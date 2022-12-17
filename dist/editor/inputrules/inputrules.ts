@@ -6,13 +6,21 @@
 * 
 * the current implementation of input rules is based off and 
 * referenced from https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/index.ts
-* and is slightly modified
 *
 */
 
-import { InputRule, inputRules, wrappingInputRule, textblockTypeInputRule, smartQuotes, emDash, ellipsis } from 'prosemirror-inputrules'
+import { 
+    InputRule, 
+    inputRules, 
+    wrappingInputRule, 
+    textblockTypeInputRule, 
+    smartQuotes, 
+    emDash, 
+    ellipsis 
+} from 'prosemirror-inputrules'
 import { NodeType, Schema } from 'prosemirror-model'
 
+//interface to define input rules 
 interface inputRulesType {
     blockQuoteRule: InputRule;
     orderedListRule: InputRule;
@@ -20,11 +28,14 @@ interface inputRulesType {
     headingRule: InputRule;
 }
 
+//Default Input Rules class
 export class DefaultInputRules implements inputRulesType {
+    //block quote rule
     public blockQuoteRule(nodeType: NodeType) {
         return wrappingInputRule(/^\s*>\s$/, nodeType);
     }
 
+    //ordered list rule
     public orderedListRule(nodeType: NodeType) {
         return wrappingInputRule(
             /^(\d+)\.\s$/, 
@@ -36,6 +47,7 @@ export class DefaultInputRules implements inputRulesType {
         );
     }
 
+    //bullet list rule
     public bulletListRule(nodeType: NodeType) {
         return wrappingInputRule(
             /^\s*([-+*])\s$/,
@@ -43,6 +55,7 @@ export class DefaultInputRules implements inputRulesType {
         );
     }
 
+    //heading rule
     public headingRule(nodeType: NodeType, maxLevel: number) {
         return textblockTypeInputRule(
             new RegExp("^(#{1," + maxLevel + "})\\s$"),

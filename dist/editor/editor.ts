@@ -9,7 +9,6 @@
 import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 import { DOMParser } from 'prosemirror-model'
-//import { exampleSetup } from 'prosemirror-example-setup'
 import { keymap } from 'prosemirror-keymap'
 import { baseKeymap } from 'prosemirror-commands'
 //import { buildKeymap } from '../editor/keymap/keymap'
@@ -43,7 +42,7 @@ export class ProseMirrorEditorDiv implements DefinePMEditorDiv {
 //includes EditorState within the class for now
 export class ProseMirrorView {
     public PMView() { 
-        const editorState = EditorState.create({
+        const editorState: EditorState = EditorState.create({
             doc: DOMParser.fromSchema(EditorObjects.OvrDefSchema.defaultSchema).parse(document.querySelector('#content') as HTMLDivElement),
             plugins: [
                 //inputRules
@@ -53,12 +52,9 @@ export class ProseMirrorView {
                 dropCursor(),
                 gapCursor()
             ]
-            //exampleSetup({
-                //schema: OverrideDefaultSchema.defaultSchema
-            //})
         });
 
-        const editorView = new EditorView(document.querySelector('#editor'), {
+        const editorView: EditorView = new EditorView(document.querySelector('#editor'), {
             state: editorState
         });
     }

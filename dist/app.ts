@@ -8,6 +8,7 @@
 */
 
 import './styles/override.css'
+import './styles/mainwindow.css'
 
 //App class
 class App {
@@ -21,7 +22,7 @@ class App {
 
 //appMain function
 function appMain(): void {
-    const app = new App();
+    const app = new App() as App;
 
     app.appDivFn();
 }

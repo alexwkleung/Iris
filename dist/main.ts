@@ -10,9 +10,9 @@
 import { MainObjects } from './utils/main-objects'
 
 //objectFns function
-function objectFns(): void {
+function irisMainFn(): void {
     MainObjects.PMEditorDiv.editorDivFn();
 
     MainObjects.PMEditorView.PMView();
 }   
-objectFns();
+irisMainFn();

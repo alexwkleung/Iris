@@ -1,7 +1,9 @@
 /*
-* default styles for prosemirror
+* default stylesheet for prosemirror
 *
 * taken from https://github.com/ProseMirror/prosemirror-view/blob/master/style/prosemirror.css
+*
+* be aware that conflicts may happen if you override them in the `override.css` file
 *
 */
 

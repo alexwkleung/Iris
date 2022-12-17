@@ -1,0 +1,11 @@
+/*
+* stylesheet for the main window 
+*
+* be aware that conflicts can/will happen since the mainwindow shares the same 
+* DOM tree with the other elements
+*
+*/
+
+body { 
+    background-color: #212121;
+}

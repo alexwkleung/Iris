@@ -5,13 +5,10 @@
 *
 */
 
-body { 
-    background-color: rgb(78, 78, 78);
-}
 
-#editor {
-    color: white;
-}
+/*
+ProseMirror overrides
+*/
 
 .ProseMirror:focus {
     outline: 0;
@@ -19,4 +16,128 @@ body {
 
 .ProseMirror {
     font-size: 25px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+/*
+html tag/element overrides (used to globally style the editor)
+*/
+
+#editor {
+    color: white;
+    width: 65%;
+    margin-left: 35%;
+}
+
+p {
+    color: white;
+    font-size: 25px;
+}
+
+a {
+	color: #5C6BC0;
+	text-decoration: none;
+}
+
+span { 
+    color: white;
+}
+
+pre code {
+    color: white;
+}
+
+pre { 
+    color: white;
+}
+
+mark {
+    background-color: #455A64;
+    color: white;
+}
+
+img { 
+    max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: white;
+    /* text-decoration: underline; */
+    border-bottom: 1px solid;
+}
+
+ul {
+    font-size: 25px;
+    color: white;
+}
+
+ol {
+    color: white;
+    font-size: 25px;
+}
+
+details, summary {
+    font-size: 25px;
+}
+
+blockquote  {
+    border-left: 3px solid white;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    margin-left: 1.5em;
+    font-size: 25px;
+}
+
+blockquote:before {
+    color: white;;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-size: 25px;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    font-size: 25px;
+    color: white;
+    padding: 6px 13px;
+}
+
+strong {
+    color: #E0E0E0;
+    font-size: 27px;
+}
+
+details summary {
+    cursor: pointer;
+    border-width: 1px;
+    width: auto;
+    height: auto;
+    border-style: solid;
+    border-color:rgb(71, 71, 71);
+    color: white;
+}
+
+details p { 
+    border-width: 1px;
+    width: auto;
+    height: auto;
+    margin: auto;
+    border-style: solid;
+    border-color:rgb(71, 71, 71);
+    color: white;
+}
+
+details summary > * {
+    display: inline;
 }
