@@ -1,17 +1,57 @@
 /*
 * file: `main.ts`
 *
-* this file will call all exported functions necessary to run Iris. 
+* this file will call imported functions necessary to run Iris. 
 *
-* the main function(s) can be split into multiple to avoid wrapping
-* the function calls into one single function
+* the majority of functions will be contained within classes
+* 
 */
 
-function mainFnCalls(): void {
-    const app = document.querySelector('#app') as HTMLElement;
-    const h1 = document.createElement('h1');
-    const text = document.createTextNode("Hello World");
-    h1.appendChild(text);
-    app.appendChild(h1);
+//import { ProseMirrorEditorDiv } from './editor/editor'
+//import { ProseMirrorView } from './editor/editor'
+import { MainObjects } from './utils/main-objects'
+
+//temporary styles
+import './styles/menubar.css'
+import './styles/style.css'
+import './styles/prosemirror.css'
+
+/*
+interface FnTypes {
+    helloWorld(): HTMLHeadingElement;
+    byeWorld(): HTMLHeadingElement;
 }
-mainFnCalls();
+
+class MainFns implements FnTypes {
+    helloWorld() {
+        const app = document.querySelector('#app') as HTMLElement;
+        const h1 = document.createElement('h1') as HTMLHeadingElement;
+        const text = (document.createTextNode("Hello World") as Text);
+        h1.appendChild(text) as Text;
+    
+       return app.appendChild(h1) as HTMLHeadingElement;
+    }
+
+    byeWorld() {
+        const app = document.querySelector('#app') as HTMLElement;
+        const h1 = document.createElement('h2') as HTMLHeadingElement;
+        const text = (document.createTextNode("Bye World") as Text);
+        h1.appendChild(text) as Text;
+    
+       return app.appendChild(h1) as HTMLHeadingElement;
+    }
+}
+
+mainFns object
+const mainFnsObj = new MainFns() as MainFns;
+*/
+
+function objectFns(): void {
+    MainObjects.PMEditorDiv.editorDivFn();
+
+    MainObjects.PMEditorView.PMView();
+
+    //mainFnsObj.helloWorld();
+    //mainFnsObj.byeWorld();
+}   
+objectFns();

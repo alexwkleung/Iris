@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
+  "type": "module",
   "scripts": {
     "tauri": "tauri",
     "tauri-dev": "tauri dev",
-    "build": "tsc --build --clean && tsc --build"
+    "dev": "vite dev --host",
+    "build": "vite build && tsc --build --clean && tsc --build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -22,10 +25,17 @@
     "@tauri-apps/api": "^1.2.0",
     "@tauri-apps/cli": "^1.2.2",
     "@types/node": "^18.11.15",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vite": "^4.0.1"
   },
   "dependencies": {
+    "prosemirror-commands": "^1.5.0",
+    "prosemirror-example-setup": "^1.2.1",
+    "prosemirror-inputrules": "^1.2.0",
+    "prosemirror-keymap": "^1.2.0",
     "prosemirror-model": "^1.18.3",
+    "prosemirror-schema-basic": "^1.2.0",
+    "prosemirror-schema-list": "^1.2.2",
     "prosemirror-state": "^1.4.2",
     "prosemirror-transform": "^1.7.0",
     "prosemirror-view": "^1.29.1"

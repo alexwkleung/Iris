@@ -1,14 +1,24 @@
 /*
 * file: `app.ts`
 *
-* this file contains the function that creates/appends the app div within the DOM
+* this file contains the creation of the app div within the DOM
 *
 */
 
-function app() {
-    const appDiv = document.createElement('div');
-    appDiv.setAttribute("id", "app");
+//App class
+class App {
+    static appDivFn() {
+        const appDiv = document.createElement('div') as HTMLDivElement;
+        appDiv.setAttribute("id", "app");
 
-    document.body.appendChild(appDiv);
+        return document.body.prepend(appDiv) as void;
+    }
 }
-app();
+
+//appMain function
+function appMain(): void {
+    App.appDivFn();
+}
+appMain();
+
+export{};

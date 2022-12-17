@@ -1,0 +1,13 @@
+/*
+body { 
+    background-color: rgb(78, 78, 78);
+}
+
+#editor {
+    color: white;
+}
+*/
+
+.ProseMirror:focus {
+    outline: 0;
+}
