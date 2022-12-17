@@ -14,7 +14,7 @@ import { baseKeymap } from 'prosemirror-commands'
 //import { buildKeymap } from '../editor/keymap/keymap'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
-import { EditorObjects } from '../utils/editor_objects'
+import { EditorObjects } from '../utils/objects/editor_objects'
 
 import '../styles/prosemirror.css'
 

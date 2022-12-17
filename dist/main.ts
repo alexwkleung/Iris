@@ -7,12 +7,14 @@
 * accessed via dot operators
 */
 
-import { MainObjects } from './utils/main_objects'
+import { MainObjects } from './utils/objects/main_objects'
 
-//objectFns function
+//irisMainFn function
 function irisMainFn(): void {
+    //ProseMirror Editor Div 
     MainObjects.PMEditorDiv.editorDivFn();
 
+    //ProseMirror EditorView
     MainObjects.PMEditorView.PMView();
 }   
 irisMainFn();

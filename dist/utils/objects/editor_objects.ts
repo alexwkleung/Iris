@@ -5,8 +5,8 @@
 *
 */
 
-import { DefaultInputRules } from '../editor/inputrules/inputrules'
-import { OverrideDefaultSchema } from '../editor/schema/schema'
+import { DefaultInputRules } from '../../editor/inputrules/inputrules'
+import { OverrideDefaultSchema } from '../../editor/schema/schema'
 
 //EditorObjects class
 export class EditorObjects {

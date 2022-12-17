@@ -5,8 +5,8 @@
 *
 */
 
-import { ProseMirrorEditorDiv } from '../editor/editor'
-import { ProseMirrorView } from '../editor/editor'
+import { ProseMirrorEditorDiv } from '../../editor/editor'
+import { ProseMirrorView } from '../../editor/editor'
 
 //MainObjects class
 export class MainObjects {

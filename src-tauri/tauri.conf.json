@@ -13,11 +13,55 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "fs":{
+        "all": true,
+        "copyFile": true,
+        "createDir": true,
+        "exists": true,
+        "readDir": true,
+        "readFile": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true,
+        "scope": [],
+        "writeFile": true
+      },
+      "window": {
+        "all": true,
+        "center": true,
+        "close": true,
+        "create": true,
+        "hide": true,
+        "maximize": true,
+        "minimize": true,
+        "print": false,
+        "requestUserAttention": true,
+        "setAlwaysOnTop": false,
+        "setCursorGrab": false,
+        "setCursorIcon": false,
+        "setCursorPosition": false,
+        "setCursorVisible": false,
+        "setDecorations": false,
+        "setFocus": true,
+        "setFullscreen": true,
+        "setIcon": false,
+        "setIgnoreCursorEvents": false,
+        "setMaxSize": false,
+        "setMinSize": false,
+        "setPosition": true,
+        "setResizable": true,
+        "setSize": false,
+        "setSkipTaskbar": false,
+        "setTitle": true,
+        "show": true,
+        "startDragging": true,
+        "unmaximize": true,
+        "unminimize": true
+      }
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
+      "category": "Productivity",
       "copyright": "",
       "deb": {
         "depends": []

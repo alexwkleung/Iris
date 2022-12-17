@@ -7,7 +7,7 @@
 
 
 /*
-ProseMirror overrides
+* ProseMirror overrides
 */
 
 .ProseMirror:focus {
@@ -16,15 +16,21 @@ ProseMirror overrides
 
 .ProseMirror {
     font-size: 25px;
+    /*
     border-style: solid;
     border-width: 1px;
     border-color: black;
+    */
     overflow-y: auto;
     max-height: 100vh;
+    height: 100vh;
 }
 
 /*
-html tag/element overrides (used to globally style inside the editor)
+* html tag/element overrides (used to globally style inside the editor)
+*
+* taken/referenced from https://github.com/alexwkleung/Markdown-CSS/blob/main/css/dark.css
+*
 */
 
 #editor {
