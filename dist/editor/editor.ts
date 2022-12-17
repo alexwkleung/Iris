@@ -19,9 +19,14 @@ import { EditorObjects } from '../utils/editor-objects'
 
 import '../styles/prosemirror.css'
 
+//interface to define ProseMirror Editor Div 
+interface DefinePMEditorDiv {
+    editorDivFn(): HTMLDivElement;
+}
+
 //ProseMirror Editor Div class
-export class ProseMirrorEditorDiv {
-    public editorDivFn() {
+export class ProseMirrorEditorDiv implements DefinePMEditorDiv {
+    public editorDivFn(): HTMLDivElement {
         const app = document.querySelector('#app') as HTMLElement;
         const editorDiv = document.createElement('div') as HTMLDivElement;
         editorDiv.setAttribute("id", "editor");

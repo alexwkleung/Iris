@@ -3,13 +3,15 @@
 *
 * this file contains the creation of the app div within the DOM
 *
+* there shouldn't be any major changes to this file besides implementing more efficient mounting methods
+*
 */
 
 import './styles/override.css'
 
 //App class
 class App {
-    static appDivFn() {
+    public appDivFn() {
         const appDiv = document.createElement('div') as HTMLDivElement;
         appDiv.setAttribute("id", "app");
 
@@ -19,6 +21,8 @@ class App {
 
 //appMain function
 function appMain(): void {
-    App.appDivFn();
+    const app = new App();
+
+    app.appDivFn();
 }
 appMain();

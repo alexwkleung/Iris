@@ -11,8 +11,8 @@ import { OverrideDefaultSchema } from '../editor/schema/schema'
 //EditorObjects class
 export class EditorObjects {
     //Default Input Rules object
-    static DefInputRules = new DefaultInputRules() as DefaultInputRules;
+    static DefInputRules: DefaultInputRules = new DefaultInputRules() as DefaultInputRules;
 
     //Override Default Schema object
-    static OvrDefSchema = new OverrideDefaultSchema() as OverrideDefaultSchema;
+    static OvrDefSchema: OverrideDefaultSchema = new OverrideDefaultSchema() as OverrideDefaultSchema;
 }

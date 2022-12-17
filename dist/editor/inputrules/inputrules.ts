@@ -10,10 +10,17 @@
 *
 */
 
-import { inputRules, wrappingInputRule, textblockTypeInputRule, smartQuotes, emDash, ellipsis } from 'prosemirror-inputrules'
+import { InputRule, inputRules, wrappingInputRule, textblockTypeInputRule, smartQuotes, emDash, ellipsis } from 'prosemirror-inputrules'
 import { NodeType, Schema } from 'prosemirror-model'
 
-export class DefaultInputRules {
+interface inputRulesType {
+    blockQuoteRule: InputRule;
+    orderedListRule: InputRule;
+    bulletListRule: InputRule;
+    headingRule: InputRule;
+}
+
+export class DefaultInputRules implements inputRulesType {
     public blockQuoteRule(nodeType: NodeType) {
         return wrappingInputRule(/^\s*>\s$/, nodeType);
     }
@@ -48,7 +55,8 @@ export class DefaultInputRules {
 
     //buildInputRules function
     public buildInputRules(schema: Schema) {
-        let rules = [...smartQuotes, ellipsis, emDash], type;
+        let rules: InputRule[] = [...smartQuotes, ellipsis, emDash];
+        let type: NodeType;
 
         if(type = schema.nodes.blockquote) {
             rules.push(this.blockQuoteRule(type));
