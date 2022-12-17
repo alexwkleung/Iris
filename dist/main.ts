@@ -7,7 +7,7 @@
 * accessed via dot operators
 */
 
-import { MainObjects } from './utils/main-objects'
+import { MainObjects } from './utils/main_objects'
 
 //objectFns function
 function irisMainFn(): void {
