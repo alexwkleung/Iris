@@ -1,0 +1,22 @@
+/*
+* stylesheet for overriding any current styles
+*
+* be aware that conflicts can/will happen, so treat this file as a global
+*
+*/
+
+body { 
+    background-color: rgb(78, 78, 78);
+}
+
+#editor {
+    color: white;
+}
+
+.ProseMirror:focus {
+    outline: 0;
+}
+
+.ProseMirror {
+    font-size: 25px;
+}

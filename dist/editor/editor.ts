@@ -8,14 +8,18 @@
 
 import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
-import { Schema, DOMParser } from 'prosemirror-model'
-import { schema } from 'prosemirror-schema-basic'
-import { addListNodes } from 'prosemirror-schema-list'
-import { exampleSetup } from 'prosemirror-example-setup'
-//import { keymap } from 'prosemirror-keymap'
-//import { baseKeymap } from 'prosemirror-commands'
-import { overrideDefaultSchema } from './schema/schema'
+import { DOMParser } from 'prosemirror-model'
+//import { exampleSetup } from 'prosemirror-example-setup'
+import { keymap } from 'prosemirror-keymap'
+import { baseKeymap } from 'prosemirror-commands'
+//import { buildKeymap } from '../editor/keymap/keymap'
+import { dropCursor } from 'prosemirror-dropcursor'
+import { gapCursor } from 'prosemirror-gapcursor'
+import { EditorObjects } from '../utils/editor-objects'
 
+import '../styles/prosemirror.css'
+
+//ProseMirror Editor Div class
 export class ProseMirrorEditorDiv {
     public editorDivFn() {
         const app = document.querySelector('#app') as HTMLElement;
@@ -26,33 +30,27 @@ export class ProseMirrorEditorDiv {
         contentDiv.setAttribute("id", "content");
         contentDiv.style.display = "none";
 
-        return app.appendChild(editorDiv) as HTMLDivElement && (document.querySelector('#editor') as HTMLDivElement).appendChild(contentDiv);
+        return (app.appendChild(editorDiv) as HTMLDivElement) && (document.querySelector('#editor') as HTMLDivElement).appendChild(contentDiv);
     }
 }
 
-//default schema
-const defaultSchema = new Schema({
-    nodes: addListNodes(schema.spec.nodes, "paragraph block*", "block"),
-    marks: schema.spec.marks
-});
-
-//class for prosemirror view
+//ProseMirror View class
+//includes EditorState within the class for now
 export class ProseMirrorView {
     public PMView() { 
         const editorState = EditorState.create({
-            //schema: schema,
-            doc: DOMParser.fromSchema(overrideDefaultSchema).parse(document.querySelector('#content') as HTMLDivElement),
-            plugins: 
-            /*[
+            doc: DOMParser.fromSchema(EditorObjects.OvrDefSchema.defaultSchema).parse(document.querySelector('#content') as HTMLDivElement),
+            plugins: [
+                //inputRules
+                EditorObjects.DefInputRules.buildInputRules(EditorObjects.OvrDefSchema.defaultSchema),
                 keymap(baseKeymap),
-                inputRules({
-                    rules: [],
-                })
+                //keymap(buildKeymap(OverrideDefaultSchema.defaultSchema)),
+                dropCursor(),
+                gapCursor()
             ]
-            */
-            exampleSetup({
-                schema: overrideDefaultSchema
-            })
+            //exampleSetup({
+                //schema: OverrideDefaultSchema.defaultSchema
+            //})
         });
 
         const editorView = new EditorView(document.querySelector('#editor'), {

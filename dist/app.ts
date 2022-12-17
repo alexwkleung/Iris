@@ -5,6 +5,8 @@
 *
 */
 
+import './styles/override.css'
+
 //App class
 class App {
     static appDivFn() {
@@ -20,5 +22,3 @@ function appMain(): void {
     App.appDivFn();
 }
 appMain();
-
-export{};

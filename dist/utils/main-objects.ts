@@ -8,6 +8,7 @@
 import { ProseMirrorEditorDiv } from '../editor/editor'
 import { ProseMirrorView } from '../editor/editor'
 
+//MainObjects class
 export class MainObjects {
     //ProseMirror Editor Div object
     static PMEditorDiv = new ProseMirrorEditorDiv() as ProseMirrorEditorDiv;
