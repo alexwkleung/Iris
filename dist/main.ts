@@ -10,7 +10,7 @@
 import { MainObjects } from './utilities/objects/main_objects'
 
 //irisMainFn function
-function irisMainFn(): void {
+function irisMain(): void {
     //Local File Directory Div
     MainObjects.LFDirectoryDiv.LFDirectoryDiv();
 
@@ -21,4 +21,4 @@ function irisMainFn(): void {
     MainObjects.PMEditorView.PMView();
 
 }   
-irisMainFn();
+irisMain();

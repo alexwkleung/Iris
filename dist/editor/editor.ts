@@ -15,6 +15,7 @@ import { baseKeymap } from 'prosemirror-commands'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { EditorObjects } from '../utilities/objects/editor_objects'
+import { app } from '../app'
 
 import '../styles/prosemirror.css'
 
@@ -26,7 +27,6 @@ interface DefinePMEditorDiv {
 //ProseMirror Editor Div class
 export class ProseMirrorEditorDiv implements DefinePMEditorDiv {
     public PMEditorDiv(): HTMLDivElement {
-        const app = document.querySelector('#app') as HTMLElement;
         const editorDiv = document.createElement('div') as HTMLDivElement;
         editorDiv.setAttribute("id", "editor");
 
@@ -43,10 +43,14 @@ export class ProseMirrorEditorDiv implements DefinePMEditorDiv {
 export class ProseMirrorView {
     public PMView() { 
         const editorState: EditorState = EditorState.create({
-            doc: DOMParser.fromSchema(EditorObjects.OvrDefSchema.defaultSchema).parse(document.querySelector('#content') as HTMLDivElement),
+            doc: DOMParser.fromSchema(
+                EditorObjects.OvrDefSchema.defaultSchema
+            ).parse(document.querySelector('#content') as HTMLDivElement),
             plugins: [
                 //inputRules
-                EditorObjects.DefInputRules.buildInputRules(EditorObjects.OvrDefSchema.defaultSchema),
+                EditorObjects.DefInputRules.buildInputRules(
+                    EditorObjects.OvrDefSchema.defaultSchema
+                ),
                 keymap(baseKeymap),
                 //keymap(buildKeymap(OverrideDefaultSchema.defaultSchema)),
                 dropCursor(),

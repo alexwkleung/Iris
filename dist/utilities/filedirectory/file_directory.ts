@@ -4,8 +4,8 @@
 * this file creates the file directory that is beside the editor within the 
 * main window in the front-end 
 *
-* TypeScript and Rust (Tauri/Native API) will be used for
-* processing folders/files at the OS level
+* TypeScript and/or Rust (Tauri/Native API) will be used for
+* processing folders/files in the OS to be used within Iris
 *
 * at the moment, the file directory will only handle local files
 *
@@ -14,16 +14,36 @@
 *
 */
 
+import { app } from '../../app'
+
 import '../../styles/file_directory.css'
 
 //Local File Directory Div class
 export class LocalFileDirectoryDiv {
     public LFDirectoryDiv() {
-        const app = document.querySelector('#app') as HTMLElement;
-        const fileDirectoryDiv = document.createElement('div');
-        fileDirectoryDiv.setAttribute("id", "filedirectory");
+        //parent div
+        const fileDirectoryDivParent = document.createElement('div') as HTMLDivElement;
+        fileDirectoryDivParent.setAttribute("id", "fileDirectoryParent");
+     
+        //button (temporary)
+        const fileFolderPickerBtn = document.createElement('button') as HTMLButtonElement;
+        fileFolderPickerBtn.setAttribute("id", "filefolderpicker");
+     
+        //button text node (temporary)
+        const FFTextNode1 = document.createTextNode("Browse File/Folder");
+     
+        fileFolderPickerBtn.appendChild(FFTextNode1);
+        fileDirectoryDivParent.appendChild(fileFolderPickerBtn);
+        app.appendChild(fileDirectoryDivParent) as HTMLDivElement;
 
-        return (app.appendChild(fileDirectoryDiv) as HTMLDivElement);
+        const fileDirectoryDiv = document.createElement('div');
+        fileDirectoryDiv.setAttribute("id", "fileDirectory");
+        
+        app.appendChild(fileDirectoryDiv) as HTMLDivElement;
+        
+        const fileDirectoryParent = document.querySelector('#fileDirectoryParent') as HTMLDivElement;
+
+        return fileDirectoryParent.appendChild(fileDirectoryDiv) as HTMLDivElement;
     }
 }
 
@@ -31,5 +51,3 @@ export class LocalFileDirectoryDiv {
 export class LocalFileDirectory {
     
 } 
-
-export{};

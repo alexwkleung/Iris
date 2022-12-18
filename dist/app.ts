@@ -16,7 +16,14 @@ class App {
         const appDiv = document.createElement('div') as HTMLDivElement;
         appDiv.setAttribute("id", "app");
 
-        return document.body.prepend(appDiv) as void;
+        document.body.prepend(appDiv) as void;
+
+        //check if app div node is connected
+        if(appDiv.isConnected) {
+            console.log("App is connected to the DOM!");
+        } else {
+            console.error("App is not connected to the DOM!");
+        }
     }
 }
 
@@ -27,3 +34,5 @@ function appMain(): void {
     app.appDivFn();
 }
 appMain();
+
+export const app = document.querySelector('#app') as HTMLElement;
