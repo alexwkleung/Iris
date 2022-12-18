@@ -14,13 +14,13 @@ function irisMain(): void {
     //Local File Directory Div
     MainObjects.LFDirectoryDiv.LFDirectoryDiv();
     //
-    
+
     //ProseMirror Editor Div 
     MainObjects.PMEditorDiv.PMEditorDiv();
     //
 
     //ProseMirror EditorView
-    MainObjects.PMEditorView.PMView();
+    //MainObjects.PMEditorView.PMView();
     //
 
     //Iris Event Listeners

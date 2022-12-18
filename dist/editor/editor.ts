@@ -16,6 +16,7 @@ import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { EditorObjects } from '../utilities/objects/editor_objects'
 import { app } from '../app'
+import { LocalFileDirectory } from '../utilities/filedirectory/file_directory'
 
 import '../styles/prosemirror.css'
 
@@ -35,8 +36,26 @@ export class ProseMirrorEditorDiv {
 
 //ProseMirrorState class
 class ProseMirrorState {
+    private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
+
+    public editorState: EditorState;
+    //public initialDoc: Node | undefined | any;
+
     public PMState(): EditorState {
-        const editorState: EditorState = EditorState.create({
+        console.log(this.LFDirectory.openFileString);
+
+        /*
+        Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
+            console.log(typeof this.LFDirectory.openFileString);
+            openFileStringTextNode = document.createTextNode(this.LFDirectory.openFileString);
+            console.log(openFileStringTextNode);
+            //(document.querySelector('#content') as HTMLDivElement).appendChild(openFileStringTextNode);
+        });
+        */
+
+        //console.log(this.initialDoc);
+
+        this.editorState = EditorState.create({
             doc: DOMParser.fromSchema(
                 EditorObjects.OvrDefSchema.defaultSchema
             ).parse(document.querySelector('#content') as HTMLDivElement),
@@ -49,20 +68,24 @@ class ProseMirrorState {
                 //keymap(buildKeymap(OverrideDefaultSchema.defaultSchema)),
                 dropCursor(),
                 gapCursor()
-            ]
+            ],
         });
 
-        return editorState;
+        //console.log(openFileStringTextNode);
+
+        return this.editorState;
     }
 }
 
 //ProseMirror View class
 export class ProseMirrorView extends ProseMirrorState {
+    public editorView: EditorView;
+
     public PMView(): EditorView { 
-        const editorView: EditorView = new EditorView(document.querySelector('#editor'), {
-            state: this.PMState()
+        this.editorView = new EditorView(document.querySelector('#editor'), {
+            state: this.PMState(),
         });
 
-        return editorView;
+        return this.editorView;
     }
 }

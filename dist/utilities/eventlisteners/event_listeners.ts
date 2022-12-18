@@ -7,6 +7,7 @@
 */
 
 import { LocalFileDirectory } from '../filedirectory/file_directory'
+import { MainObjects } from '../objects/main_objects'
 
 export class IrisEventListeners {
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
@@ -21,8 +22,11 @@ export class IrisEventListeners {
     public openFileListener() {
         const openFile = document.querySelector('#openFile') as HTMLButtonElement;
         
-        openFile.addEventListener('click', (): void => {
-            this.LFDirectory.OpenLF();
+        openFile.addEventListener('click', async () => {
+            MainObjects.PMEditorView.PMView();
+            await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
+                console.log("RESOLVED.");
+            });
         });
     }
 }

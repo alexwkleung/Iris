@@ -20,9 +20,14 @@
 import { app } from '../../app'
 import { dialog, fs, path } from '@tauri-apps/api'
 import { e } from '@tauri-apps/api/fs-4bb77382'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import rehypeSanitize from 'rehype-sanitize'
+import rehypeStringify from 'rehype-stringify'
 
 import '../../styles/file_directory.css'
-import { read, readFile } from 'fs';
+//import { read, readFile } from 'fs';
 
 //Local File Directory Div class
 export class LocalFileDirectoryDiv {
@@ -118,52 +123,73 @@ export class LocalFileDirectory {
         const openFile: string = await dialog.open({
             filters: [{
                 name: "Iris Accepted File Types",
-                extensions: ["md", "txt"],
+                extensions: ["md"],
             }], 
             recursive: true,
         }) as string;
-
-        //exception handle 
-        if(openFile) {
-            console.log(openFile);
-        } else if(openFile === null) {
-            console.error("User canceled open dialog.")
-        }
-
-        /*
-        const splitFileSplit = openFile.split('/');
-        console.log(splitFileSplit);
-        const splitFilePop1: string | undefined = splitFileSplit.pop() as string | undefined;
-        console.log(splitFilePop1);
-        */
 
         const readFileToArr = fs.readTextFile(openFile, {
             dir: fs.BaseDirectory.Desktop || fs.BaseDirectory.Home
         })
 
-        /*
-        .then(
-            (fileData) => {
-                fileArr.push(fileData)
-                for(let i = 0; i < fileArr.length; i++) {
-                    test = fileArr[i];
-                }
-        });
-        */
+        //exception handle 
+        if(openFile) {
+            //log path to file
+            console.log(openFile);
 
-        //resolve promise from readTextFile to handle data
-        await Promise.resolve(readFileToArr).then((fileData) => {
-            fileArr.push(fileData);
-            //console.log(fileArr[0]);
-        });
-
-        for(let folderIndex of fileArr) {
-            //temporary (testing out JSON string for holding/parsing data from file)
-            const folderIndexStringify = JSON.stringify(folderIndex);
-            //console.log(JSON.parse(folderIndexStringify));
-
-            this.openFileString = JSON.parse(folderIndexStringify);
-            console.log(this.openFileString);
+            //resolve promise from readTextFile to handle data
+            //and push that data into fileArr array
+            await Promise.resolve(readFileToArr).then((fileData) => {
+                fileArr.push(fileData);
+            });
+        } else if(openFile === null) {
+            console.error("User canceled open dialog. Promise rejected.")
         }
+
+        //testing to make sure data is passed and parsed (via console check)
+        for(let folderIndex of fileArr) {
+            /*
+            //temporary (testing out JSON string for holding/parsing data from file)
+            const folderIndexStringify = JSON.stringify(folderIndex, null, 2);
+            
+            this.openFileString = JSON.parse(folderIndexStringify);
+            */
+
+            //parse open file using unified
+            const mdParse = await unified()
+                .use(remarkParse)
+                .use(remarkRehype)
+                .use(rehypeSanitize)
+                .use(rehypeStringify)
+                .process(folderIndex)
+            
+            this.openFileString = String(mdParse)
+
+            //const tNode = document.createTextNode(this.openFileString);
+
+            console.log(this.openFileString);
+            //(document.querySelector('.ProseMirror') as HTMLDivElement).textContent = this.openFileString;
+            (document.querySelector('#content') as HTMLDivElement).innerHTML = this.openFileString;
+
+            //this should be dealt with in a transaction in the EditorState, and
+            //not directly manipulating the DOM tree
+            (document.querySelector('.ProseMirror') as HTMLDivElement).innerHTML = this.openFileString;
+        }
+
+        const fileDirectory = document.querySelector('#fileDirectory') as HTMLElement;
+        
+        //temporary directory folder title
+        const splitFileDirectory = openFile.split('/');
+        const splitFilePop1 = splitFileDirectory.pop() as string | null;
+        const splitFilePop2 = splitFileDirectory.pop() as string | null;
+        const splitFilePop3 = splitFileDirectory.pop() as string | null;
+        const splitFileConcat1 = splitFilePop3 + "/" + splitFilePop2 as string;
+        fileDirectory.textContent = splitFilePop2 as string | null;
+
+        //temporary file list example
+        //do not use innerHTML - instead create elements/nodes dynamically
+        //folder name should be parent div that is collapsible
+        //once you open the collapsible parent div, it will reveal the file names (child divs)
+        fileDirectory.innerHTML = splitFileConcat1 as string + "<br><br>" + "\t" +  splitFilePop1 as string;
     }
 } 
