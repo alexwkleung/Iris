@@ -22,8 +22,8 @@
     border-color: black;
     */
     overflow-y: auto;
-    max-height: 100vh;
     height: 100vh;
+    max-height: 100vh;
 }
 
 /*
@@ -36,7 +36,8 @@
 #editor {
     color: white;
     width: 65%;
-    margin-left: 35%;
+    margin-left: 35.5%;
+    background-color: #212121;
 }
 
 p {

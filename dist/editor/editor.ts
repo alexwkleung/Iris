@@ -20,12 +20,12 @@ import '../styles/prosemirror.css'
 
 //interface to define ProseMirror Editor Div 
 interface DefinePMEditorDiv {
-    editorDivFn(): HTMLDivElement;
+    PMEditorDiv(): HTMLDivElement;
 }
 
 //ProseMirror Editor Div class
 export class ProseMirrorEditorDiv implements DefinePMEditorDiv {
-    public editorDivFn(): HTMLDivElement {
+    public PMEditorDiv(): HTMLDivElement {
         const app = document.querySelector('#app') as HTMLElement;
         const editorDiv = document.createElement('div') as HTMLDivElement;
         editorDiv.setAttribute("id", "editor");

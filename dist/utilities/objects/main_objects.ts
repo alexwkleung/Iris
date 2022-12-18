@@ -7,6 +7,7 @@
 
 import { ProseMirrorEditorDiv } from '../../editor/editor'
 import { ProseMirrorView } from '../../editor/editor'
+import { LocalFileDirectoryDiv } from '../../utilities/filedirectory/file_directory'
 
 //MainObjects class
 export class MainObjects {
@@ -15,4 +16,7 @@ export class MainObjects {
 
     //ProseMirror Editor View object
     static PMEditorView = new ProseMirrorView() as ProseMirrorView;
+
+    //Local File Directory object
+    static LFDirectoryDiv = new LocalFileDirectoryDiv() as LocalFileDirectoryDiv;
 }

@@ -11,10 +11,14 @@ import { MainObjects } from './utilities/objects/main_objects'
 
 //irisMainFn function
 function irisMainFn(): void {
+    //Local File Directory Div
+    MainObjects.LFDirectoryDiv.LFDirectoryDiv();
+
     //ProseMirror Editor Div 
-    MainObjects.PMEditorDiv.editorDivFn();
+    MainObjects.PMEditorDiv.PMEditorDiv();
 
     //ProseMirror EditorView
     MainObjects.PMEditorView.PMView();
+
 }   
 irisMainFn();

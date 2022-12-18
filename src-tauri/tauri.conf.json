@@ -26,6 +26,24 @@
         "scope": [],
         "writeFile": true
       },
+      "dialog": {
+        "all": true,
+        "ask": true,
+        "confirm": true,
+        "message": true,
+        "open": true,
+        "save": true
+      },
+      "path": {
+        "all": true
+      },
+      "shell": {
+        "all": true,
+        "execute": false,
+        "open": true,
+        "scope": [],
+        "sidecar": false
+      },
       "window": {
         "all": true,
         "center": true,
