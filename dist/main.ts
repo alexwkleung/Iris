@@ -20,5 +20,7 @@ function irisMain(): void {
     //ProseMirror EditorView
     MainObjects.PMEditorView.PMView();
 
+    //Iris Event Listeners
+    MainObjects.IrisEvt.FileFolderPickerListener();
 }   
 irisMain();

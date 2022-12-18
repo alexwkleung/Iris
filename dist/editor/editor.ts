@@ -19,13 +19,8 @@ import { app } from '../app'
 
 import '../styles/prosemirror.css'
 
-//interface to define ProseMirror Editor Div 
-interface DefinePMEditorDiv {
-    PMEditorDiv(): HTMLDivElement;
-}
-
 //ProseMirror Editor Div class
-export class ProseMirrorEditorDiv implements DefinePMEditorDiv {
+export class ProseMirrorEditorDiv {
     public PMEditorDiv(): HTMLDivElement {
         const editorDiv = document.createElement('div') as HTMLDivElement;
         editorDiv.setAttribute("id", "editor");
@@ -38,10 +33,9 @@ export class ProseMirrorEditorDiv implements DefinePMEditorDiv {
     }
 }
 
-//ProseMirror View class
-//includes EditorState within the class for now
-export class ProseMirrorView {
-    public PMView() { 
+//ProseMirrorState class
+class ProseMirrorState {
+    public PMState(): EditorState {
         const editorState: EditorState = EditorState.create({
             doc: DOMParser.fromSchema(
                 EditorObjects.OvrDefSchema.defaultSchema
@@ -58,8 +52,17 @@ export class ProseMirrorView {
             ]
         });
 
+        return editorState;
+    }
+}
+
+//ProseMirror View class
+export class ProseMirrorView extends ProseMirrorState {
+    public PMView(): EditorView { 
         const editorView: EditorView = new EditorView(document.querySelector('#editor'), {
-            state: editorState
+            state: this.PMState()
         });
+
+        return editorView;
     }
 }

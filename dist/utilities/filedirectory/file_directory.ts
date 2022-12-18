@@ -15,6 +15,9 @@
 */
 
 import { app } from '../../app'
+import { dialog } from '@tauri-apps/api'
+import { fs } from '@tauri-apps/api'
+import { path } from '@tauri-apps/api'
 
 import '../../styles/file_directory.css'
 
@@ -24,17 +27,18 @@ export class LocalFileDirectoryDiv {
         //parent div
         const fileDirectoryDivParent = document.createElement('div') as HTMLDivElement;
         fileDirectoryDivParent.setAttribute("id", "fileDirectoryParent");
-     
+        
+        app.appendChild(fileDirectoryDivParent) as HTMLDivElement;
+
         //button (temporary)
         const fileFolderPickerBtn = document.createElement('button') as HTMLButtonElement;
         fileFolderPickerBtn.setAttribute("id", "filefolderpicker");
      
         //button text node (temporary)
-        const FFTextNode1 = document.createTextNode("Browse File/Folder");
+        const FFTextNode1 = document.createTextNode("Browse Folder");
      
         fileFolderPickerBtn.appendChild(FFTextNode1);
         fileDirectoryDivParent.appendChild(fileFolderPickerBtn);
-        app.appendChild(fileDirectoryDivParent) as HTMLDivElement;
 
         const fileDirectoryDiv = document.createElement('div');
         fileDirectoryDiv.setAttribute("id", "fileDirectory");
@@ -49,5 +53,24 @@ export class LocalFileDirectoryDiv {
 
 //Local File Directory class
 export class LocalFileDirectory {
-    
+    //open folder dialog
+    public async OpenLFFolderDialog() {
+        const arr = [];
+
+        const openFolder = await dialog.open({
+            directory: true,
+            defaultPath: await path.homeDir()
+        }) as string;
+
+        if(openFolder) {
+            console.log(openFolder + " ---> " + typeof openFolder);
+        } else if(openFolder === null) {
+            console.log("User canceled open dialog.")
+        } 
+
+        console.log(fs.readDir(
+            openFolder, {
+            recursive: true
+        }));
+    }
 } 
