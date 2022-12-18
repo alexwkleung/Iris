@@ -12,7 +12,9 @@ import { OverrideDefaultSchema } from '../../editor/schema/schema'
 export class EditorObjects {
     //Default Input Rules object
     static DefInputRules: DefaultInputRules = new DefaultInputRules() as DefaultInputRules;
+    //
 
     //Override Default Schema object
     static OvrDefSchema: OverrideDefaultSchema = new OverrideDefaultSchema() as OverrideDefaultSchema;
+    //
 }

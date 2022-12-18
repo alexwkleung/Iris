@@ -13,14 +13,19 @@ import { MainObjects } from './utilities/objects/main_objects'
 function irisMain(): void {
     //Local File Directory Div
     MainObjects.LFDirectoryDiv.LFDirectoryDiv();
-
+    //
+    
     //ProseMirror Editor Div 
     MainObjects.PMEditorDiv.PMEditorDiv();
+    //
 
     //ProseMirror EditorView
     MainObjects.PMEditorView.PMView();
+    //
 
     //Iris Event Listeners
-    MainObjects.IrisEvt.FileFolderPickerListener();
+    MainObjects.IrisEvt.OpenFolderListener();
+    MainObjects.IrisEvt.openFileListener();
+    //
 }   
 irisMain();

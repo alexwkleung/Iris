@@ -14,13 +14,17 @@ import { IrisEventListeners } from '../eventlisteners/event_listeners'
 export class MainObjects {
     //ProseMirror Editor Div object
     static PMEditorDiv = new ProseMirrorEditorDiv() as ProseMirrorEditorDiv;
+    //
 
     //ProseMirror Editor View object
     static PMEditorView = new ProseMirrorView() as ProseMirrorView;
+    //
 
     //Local File Directory object
     static LFDirectoryDiv = new LocalFileDirectoryDiv() as LocalFileDirectoryDiv;
+    //
 
     //Iris Event Listeners object
     static IrisEvt = new IrisEventListeners() as IrisEventListeners;
+    //
 }

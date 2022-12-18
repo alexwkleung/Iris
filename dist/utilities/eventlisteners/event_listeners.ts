@@ -11,10 +11,18 @@ import { LocalFileDirectory } from '../filedirectory/file_directory'
 export class IrisEventListeners {
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 
-    public FileFolderPickerListener() {
-        const fileFolderPicker = document.querySelector('#filefolderpicker') as HTMLButtonElement;
-        fileFolderPicker.addEventListener('click', (): void => {
-            this.LFDirectory.OpenLFFolderDialog();
+    public OpenFolderListener() {
+        const browseFolder = document.querySelector('#browseFolder') as HTMLButtonElement;
+        browseFolder.addEventListener('click', (): void => {
+            this.LFDirectory.OpenLFFolder();
+        });
+    }
+
+    public openFileListener() {
+        const openFile = document.querySelector('#openFile') as HTMLButtonElement;
+        
+        openFile.addEventListener('click', (): void => {
+            this.LFDirectory.OpenLF();
         });
     }
 }
