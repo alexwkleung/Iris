@@ -15,11 +15,10 @@
 */
 
 import { app } from '../../app'
-import { dialog } from '@tauri-apps/api'
-import { fs } from '@tauri-apps/api'
-import { path } from '@tauri-apps/api'
+import { dialog, fs, path } from '@tauri-apps/api'
 
 import '../../styles/file_directory.css'
+import { e } from '@tauri-apps/api/fs-4bb77382';
 
 //Local File Directory Div class
 export class LocalFileDirectoryDiv {
@@ -55,7 +54,7 @@ export class LocalFileDirectoryDiv {
 export class LocalFileDirectory {
     //open folder dialog
     public async OpenLFFolderDialog() {
-        const arr = [];
+        const arr: e[][] = [];
 
         const openFolder = await dialog.open({
             directory: true,
@@ -68,9 +67,12 @@ export class LocalFileDirectory {
             console.log("User canceled open dialog.")
         } 
 
-        console.log(fs.readDir(
+        const readDirToArr = fs.readDir(
             openFolder, {
             recursive: true
-        }));
+        })
+        .then(
+            (data) => arr.push(data) && console.log(arr)
+        );
     }
 } 
