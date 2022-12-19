@@ -20,11 +20,7 @@
 import { app } from '../../app'
 import { dialog, fs, path } from '@tauri-apps/api'
 import { e } from '@tauri-apps/api/fs-4bb77382'
-import { unified } from 'unified'
-import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
-import rehypeSanitize from 'rehype-sanitize'
-import rehypeStringify from 'rehype-stringify'
+import { MarkdownParser } from '../markdown_parser/markdown_parser'
 
 import '../../styles/file_directory.css'
 //import { read, readFile } from 'fs';
@@ -67,12 +63,15 @@ export class LocalFileDirectoryDiv {
     }
 }
 
+const mdParser = new MarkdownParser() as MarkdownParser;
+
 //Local File Directory class
 export class LocalFileDirectory {
+    //private mdParser = new MarkdownParser() as MarkdownParser;
     //string to hold data from file to pass into ProseMirror editor
-    public openFileString: string = "";
+    static openFileString: string = "";
 
-    //open folder dialog
+    //open folder dialog (need to work on this!)
     public async OpenLFFolder() {
         const folderArr = [] as e[][];
 
@@ -148,32 +147,20 @@ export class LocalFileDirectory {
 
         //testing to make sure data is passed and parsed (via console check)
         for(let folderIndex of fileArr) {
-            /*
-            //temporary (testing out JSON string for holding/parsing data from file)
-            const folderIndexStringify = JSON.stringify(folderIndex, null, 2);
-            
-            this.openFileString = JSON.parse(folderIndexStringify);
-            */
-
-            //parse open file using unified
-            const mdParse = await unified()
-                .use(remarkParse)
-                .use(remarkRehype)
-                .use(rehypeSanitize)
-                .use(rehypeStringify)
-                .process(folderIndex)
-            
-            this.openFileString = String(mdParse)
-
             //const tNode = document.createTextNode(this.openFileString);
 
-            console.log(this.openFileString);
-            //(document.querySelector('.ProseMirror') as HTMLDivElement).textContent = this.openFileString;
-            (document.querySelector('#content') as HTMLDivElement).innerHTML = this.openFileString;
+            //resolve promise for markdown parser
+            //and append parsed content from file to the DOM
+            Promise.resolve(MarkdownParser.mdParse(folderIndex).then(() => {
+                //this is okay for now, as the content div is not visible and only used
+                //for ProseMirror's document parsing
+                (document.querySelector('#content') as HTMLDivElement).innerHTML = LocalFileDirectory.openFileString;
+                //this should be dealt with in a transaction in the EditorState, and
+                //not directly manipulating the DOM tree - such as the ProseMirror class
+                (document.querySelector('.ProseMirror') as HTMLDivElement).innerHTML = LocalFileDirectory.openFileString;
+            }))
 
-            //this should be dealt with in a transaction in the EditorState, and
-            //not directly manipulating the DOM tree
-            (document.querySelector('.ProseMirror') as HTMLDivElement).innerHTML = this.openFileString;
+            //console.log(this.openFileString);
         }
 
         const fileDirectory = document.querySelector('#fileDirectory') as HTMLElement;
@@ -190,6 +177,6 @@ export class LocalFileDirectory {
         //do not use innerHTML - instead create elements/nodes dynamically
         //folder name should be parent div that is collapsible
         //once you open the collapsible parent div, it will reveal the file names (child divs)
-        fileDirectory.innerHTML = splitFileConcat1 as string + "<br><br>" + "\t" +  splitFilePop1 as string;
+        fileDirectory.innerHTML = splitFileConcat1 as string + "<br><br>" + "\t" + splitFilePop1 as string;
     }
 } 

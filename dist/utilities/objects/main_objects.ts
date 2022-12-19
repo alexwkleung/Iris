@@ -7,8 +7,8 @@
 
 import { ProseMirrorEditorDiv } from '../../editor/editor'
 import { ProseMirrorView } from '../../editor/editor'
-import { LocalFileDirectoryDiv } from '../../utilities/filedirectory/file_directory'
-import { IrisEventListeners } from '../eventlisteners/event_listeners'
+import { LocalFileDirectoryDiv } from '../file_directory/file_directory'
+import { IrisEventListeners } from '../event_listeners/event_listeners'
 
 //MainObjects class
 export class MainObjects {

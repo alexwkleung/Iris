@@ -16,7 +16,6 @@ import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { EditorObjects } from '../utilities/objects/editor_objects'
 import { app } from '../app'
-import { LocalFileDirectory } from '../utilities/filedirectory/file_directory'
 
 import '../styles/prosemirror.css'
 
@@ -36,25 +35,10 @@ export class ProseMirrorEditorDiv {
 
 //ProseMirrorState class
 class ProseMirrorState {
-    private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
-
     public editorState: EditorState;
     //public initialDoc: Node | undefined | any;
 
     public PMState(): EditorState {
-        console.log(this.LFDirectory.openFileString);
-
-        /*
-        Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
-            console.log(typeof this.LFDirectory.openFileString);
-            openFileStringTextNode = document.createTextNode(this.LFDirectory.openFileString);
-            console.log(openFileStringTextNode);
-            //(document.querySelector('#content') as HTMLDivElement).appendChild(openFileStringTextNode);
-        });
-        */
-
-        //console.log(this.initialDoc);
-
         this.editorState = EditorState.create({
             doc: DOMParser.fromSchema(
                 EditorObjects.OvrDefSchema.defaultSchema
