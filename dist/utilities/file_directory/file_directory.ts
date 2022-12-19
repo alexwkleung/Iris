@@ -22,6 +22,7 @@ import { dialog, fs, path } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
 import { MarkdownParser } from '../markdown_parser/markdown_parser'
+import { ProseMirrorView } from '../../editor/editor'
 
 import '../../styles/file_directory.css'
 
@@ -73,7 +74,10 @@ export class LocalFileDirectoryDiv {
 }
 
 //Local File Directory class
-export class LocalFileDirectory {
+export class LocalFileDirectory extends ProseMirrorView {
+    //private PMState = new ProseMirrorState() as ProseMirrorState;
+    //private PMView = new ProseMirrorView() as ProseMirrorView;
+
     //string to hold data from file to pass into ProseMirror editor
     static openFileString: string = "" as string;
 
@@ -95,6 +99,8 @@ export class LocalFileDirectory {
 
     public splitFileConcat1: string;
 
+    public splitFileConcat2: string;
+
     //open folder dialog (need to work on this!)
     public async OpenLFFolder() {
         //const folderArr = [] as e[][];
@@ -107,7 +113,7 @@ export class LocalFileDirectory {
         if(openFolder) {
             console.log(openFolder + " ---> " + typeof openFolder);
         } else if(openFolder === null) {
-            console.log("User canceled open dialog.")
+            console.log("User canceled open dialog: Promise Rejected.")
         } 
 
         const fileDirectory = document.querySelector('#fileDirectory') as HTMLDivElement;
@@ -145,41 +151,6 @@ export class LocalFileDirectory {
             dir: fs.BaseDirectory.Desktop || fs.BaseDirectory.Home
         })
 
-        //exception handle 
-        if(this.openFile) {
-            //log path to file
-            console.log(this.openFile);
-
-            //resolve promise from readTextFile to handle data
-            //and push that data into fileArr array
-            await Promise.resolve(readFileToArr).then((fileData) => {
-                LocalFileDirectory.localFileArr.push(fileData);
-            });
-
-            //set window title to path of currernt opened file
-            await appWindow.setTitle("Iris-dev-build - " + this.openFile)
-        } else if(this.openFile === null) {
-            console.error("User canceled open dialog. Promise rejected.");
-        }
-
-        //testing to make sure data is passed and parsed (via console check)
-        for(let folderIndex of LocalFileDirectory.localFileArr) {
-            //const tNode = document.createTextNode(this.openFileString);
-
-            //resolve promise for markdown parser
-            //and append parsed content from file to the DOM
-            Promise.resolve(MarkdownParser.mdParse(folderIndex).then(() => {
-                //this is okay for now, as the content div is not visible and only used
-                //for ProseMirror's document parsing
-                (document.querySelector('#content') as HTMLDivElement).innerHTML = LocalFileDirectory.openFileString;
-                //this should be dealt with in a transaction in the EditorState, and
-                //not directly manipulating the DOM tree - such as the ProseMirror class
-                (document.querySelector('.ProseMirror') as HTMLDivElement).innerHTML = LocalFileDirectory.openFileString;
-            }))
-
-            //console.log(this.openFileString);
-        }
-
         const fileDirectory = document.querySelector('#fileDirectory') as HTMLElement;
         
         //temporary directory folder title
@@ -195,9 +166,56 @@ export class LocalFileDirectory {
         //folder name should be parent div that is collapsible
         //once you open the collapsible parent div, it will reveal the file names (child divs)
         fileDirectory.innerHTML = this.splitFileConcat1 as string + "<br><br>" + "\t" + this.splitFilePop1 as string;
+
+        this.splitFileConcat2 = this.splitFilePop3 + "/" + this.splitFilePop2;
+
+        //exception handle 
+        if(this.openFile) {
+            //log path to file
+            console.log(this.openFile);
+        
+            //resolve promise from readTextFile to handle data
+            //and push that data into fileArr array
+            await Promise.resolve(readFileToArr).then((fileData) => {
+                LocalFileDirectory.localFileArr.push(fileData);
+            });
+        
+            //ensure data is passed and parsed
+            //this logic must be tweaked in order to handle multiple files
+            //
+            for(let folderIndex of LocalFileDirectory.localFileArr) {
+                //const tNode = document.createTextNode(this.openFileString);
+
+                //resolve promise for markdown parser
+                //and append parsed content from file to the DOM
+                Promise.resolve(MarkdownParser.mdParse(folderIndex).then(() => {
+                    //this is okay for now, as the content div is not visible and only used
+                    //for ProseMirror's document parsing
+                    (document.querySelector('#content') as HTMLDivElement).innerHTML = LocalFileDirectory.openFileString;
+                    
+                    console.log(LocalFileDirectory.openFileString);
+                    //(document.querySelector('.ProseMirror') as HTMLDivElement).innerHTML = LocalFileDirectory.openFileString;
+                }));
+                //console.log(this.openFileString);
+            }
+
+            //set window title to path of currernt opened file
+            await appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
+        } else if(this.openFile === null) {
+            console.error("Open Dialog (User Cancel): Promise Rejected!");
+        }
     }
 
-    public saveLF() {
-        
+    public async saveLF() {
+        console.log(this.openFile);
+
+        /*
+        await fs.writeTextFile({ 
+            path: this.openFile, 
+            contents: 
+        }, { 
+            dir: fs.BaseDirectory.Desktop | fs.BaseDirectory.Home
+        });
+        */
     }
 } 

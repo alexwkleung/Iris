@@ -33,10 +33,11 @@ export class ProseMirrorEditorDiv {
     }
 }
 
+//export let editorArr: any = [];
+
 //ProseMirrorState class
-class ProseMirrorState {
+export class ProseMirrorState {
     public editorState: EditorState;
-    //public initialDoc: Node | undefined | any;
 
     public PMState(): EditorState {
         this.editorState = EditorState.create({
@@ -55,7 +56,11 @@ class ProseMirrorState {
             ],
         });
 
-        //console.log(openFileStringTextNode);
+        //editorArr.push(this.editorState.doc.toJSON());
+
+        console.log(this.editorState.doc.toJSON());
+
+        //console.log(editorArr.pop());
 
         return this.editorState;
     }

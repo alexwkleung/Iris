@@ -24,8 +24,9 @@ function irisMain(): void {
     //
 
     //Iris Event Listeners
-    MainObjects.IrisEvt.OpenFolderListener();
+    MainObjects.IrisEvt.openFolderListener();
     MainObjects.IrisEvt.openFileListener();
+    MainObjects.IrisEvt.saveFileListener();
     //
 }   
 irisMain();

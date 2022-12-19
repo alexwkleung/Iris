@@ -13,8 +13,9 @@ export class IrisEventListeners {
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 
     //open folder listener
-    public OpenFolderListener() {
+    public openFolderListener() {
         const browseFolder = document.querySelector('#browseFolder') as HTMLButtonElement;
+
         browseFolder.addEventListener('click', (): void => {
             this.LFDirectory.OpenLFFolder();
         });
@@ -25,9 +26,22 @@ export class IrisEventListeners {
         const openFile = document.querySelector('#openFile') as HTMLButtonElement;
         
         openFile.addEventListener('click', async () => {
-            MainObjects.PMEditorView.PMView();
             await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
-                console.log("RESOLVED.");
+                //MainObjects.PMEditorView.PMView();
+                console.log("Open Local File: Promise Resolved.");
+            });
+
+            MainObjects.PMEditorView.PMView();
+        });
+    }   
+
+    //save file listener
+    public saveFileListener() {
+        const saveFile = document.querySelector('#saveFile') as HTMLButtonElement;
+
+        saveFile.addEventListener('click' , async () => {
+            await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
+                console.log("Save Local File: Promise Resolved.");
             });
         });
     }
