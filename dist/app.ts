@@ -7,6 +7,8 @@
 *
 */
 
+import { appWindow } from '@tauri-apps/api/window'
+
 import './styles/override.css'
 import './styles/mainwindow.css'
 
@@ -28,10 +30,13 @@ class App {
 }
 
 //appMain function
-function appMain(): void {
+async function appMain() {
     const app = new App() as App;
 
     app.appDivFn();
+
+    //set default app title on startup 
+    await appWindow.setTitle("Iris-dev-build");
 }
 appMain();
 

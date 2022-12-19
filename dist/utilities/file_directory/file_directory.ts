@@ -19,16 +19,16 @@
 
 import { app } from '../../app'
 import { dialog, fs, path } from '@tauri-apps/api'
+import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
 import { MarkdownParser } from '../markdown_parser/markdown_parser'
 
 import '../../styles/file_directory.css'
-//import { read, readFile } from 'fs';
 
 //Local File Directory Div class
 export class LocalFileDirectoryDiv {
     public LFDirectoryDiv() {
-        //parent div
+        //file directory div (parent)
         const fileDirectoryDivParent = document.createElement('div') as HTMLDivElement;
         fileDirectoryDivParent.setAttribute("id", "fileDirectoryParent");
         
@@ -52,6 +52,15 @@ export class LocalFileDirectoryDiv {
         openFileBtn.appendChild(OFTextNode1);
         fileDirectoryDivParent.appendChild(openFileBtn);
 
+        //save file button (temporary)
+        const saveFileBtn = document.createElement('button') as HTMLButtonElement;
+        saveFileBtn.setAttribute("id", "saveFile");
+
+        const SFTextNode1 = document.createTextNode("Save File");
+        saveFileBtn.appendChild(SFTextNode1);
+        fileDirectoryDivParent.appendChild(saveFileBtn);
+
+        //file directory div (child)
         const fileDirectoryDiv = document.createElement('div');
         fileDirectoryDiv.setAttribute("id", "fileDirectory");
         
@@ -63,17 +72,32 @@ export class LocalFileDirectoryDiv {
     }
 }
 
-const mdParser = new MarkdownParser() as MarkdownParser;
-
 //Local File Directory class
 export class LocalFileDirectory {
-    //private mdParser = new MarkdownParser() as MarkdownParser;
     //string to hold data from file to pass into ProseMirror editor
-    static openFileString: string = "";
+    static openFileString: string = "" as string;
+
+    //local folder array
+    static localFolderArr: e[][] = [] as e[][];
+
+    //local file array
+    static localFileArr: string[] = [] as string[];
+
+    public openFile: string;
+
+    public splitFileDirectory: string[];
+
+    public splitFilePop1: string | null;
+
+    public splitFilePop2: string | null;
+
+    public splitFilePop3: string | null;
+
+    public splitFileConcat1: string;
 
     //open folder dialog (need to work on this!)
     public async OpenLFFolder() {
-        const folderArr = [] as e[][];
+        //const folderArr = [] as e[][];
 
         const openFolder = await dialog.open({
             directory: true,
@@ -100,26 +124,16 @@ export class LocalFileDirectory {
             openFolder, {
             recursive: true
         })
-        /*
-        .then(
-            (folderData) => {
-                folderArr.push(folderData) && console.log(folderArr)
-            }
-        );
-        */
 
         await Promise.resolve(readDirToArr).then((folderData) => {
-            folderArr.push(folderData) //&& console.log(folderArr)
+            LocalFileDirectory.localFolderArr.push(folderData)
         })
     }
 
     //open file dialog
     public async OpenLF() {
-        //file array
-        const fileArr: string[] = [] as string[];
-
         //open file dialog
-        const openFile: string = await dialog.open({
+        this.openFile = await dialog.open({
             filters: [{
                 name: "Iris Accepted File Types",
                 extensions: ["md"],
@@ -127,26 +141,29 @@ export class LocalFileDirectory {
             recursive: true,
         }) as string;
 
-        const readFileToArr = fs.readTextFile(openFile, {
+        const readFileToArr = fs.readTextFile(this.openFile, {
             dir: fs.BaseDirectory.Desktop || fs.BaseDirectory.Home
         })
 
         //exception handle 
-        if(openFile) {
+        if(this.openFile) {
             //log path to file
-            console.log(openFile);
+            console.log(this.openFile);
 
             //resolve promise from readTextFile to handle data
             //and push that data into fileArr array
             await Promise.resolve(readFileToArr).then((fileData) => {
-                fileArr.push(fileData);
+                LocalFileDirectory.localFileArr.push(fileData);
             });
-        } else if(openFile === null) {
-            console.error("User canceled open dialog. Promise rejected.")
+
+            //set window title to path of currernt opened file
+            await appWindow.setTitle("Iris-dev-build - " + this.openFile)
+        } else if(this.openFile === null) {
+            console.error("User canceled open dialog. Promise rejected.");
         }
 
         //testing to make sure data is passed and parsed (via console check)
-        for(let folderIndex of fileArr) {
+        for(let folderIndex of LocalFileDirectory.localFileArr) {
             //const tNode = document.createTextNode(this.openFileString);
 
             //resolve promise for markdown parser
@@ -166,17 +183,21 @@ export class LocalFileDirectory {
         const fileDirectory = document.querySelector('#fileDirectory') as HTMLElement;
         
         //temporary directory folder title
-        const splitFileDirectory = openFile.split('/');
-        const splitFilePop1 = splitFileDirectory.pop() as string | null;
-        const splitFilePop2 = splitFileDirectory.pop() as string | null;
-        const splitFilePop3 = splitFileDirectory.pop() as string | null;
-        const splitFileConcat1 = splitFilePop3 + "/" + splitFilePop2 as string;
-        fileDirectory.textContent = splitFilePop2 as string | null;
+        this.splitFileDirectory = this.openFile.split('/');
+        this.splitFilePop1 = this.splitFileDirectory.pop() as string | null;
+        this.splitFilePop2 = this.splitFileDirectory.pop() as string | null;
+        this.splitFilePop3 = this.splitFileDirectory.pop() as string | null;
+        this.splitFileConcat1 = this.splitFilePop3 + "/" + this.splitFilePop2 as string;
+        fileDirectory.textContent = this.splitFilePop2 as string | null;
 
         //temporary file list example
         //do not use innerHTML - instead create elements/nodes dynamically
         //folder name should be parent div that is collapsible
         //once you open the collapsible parent div, it will reveal the file names (child divs)
-        fileDirectory.innerHTML = splitFileConcat1 as string + "<br><br>" + "\t" + splitFilePop1 as string;
+        fileDirectory.innerHTML = this.splitFileConcat1 as string + "<br><br>" + "\t" + this.splitFilePop1 as string;
+    }
+
+    public saveLF() {
+        
     }
 } 
