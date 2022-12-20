@@ -46,13 +46,6 @@
     "prosemirror-schema-list": "^1.2.2",
     "prosemirror-state": "^1.4.2",
     "prosemirror-transform": "^1.7.0",
-    "prosemirror-view": "^1.29.1",
-    "rehype-parse": "^8.0.4",
-    "rehype-remark": "^9.1.2",
-    "rehype-sanitize": "^5.0.1",
-    "rehype-stringify": "^9.0.3",
-    "remark-parse": "^10.0.1",
-    "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2"
+    "prosemirror-view": "^1.29.1"
   }
 }

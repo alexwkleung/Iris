@@ -23,15 +23,9 @@ import { app } from '../../app'
 import { dialog, fs, path } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
-import { MarkdownParser } from '../markdown_parser/markdown_parser'
+//import { MarkdownParser } from '../markdown_parser/markdown_parser'
 import { ProseMirrorView } from '../../editor/editorview/editor_view'
-
-import {fromHtml} from 'hast-util-from-html'
-import {toMdast} from 'hast-util-to-mdast'
-import {toMarkdown} from 'mdast-util-to-markdown'
-import { toHast } from 'mdast-util-to-hast'
-import { toHtml } from 'hast-util-to-html'
-import { fromMarkdown } from 'mdast-util-from-markdown'
+import { SyntaxTrees } from '../syntax_trees/syntax_trees'
 
 import '../../styles/file_directory.css'
 
@@ -201,18 +195,8 @@ export class LocalFileDirectory extends ProseMirrorView {
                 const selectContent = document.querySelector('#content') as HTMLDivElement;
                 const selectPM = document.querySelector('.ProseMirror') as HTMLDivElement;
 
-                //use hast utils to convert mdast to hast and hast (html)
-                //to markdown for saving.
-                //
-                //although this somewhat works, you need to make sure 
-                //that the prosemirror side of things are working 
-                //the way the library handles certain operations
-                //
-                const mdast = fromMarkdown(folderIndex);
-                const hast: any = toHast(mdast);
-                const html = toHtml(hast);
-
-                LocalFileDirectory.openFileString = html;
+                //convert markdown to html
+               LocalFileDirectory.openFileString = SyntaxTrees.toHTML_ST(folderIndex);
 
                 console.log(LocalFileDirectory.openFileString);
 
@@ -226,20 +210,13 @@ export class LocalFileDirectory extends ProseMirrorView {
         }
     }
 
+    //save file dialog
     public async saveLF() {
         console.log(this.openFile);
 
-        //use hast utils to convert html to mdast and mdast to markdown for saving
-        //
-        //although this somewhat works, you need to make sure 
-        //that the prosemirror side of things are working 
-        //the way the library handles certain operations
-        //
-        const hast = fromHtml(String((document.querySelector('#content') as HTMLDivElement).innerHTML), { fragment: true })
-        const mdast = toMdast(hast);
-        const md = toMarkdown(mdast);
-
-        LocalFileDirectory.saveFileString = md;
+        const selectContent = document.querySelector('#content') as HTMLDivElement;
+        //convert html to markdown
+        LocalFileDirectory.saveFileString = SyntaxTrees.toMarkdown_ST(selectContent.innerHTML);
 
         console.log(LocalFileDirectory.saveFileString);
 
