@@ -9,13 +9,15 @@
 */
 
 import { EditorState } from 'prosemirror-state'
-import { DOMParser } from 'prosemirror-model'
+//import { DOMParser } from 'prosemirror-model'
 import { keymap } from 'prosemirror-keymap'
 import { baseKeymap } from 'prosemirror-commands'
 //import { buildKeymap } from '../editor/keymap/keymap'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { OverrideDefaultSchema } from '../schema/schema'
+import { DOMParserState } from '../../utilities/dom_parser_state/dom_parser_state'
+//import { ProseMirrorEditorDiv } from '../editor'
 
 //ProseMirrorState class
 export class ProseMirrorState extends OverrideDefaultSchema {
@@ -25,7 +27,7 @@ export class ProseMirrorState extends OverrideDefaultSchema {
         const selectContent = document.querySelector('#content') as HTMLDivElement;
 
         ProseMirrorState.editorState = EditorState.create({
-            doc: DOMParser.fromSchema(this.defaultSchema).parse(selectContent),
+            doc: DOMParserState.parser(this.defaultSchema, selectContent), //DOMParser.fromSchema(this.defaultSchema).parse(ProseMirrorEditorDiv.contentDiv),
             plugins: [
                 this.buildInputRules(this.defaultSchema),
                 keymap(baseKeymap),
@@ -34,12 +36,6 @@ export class ProseMirrorState extends OverrideDefaultSchema {
                 gapCursor()
             ],
         });
-
-        //editorArr.push(this.editorState.doc.toJSON());
-
-        //console.log(this.editorState.doc.toJSON());
-
-        //console.log(editorArr.pop());
 
         return ProseMirrorState.editorState;
     }

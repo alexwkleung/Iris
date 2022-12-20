@@ -9,7 +9,8 @@
 import { LocalFileDirectory } from '../file_directory/file_directory'
 import { MainObjects } from '../objects/main_objects'
 
-export class IrisEventListeners {
+//Iris Event Listeners class
+export class IrisEventListeners extends LocalFileDirectory {
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 
     //open folder listener
@@ -27,6 +28,7 @@ export class IrisEventListeners {
         
         openFile.addEventListener('click', async () => {
             MainObjects.PMEditorView.PMView();
+            
             console.log("Created Editor View");
 
             await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {

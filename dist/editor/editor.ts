@@ -5,7 +5,7 @@
 *
 */
 
-import { app } from '../app'
+import { App } from '../app'
 
 import '../styles/prosemirror.css'
 
@@ -23,6 +23,7 @@ export class ProseMirrorEditorDiv {
         contentDiv.setAttribute("id", "content");
         contentDiv.style.display = "none";
 
-        return (app.appendChild(ProseMirrorEditorDiv.editorDiv) as HTMLDivElement) && ProseMirrorEditorDiv.editorDiv.appendChild(contentDiv);
+        return (App.appDiv.appendChild(ProseMirrorEditorDiv.editorDiv) as HTMLDivElement) 
+        && ProseMirrorEditorDiv.editorDiv.appendChild(contentDiv);
     }
 }

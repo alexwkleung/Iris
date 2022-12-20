@@ -19,13 +19,17 @@
 *
 */
 
-import { app } from '../../app'
+import { App } from '../../app'
 import { dialog, fs, path } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
-//import { MarkdownParser } from '../markdown_parser/markdown_parser'
+import { ProseMirrorState } from '../../editor/editorstate/editor_state'
 import { ProseMirrorView } from '../../editor/editorview/editor_view'
-import { SyntaxTrees } from '../syntax_trees/syntax_trees'
+//import { SyntaxTrees } from '../syntax_trees/syntax_trees'
+import { EvaSTUtil } from 'eva-st-util'
+import { ProseMirrorEditorDiv } from '../../editor/editor'
+import { DOMParserState } from '../dom_parser_state/dom_parser_state'
+import { OverrideDefaultSchema } from '../../editor/schema/schema'
 
 import '../../styles/file_directory.css'
 
@@ -43,7 +47,7 @@ export class LocalFileDirectoryDiv {
         LocalFileDirectoryDiv.fileDirectoryDivParent = document.createElement('div') as HTMLDivElement;
         LocalFileDirectoryDiv.fileDirectoryDivParent.setAttribute("id", "fileDirectoryParent");
         
-        app.appendChild(LocalFileDirectoryDiv.fileDirectoryDivParent) as HTMLDivElement;
+        App.appDiv.appendChild(LocalFileDirectoryDiv.fileDirectoryDivParent) as HTMLDivElement;
 
         //browse folder button (temporary)
         LocalFileDirectoryDiv.browseFolderBtn = document.createElement('button') as HTMLButtonElement;
@@ -75,7 +79,7 @@ export class LocalFileDirectoryDiv {
         LocalFileDirectoryDiv.fileDirectoryDiv = document.createElement('div') as HTMLDivElement;
         LocalFileDirectoryDiv.fileDirectoryDiv.setAttribute("id", "fileDirectory");
         
-        app.appendChild(LocalFileDirectoryDiv.fileDirectoryDiv) as HTMLDivElement;
+        App.appDiv.appendChild(LocalFileDirectoryDiv.fileDirectoryDiv) as HTMLDivElement;
         
         const fileDirectoryParent = document.querySelector('#fileDirectoryParent') as HTMLDivElement;
 
@@ -84,7 +88,9 @@ export class LocalFileDirectoryDiv {
 }
 
 //Local File Directory class
-export class LocalFileDirectory extends ProseMirrorView {
+export class LocalFileDirectory extends ProseMirrorState {
+    private oSchema = new OverrideDefaultSchema() as OverrideDefaultSchema;
+
     //string to hold data from file
     static openFileString: string = "" as string;
 
@@ -108,8 +114,6 @@ export class LocalFileDirectory extends ProseMirrorView {
 
     //open folder dialog (need to work on this!!)
     public async OpenLFFolder() {
-        //const folderArr = [] as e[][];
-
         const openFolder = await dialog.open({
             directory: true,
             defaultPath: await path.homeDir()
@@ -180,7 +184,10 @@ export class LocalFileDirectory extends ProseMirrorView {
         if(this.openFile) {
             //log path to file
             console.log(this.openFile);
-        
+
+            //FIX: need to properly do this on the prosemirror side:
+            //set and define editor state instead of using innerHTML hacks
+
             //resolve promise from readTextFile to handle data
             //and push that data into fileArr array
             await Promise.resolve(readFileToArr).then((fileData) => {
@@ -196,13 +203,17 @@ export class LocalFileDirectory extends ProseMirrorView {
                 const selectPM = document.querySelector('.ProseMirror') as HTMLDivElement;
 
                 //convert markdown to html
-               LocalFileDirectory.openFileString = SyntaxTrees.toHTML_ST(folderIndex);
+                LocalFileDirectory.openFileString = EvaSTUtil.MDtoHTML_ST(folderIndex) //SyntaxTrees.MDtoHTML_ST(folderIndex);
 
                 console.log(LocalFileDirectory.openFileString);
 
                 selectContent.innerHTML = LocalFileDirectory.openFileString;
+
+                //FIX: need to properly do this on the prosemirror side
+                //and need to fix bug where the prosemirror div is repeatedly appending to the DOM
                 selectPM.innerHTML = selectContent.innerHTML;
             }
+
             //set window title to path of currernt opened file
             await appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
         } else if(this.openFile === null) {
@@ -216,7 +227,7 @@ export class LocalFileDirectory extends ProseMirrorView {
 
         const selectContent = document.querySelector('#content') as HTMLDivElement;
         //convert html to markdown
-        LocalFileDirectory.saveFileString = SyntaxTrees.toMarkdown_ST(selectContent.innerHTML);
+        LocalFileDirectory.saveFileString = EvaSTUtil.HTMLtoMarkdown_ST(selectContent.innerHTML) //SyntaxTrees.HTMLtoMarkdown_ST(selectContent.innerHTML);
 
         console.log(LocalFileDirectory.saveFileString);
 

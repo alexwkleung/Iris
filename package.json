@@ -29,6 +29,7 @@
     "vite": "^4.0.1"
   },
   "dependencies": {
+    "eva-st-util": "github:alexwkleung/Eva-ST-Util",
     "hast-util-from-html": "^1.0.0",
     "hast-util-to-html": "^8.0.3",
     "hast-util-to-mdast": "^8.4.1",
