@@ -76,7 +76,43 @@ img {
 h1, h2, h3, h4, h5, h6 {
     color: white;
     /* text-decoration: underline; */
-    border-bottom: 1px solid;
+    /* border-bottom: 1px solid; */
+}
+
+h1::before { 
+    content: '# ';
+    display: inline;
+    color: rgb(70, 69, 69);
+}
+
+h2::before { 
+    content: '## ';
+    display: inline;
+    color: rgb(70, 69, 69);
+}
+
+h3::before { 
+    content: '### ';
+    display: inline;
+    color: rgb(70, 69, 69);
+}
+
+h4::before { 
+    content: '#### ';
+    display: inline;
+    color: rgb(70, 69, 69);
+}
+
+h5::before { 
+    content: '##### ';
+    display: inline;
+    color: rgb(70, 69, 69);
+}
+
+h6::before { 
+    content: '###### ';
+    display: inline;
+    color: rgb(70, 69, 69);
 }
 
 ul {

@@ -26,12 +26,26 @@ export class IrisEventListeners {
         const openFile = document.querySelector('#openFile') as HTMLButtonElement;
         
         openFile.addEventListener('click', async () => {
+            MainObjects.PMEditorView.PMView();
+            console.log("Created Editor View");
+
             await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
+                const selectContent = document.querySelector('#content') as HTMLDivElement;
+                const selectPM = document.querySelector('.ProseMirror') as HTMLDivElement;
+                
                 //MainObjects.PMEditorView.PMView();
+                console.log("Activated content listener on opened file");
+
+                //extract nodes from prosemirror div to content div
+                //to sync the dom trees.
+                //content div will be used as the template for the current written document
+                //so that the prosemirror div does not get touched
+                //
+                selectPM.addEventListener('keyup', () => {
+                    selectContent.innerHTML = selectPM.innerHTML; 
+                });
                 console.log("Open Local File: Promise Resolved.");
             });
-
-            MainObjects.PMEditorView.PMView();
         });
     }   
 

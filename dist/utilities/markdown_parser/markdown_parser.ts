@@ -13,6 +13,8 @@ import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import rehypeSanitize from 'rehype-sanitize'
 import rehypeStringify from 'rehype-stringify'
+import rehypeRemark from 'rehype-remark'
+import rehypeParse from 'rehype-parse'
 import { LocalFileDirectory } from '../file_directory/file_directory'
 
 //parse open file using unified
@@ -31,4 +33,19 @@ export class MarkdownParser {
 
         LocalFileDirectory.openFileString = String(mdParse);
     }
+
+    /*
+    static async mdParseSave(data: any) {
+        const mdParseOpen = await unified()
+            .use(rehypeParse)
+            .use(rehypeRemark)
+            .use(rehypeStringify)
+            .process(data)
+
+        LocalFileDirectory.saveFileString = String(mdParseOpen);
+
+        console.log(LocalFileDirectory.saveFileString);
+
+    }
+    */
 }   
