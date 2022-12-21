@@ -11,6 +11,8 @@ import { appWindow } from '@tauri-apps/api/window'
 
 import './styles/override.css'
 import './styles/mainwindow.css'
+import './styles/material.css'
+import './styles/katex.min.css'
 
 //App class
 export class App {

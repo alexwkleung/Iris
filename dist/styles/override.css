@@ -39,7 +39,7 @@
 }
 
 /*
-* html tag/element overrides (used to globally style inside the editor)
+* html tag/element overrides (used to globally style the editor)
 *
 * taken/referenced from https://github.com/alexwkleung/Markdown-CSS/blob/main/css/dark.css
 *
@@ -67,20 +67,28 @@
 
 /* list */
 #editor .milkdown .editor .list-item_label {
-    font-size: 30px;
+    font-size: 20px;
     color: white;
+    margin-left: 20px;
+    margin-top: 0px;
 }
 
 /* hashes */
 #editor .milkdown-1wzys5m {
-    color: white;
+    color: rgb(74, 73, 73);
     margin-right: 10px;
 }
 
+/* heading */
 .milkdown .editor h1, h2, h3, h4, h5, h6 {
     color: white;
+    border-bottom: 1px solid;
     /* text-decoration: underline; */
     /* border-bottom: 1px solid; */
+}
+
+.milkdown .editor hr {
+    background-color: white;
 }
 
 a {

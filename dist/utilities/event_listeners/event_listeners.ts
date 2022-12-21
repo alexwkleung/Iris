@@ -30,8 +30,6 @@ export class IrisEventListeners extends LocalFileDirectory {
 
             console.log("PROSEMIRROR EDITOR DIV IS CONNECTED!");
 
-            //MainObjects.PMEditorDiv.PMEditorDiv();
-
             await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
                 console.log("Activated content listener on opened file");
 

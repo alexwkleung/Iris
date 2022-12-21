@@ -24,7 +24,7 @@ import { dialog, fs, path } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
 import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
-import { insert, getHTML, getMarkdown } from '@milkdown/utils'
+import { insert, getHTML, getMarkdown, replaceAll } from '@milkdown/utils'
 
 import '../../styles/file_directory.css'
 
@@ -183,6 +183,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
         Promise.resolve(this.openFile).then(() => {
             Promise.resolve(readFileToArr).then((fileData) => {
                 LocalFileDirectory.localFileArr.push(fileData);
+                
                 console.log(LocalFileDirectory.localFileArr);
             });
         });
@@ -193,10 +194,10 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             //when a new file is opened: 
             //
             //destroy previous editor state
-            ProseMirrorEditor.editor.destroy();
+            //ProseMirrorEditor.editor.destroy();
             //
             //then create a new editor state
-            this.PMState();
+            //this.PMState();
 
             //log path to file
             console.log(this.openFile);
@@ -221,8 +222,9 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             console.log("OUTSIDE LOOP:")
             console.log(LocalFileDirectory.openFileString);
 
-            //insert raw markdown string into editor state
-            ProseMirrorEditor.editor.action(insert(LocalFileDirectory.openFileString));
+            //insert raw markdown string into editor state by replacing all its contents
+            //with the opened file string
+            ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString));
 
             //set window title to path of currernt opened file
             appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
