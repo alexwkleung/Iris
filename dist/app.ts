@@ -14,16 +14,16 @@ import './styles/mainwindow.css'
 
 //App class
 export class App {
-    static appDiv: HTMLDivElement;
+    static appNode: HTMLDivElement;
 
     static appDivFn() {
-        App.appDiv = document.createElement('div') as HTMLDivElement;
-        App.appDiv.setAttribute("id", "app");
+        App.appNode = document.createElement('div') as HTMLDivElement;
+        App.appNode.setAttribute("id", "app");
 
-        document.body.prepend(App.appDiv) as void;
+        document.body.prepend(App.appNode) as void;
 
-        //check if app div node is connected
-        if(App.appDiv.isConnected) {
+        //check if app node is connected
+        if(App.appNode.isConnected) {
             console.log("App is connected to the DOM!");
         } else {
             console.error("App is not connected to the DOM!");
@@ -41,5 +41,3 @@ async function appMain() {
     await appWindow.setTitle("Iris-dev-build");
 }
 appMain();
-
-//export const app = document.querySelector('#app') as HTMLElement;

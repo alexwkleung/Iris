@@ -5,23 +5,23 @@
 *
 */
 
-import { ProseMirrorEditorDiv } from '../../editor/editor'
-import { ProseMirrorView } from '../../editor/editorview/editor_view'
+import { ProseMirrorEditorNode } from '../../editor/editor'
 import { LocalFileDirectoryDiv } from '../file_directory/file_directory'
 import { IrisEventListeners } from '../event_listeners/event_listeners'
+import { ProseMirrorEditor } from '../../editor/editor_state/editor_state';
 
 //MainObjects class
 export class MainObjects {
-    //ProseMirror Editor Div object
-    static PMEditorDiv = new ProseMirrorEditorDiv() as ProseMirrorEditorDiv;
+    //ProseMirror Editor Node object
+    static PMEditorNode = new ProseMirrorEditorNode() as ProseMirrorEditorNode;
     //
 
-    //ProseMirror Editor View object
-    static PMEditorView = new ProseMirrorView() as ProseMirrorView;
+    //ProseMirror Editor object
+    static PMEditor = new ProseMirrorEditor() as ProseMirrorEditor;
     //
 
     //Local File Directory object
-    static LFDirectoryDiv = new LocalFileDirectoryDiv() as LocalFileDirectoryDiv;
+    static LFDirectoryNode = new LocalFileDirectoryDiv() as LocalFileDirectoryDiv;
     //
 
     //Iris Event Listeners object

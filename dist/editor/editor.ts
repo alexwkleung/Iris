@@ -10,20 +10,16 @@ import { App } from '../app'
 import '../styles/prosemirror.css'
 
 //ProseMirror Editor Div class
-export class ProseMirrorEditorDiv {
+export class ProseMirrorEditorNode {
     //passable created DOM node variables to reference later
-    static editorDiv: HTMLDivElement;
-    static contentDiv: HTMLDivElement;
+    static editorNode: HTMLDivElement;
 
-    public PMEditorDiv(): HTMLDivElement {
-        ProseMirrorEditorDiv.editorDiv = document.createElement('div') as HTMLDivElement;
-        ProseMirrorEditorDiv.editorDiv.setAttribute("id", "editor");
+    public PMEditorNode(): HTMLDivElement {
+        ProseMirrorEditorNode.editorNode = document.createElement('div') as HTMLDivElement;
+        ProseMirrorEditorNode.editorNode.setAttribute("id", "editor");
 
-        const contentDiv = document.createElement('div') as HTMLDivElement;
-        contentDiv.setAttribute("id", "content");
-        contentDiv.style.display = "none";
+        console.log("CREATED EDITOR DIV");
 
-        return (App.appDiv.appendChild(ProseMirrorEditorDiv.editorDiv) as HTMLDivElement) 
-        && ProseMirrorEditorDiv.editorDiv.appendChild(contentDiv);
+        return (App.appNode.appendChild(ProseMirrorEditorNode.editorNode) as HTMLDivElement) 
     }
 }

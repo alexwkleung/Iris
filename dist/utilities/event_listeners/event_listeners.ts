@@ -7,7 +7,6 @@
 */
 
 import { LocalFileDirectory } from '../file_directory/file_directory'
-import { MainObjects } from '../objects/main_objects'
 
 //Iris Event Listeners class
 export class IrisEventListeners extends LocalFileDirectory {
@@ -27,25 +26,15 @@ export class IrisEventListeners extends LocalFileDirectory {
         const openFile = document.querySelector('#openFile') as HTMLButtonElement;
         
         openFile.addEventListener('click', async () => {
-            MainObjects.PMEditorView.PMView();
-            
-            console.log("Created Editor View");
+            console.log("Clicked open file button");
+
+            console.log("PROSEMIRROR EDITOR DIV IS CONNECTED!");
+
+            //MainObjects.PMEditorDiv.PMEditorDiv();
 
             await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
-                const selectContent = document.querySelector('#content') as HTMLDivElement;
-                const selectPM = document.querySelector('.ProseMirror') as HTMLDivElement;
-                
-                //MainObjects.PMEditorView.PMView();
                 console.log("Activated content listener on opened file");
 
-                //extract nodes from prosemirror div to content div
-                //to sync the dom trees.
-                //content div will be used as the template for the current written document
-                //so that the prosemirror div does not get touched
-                //
-                selectPM.addEventListener('keyup', () => {
-                    selectContent.innerHTML = selectPM.innerHTML; 
-                });
                 console.log("Open Local File: Promise Resolved.");
             });
         });

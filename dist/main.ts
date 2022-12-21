@@ -11,17 +11,16 @@ import { MainObjects } from './utilities/objects/main_objects'
 
 //irisMainFn function
 function irisMain(): void {
-    //Local File Directory Div
-    MainObjects.LFDirectoryDiv.LFDirectoryDiv();
+    //Local File Directory Node
+    MainObjects.LFDirectoryNode.LFDirectoryDiv();
     //
 
-    //ProseMirror Editor Div 
-    MainObjects.PMEditorDiv.PMEditorDiv();
+    //ProseMirror Editor Node
+    MainObjects.PMEditorNode.PMEditorNode();
     //
 
-    //ProseMirror EditorView
-    //MainObjects.PMEditorView.PMView();
-    //
+    //ProseMirror Editor State 
+    MainObjects.PMEditor.PMState();
 
     //Iris Event Listeners
     MainObjects.IrisEvt.openFolderListener();

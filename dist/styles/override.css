@@ -27,12 +27,25 @@
 }
 
 /*
+.milkdown {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+*/
+
+#editor .milkdown .editor {
+    padding: 0px 0px;
+}
+
+/*
 * html tag/element overrides (used to globally style inside the editor)
 *
 * taken/referenced from https://github.com/alexwkleung/Markdown-CSS/blob/main/css/dark.css
 *
 */
 
+/* editor node */
 #editor {
     color: white;
     width: 65%;
@@ -40,9 +53,34 @@
     background-color: #212121;
 }
 
-p {
+/* milkdown editor */
+#editor .milkdown {
+    background: #212121;
+    box-shadow: none;
+}
+
+/* paragraph */
+#editor .milkdown p {
     color: white;
-    font-size: 22px;
+    font-size: 20px;
+}
+
+/* list */
+#editor .milkdown .editor .list-item_label {
+    font-size: 30px;
+    color: white;
+}
+
+/* hashes */
+#editor .milkdown-1wzys5m {
+    color: white;
+    margin-right: 10px;
+}
+
+.milkdown .editor h1, h2, h3, h4, h5, h6 {
+    color: white;
+    /* text-decoration: underline; */
+    /* border-bottom: 1px solid; */
 }
 
 a {
@@ -73,12 +111,7 @@ img {
 	object-fit: contain;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    color: white;
-    /* text-decoration: underline; */
-    /* border-bottom: 1px solid; */
-}
-
+/*
 h1::before { 
     content: '# ';
     display: inline;
@@ -114,6 +147,7 @@ h6::before {
     display: inline;
     color: rgb(70, 69, 69);
 }
+*/
 
 ul {
     font-size: 22px;
