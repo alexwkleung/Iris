@@ -6,8 +6,8 @@
 */
 
 import { ProseMirrorEditorNode } from '../../editor/editor'
-import { LocalFileDirectoryDiv } from '../file_directory/file_directory'
-import { IrisEventListeners } from '../event_listeners/event_listeners'
+import { LocalFileDirectoryNode } from '../file_directory/file_directory'
+import { LocalEventListeners } from '../event_listeners/event_listeners'
 import { ProseMirrorEditor } from '../../editor/editor_state/editor_state';
 
 //MainObjects class
@@ -21,10 +21,10 @@ export class MainObjects {
     //
 
     //Local File Directory object
-    static LFDirectoryNode = new LocalFileDirectoryDiv() as LocalFileDirectoryDiv;
+    static LFDirectoryNode = new LocalFileDirectoryNode() as LocalFileDirectoryNode;
     //
 
-    //Iris Event Listeners object
-    static IrisEvt = new IrisEventListeners() as IrisEventListeners;
+    //Local Event Listeners object
+    static LocalEvt = new LocalEventListeners() as LocalEventListeners;
     //
 }

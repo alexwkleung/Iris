@@ -5,7 +5,7 @@
 * main window in the front-end 
 *
 * TypeScript and/or Rust (Tauri/Native API) will be used for
-* processing folders/files in the OS to be used within Iris
+* processing folders/files in the OS
 *
 * for now, the file operations will be done on the TypeScript side and will move 
 * to the Rust side later once the core structure is down
@@ -26,10 +26,11 @@ import { e } from '@tauri-apps/api/fs-4bb77382'
 import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
 import { insert, getHTML, getMarkdown, replaceAll } from '@milkdown/utils'
 
+//stylesheets
 import '../../styles/file_directory.css'
 
 //Local File Directory Div class
-export class LocalFileDirectoryDiv {
+export class LocalFileDirectoryNode {
     //passable created DOM node variables to reference later
     static fileDirectoryDivParent: HTMLDivElement;
     static browseFolderBtn: HTMLButtonElement;
@@ -39,62 +40,62 @@ export class LocalFileDirectoryDiv {
 
     public LFDirectoryDiv() {
         //file directory div (parent)
-        LocalFileDirectoryDiv.fileDirectoryDivParent = document.createElement('div') as HTMLDivElement;
-        LocalFileDirectoryDiv.fileDirectoryDivParent.setAttribute("id", "fileDirectoryParent");
+        LocalFileDirectoryNode.fileDirectoryDivParent = document.createElement('div') as HTMLDivElement;
+        LocalFileDirectoryNode.fileDirectoryDivParent.setAttribute("id", "fileDirectoryParent");
         
-        App.appNode.appendChild(LocalFileDirectoryDiv.fileDirectoryDivParent) as HTMLDivElement;
+        App.appNode.appendChild(LocalFileDirectoryNode.fileDirectoryDivParent) as HTMLDivElement;
 
         //browse folder button (temporary)
-        LocalFileDirectoryDiv.browseFolderBtn = document.createElement('button') as HTMLButtonElement;
-        LocalFileDirectoryDiv.browseFolderBtn.setAttribute("id", "browseFolder");
+        LocalFileDirectoryNode.browseFolderBtn = document.createElement('button') as HTMLButtonElement;
+        LocalFileDirectoryNode.browseFolderBtn.setAttribute("id", "browseFolder");
      
         //browse folder button text node (temporary)
         const FFTextNode1 = document.createTextNode("Browse Folder");
      
-        LocalFileDirectoryDiv.browseFolderBtn.appendChild(FFTextNode1);
-        LocalFileDirectoryDiv.fileDirectoryDivParent.appendChild(LocalFileDirectoryDiv.browseFolderBtn);
+        LocalFileDirectoryNode.browseFolderBtn.appendChild(FFTextNode1);
+        LocalFileDirectoryNode.fileDirectoryDivParent.appendChild(LocalFileDirectoryNode.browseFolderBtn);
 
         //open file button (temporary)
-        LocalFileDirectoryDiv.openFileBtn = document.createElement('button') as HTMLButtonElement;
-        LocalFileDirectoryDiv.openFileBtn.setAttribute("id", "openFile");
+        LocalFileDirectoryNode.openFileBtn = document.createElement('button') as HTMLButtonElement;
+        LocalFileDirectoryNode.openFileBtn.setAttribute("id", "openFile");
 
         const OFTextNode1 = document.createTextNode("Open File");
-        LocalFileDirectoryDiv.openFileBtn.appendChild(OFTextNode1);
-        LocalFileDirectoryDiv.fileDirectoryDivParent.appendChild(LocalFileDirectoryDiv.openFileBtn);
+        LocalFileDirectoryNode.openFileBtn.appendChild(OFTextNode1);
+        LocalFileDirectoryNode.fileDirectoryDivParent.appendChild(LocalFileDirectoryNode.openFileBtn);
 
         //save file button (temporary)
-        LocalFileDirectoryDiv.saveFileBtn = document.createElement('button') as HTMLButtonElement;
-        LocalFileDirectoryDiv.saveFileBtn.setAttribute("id", "saveFile");
+        LocalFileDirectoryNode.saveFileBtn = document.createElement('button') as HTMLButtonElement;
+        LocalFileDirectoryNode.saveFileBtn.setAttribute("id", "saveFile");
 
         const SFTextNode1 = document.createTextNode("Save File");
-        LocalFileDirectoryDiv.saveFileBtn.appendChild(SFTextNode1);
-        LocalFileDirectoryDiv.fileDirectoryDivParent.appendChild(LocalFileDirectoryDiv.saveFileBtn);
+        LocalFileDirectoryNode.saveFileBtn.appendChild(SFTextNode1);
+        LocalFileDirectoryNode.fileDirectoryDivParent.appendChild(LocalFileDirectoryNode.saveFileBtn);
 
         //file directory div (child)
-        LocalFileDirectoryDiv.fileDirectoryNode = document.createElement('div') as HTMLDivElement;
-        LocalFileDirectoryDiv.fileDirectoryNode.setAttribute("id", "fileDirectory");
+        LocalFileDirectoryNode.fileDirectoryNode = document.createElement('div') as HTMLDivElement;
+        LocalFileDirectoryNode.fileDirectoryNode.setAttribute("id", "fileDirectory");
         
-        App.appNode.appendChild(LocalFileDirectoryDiv.fileDirectoryNode) as HTMLDivElement;
+        App.appNode.appendChild(LocalFileDirectoryNode.fileDirectoryNode) as HTMLDivElement;
         
         const fileDirectoryParent = document.querySelector('#fileDirectoryParent') as HTMLDivElement;
 
-        return fileDirectoryParent.appendChild(LocalFileDirectoryDiv.fileDirectoryNode) as HTMLDivElement;
+        return fileDirectoryParent.appendChild(LocalFileDirectoryNode.fileDirectoryNode) as HTMLDivElement;
     }
 }
 
 //Local File Directory class
 export class LocalFileDirectory extends ProseMirrorEditor {
     //string to hold data from file
-    static openFileString: string = "" as string;
+    static openFileString: string = "";
 
     //string to hold data from file
     static saveFileString: string;
 
     //local folder array
-    static localFolderArr: e[][] = [] as e[][];
+    static localFolderArr: e[][] = [];
 
     //local file array
-    static localFileArr: string[] = [] as string[];
+    static localFileArr: string[] = [];
 
     //open file variables
     public openFile: string;
@@ -183,13 +184,14 @@ export class LocalFileDirectory extends ProseMirrorEditor {
         Promise.resolve(this.openFile).then(() => {
             Promise.resolve(readFileToArr).then((fileData) => {
                 LocalFileDirectory.localFileArr.push(fileData);
-                
+
                 console.log(LocalFileDirectory.localFileArr);
             });
         });
 
         //exception handle 
         if(this.openFile) {
+            //set openFileBool to true when a file is opened
             this.openFileBool = true;
             //when a new file is opened: 
             //
@@ -227,8 +229,9 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString));
 
             //set window title to path of currernt opened file
-            appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
+            appWindow.setTitle("Eva-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
         } else if(this.openFile === null) {
+            //set openFileBool to false when a file is not opened from dialog (user cancels it)
             this.openFileBool = false;
 
             console.error("Open Dialog (User Cancel): Promise Rejected!");

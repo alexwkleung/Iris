@@ -1,7 +1,7 @@
 /*
 * file: `app.ts`
 *
-* this file contains the creation of the app div within the DOM
+* this file contains the creation of the app node
 *
 * there shouldn't be any major changes to this file besides implementing more efficient mounting methods
 *
@@ -9,6 +9,7 @@
 
 import { appWindow } from '@tauri-apps/api/window'
 
+//stylesheets
 import './styles/override.css'
 import './styles/mainwindow.css'
 import './styles/material.css'
@@ -40,6 +41,6 @@ async function appMain() {
     App.appDivFn();
 
     //set default app title on startup 
-    await appWindow.setTitle("Iris-dev-build");
+    await appWindow.setTitle("Eva-dev-build");
 }
 appMain();

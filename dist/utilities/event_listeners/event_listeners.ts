@@ -1,23 +1,26 @@
 /* 
 * file: `event_listeners.ts`
 *
-* this file holds all the event listeners necessary to make the elements 
-* in the front-end side of things usable
+* this file holds all the event listeners necessary to make 
+* the front-end side of things usable
 *
 */
 
 import { LocalFileDirectory } from '../file_directory/file_directory'
 
 //Iris Event Listeners class
-export class IrisEventListeners extends LocalFileDirectory {
+export class LocalEventListeners extends LocalFileDirectory {
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 
     //open folder listener
     public openFolderListener() {
         const browseFolder = document.querySelector('#browseFolder') as HTMLButtonElement;
 
-        browseFolder.addEventListener('click', (): void => {
-            this.LFDirectory.OpenLFFolder();
+        browseFolder.addEventListener('click', async () => {
+            console.log("Open Local Folder: Promise Resolved.");
+            await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
+                console.log("Open Local Folder: Promise Resolved.");
+            });
         });
     }
 
@@ -28,11 +31,7 @@ export class IrisEventListeners extends LocalFileDirectory {
         openFile.addEventListener('click', async () => {
             console.log("Clicked open file button");
 
-            console.log("PROSEMIRROR EDITOR DIV IS CONNECTED!");
-
             await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
-                console.log("Activated content listener on opened file");
-
                 console.log("Open Local File: Promise Resolved.");
             });
         });

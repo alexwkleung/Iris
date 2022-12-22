@@ -45,6 +45,10 @@
 *
 */
 
+#editor .milkdown-menu .milkdown-l277y9 {
+    bottom: 200px;
+}
+
 /* editor node */
 #editor {
     color: white;
@@ -82,7 +86,6 @@
 /* heading */
 .milkdown .editor h1, h2, h3, h4, h5, h6 {
     color: white;
-    border-bottom: 1px solid;
     /* text-decoration: underline; */
     /* border-bottom: 1px solid; */
 }
