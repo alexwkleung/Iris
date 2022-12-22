@@ -5,6 +5,11 @@
 *
 */
 
+/* fonts */
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url('./fonts/app/Inter-Medium.ttf');
+}
 
 /*
 * ProseMirror overrides
@@ -15,7 +20,7 @@
 }
 
 .ProseMirror {
-    font-size: 25px;
+    font-size: 20px;
     /*
     border-style: solid;
     border-width: 1px;
@@ -24,6 +29,11 @@
     overflow-y: auto;
     height: 100vh;
     max-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+#editor .milkdown-awfb1s {
+    position: sticky;
 }
 
 /*
@@ -45,8 +55,24 @@
 *
 */
 
-#editor .milkdown-menu .milkdown-l277y9 {
-    bottom: 200px;
+/* code fence selector */
+#editor .milkdown-t2w0b6 .code-fence_selector {
+    background-color: #212121;
+}
+
+/* code fence selector list */ 
+#editor .milkdown-t2w0b6 .code-fence_selector-list {
+    background-color: #212121;
+}
+
+/* pre background */
+#editor .milkdown .editor .milkdown-t2w0b6 {
+    background-color: #212121;
+}
+
+/* pre */
+#editor .milkdown .editor .code-fence pre {
+    background-color: #212121;
 }
 
 /* editor node */
@@ -78,7 +104,7 @@
 }
 
 /* hashes */
-#editor .milkdown-1wzys5m {
+#editor .milkdown-12f84v3 {
     color: rgb(74, 73, 73);
     margin-right: 10px;
 }

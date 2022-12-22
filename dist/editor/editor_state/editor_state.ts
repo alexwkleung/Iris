@@ -9,14 +9,13 @@ import { Editor, rootCtx, editorViewOptionsCtx } from '@milkdown/core'
 //import { EditorState } from '@milkdown/prose/state'
 //import { EditorView } from '@milkdown/prose/view'
 import { commonmark } from '@milkdown/preset-commonmark'
-import { tokyo } from '@milkdown/theme-tokyo'
+import { nord } from '@milkdown/theme-nord'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { gfm } from '@milkdown/preset-gfm'
 import { history } from '@milkdown/plugin-history'
 import { indent } from '@milkdown/plugin-indent'
 import { block } from '@milkdown/plugin-block'
 import { tooltip } from '@milkdown/plugin-tooltip'
-import { math } from '@milkdown/plugin-math'
 import { slash } from '@milkdown/plugin-slash'
 import { prism } from '@milkdown/plugin-prism'
 import { upload } from '@milkdown/plugin-upload'
@@ -35,14 +34,17 @@ export class ProseMirrorEditor {
             .use(indent)
             .use(block)
             .use(tooltip)
-            .use(math)
-            //use tokyo theme as the base theme to modify the stylesheet from
+            //use nord theme as the base theme to modify the stylesheet from
             //however, note that this will use material icons in order to display properly
-            .use(tokyo)
+            .use(nord)
             //need to configure slash commands
+            //use https://milkdown.dev/plugin-slash 
+            //for example
             .use(slash)
             .use(prism)
-            .use(upload) //bug with images crashing
+            //bug with images crashing app
+            //may decide to remove image functionality later
+            .use(upload)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('#editor'))
             })

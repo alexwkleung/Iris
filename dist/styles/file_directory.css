@@ -3,6 +3,12 @@
 *
 */
 
+/* fonts */
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url('./fonts/app/Inter-Medium.ttf');
+}
+
 /* file directory parent node */
 #fileDirectoryParent {
     background-color: #2c2b2b;
@@ -17,6 +23,20 @@
     width: 320px;
     position: fixed;
     white-space: pre-wrap;
+    font-family: 'Inter', sans-serif;    
+    font-size: 20px;
+}
+
+#openFile  {
+    font-size: 15px;
+}
+
+#saveFile {
+    font-size: 15px;
+}
+
+#openFolder {
+    font-size: 15px;
 }
 
 /*

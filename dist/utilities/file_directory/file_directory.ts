@@ -49,7 +49,7 @@ export class LocalFileDirectoryNode {
 
         //browse folder button (temporary)
         LocalFileDirectoryNode.browseFolderBtn = document.createElement('button') as HTMLButtonElement;
-        LocalFileDirectoryNode.browseFolderBtn.setAttribute("id", "browseFolder");
+        LocalFileDirectoryNode.browseFolderBtn.setAttribute("id", "openFolder");
      
         //browse folder button text node (temporary)
         const FFTextNode1 = document.createTextNode("Browse Folder");
@@ -226,10 +226,10 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
             //insert raw markdown string into editor state by replacing 
             //all its contents with the opened file string
-            ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString));
+            ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
 
             //set window title to path of currernt opened file
-            appWindow.setTitle("Eva-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
+            appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
         } else if(this.openFile === null) {
             //set openFileConst to CloseDialog constant ("Dialog Closed") 
             //when a file is not opened from dialog (user cancels it)

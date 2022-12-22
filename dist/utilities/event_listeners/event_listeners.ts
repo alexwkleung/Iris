@@ -14,7 +14,7 @@ export class LocalEventListeners extends LocalFileDirectory {
 
     //open folder listener
     public openFolderListener() {
-        const browseFolder = document.querySelector('#browseFolder') as HTMLButtonElement;
+        const browseFolder = document.querySelector('#openFolder') as HTMLButtonElement;
 
         browseFolder.addEventListener('click', async () => {
             console.log("Open Local Folder: Promise Resolved.");

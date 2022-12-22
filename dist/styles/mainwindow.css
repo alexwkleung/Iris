@@ -6,8 +6,15 @@
 *
 */
 
+/* fonts */
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url('./fonts/app/Inter-Medium.ttf');
+}
+
 body { 
     background-color: #212121;
     color: white;
     overflow: hidden;
+    font-family: 'Inter', sans-serif;    
 }

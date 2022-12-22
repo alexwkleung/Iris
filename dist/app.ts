@@ -41,6 +41,6 @@ async function appMain() {
     App.appDivFn();
 
     //set default app title on startup 
-    await appWindow.setTitle("Eva-dev-build");
+    await appWindow.setTitle("Iris-dev-build");
 }
 appMain();
