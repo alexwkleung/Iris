@@ -8,7 +8,7 @@
 
 import { LocalFileDirectory } from '../file_directory/file_directory'
 
-//Iris Event Listeners class
+//Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 

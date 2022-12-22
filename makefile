@@ -1,18 +1,25 @@
-# it is preferred to execute build/dev steps using make
-#
-# for now, most of the target commands are wrappers around npm run scripts
+# makefile that contains all necessary development scripts
 # 
-# later on, this makefile will contain all the necessary executed commands for each
-# target without wrapping over npm run scripts
+# this should reflect the package.json scripts
 #
 
 
 # build
 .PHONY: build
 build:
-	npm run build
+	npx vite build && npx tsc --build --clean && npx tsc --build
 
-# tauri
+# tauri dev
 .PHONY: tauri
 tauri:
 	npm run tauri-dev
+
+# vite dev 
+.PHONY: dev
+dev: 
+	npx vite dev --host
+
+# vite preview
+.PHONY: preview
+preview: 
+	npx vite preview

@@ -14,7 +14,7 @@
     overflow-y: auto;
     height: 100vh;
     max-height: 100vh;
-    width: 32%;
+    width: 320px;
     position: fixed;
     white-space: pre-wrap;
 }

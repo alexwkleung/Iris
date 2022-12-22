@@ -3,8 +3,6 @@
 *
 * this is the file that holds the prosemirror (milkdown) editorstate
 *
-* note that implementations may change over time
-*
 */
 
 import { Editor, rootCtx, editorViewOptionsCtx } from '@milkdown/core'
@@ -41,8 +39,7 @@ export class ProseMirrorEditor {
             //use tokyo theme as the base theme to modify the stylesheet from
             //however, note that this will use material icons in order to display properly
             .use(tokyo)
-            //configure slash commands
-            //taken/referenced from example usage: https://milkdown.dev/plugin-slash
+            //need to configure slash commands
             .use(slash)
             .use(prism)
             .use(upload) //bug with images crashing

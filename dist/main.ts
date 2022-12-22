@@ -3,14 +3,12 @@
 *
 * this file will call imported functions necessary to run the appplication
 *
-* most of the functions will be contained within classes, so they will be 
-* accessed via dot operators
 */
 
 import { MainObjects } from './utilities/objects/main_objects'
 
-//irisMainFn function
-function irisMain(): void {
+//main function
+function main() {
     //Local File Directory Node
     MainObjects.LFDirectoryNode.LFDirectoryDiv();
     //
@@ -19,13 +17,13 @@ function irisMain(): void {
     MainObjects.PMEditorNode.PMEditorNode();
     //
 
-    //ProseMirror Editor State 
+    //ProseMirror Editor State (Milkdown)
     MainObjects.PMEditor.PMState();
 
-    //Iris Event Listeners
+    //Local Event Listeners
     MainObjects.LocalEvt.openFolderListener();
     MainObjects.LocalEvt.openFileListener();
     MainObjects.LocalEvt.saveFileListener();
     //
 }   
-irisMain();
+main();

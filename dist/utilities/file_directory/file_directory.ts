@@ -7,8 +7,8 @@
 * TypeScript and/or Rust (Tauri/Native API) will be used for
 * processing folders/files in the OS
 *
-* for now, the file operations will be done on the TypeScript side and will move 
-* to the Rust side later once the core structure is down
+* for now, the majority of file operations will be done through the TypeScript API and will move 
+* to the Rust API later once the core structure is down
 *
 * at the moment, the file directory will only handle local files
 *
@@ -25,9 +25,11 @@ import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
 import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
 import { insert, getHTML, getMarkdown, replaceAll } from '@milkdown/utils'
+import { FileSystemConstants } from '../constants/constants'
 
 //stylesheets
 import '../../styles/file_directory.css'
+import { s } from '@tauri-apps/api/event-2a9960e7'
 
 //Local File Directory Div class
 export class LocalFileDirectoryNode {
@@ -106,9 +108,9 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     public splitFileConcat1: string;
     public splitFileConcat2: string;
 
-    //booleans
-    private openFileBool: boolean;
-    private saveFileBool: boolean;
+    //private variables to assign constants
+    private openFileConst: string;
+    private saveFileConst: string;
 
     //open folder dialog (need to work on this!!)
     public async OpenLFFolder() {
@@ -148,10 +150,12 @@ export class LocalFileDirectory extends ProseMirrorEditor {
         //reset local file array
         LocalFileDirectory.localFileArr.length = 0
 
+        LocalFileDirectory.openFileString = " ";
+
         //open file dialog
         this.openFile = await dialog.open({
             filters: [{
-                name: "Iris Accepted File Types",
+                name: "Accepted File Types",
                 extensions: ["md"],
             }], 
             recursive: true,
@@ -191,15 +195,10 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
         //exception handle 
         if(this.openFile) {
-            //set openFileBool to true when a file is opened
-            this.openFileBool = true;
-            //when a new file is opened: 
-            //
-            //destroy previous editor state
-            //ProseMirrorEditor.editor.destroy();
-            //
-            //then create a new editor state
-            //this.PMState();
+            //set openFileConst to OpenFile constant ("File Opened")
+            this.openFileConst = FileSystemConstants.OpenFile;
+
+            console.log(this.openFileConst);
 
             //log path to file
             console.log(this.openFile);
@@ -217,22 +216,26 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             for(let folderIndex of LocalFileDirectory.localFileArr) {
                 LocalFileDirectory.openFileString = folderIndex;
 
-                console.log("INSIDE LOOP:");
-                console.log(LocalFileDirectory.openFileString);
+                //console.log("INSIDE LOOP:");
+                //console.log(LocalFileDirectory.openFileString);
+                //break;
             }
 
             console.log("OUTSIDE LOOP:")
             console.log(LocalFileDirectory.openFileString);
 
-            //insert raw markdown string into editor state by replacing all its contents
-            //with the opened file string
+            //insert raw markdown string into editor state by replacing 
+            //all its contents with the opened file string
             ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString));
 
             //set window title to path of currernt opened file
             appWindow.setTitle("Eva-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
         } else if(this.openFile === null) {
-            //set openFileBool to false when a file is not opened from dialog (user cancels it)
-            this.openFileBool = false;
+            //set openFileConst to CloseDialog constant ("Dialog Closed") 
+            //when a file is not opened from dialog (user cancels it)
+            this.openFileConst = FileSystemConstants.CloseDialog;
+
+            console.log(this.openFileConst);
 
             console.error("Open Dialog (User Cancel): Promise Rejected!");
         }
