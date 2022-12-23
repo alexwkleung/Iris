@@ -179,7 +179,7 @@
     color: white;
     font-family: 'Inter-Bold';
     /* text-decoration: underline; */
-    border-bottom: 0.5px solid;
+    /* border-bottom: 0.5px solid; */
 }
 
 .milkdown .editor hr {
