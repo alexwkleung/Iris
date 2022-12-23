@@ -161,7 +161,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     }
 
     //open file dialog
-    public async OpenLF() {
+    public async OpenLF(): Promise<void> {
         //reset local file array
         LocalFileDirectory.localFileArr.length = 0
 
@@ -216,8 +216,8 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
         console.log(EvaDOMBuilderUtil.prevParentNode);
 
-        Promise.resolve(this.openFile).then(() => {
-            Promise.resolve(readFileToArr).then((fileData) => {
+        Promise.resolve(this.openFile).then((): void => {
+            Promise.resolve(readFileToArr).then((fileData): void => {
                 LocalFileDirectory.localFileArr.push(fileData);
 
                 console.log(LocalFileDirectory.localFileArr);
@@ -273,7 +273,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     }
 
     //save file
-    public async saveLF() {
+    public async saveLF(): Promise<void> {
         this.saveFileConst = FileSystemConstants.SaveFile;
 
         console.log(this.saveFileConst);

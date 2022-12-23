@@ -19,7 +19,7 @@ import './styles/katex.min.css'
 export class App {
     static appNode: HTMLDivElement;
 
-    static appDivFn() {
+    static appDivFn(): void {
         App.appNode = document.createElement('div') as HTMLDivElement;
         App.appNode.setAttribute("id", "app");
 
@@ -35,12 +35,12 @@ export class App {
 }
 
 //appMain function
-async function appMain() {
+async function appMain(): Promise<void> {
     const app = new App() as App;
 
     App.appDivFn();
 
     //set default app title on startup 
-    await appWindow.setTitle("Iris-dev-build");
+    return await appWindow.setTitle("Iris-dev-build");
 }
 appMain();
