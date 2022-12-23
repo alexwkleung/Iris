@@ -8,13 +8,13 @@
 
 /* fonts */
 @font-face {
-    font-family: 'Inter-Medium';
-    src: url('./fonts/app/Inter-Medium.ttf');
+    font-family: 'Inter-Regular';
+    src: url('./fonts/app/Inter-Regular.ttf');
 }
 
 body { 
     background-color: #212121;
     color: white;
     overflow: hidden;
-    font-family: 'Inter', sans-serif;    
+    font-family: 'Inter-Regular';
 }

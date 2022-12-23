@@ -44,6 +44,7 @@
     "@milkdown/prose": "^6.5.4",
     "@milkdown/theme-nord": "^6.5.4",
     "@milkdown/utils": "^6.5.4",
+    "eva-dom-builder-util": "github:alexwkleung/Eva-DOM-Builder-Util",
     "eva-st-util": "github:alexwkleung/Eva-ST-Util",
     "prosemirror-model": "^1.18.3",
     "prosemirror-state": "^1.4.2",

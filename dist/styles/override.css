@@ -7,10 +7,14 @@
 
 /* fonts */
 @font-face {
-    font-family: 'Inter-Medium';
-    src: url('./fonts/app/Inter-Medium.ttf');
+    font-family: 'Inter-Regular';
+    src: url('./fonts/app/Inter-Light.ttf');
 }
 
+@font-face {
+    font-family: 'Inter-Bold';
+    src: url('./fonts/app/Inter-Bold.ttf');
+}
 /*
 * ProseMirror overrides
 */
@@ -29,7 +33,7 @@
     overflow-y: auto;
     height: 100vh;
     max-height: 100vh;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter-Regular';
 }
 
 #editor .milkdown-awfb1s {
@@ -55,14 +59,75 @@
 *
 */
 
+/* slash menu */
+#editor .milkdown-xilf5l {
+    background: #313131;
+    border: none;
+    box-shadow: none;
+}
+
+/* anchor */
+#editor .milkdown .editor .link, .milkdown .editor a {
+    color: #6571b7;
+}
+
+/* hr */
+#editor .milkdown .editor hr {
+    background-color: white;
+}
+
+/* table edit icon after */
+#editor .milkdown-1m8mtdp .icon:not(:last-child)::after {
+    background: transparent;
+}
+
+/* table edit background */
+#editor .milkdown-1m8mtdp {
+    background-color: #313131;
+    border: none;
+    box-shadow: none;
+}
+
+/* tooltip after */
+#editor .milkdown-hdnsow .icon:not(:last-child)::after {
+    background: transparent;
+}
+
+/* tooltip icon */
+#editor .milkdown-hdnsow .icon {
+    color: white;
+}
+
+/* tooltip background */
+#editor .milkdown-hdnsow {
+    background-color:#313131;
+    border: none;
+    box-shadow: none;
+}
+
+/* code fence selector icon */
+#editor .milkdown-t2w0b6 .code-fence_selector>.icon {
+    border-left: 0px;
+}
+
+/* code fence selector hove*/
+#editor .milkdown-t2w0b6 .code-fence_selector>.icon:hover {
+    color: transparent;
+    background-color: transparent;
+}
+
 /* code fence selector */
 #editor .milkdown-t2w0b6 .code-fence_selector {
     background-color: #212121;
+    border: none;
+    box-shadow: none;
 }
 
 /* code fence selector list */ 
 #editor .milkdown-t2w0b6 .code-fence_selector-list {
     background-color: #212121;
+    border: none;
+    box-shadow: none;
 }
 
 /* pre background */
@@ -112,17 +177,13 @@
 /* heading */
 .milkdown .editor h1, h2, h3, h4, h5, h6 {
     color: white;
+    font-family: 'Inter-Bold';
     /* text-decoration: underline; */
-    /* border-bottom: 1px solid; */
+    border-bottom: 0.5px solid;
 }
 
 .milkdown .editor hr {
     background-color: white;
-}
-
-a {
-	color: #5C6BC0;
-	text-decoration: none;
 }
 
 span { 
@@ -209,7 +270,7 @@ blockquote  {
 }
 
 blockquote:before {
-    color: white;;
+    color: white;
     font-size: 4em;
     line-height: 0.1em;
     margin-right: 0.25em;

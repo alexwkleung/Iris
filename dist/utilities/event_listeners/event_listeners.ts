@@ -7,6 +7,7 @@
 */
 
 import { LocalFileDirectory } from '../file_directory/file_directory'
+import { appWindow } from '@tauri-apps/api/window'
 
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {

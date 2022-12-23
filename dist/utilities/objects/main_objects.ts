@@ -9,6 +9,7 @@ import { ProseMirrorEditorNode } from '../../editor/editor'
 import { LocalFileDirectoryNode } from '../file_directory/file_directory'
 import { LocalEventListeners } from '../event_listeners/event_listeners'
 import { ProseMirrorEditor } from '../../editor/editor_state/editor_state';
+import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 
 //MainObjects class
 export class MainObjects {
@@ -27,4 +28,7 @@ export class MainObjects {
     //Local Event Listeners object
     static LocalEvt = new LocalEventListeners() as LocalEventListeners;
     //
+
+    //DOM Builders
+    static FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
 }

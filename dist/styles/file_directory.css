@@ -5,8 +5,8 @@
 
 /* fonts */
 @font-face {
-    font-family: 'Inter-Medium';
-    src: url('./fonts/app/Inter-Medium.ttf');
+    font-family: 'Inter-Regular';
+    src: url('./fonts/app/Inter-Regular.ttf');
 }
 
 /* file directory parent node */
@@ -23,7 +23,7 @@
     width: 320px;
     position: fixed;
     white-space: pre-wrap;
-    font-family: 'Inter', sans-serif;    
+    font-family: 'Inter-Regular';  
     font-size: 20px;
 }
 
@@ -39,8 +39,38 @@
     font-size: 15px;
 }
 
-/*
-#fileDirectory {
-
+ul, .parentFolder {
+    list-style-type: none;
 }
-*/
+
+.parentFolder {
+    margin: 0;
+    padding: 0;
+}
+
+.caret {
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.caret::before {
+    content: "\25B6";
+    color: white;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.caret-down::before {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);  
+}
+
+.nested {
+    display: none;
+}
+
+.active {
+    display: block;
+    margin-left: -15px;
+}
