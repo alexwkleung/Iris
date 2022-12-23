@@ -121,6 +121,8 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     public splitFileConcat1: string;
     public splitFileConcat2: string;
 
+    public saveFile: void;
+
     //private variables to assign constants
     private openFileConst: string;
     private saveFileConst: string;
@@ -270,13 +272,14 @@ export class LocalFileDirectory extends ProseMirrorEditor {
         }
     }
 
-    //save file dialog
+    //save file
     public async saveLF() {
-        console.log(this.openFile);
+        this.saveFileConst = FileSystemConstants.SaveFile;
 
-        console.log(LocalFileDirectory.saveFileString);
+        console.log(this.saveFileConst);
 
-        await fs.writeTextFile({ 
+        //write to file
+        this.saveFile = await fs.writeTextFile({ 
             path: this.openFile, 
             contents: ProseMirrorEditor.editor.action(getMarkdown())
         }, { 

@@ -8,6 +8,7 @@
 //File System Constants
 export enum FileSystemConstants {
     OpenFile = "File Opened",
+    SaveFile = "File Saved",
     CloseDialog = "Dialog Closed",
-    OpenFolder = "Folder Opened"
+    OpenFolder = "Folder Opened",
 }
