@@ -16,7 +16,7 @@
     "url": "git+https://github.com/alexwkleung/Iris.git"
   },
   "author": "alexwkleung",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/alexwkleung/Iris/issues"
   },
