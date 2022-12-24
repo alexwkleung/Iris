@@ -144,6 +144,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     private saveFileConst: string;
 
     public fileArr: string[] = [];
+    public fileStr: string = "";
 
     public listFilesRef: string = "";
 
@@ -216,9 +217,6 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             ProseMirrorEditor.editor.destroy();
             ProseMirrorEditor.editor.create();
 
-            //then
-
-            //re-build file directory tree based on opened file
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
 
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(LocalFileDirectory.localFolderArr);
@@ -230,12 +228,57 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
             for(let i = 0; i < listFiles.length; i++) {
                 listFiles[i].addEventListener('click', () => {
-                   console.log("TEST CLICK");
-                });
-            }
+                    ProseMirrorEditor.readonly = true;
 
-            //set window title to path of current opened folder
-            await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                    ProseMirrorEditor.editor.destroy();
+                    ProseMirrorEditor.editor.create();
+
+                    this.listFilesRef = listFiles[i].textContent as string; 
+
+                    console.log(this.listFilesRef);
+
+                    const readText= fs.readTextFile(this.listFilesRef, {
+                        dir: fs.BaseDirectory.Desktop
+                    });
+
+                    this.fileArr.length = 0;
+                    
+                    //resolve promise for fs readTextFile 
+                    Promise.resolve(readText).then((fileData) => {
+                        //resolved promise value 
+                        //will be pushed into array
+                        this.fileArr.push(fileData);
+                        console.log(this.fileArr);
+
+                        //iterate over array containing 
+                        //file content
+                        for(let fileIndex of this.fileArr) {
+                            this.fileStr = fileIndex;
+                        }
+
+                        //console.log(fileStr);
+                        //open file content in editor
+                        ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
+                    });
+
+                    console.log(this.fileStr);
+                    console.log(this.listFilesRef);
+
+                    //temp naming
+                    const split1 = this.listFilesRef.split('/');
+                    const pop1 = split1.pop() as string | null;
+                    const pop2 = split1.pop() as string | null;
+                    const pop3 = split1.pop() as string | null
+                    const concat1 = pop3 + "/" + pop2;
+
+                    console.log(pop1);
+                    console.log(concat1);
+
+                    appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                });
+
+                await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+            }  
         } else {
             this.folderFileString = LocalFileDirectory.localFolderArr.toString();
             this.splitFolderFile = this.folderFileString.split(',');
@@ -271,10 +314,8 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         dir: fs.BaseDirectory.Desktop
                     });
 
-                    //const arr: string[] = [];
-
-                    let fileStr: string = " ";
-
+                    this.fileArr.length = 0;
+                    
                     //resolve promise for fs readTextFile 
                     Promise.resolve(readText).then((fileData) => {
                         //resolved promise value 
@@ -285,22 +326,32 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         //iterate over array containing 
                         //file content
                         for(let fileIndex of this.fileArr) {
-                            fileStr = fileIndex;
+                            this.fileStr = fileIndex;
                         }
 
                         //console.log(fileStr);
                         //open file content in editor
-                        ProseMirrorEditor.editor.action(replaceAll(fileStr, true));
+                        ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
                     });
 
-                    console.log(fileStr);
+                    console.log(this.fileStr);
                     console.log(this.listFilesRef);
-                    console.log("TEST CLICK");
-                });
-            }  
 
-            //set window title to path of current opened folder
-            await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                    //temp naming
+                    const split1 = this.listFilesRef.split('/');
+                    const pop1 = split1.pop() as string | null;
+                    const pop2 = split1.pop() as string | null;
+                    const pop3 = split1.pop() as string | null
+                    const concat1 = pop3 + "/" + pop2;
+
+                    console.log(pop1);
+                    console.log(concat1);
+
+                    appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                });
+
+                await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+            }  
         }
     }
 
@@ -400,9 +451,9 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
             } else {
-                await ProseMirrorEditor.editor.create();
-
                 ProseMirrorEditor.readonly = true;
+
+                await ProseMirrorEditor.editor.create();
 
                 //insert raw markdown string into editor state by replacing 
                 //all its contents with the opened file string

@@ -24,7 +24,6 @@ function main() {
     MainObjects.LocalEvt.openFolderListener();
     MainObjects.LocalEvt.openFileListener();
     MainObjects.LocalEvt.saveFileListener();
-    //MainObjects.LocalEvt.switchToFileListener();
     //
 }   
 main();
