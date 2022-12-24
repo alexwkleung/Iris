@@ -19,6 +19,14 @@
 * ProseMirror overrides
 */
 
+#wysiwygButton {
+    font-size: 15px;
+}
+
+#markdownButton {
+    font-size: 15px;
+}
+
 .ProseMirror:focus {
     outline: 0;
 }
