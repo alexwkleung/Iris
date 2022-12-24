@@ -54,7 +54,7 @@ export class LocalFileDirectoryNode {
         LocalFileDirectoryNode.browseFolderBtn.setAttribute("id", "openFolder");
      
         //browse folder button text node (temporary)
-        const FFTextNode1 = document.createTextNode("Browse Folder");
+        const FFTextNode1 = document.createTextNode("Open Folder");
      
         LocalFileDirectoryNode.browseFolderBtn.appendChild(FFTextNode1);
         LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.browseFolderBtn);
@@ -112,6 +112,22 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     //local file array
     static localFileArr: string[] = [];
 
+    //open folder variables
+    public openFolder: string;
+    public splitFolderDirectory: string[];
+    public splitFolderPop1: string | null;
+    public splitFolderPop2: string | null;
+    public splitFolderConcat: string;
+
+    
+    public folderFileString: string;
+    public splitFolderFile: string[];
+    public splitFolderFilePop1: string | null;
+    public splitFolderFilePop2: string | null;
+    public splitFolderFileConcat1: string;
+    public splitFolderFileConcat2: string;
+    public splitFolderFileConcat3: string;
+
     //open file variables
     public openFile: string;
     public splitFileDirectory: string[];
@@ -121,43 +137,114 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     public splitFileConcat1: string;
     public splitFileConcat2: string;
 
+    //save file variables
     public saveFile: void;
 
     //private variables to assign constants
     private openFileConst: string;
     private saveFileConst: string;
 
+    public recArr: string[] = [];
+
+    //
+    private OpenLFFolderRecursive(entries: e[]) {
+        for(const entry of entries) {
+            console.log(entry.path);
+            //check type of path
+            console.log(typeof entry.path);
+
+            //push paths of folder to recArr
+            this.recArr.push(entry.path);
+
+            //check if the children of opened folder path is a directory
+            //...
+            //return null if children of opened folder path isn't a directory
+            if(entry.children) { 
+                this.OpenLFFolderRecursive(entry.children);
+            } else if(entry.children === false) {
+                return null;
+            } 
+        }
+    }
+   
     //open folder dialog (need to work on this!!)
     public async OpenLFFolder() {
-        const openFolder = await dialog.open({
+        //open folder dialog
+        this.openFolder = await dialog.open({
             directory: true,
-            defaultPath: await path.homeDir()
+            defaultPath: await path.desktopDir() //await path.homeDir()
         }) as string;
+        
+        //exception handle
+        if(this.openFolder) {
+            const entries = await fs.readDir("Iris_Notes", {
+                dir: fs.BaseDirectory.Desktop,
+                recursive: true
+            });
 
-        if(openFolder) {
-            console.log(openFolder + " ---> " + typeof openFolder);
-        } else if(openFolder === null) {
+            //set recArr length to 0 to reset array
+            this.recArr.length = 0;
+
+            //call recursive function
+            this.OpenLFFolderRecursive(entries);
+
+            console.log(this.recArr);
+            console.log(this.recArr.length);
+            console.log(this.openFolder + " ---> " + typeof this.openFolder);
+        } else if(this.openFolder === null) {
             console.log("User canceled open dialog: Promise Rejected.")
         } 
 
-        const fileDirectory = document.querySelector('#fileDirectory') as HTMLDivElement;
+        //const fileDirectory = document.querySelector('#fileDirectory') as HTMLDivElement;
 
         //temporary directory title
         //later: need to contain this in a child container div within fileDirectoryParent div
-        const splitFolderDirectory = openFolder.split('/');
-        const splitFolderPop1 = splitFolderDirectory.pop() as string | null;
-        const splitFolderPop2 = splitFolderDirectory.pop()  as string | null;
-        const splitFolderConcat = splitFolderPop2 + "/" + splitFolderPop1 as string;
-        fileDirectory.textContent = splitFolderConcat as string | null;
+        this.splitFolderDirectory = this.openFolder.split('/');
+        this.splitFolderPop1 = this.splitFolderDirectory.pop() as string | null;
+        this.splitFolderPop2 = this.splitFolderDirectory.pop()  as string | null;
+        this.splitFolderConcat = this.splitFolderPop2 + "/" + this.splitFolderPop1 as string;
 
-        const readDirToArr = fs.readDir(
-            openFolder, {
-            recursive: true
-        })
+        if((document.querySelector('.parentFolder'))) {
+            this.folderFileString = this.recArr.toString();
+            this.splitFolderFile = this.folderFileString.split(',');
+            this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
+            console.log(typeof this.folderFileString);
+            
+            //remove parentFolder from DOM if found
+            (document.querySelector('.parentFolder') as ChildNode).remove();
 
-        await Promise.resolve(readDirToArr).then((folderData) => {
-            LocalFileDirectory.localFolderArr.push(folderData)
-        })
+            ProseMirrorEditor.readonly = false;
+
+            ProseMirrorEditor.editor.destroy();
+            ProseMirrorEditor.editor.create();
+
+            //then
+
+            //re-build file directory tree based on opened file
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
+
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.recArr);
+
+            //set window title to path of current opened folder
+            await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+        } else {
+            this.folderFileString = this.recArr.toString();
+            this.splitFolderFile = this.folderFileString.split(',');
+            this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
+            console.log(typeof this.folderFileString);
+            
+            ProseMirrorEditor.readonly = false;
+
+            ProseMirrorEditor.editor.destroy();
+            ProseMirrorEditor.editor.create();
+
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
+
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.recArr);
+
+            //build file directory based on opened file
+            //this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, this.splitFilePop1);
+        }
     }
 
     //open file dialog
@@ -255,12 +342,20 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             console.log("OUTSIDE LOOP:")
             console.log(LocalFileDirectory.openFileString);
 
-            //insert raw markdown string into editor state by replacing 
-            //all its contents with the opened file string
-            ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
+            //check if editor node is present in the DOM before inserting file content
+            if(document.querySelector('.milkdown')) {
+                //await ProseMirrorEditor.editor.destroy();
+                ProseMirrorEditor.readonly = true;
+                //await ProseMirrorEditor.editor.create();
 
+                //insert raw markdown string into editor state by replacing 
+                //all its contents with the opened file string
+                ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
+            } else {
+
+            }
             //set window title to path of currernt opened file
-            appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
+            await appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
         } else if(this.openFile === null) {
             //set openFileConst to CloseDialog constant ("Dialog Closed") 
             //when a file is not opened from dialog (user cancels it)
@@ -283,7 +378,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             path: this.openFile, 
             contents: ProseMirrorEditor.editor.action(getMarkdown())
         }, { 
-            dir: fs.BaseDirectory.Desktop //| fs.BaseDirectory.Home
+            dir: fs.BaseDirectory.Desktop //|| fs.BaseDirectory.Home
         });
     }
 } 

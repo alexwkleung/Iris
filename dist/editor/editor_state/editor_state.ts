@@ -5,7 +5,7 @@
 *
 */
 
-import { Editor, rootCtx, editorViewOptionsCtx } from '@milkdown/core'
+import { Editor, rootCtx, editorViewOptionsCtx, prosePluginsCtx } from '@milkdown/core'
 //import { EditorState } from '@milkdown/prose/state'
 //import { EditorView } from '@milkdown/prose/view'
 import { commonmark } from '@milkdown/preset-commonmark'
@@ -24,8 +24,13 @@ import { upload } from '@milkdown/plugin-upload'
 //ProseMirrorState class
 export class ProseMirrorEditor {
     static editor: Editor;
-
+    static readonly: boolean;
+    
     public async PMState(): Promise<Editor> {
+        ProseMirrorEditor.readonly = false;
+        console.log(ProseMirrorEditor.readonly);
+        const editable = () => ProseMirrorEditor.readonly;
+
         ProseMirrorEditor.editor = await Editor.make()
             .use(commonmark)
             .use(gfm)
@@ -47,6 +52,7 @@ export class ProseMirrorEditor {
             .use(upload)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('#editor'))
+                ctx.set(editorViewOptionsCtx, { editable })
             })
             .create();
 

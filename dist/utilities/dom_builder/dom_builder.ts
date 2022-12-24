@@ -20,7 +20,7 @@ export class FileDirectoryBuilder {
     //tree view is based off of https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_treeview
     //in the future, you should switch to a more rigid implementation of a file tree 
     //
-    public Eva_FileDirectoryTreeBuilder(folderName: string, fileName: string | null) {
+    public Eva_FileDirectoryTreeBuilder(folderName: string, fileName: string | null | undefined) {
         console.log(EvaDOMBuilderUtil.parentNode);
 
         //ul node
@@ -66,16 +66,18 @@ export class FileDirectoryBuilder {
             true
         )
 
-        this.EvaDOM.DOMBuilderChildNoAttr(
-            'li',
-            fileName as string | undefined,
-            EvaDOMBuilderUtil.prevChildNode,
-            1,
-            false
-        );
+        if(fileName !== undefined) {
+            this.EvaDOM.DOMBuilderChildNoAttr(
+                'li',
+                fileName as string | undefined,
+                EvaDOMBuilderUtil.prevChildNode,
+                1,
+                false
+            );
+        }
 
         //logic for clicking folders and showing files
-        const toggle = document.getElementsByClassName("caret");
+        const toggle = document.getElementsByClassName('caret');
         const nested = document.querySelector('.nested') as HTMLElement;
 
         for(let i = 0; i < toggle.length; i++) {
@@ -84,5 +86,13 @@ export class FileDirectoryBuilder {
                 (this as Element).classList.toggle('caret-down');
             });
         }
+    }
+
+    public Eva_FileDirectoryTreeFilesBuilder(stringArray: string[]) {
+        this.EvaDOM.DOMBuilderChildWithStringArray(
+            'li',
+            EvaDOMBuilderUtil.prevChildNode,
+            stringArray
+        )
     }
 }
