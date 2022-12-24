@@ -28,6 +28,7 @@ import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { FileSystemConstants } from '../constants/constants'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { EvaDOMBuilderUtil } from 'eva-dom-builder-util'
+import { ProseMirrorEditorNode } from '../../editor/editor'
 
 //stylesheets
 import '../../styles/file_directory.css'
@@ -223,7 +224,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
             //logic for opening a file to the editor from an opened folder within 
             //the directory tree.
-            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('option');
+            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('li');
             console.log(listFiles);
 
             for(let i = 0; i < listFiles.length; i++) {
@@ -261,6 +262,18 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         //console.log(fileStr);
                         //open file content in editor
                         ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
+
+                        //show input button node container 
+                        ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
+
+                        //remove disabled attribute from wysiwyg input label
+                        ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
+
+                        //set wysiwyg input to checked
+                        ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
+
+                        //remove disabled attribute from markdown input label
+                        ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
                     });
 
                     console.log(this.fileStr);
@@ -287,7 +300,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
             console.log(typeof this.folderFileString);
             
-            ProseMirrorEditor.readonly = false;
+            ProseMirrorEditor.readonly = true;
 
             ProseMirrorEditor.editor.destroy();
             ProseMirrorEditor.editor.create();
@@ -303,6 +316,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
             for(let i = 0; i < listFiles.length; i++) {
                 listFiles[i].addEventListener('click', () => {
+                    console.log('lcick');
                     ProseMirrorEditor.readonly = true;
 
                     ProseMirrorEditor.editor.destroy();
@@ -336,6 +350,18 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         //console.log(fileStr);
                         //open file content in editor
                         ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
+
+                        //show input button node container 
+                        ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
+
+                        //remove disabled attribute from wysiwyg input label
+                        ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
+
+                        //set wysiwyg input to checked
+                        ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
+
+                        //remove disabled attribute from markdown input label
+                        ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
                     });
 
                     console.log(this.fileStr);
@@ -454,6 +480,17 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                 //insert raw markdown string into editor state by replacing 
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
+
+                //show input button node container 
+                ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
+
+                //remove disabled attribute from wysiwyg input label
+                ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
+                //set wysiwyg input to checked
+                ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
+
+                //remove disabled attribute from markdown input label
+                ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
             } else {
                 ProseMirrorEditor.readonly = true;
 
@@ -462,6 +499,17 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                 //insert raw markdown string into editor state by replacing 
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
+
+                //show input button node container 
+                ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
+
+                //remove disabled attribute from wysiwyg input label
+                ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
+                //set wysiwyg input to checked
+                ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
+
+                //remove disabled attribute from markdown input label
+                ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
             }
 
             //set window title to path of currernt opened file

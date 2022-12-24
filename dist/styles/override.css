@@ -15,17 +15,10 @@
     font-family: 'Inter-Bold';
     src: url('./fonts/app/Inter-Bold.ttf');
 }
+
 /*
 * ProseMirror overrides
 */
-
-#wysiwygButton {
-    font-size: 15px;
-}
-
-#markdownButton {
-    font-size: 15px;
-}
 
 .ProseMirror:focus {
     outline: 0;
@@ -38,15 +31,112 @@
     border-width: 1px;
     border-color: black;
     */
-    overflow-y: auto;
+    overflow-y: scroll;
     height: 100vh;
-    max-height: 100vh;
+    max-height: 90%;
     font-family: 'Inter-Regular';
 }
 
+/* scroll bar customization */
+::-webkit-scrollbar {
+    width: 6px; 
+    height: 4px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color:#939393; 
+    -webkit-border-radius: 1ex;
+}
+
+
+/* input button node container (menu bar) */
+#inputButtonNodeContainer {
+    background-color:#212121;
+    height: 50px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+/* label buttons */
+#markdownButtonParent {
+    display: inline;
+    margin-right: 15px;
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    position: relative;
+    /*background-color: #343434;*/
+    color: white;
+}
+
+#wysiwygButtonParent {
+    display: inline;
+    padding-right: 15px;
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    position: relative;
+    /*background-color: #343434;*/
+    color: white;
+    margin-left: 350px;
+}
+
+#wysiwygButton {
+    font-size: 15px;
+    margin-top: 15px;
+    /*position: relative;*/
+}
+
+#markdownButton {
+    font-size: 15px;
+    margin-top: 15px;
+    /*position: relative;*/
+}
+
+/* 
+modify input buttons to get custom appearance
+
+credit: https://stackoverflow.com/questions/4253920/how-do-i-change-the-color-of-radio-buttons
+user: Vadim Ovchinnikov
+*/
+
+input[type="radio"] {
+    /* remove standard background appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* create custom radiobutton appearance */
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    padding: 6px;
+    /* background-color only for content */
+    background-clip: content-box;
+    border: 1px solid #bbbbbb;
+    background-color: #e7e6e7;
+    border-radius: 20%;
+    margin: -5px;
+}
+
+input[type="radio"]:checked {
+    background-color: #b964fa;
+}
+
+label {
+    margin-left: 10px;
+    /*background-color: #343434;*/
+}
+
+/*
+* html tag/element overrides (used to globally style the editor)
+*
+* taken/referenced from https://github.com/alexwkleung/Markdown-CSS/blob/main/css/dark.css
+*
+*/
+
+/*
 #editor .milkdown-awfb1s {
     position: sticky;
 }
+*/
 
 /*
 .milkdown {
@@ -56,15 +146,61 @@
 }
 */
 
-#editor .milkdown .editor {
-    padding: 0px 0px;
+/* outline */
+#editor .milkdown .material-icons-outlined {
+    color: rgb(104, 116, 122);
+}
+
+/* media queries for window sizes */
+/* default window */
+@media (min-width: 1024px) {
+    #editor .milkdown .editor {
+        padding: 0px 0px;
+        position: fixed;
+        width: 65%;
+        left: 66%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%); /* Safari and Chrome*/
+        transform: translate(-50%, -50%);
+    }
+
+    .ProseMirror {
+        font-size: 20px;
+        /*
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        */
+        overflow-y: scroll;
+        height: 100vh;
+        max-height: 90%;
+        font-family: 'Inter-Regular';
+    }
+}
+
+/* full screen */
+@media (min-width: 1080px) {
+    #editor .milkdown .editor {
+        padding: 0px 0px;
+        position: fixed;
+        width: 65%;
+        left: 60%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%); /* Safari and Chrome*/
+        transform: translate(-50%, -50%);
+    }    
 }
 
 /*
-* html tag/element overrides (used to globally style the editor)
-*
-* taken/referenced from https://github.com/alexwkleung/Markdown-CSS/blob/main/css/dark.css
-*
+#editor .milkdown .editor {
+    padding: 0px 0px;
+    position: fixed;
+    width: 65%;
+    left: 55%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
 */
 
 /* slash menu */

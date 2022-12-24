@@ -31,14 +31,20 @@
 
 #openFile  {
     font-size: 15px;
+    position: sticky;
+    margin-top: 15px;
 }
 
 #saveFile {
     font-size: 15px;
+    position: sticky;
+    margin-top: 15px;
 }
 
 #openFolder {
     font-size: 15px;
+    position: sticky;
+    margin-top: 15px;
 }
 
 ul, .parentFolder {
@@ -48,6 +54,7 @@ ul, .parentFolder {
 .parentFolder {
     margin: 0;
     padding: 0;
+    margin-top: 15px;
 }
 
 .caret {
