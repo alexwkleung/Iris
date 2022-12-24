@@ -56,7 +56,7 @@ export class FileDirectoryBuilder {
 
         //span child to li
         this.EvaDOM.DOMBuilderChildWithRef(
-            'ul',
+            'select',
             'class',
             "nested",
             undefined,
@@ -68,7 +68,7 @@ export class FileDirectoryBuilder {
 
         if(fileName !== undefined) {
             this.EvaDOM.DOMBuilderChildNoAttr(
-                'li',
+                'option',
                 fileName as string | undefined,
                 EvaDOMBuilderUtil.prevChildNode,
                 1,
@@ -90,7 +90,7 @@ export class FileDirectoryBuilder {
 
     public Eva_FileDirectoryTreeFilesBuilder(stringArray: string[]) {
         this.EvaDOM.DOMBuilderChildWithStringArray(
-            'li',
+            'option',
             EvaDOMBuilderUtil.prevChildNode,
             stringArray
         )

@@ -7,7 +7,6 @@
 */
 
 import { LocalFileDirectory } from '../file_directory/file_directory'
-import { register } from '@tauri-apps/api/globalShortcut'
 
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {

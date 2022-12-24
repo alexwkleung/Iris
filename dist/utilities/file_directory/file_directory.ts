@@ -223,7 +223,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
             //logic for opening a file to the editor from an opened folder within 
             //the directory tree.
-            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('li');
+            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('option');
             console.log(listFiles);
 
             for(let i = 0; i < listFiles.length; i++) {
@@ -241,8 +241,10 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         dir: fs.BaseDirectory.Desktop
                     });
 
+                    //reset
                     this.fileArr.length = 0;
-                    
+                    this.fileStr = " ";
+
                     //resolve promise for fs readTextFile 
                     Promise.resolve(readText).then((fileData) => {
                         //resolved promise value 
@@ -314,8 +316,10 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         dir: fs.BaseDirectory.Desktop
                     });
 
+                    //reset
                     this.fileArr.length = 0;
-                    
+                    this.fileStr = " "; 
+
                     //resolve promise for fs readTextFile 
                     Promise.resolve(readText).then((fileData) => {
                         //resolved promise value 

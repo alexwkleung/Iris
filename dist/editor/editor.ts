@@ -22,6 +22,22 @@ export class ProseMirrorEditorNode {
 
         console.log("Created Editor Node");
 
-        return (App.appNode.appendChild(ProseMirrorEditorNode.editorNode) as HTMLDivElement) 
+        const wysiwygButton = document.createElement('button');
+        wysiwygButton.setAttribute("id", "wysiwygButton");
+
+        wysiwygButton.textContent = "WYSIWYG";
+        ProseMirrorEditorNode.editorNode.appendChild(wysiwygButton);
+
+        const markdownButton = document.createElement('button');
+        markdownButton.setAttribute("id", "markdownButton");
+
+        markdownButton.textContent = "Markdown";
+        ProseMirrorEditorNode.editorNode.appendChild(markdownButton);
+        
+        return App.appNode.appendChild(ProseMirrorEditorNode.editorNode) as HTMLDivElement
+    }
+
+    public EditorSwitches() {
+        //...
     }
 }
