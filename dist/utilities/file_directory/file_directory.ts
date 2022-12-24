@@ -24,7 +24,7 @@ import { dialog, fs, path } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
 import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
-import { insert, getHTML, getMarkdown, replaceAll } from '@milkdown/utils'
+import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { FileSystemConstants } from '../constants/constants'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { EvaDOMBuilderUtil } from 'eva-dom-builder-util'
@@ -32,7 +32,7 @@ import { EvaDOMBuilderUtil } from 'eva-dom-builder-util'
 //stylesheets
 import '../../styles/file_directory.css'
 
-//Local File Directory Div class
+//Local File Directory Node class
 export class LocalFileDirectoryNode {
     //passable created DOM node variables to reference later
     static fileDirectoryNodeParent: HTMLDivElement;
@@ -107,7 +107,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     static saveFileString: string;
 
     //local folder array
-    static localFolderArr: e[][] = [];
+    static localFolderArr: string[] = [];
 
     //local file array
     static localFileArr: string[] = [];
@@ -119,7 +119,6 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     public splitFolderPop2: string | null;
     public splitFolderConcat: string;
 
-    
     public folderFileString: string;
     public splitFolderFile: string[];
     public splitFolderFilePop1: string | null;
@@ -144,9 +143,11 @@ export class LocalFileDirectory extends ProseMirrorEditor {
     private openFileConst: string;
     private saveFileConst: string;
 
-    public recArr: string[] = [];
+    public fileArr: string[] = [];
 
-    //
+    public listFilesRef: string = "";
+
+    //recursively iterate over folder contents
     private OpenLFFolderRecursive(entries: e[]) {
         for(const entry of entries) {
             console.log(entry.path);
@@ -154,7 +155,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             console.log(typeof entry.path);
 
             //push paths of folder to recArr
-            this.recArr.push(entry.path);
+            LocalFileDirectory.localFolderArr.push(entry.path);
 
             //check if the children of opened folder path is a directory
             //...
@@ -183,29 +184,26 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             });
 
             //set recArr length to 0 to reset array
-            this.recArr.length = 0;
+            LocalFileDirectory.localFolderArr.length = 0;
 
             //call recursive function
             this.OpenLFFolderRecursive(entries);
 
-            console.log(this.recArr);
-            console.log(this.recArr.length);
+            console.log(LocalFileDirectory.localFolderArr);
+            console.log(LocalFileDirectory.localFolderArr);
             console.log(this.openFolder + " ---> " + typeof this.openFolder);
         } else if(this.openFolder === null) {
             console.log("User canceled open dialog: Promise Rejected.")
         } 
 
-        //const fileDirectory = document.querySelector('#fileDirectory') as HTMLDivElement;
-
-        //temporary directory title
-        //later: need to contain this in a child container div within fileDirectoryParent div
         this.splitFolderDirectory = this.openFolder.split('/');
         this.splitFolderPop1 = this.splitFolderDirectory.pop() as string | null;
         this.splitFolderPop2 = this.splitFolderDirectory.pop()  as string | null;
         this.splitFolderConcat = this.splitFolderPop2 + "/" + this.splitFolderPop1 as string;
 
+        //check if parentFolder is in the DOM
         if((document.querySelector('.parentFolder'))) {
-            this.folderFileString = this.recArr.toString();
+            this.folderFileString = LocalFileDirectory.localFolderArr.toString();
             this.splitFolderFile = this.folderFileString.split(',');
             this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
             console.log(typeof this.folderFileString);
@@ -223,12 +221,23 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             //re-build file directory tree based on opened file
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.recArr);
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(LocalFileDirectory.localFolderArr);
+
+            //logic for opening a file to the editor from an opened folder within 
+            //the directory tree.
+            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('li');
+            console.log(listFiles);
+
+            for(let i = 0; i < listFiles.length; i++) {
+                listFiles[i].addEventListener('click', () => {
+                   console.log("TEST CLICK");
+                });
+            }
 
             //set window title to path of current opened folder
             await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
         } else {
-            this.folderFileString = this.recArr.toString();
+            this.folderFileString = LocalFileDirectory.localFolderArr.toString();
             this.splitFolderFile = this.folderFileString.split(',');
             this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
             console.log(typeof this.folderFileString);
@@ -240,17 +249,65 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.recArr);
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(LocalFileDirectory.localFolderArr);
 
-            //build file directory based on opened file
-            //this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, this.splitFilePop1);
+            //logic for opening a file to the editor from an opened folder within 
+            //the directory tree.
+            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('li');
+            console.log(listFiles);
+
+            for(let i = 0; i < listFiles.length; i++) {
+                listFiles[i].addEventListener('click', () => {
+                    ProseMirrorEditor.readonly = true;
+
+                    ProseMirrorEditor.editor.destroy();
+                    ProseMirrorEditor.editor.create();
+
+                    this.listFilesRef = listFiles[i].textContent as string; 
+
+                    console.log(this.listFilesRef);
+
+                    const readText= fs.readTextFile(this.listFilesRef, {
+                        dir: fs.BaseDirectory.Desktop
+                    });
+
+                    //const arr: string[] = [];
+
+                    let fileStr: string = " ";
+
+                    //resolve promise for fs readTextFile 
+                    Promise.resolve(readText).then((fileData) => {
+                        //resolved promise value 
+                        //will be pushed into array
+                        this.fileArr.push(fileData);
+                        console.log(this.fileArr);
+
+                        //iterate over array containing 
+                        //file content
+                        for(let fileIndex of this.fileArr) {
+                            fileStr = fileIndex;
+                        }
+
+                        //console.log(fileStr);
+                        //open file content in editor
+                        ProseMirrorEditor.editor.action(replaceAll(fileStr, true));
+                    });
+
+                    console.log(fileStr);
+                    console.log(this.listFilesRef);
+                    console.log("TEST CLICK");
+                });
+            }  
+
+            //set window title to path of current opened folder
+            await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
         }
     }
 
     //open file dialog
     public async OpenLF(): Promise<void> {
         //reset local file array
-        LocalFileDirectory.localFileArr.length = 0
+        LocalFileDirectory.localFileArr.length = 0;
 
         LocalFileDirectory.openFileString = " ";
 
@@ -264,10 +321,10 @@ export class LocalFileDirectory extends ProseMirrorEditor {
         }) as string;
 
         const readFileToArr = fs.readTextFile(this.openFile, {
-            dir: fs.BaseDirectory.Desktop || fs.BaseDirectory.Home
+            dir: fs.BaseDirectory.Desktop //|| fs.BaseDirectory.Home
         })
 
-        const fileDirectory = document.querySelector('#fileDirectory') as HTMLElement;
+        //const fileDirectory = document.querySelector('#fileDirectory') as HTMLElement;
         
         //temporary directory folder title
         this.splitFileDirectory = this.openFile.split('/');
@@ -275,15 +332,6 @@ export class LocalFileDirectory extends ProseMirrorEditor {
         this.splitFilePop2 = this.splitFileDirectory.pop() as string | null;
         this.splitFilePop3 = this.splitFileDirectory.pop() as string | null;
         this.splitFileConcat1 = this.splitFilePop3 + "/" + this.splitFilePop2 as string;
-        //fileDirectory.textContent = this.splitFilePop2 as string | null;
-
-        //temporary file tree example
-        //when doing actual implementation of the file tree, 
-        //make sure to create elements/nodes dynamically.
-        //
-        //folder name should be parent div that is collapsible
-        //once you open the collapsible parent div, it will reveal the file names (child divs)
-        //fileDirectory.innerHTML = this.splitFileConcat1 as string + "<br><br>" + "\t" + this.splitFilePop1 as string;
 
         this.splitFileConcat2 = this.splitFilePop3 + "/" + this.splitFilePop2;
 
@@ -339,8 +387,8 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                 //break;
             }
 
-            console.log("OUTSIDE LOOP:")
-            console.log(LocalFileDirectory.openFileString);
+            //console.log("OUTSIDE LOOP:")
+            //console.log(LocalFileDirectory.openFileString);
 
             //check if editor node is present in the DOM before inserting file content
             if(document.querySelector('.milkdown')) {
@@ -352,8 +400,15 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
             } else {
+                await ProseMirrorEditor.editor.create();
 
+                ProseMirrorEditor.readonly = true;
+
+                //insert raw markdown string into editor state by replacing 
+                //all its contents with the opened file string
+                ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
             }
+
             //set window title to path of currernt opened file
             await appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
         } else if(this.openFile === null) {
@@ -375,7 +430,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
 
         //write to file
         this.saveFile = await fs.writeTextFile({ 
-            path: this.openFile, 
+            path: this.listFilesRef, 
             contents: ProseMirrorEditor.editor.action(getMarkdown())
         }, { 
             dir: fs.BaseDirectory.Desktop //|| fs.BaseDirectory.Home

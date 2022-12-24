@@ -23,7 +23,7 @@
         "removeDir": true,
         "removeFile": true,
         "renameFile": true,
-        "scope": ["$HOME/Iris_Notes/*", "$DESKTOP/Iris_Notes/*"],
+        "scope": ["$DESKTOP/Iris_Notes/*"],
         "writeFile": true
       },
       "dialog": {

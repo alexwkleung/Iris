@@ -82,3 +82,8 @@ ul, .parentFolder {
 li {
     margin-bottom: 10px;
 }
+
+/* figure out this later */
+.fileClickCheck {
+    border: 1px solid;
+}
