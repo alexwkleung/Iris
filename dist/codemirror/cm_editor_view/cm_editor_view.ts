@@ -1,6 +1,5 @@
 import { EditorView } from '@codemirror/view'
 import { CodeMirror_EditorState } from '../cm_editor_state/cm_editor_state'
-import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
 
 export class CodeMirror_EditorView {
     //ref

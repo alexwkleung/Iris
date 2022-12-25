@@ -5,10 +5,10 @@
 *
 */
 
-import { ProseMirrorEditorNode } from '../../editor/editor'
+import { ProseMirrorEditorNode } from '../../pm_editor/pm_editor_node'
 import { LocalFileDirectoryNode } from '../file_directory/file_directory'
 import { LocalEventListeners } from '../event_listeners/event_listeners'
-import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
+import { ProseMirrorEditor } from '../../pm_editor/pm_editor_state/pm_editor_state'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'

@@ -2,6 +2,9 @@
 * stylesheet for overriding any current styles
 *
 * be aware that conflicts can/will happen, so treat this file as a global
+* 
+* this big stylesheet will be cleaned up in the near future as it is currently 
+* quite difficult to navigate around
 *
 */
 
@@ -33,9 +36,9 @@
     width: 68%;
     /*margin-top: 20px;*/
     height: 100vh;
-    max-height: 93%;
+    max-height: 85%;
     position: fixed;
-    display: "none";
+    margin-top: 30px;
 }
 
 /*
@@ -76,12 +79,21 @@
     -webkit-border-radius: 1ex;
 }
 
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
 /* input button node container (menu bar) */
 #inputButtonNodeContainer {
     background-color:#212121;
     height: 50px;
     overflow-x: scroll;
     overflow-y: hidden;
+    position: relative;
+    z-index: 1;
+    /*border: 1px solid;*/
+    width: 800px;
+    margin-left: 320px;
 }
 
 /* label buttons */
@@ -93,6 +105,7 @@
     position: relative;
     /*background-color: #343434;*/
     color: white;
+    right: 330px;
 }
 
 #wysiwygButtonParent {
@@ -104,6 +117,19 @@
     /*background-color: #343434;*/
     color: white;
     margin-left: 350px;
+    right: 330px;
+}
+
+#readingButtonParent {
+    display: inline;
+    padding-right: 15px;
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    position: relative;
+    /*background-color: #343434;*/
+    color: white;
+    margin-left: 350px;
+    right: 330px;
 }
 
 #wysiwygButton {
@@ -118,6 +144,10 @@
     /*position: relative;*/
 }
 
+#readingButton {
+    font-size: 15px;
+    margin-top: 15px;
+}
 /* 
 modify input buttons to get custom appearance
 
@@ -160,18 +190,16 @@ label {
 */
 
 /*
-#editor .milkdown-awfb1s {
-    position: sticky;
-}
-*/
-
-/*
 .milkdown {
     border-style: solid;
     border-width: 1px;
     border-color: black;
 }
 */
+
+#editor .milkdown .editor .list-item[data-list-type='bullet']>.list-item_label {
+    line-height: 1.5;
+}
 
 /* outline */
 #editor .milkdown .material-icons-outlined {
@@ -189,6 +217,8 @@ label {
         top: 50%;
         -webkit-transform: translate(-50%, -50%); /* Safari and Chrome*/
         transform: translate(-50%, -50%);
+        /*border: 1px solid;*/
+        margin-top: 20px;
     }
 
     .ProseMirror {
@@ -216,6 +246,21 @@ label {
         -webkit-transform: translate(-50%, -50%); /* Safari and Chrome*/
         transform: translate(-50%, -50%);
     }    
+
+    #cm_editor { 
+        font-size: 20px;
+        margin-left: 320px;
+        overflow: scroll;
+        /*border: 1px solid;*/
+        /*top: 200px;*/
+        width: 68%;
+        /*margin-top: 20px;*/
+        height: 100vh;
+        max-height: 90%;
+        position: fixed;
+        margin-top: 30px;
+    }
+    
 }
 
 /*
@@ -317,6 +362,7 @@ label {
     width: 65%;
     margin-left: 350px;
     background-color: #212121;
+    display: "none";
 }
 
 /* milkdown editor */

@@ -23,12 +23,12 @@ import { App } from '../../app'
 import { dialog, fs, path } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
-import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
+import { ProseMirrorEditor } from '../../pm_editor/pm_editor_state/pm_editor_state'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { FileSystemConstants } from '../constants/constants'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { EvaDOMBuilderUtil } from 'eva-dom-builder-util'
-import { ProseMirrorEditorNode } from '../../editor/editor'
+import { ProseMirrorEditorNode } from '../../pm_editor/pm_editor_node'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
 
 //stylesheets
@@ -358,7 +358,7 @@ export class LocalFileDirectory {
                             changes: { from: 0, insert: ProseMirrorEditor.editor.action(getMarkdown())}
                         });
                         */
-                       
+
                         //show input button node container 
                         ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
 
@@ -370,27 +370,11 @@ export class LocalFileDirectory {
 
                         //remove disabled attribute from markdown input label
                         ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
+
+                        console.log(this.fileStr);
                     });
                 
                     console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
-
-                    //nested function modeSwitcher
-                    /*
-                    function modeSwitcher() {
-                        const input = (document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input');
-
-                        for(let i = 0; i < input.length; i++) {
-                            input[i].addEventListener('click', () => {
-                                if(input[i].value === "wysiwygButton") {
-                                    console.log("WYSIWYG");
-                                } else if(input[i].value === "markdownButton") {
-                                    console.log("Markdown")
-                                }
-                            })
-                        }
-                    }
-                    modeSwitcher();
-                    */
 
                     console.log(this.fileStr);
                     console.log(this.listFilesRef);

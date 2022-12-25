@@ -9,17 +9,20 @@
 import { LocalFileDirectory } from '../file_directory/file_directory'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
-import { ProseMirrorEditorNode } from '../../editor/editor'
-import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
+import { ProseMirrorEditorNode } from '../../pm_editor/pm_editor_node'
+import { ProseMirrorEditor } from '../../pm_editor/pm_editor_state/pm_editor_state'
 import { EditorModeConstants } from '../constants/constants'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
-import { CodeMirror_EditorState } from '../../codemirror/cm_editor_state/cm_editor_state'
 
 //const LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
+    //local file directory object
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
-    private CM_View = new CodeMirror_EditorView() as CodeMirror_EditorView;
+
+    //constant refs
+    public wysiwygConst: string;
+    public markdownConst: string
 
     //open folder listener
     public openFolderListener() {
@@ -69,33 +72,46 @@ export class LocalEventListeners extends LocalFileDirectory {
                 //check if value is wysiwyg
                 if(input[i].value === "wysiwygButton") {
                     console.log("WYSIWYG");
-                    EditorModeConstants.WYSIWYG_Active;
-                    EditorModeConstants.Markdown_Inactive;
+
+                    //set constants
+                    this.wysiwygConst = EditorModeConstants.WYSIWYG_Active;
+                    this.markdownConst = EditorModeConstants.Markdown_Inactive;
 
                     //check if markdown editor is visible
                     if((document.querySelector('#cm_editor') as HTMLElement).style.display === "") {
+                        //hide CM editor
                         CodeMirror_EditorNode.editorNode.style.display = "none";
+
+                        //show PM editor
                         ProseMirrorEditorNode.editorNode.style.display = "";
+
+                        //replace all contents of wysiwyg editor with markdown editor contents
                         ProseMirrorEditor.editor.action(replaceAll(CodeMirror_EditorView.editorView.state.doc.toString()));
                     } else if((document.querySelector('#cm_editor') as HTMLElement).style.display === "none") { 
+                        this.wysiwygConst = EditorModeConstants.WYSIWYG_Active;
+                        this.markdownConst = EditorModeConstants.Markdown_Inactive;
+                        
                         ProseMirrorEditorNode.editorNode.style.display = "";
+
                         ProseMirrorEditor.editor.action(replaceAll(CodeMirror_EditorView.editorView.state.doc.toString()));
                     }
                 //check if value is markdownButton
                 } else if(input[i].value === "markdownButton") {
                     console.log("Markdown");
-                    EditorModeConstants.Markdown_Active;
-                    EditorModeConstants.WYSIWYG_Inactive;
+                    this.markdownConst = EditorModeConstants.Markdown_Active;
+                    this.wysiwygConst = EditorModeConstants.WYSIWYG_Inactive;
 
                     //check if wysiwyg editor is visible
-                    if((document.querySelector('#editor') as HTMLElement).style.display === "") {
-                        //CodeMirror_EditorView.editorView.destroy();
-
-                        //this.CM_View.CodeMirror_EditorView();
-
+                    if((document.querySelector('#editor') as HTMLElement).style.display === "") {                        
+                        //hide PM editor
                         ProseMirrorEditorNode.editorNode.style.display = "none";
+
+                        //show CM editor
                         CodeMirror_EditorNode.editorNode.style.display = "";
 
+                        //dispatch an insert change to editorview
+                        //
+                        //inserts wysiwyg editor contents into markdown editor
                         CodeMirror_EditorView.editorView.dispatch({
                             changes: {
                                 from: 0,
@@ -105,10 +121,9 @@ export class LocalEventListeners extends LocalFileDirectory {
                         });
                     //check if wysiwyg editor is invisible 
                     } else if((document.querySelector('#editor') as HTMLElement).style.display === "none") {
-                        //CodeMirror_EditorView.editorView.destroy();
-
-                        //this.CM_View.CodeMirror_EditorView();
-
+                        this.markdownConst = EditorModeConstants.Markdown_Active;
+                        this.wysiwygConst = EditorModeConstants.WYSIWYG_Inactive;
+                        
                         CodeMirror_EditorNode.editorNode.style.display = "";
 
                         CodeMirror_EditorView.editorView.dispatch({

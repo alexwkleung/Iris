@@ -54,7 +54,7 @@ export class ProseMirrorEditor {
             //bug with images crashing app
             //may decide to remove image functionality later
             //.use(upload)
-            .use(trailing)
+            //.use(trailing)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('#editor'))
                 ctx.set(editorViewOptionsCtx, { editable })

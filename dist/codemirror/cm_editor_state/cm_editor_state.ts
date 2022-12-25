@@ -2,8 +2,7 @@ import { EditorState, Compartment } from '@codemirror/state'
 import { 
     keymap, 
     rectangularSelection, 
-    drawSelection, 
-    highlightActiveLine 
+    drawSelection
 } from '@codemirror/view'
 import { 
     defaultKeymap, 
@@ -13,8 +12,8 @@ import {
 } from '@codemirror/commands'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
-import { bracketMatching } from '@codemirror/language'
 import { EditorView } from '@codemirror/view'
+
 //CodeMirror EditorState class
 export class CodeMirror_EditorState {
     //ref
@@ -31,13 +30,15 @@ export class CodeMirror_EditorState {
                 history(),
                 rectangularSelection(),
                 drawSelection(),
-                highlightActiveLine(),
-                bracketMatching(),
                 keymap.of([
                     ...defaultKeymap,
                     ...[indentWithTab],
                     ...historyKeymap
-                ])
+                ]),
+                //EditorView.lineWrapping
+                EditorView.theme({
+                    '.cm-cursor, .cm-dropCursor': { borderLeftColor: '#DDDDDD' }
+                })
             ]
         });
 

@@ -15,7 +15,7 @@ import '../styles/themes/prism-coldark-dark.css'
 export class ProseMirrorEditorNode {
     //passable created DOM node variables to reference later
 
-    //editor node
+    //editor node ref
     static editorNode: HTMLDivElement;
 
     //input button node container
@@ -26,10 +26,15 @@ export class ProseMirrorEditorNode {
     static wysiwygInputNode: HTMLInputElement;
     static wysiwygInputLabelNode: HTMLLabelElement;
 
-    //markdonw input
+    //markdown input
     static markdownInputParentNode: HTMLDivElement;
     static markdownInputNode: HTMLInputElement;
     static markdownInputLabelNode: HTMLLabelElement;
+
+    //reading input 
+    static readingInputParentNode: HTMLDivElement;
+    static readingInputNode: HTMLInputElement;
+    static readingInputLabelNode: HTMLLabelElement;
 
     public PMEditorNode() {
         //editor node
@@ -78,18 +83,41 @@ export class ProseMirrorEditorNode {
         ProseMirrorEditorNode.inputButtonNodeContainer = document.createElement('div');
         ProseMirrorEditorNode.inputButtonNodeContainer.setAttribute("id", "inputButtonNodeContainer");
         ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "none";
-        
+
+        //reading input button container
+        ProseMirrorEditorNode.readingInputParentNode = document.createElement('div');
+        ProseMirrorEditorNode.readingInputParentNode.setAttribute("id", "readingInputParent");
+
+        //reading input node
+        ProseMirrorEditorNode.readingInputNode = document.createElement('input');
+        ProseMirrorEditorNode.readingInputNode.setAttribute("type", "radio");
+        ProseMirrorEditorNode.readingInputNode.setAttribute("value", "reading");
+        ProseMirrorEditorNode.readingInputNode.setAttribute("id", "readingButton");
+        ProseMirrorEditorNode.readingInputNode.setAttribute("value", "readingButton");
+        ProseMirrorEditorNode.readingInputNode.setAttribute("name", "editorSwitcher");
+        ProseMirrorEditorNode.readingInputNode.setAttribute("disabled", "");
+
+        ProseMirrorEditorNode.readingInputLabelNode = document.createElement('label');
+        ProseMirrorEditorNode.readingInputNode.setAttribute("for", "readingButton");
+        ProseMirrorEditorNode.readingInputNode.textContent = "Reading";
+
         //append childs
         App.appNode.appendChild(ProseMirrorEditorNode.inputButtonNodeContainer);
 
         App.appNode.appendChild(ProseMirrorEditorNode.editorNode);
+
+        //containers
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.wysiwygInputParentNode);
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.markdownInputParentNode);
+        ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.readingInputParentNode)
 
         ProseMirrorEditorNode.wysiwygInputParentNode.appendChild(ProseMirrorEditorNode.wysiwygInputNode);
         ProseMirrorEditorNode.wysiwygInputParentNode.appendChild(ProseMirrorEditorNode.wysiwygInputLabelNode);
 
         ProseMirrorEditorNode.markdownInputParentNode.appendChild(ProseMirrorEditorNode.markdownInputNode);
         ProseMirrorEditorNode.markdownInputParentNode.appendChild(ProseMirrorEditorNode.markdownInputLabelNode);
+
+        ProseMirrorEditorNode.readingInputParentNode.appendChild(ProseMirrorEditorNode.readingInputNode);
+        ProseMirrorEditorNode.readingInputParentNode.appendChild(ProseMirrorEditorNode.readingInputLabelNode);
     }
 }

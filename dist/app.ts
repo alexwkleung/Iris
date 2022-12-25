@@ -17,6 +17,7 @@ import './styles/katex.min.css'
 
 //App class
 export class App {
+    //ref
     static appNode: HTMLDivElement;
 
     static appDivFn(): void {
