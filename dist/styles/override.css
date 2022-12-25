@@ -16,6 +16,34 @@
     src: url('./fonts/app/Inter-Bold.ttf');
 }
 
+/* CodeMirror overrides */
+
+/*
+.ͼ1 .cm-line {
+    font-size: 20px;
+}
+*/
+
+#cm_editor { 
+    font-size: 20px;
+    margin-left: 320px;
+    overflow: scroll;
+    /*border: 1px solid;*/
+    /*top: 200px;*/
+    width: 68%;
+    /*margin-top: 20px;*/
+    height: 100vh;
+    max-height: 93%;
+    position: fixed;
+    display: "none";
+}
+
+/*
+.ͼ1 .cm-line {
+    margin-top: 20px;
+}
+*/
+
 /*
 * ProseMirror overrides
 */
@@ -39,7 +67,7 @@
 
 /* scroll bar customization */
 ::-webkit-scrollbar {
-    width: 6px; 
+    width: 10px; 
     height: 4px; 
 }
 
@@ -47,7 +75,6 @@
     background-color:#939393; 
     -webkit-border-radius: 1ex;
 }
-
 
 /* input button node container (menu bar) */
 #inputButtonNodeContainer {

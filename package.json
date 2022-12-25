@@ -29,6 +29,12 @@
     "vite": "^4.0.1"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.1.2",
+    "@codemirror/lang-markdown": "^6.0.5",
+    "@codemirror/language": "^6.3.2",
+    "@codemirror/language-data": "^6.1.0",
+    "@codemirror/state": "^6.1.4",
+    "@codemirror/view": "^6.7.1",
     "@milkdown/core": "^6.5.4",
     "@milkdown/plugin-block": "^6.5.4",
     "@milkdown/plugin-clipboard": "^6.5.4",

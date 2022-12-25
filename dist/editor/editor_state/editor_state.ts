@@ -24,10 +24,11 @@ import { trailing } from '@milkdown/plugin-trailing'
 
 //ProseMirrorState class
 export class ProseMirrorEditor {
+    //refs
     static editor: Editor;
     static readonly: boolean;
     
-    public async PMState(): Promise<Editor> {
+    public async PM_State(): Promise<Editor> {
         ProseMirrorEditor.readonly = false;
 
         console.log(ProseMirrorEditor.readonly);

@@ -8,7 +8,7 @@
 import { MainObjects } from './utilities/objects/main_objects'
 
 //main function
-function main() {
+function main(): void {
     //Local File Directory Node
     MainObjects.LFDirectoryNode.LFDirectoryDiv();
     //
@@ -18,12 +18,19 @@ function main() {
     //
 
     //ProseMirror Editor State (Milkdown)
-    MainObjects.PMEditor.PMState();
+    MainObjects.PMEditor.PM_State();
+
+    //CodeMirror Editor Nodes
+    MainObjects.CMEditorNode.CodeMirrorEditorNode();
+
+    //CodeMirror Editor View
+    MainObjects.CMEditorView.CodeMirror_EditorView();
 
     //Local Event Listeners
     MainObjects.LocalEvt.openFolderListener();
     MainObjects.LocalEvt.openFileListener();
     MainObjects.LocalEvt.saveFileListener();
+    MainObjects.LocalEvt.editorMode();
     //
 }   
 main();

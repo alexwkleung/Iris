@@ -12,3 +12,10 @@ export enum FileSystemConstants {
     CloseDialog = "Dialog Closed",
     OpenFolder = "Folder Opened",
 }
+
+export enum EditorModeConstants {
+    WYSIWYG_Active = "WYSIWYG Active",
+    WYSIWYG_Inactive = "WYSIWYG Inactive",
+    Markdown_Active = "Markdown Active",
+    Markdown_Inactive = "Markdown Inactive"
+}

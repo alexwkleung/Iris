@@ -29,6 +29,7 @@ import { FileSystemConstants } from '../constants/constants'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { EvaDOMBuilderUtil } from 'eva-dom-builder-util'
 import { ProseMirrorEditorNode } from '../../editor/editor'
+import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
 
 //stylesheets
 import '../../styles/file_directory.css'
@@ -97,7 +98,7 @@ export class LocalFileDirectoryNode {
 }
 
 //Local File Directory class
-export class LocalFileDirectory extends ProseMirrorEditor {
+export class LocalFileDirectory {
     //FileDirectoryBuilder object
     private FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
 
@@ -169,7 +170,7 @@ export class LocalFileDirectory extends ProseMirrorEditor {
             } 
         }
     }
-   
+
     //open folder dialog (need to work on this!!)
     public async OpenLFFolder() {
         //open folder dialog
@@ -351,6 +352,13 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         //open file content in editor
                         ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
 
+                        //
+                        /*
+                        CodeMirror_EditorView.editorView.dispatch({
+                            changes: { from: 0, insert: ProseMirrorEditor.editor.action(getMarkdown())}
+                        });
+                        */
+                       
                         //show input button node container 
                         ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
 
@@ -363,6 +371,26 @@ export class LocalFileDirectory extends ProseMirrorEditor {
                         //remove disabled attribute from markdown input label
                         ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
                     });
+                
+                    console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
+
+                    //nested function modeSwitcher
+                    /*
+                    function modeSwitcher() {
+                        const input = (document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input');
+
+                        for(let i = 0; i < input.length; i++) {
+                            input[i].addEventListener('click', () => {
+                                if(input[i].value === "wysiwygButton") {
+                                    console.log("WYSIWYG");
+                                } else if(input[i].value === "markdownButton") {
+                                    console.log("Markdown")
+                                }
+                            })
+                        }
+                    }
+                    modeSwitcher();
+                    */
 
                     console.log(this.fileStr);
                     console.log(this.listFilesRef);

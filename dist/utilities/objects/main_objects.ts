@@ -8,8 +8,10 @@
 import { ProseMirrorEditorNode } from '../../editor/editor'
 import { LocalFileDirectoryNode } from '../file_directory/file_directory'
 import { LocalEventListeners } from '../event_listeners/event_listeners'
-import { ProseMirrorEditor } from '../../editor/editor_state/editor_state';
+import { ProseMirrorEditor } from '../../editor/editor_state/editor_state'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
+import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
+import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
 
 //MainObjects class
 export class MainObjects {
@@ -31,4 +33,10 @@ export class MainObjects {
 
     //DOM Builders
     static FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
+
+    //CodeMirror Editor Node
+    static CMEditorNode = new CodeMirror_EditorNode() as CodeMirror_EditorNode;
+
+    //CodeMirror Editor View
+    static CMEditorView = new CodeMirror_EditorView() as CodeMirror_EditorView;
 }
