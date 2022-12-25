@@ -23,6 +23,7 @@ export class LocalEventListeners extends LocalFileDirectory {
     //constant refs
     public wysiwygConst: string;
     public markdownConst: string
+    public readingConst: string;
 
     //open folder listener
     public openFolderListener() {
@@ -134,8 +135,10 @@ export class LocalEventListeners extends LocalFileDirectory {
                             }
                         });
                     }
+                } else if(input[i].value === "readingButton") {
+                    
                 }
-            })
+            });
         }
     }
 }

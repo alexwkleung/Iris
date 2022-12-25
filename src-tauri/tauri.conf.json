@@ -23,7 +23,7 @@
         "removeDir": true,
         "removeFile": true,
         "renameFile": true,
-        "scope": ["$DESKTOP/Iris_Notes/*"],
+        "scope": ["$DESKTOP/Iris_Notes/*", "$DESKTOP/**", "$HOME/Iris_Notes", "$HOME/**"],
         "writeFile": true
       },
       "dialog": {
@@ -75,6 +75,20 @@
         "startDragging": true,
         "unmaximize": true,
         "unminimize": true
+      },
+      "protocol": {
+        "all": true,
+        "asset": true
+      },
+      "clipboard": {
+        "all": true,
+        "readText": true,
+        "writeText": true
+      },
+      "http": {
+        "all": true,
+        "request": true,
+        "scope": []
       }
     },
     "bundle": {

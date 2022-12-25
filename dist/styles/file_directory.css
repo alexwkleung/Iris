@@ -33,18 +33,24 @@
     font-size: 15px;
     position: sticky;
     margin-top: 15px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #saveFile {
     font-size: 15px;
     position: sticky;
     margin-top: 15px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #openFolder {
     font-size: 15px;
     position: sticky;
     margin-top: 15px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 ul, .parentFolder {

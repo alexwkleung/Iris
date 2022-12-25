@@ -5,9 +5,7 @@
 *
 */
 
-import { Editor, rootCtx, editorViewOptionsCtx, prosePluginsCtx } from '@milkdown/core'
-//import { EditorState } from '@milkdown/prose/state'
-//import { EditorView } from '@milkdown/prose/view'
+import { Editor, rootCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { nord } from '@milkdown/theme-nord'
 import { clipboard } from '@milkdown/plugin-clipboard'
@@ -16,10 +14,10 @@ import { history } from '@milkdown/plugin-history'
 import { indent } from '@milkdown/plugin-indent'
 //import { block } from '@milkdown/plugin-block'
 import { tooltip } from '@milkdown/plugin-tooltip'
-import { slash } from '@milkdown/plugin-slash'
+import { slash, slashPlugin, defaultActions, defaultConfig, createDropdownItem } from '@milkdown/plugin-slash'
 import { prism } from '@milkdown/plugin-prism'
-//import { upload } from '@milkdown/plugin-upload'
-import { trailing } from '@milkdown/plugin-trailing'
+import { upload } from '@milkdown/plugin-upload'
+//import { trailing } from '@milkdown/plugin-trailing'
 //import { listener, listenerCtx } from '@milkdown/plugin-listener'
 
 //ProseMirrorState class
@@ -51,9 +49,7 @@ export class ProseMirrorEditor {
             //for example
             .use(slash)
             .use(prism)
-            //bug with images crashing app
-            //may decide to remove image functionality later
-            //.use(upload)
+            .use(upload)
             //.use(trailing)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('#editor'))

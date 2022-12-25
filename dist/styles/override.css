@@ -28,9 +28,9 @@
 */
 
 #cm_editor { 
-    font-size: 20px;
+    /*font-size: 20px;*/
     margin-left: 320px;
-    overflow: scroll;
+    overflow-y: scroll;
     /*border: 1px solid;*/
     /*top: 200px;*/
     width: 68%;
@@ -39,6 +39,10 @@
     max-height: 85%;
     position: fixed;
     margin-top: 30px;
+}
+
+.cm-editor {
+    font-family: 'Inter-Bold';
 }
 
 /*
@@ -94,6 +98,8 @@
     /*border: 1px solid;*/
     width: 800px;
     margin-left: 320px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 /* label buttons */
@@ -128,7 +134,6 @@
     position: relative;
     /*background-color: #343434;*/
     color: white;
-    margin-left: 350px;
     right: 330px;
 }
 
@@ -148,6 +153,7 @@
     font-size: 15px;
     margin-top: 15px;
 }
+
 /* 
 modify input buttons to get custom appearance
 
@@ -197,6 +203,28 @@ label {
 }
 */
 
+/* slash tooltip */
+#editor .milkdown-xilf5l {
+    /*margin-top: -370px;*/
+    margin-top: -100px;
+    margin-left: -20px;
+    border: 1px solid;
+    height: 45px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* image tooltip  */
+#editor .milkdown-benxqe {
+    margin-top: -120px;
+    margin-left: -25px;
+}
+
+/* temporary fix for image crash */
+#editor .milkdown-18jshmw img { 
+    pointer-events: none !important;
+}
+
 #editor .milkdown .editor .list-item[data-list-type='bullet']>.list-item_label {
     line-height: 1.5;
 }
@@ -233,6 +261,10 @@ label {
         max-height: 90%;
         font-family: 'Inter-Regular';
     }
+
+    #editor .milkdown img {
+        width: 650px;
+    }
 }
 
 /* full screen */
@@ -260,7 +292,10 @@ label {
         position: fixed;
         margin-top: 30px;
     }
-    
+
+    #editor .milkdown img {
+        width: 1600px;
+    }
 }
 
 /*
@@ -280,6 +315,18 @@ label {
     background: #313131;
     border: none;
     box-shadow: none;
+    overflow-y: hidden;
+}
+#editor .milkdown-xilf5l .slash-dropdown-item.active {
+    background: none;
+}
+#editor .milkdown-xilf5l .slash-dropdown-item, .milkdown-xilf5l .slash-dropdown-item .icon {
+    -webkit-transition: none;
+    transition: none;
+}
+#editor .milkdown-xilf5l .slash-dropdown-item {
+    -webkit-transition: none;
+    transition: none;
 }
 
 /* anchor */

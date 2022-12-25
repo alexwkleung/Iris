@@ -49,7 +49,7 @@ export class LocalFileDirectoryNode {
         LocalFileDirectoryNode.fileDirectoryNodeParent = document.createElement('div') as HTMLDivElement;
         LocalFileDirectoryNode.fileDirectoryNodeParent.setAttribute("id", "fileDirectoryParent");
         
-        App.appNode.appendChild(LocalFileDirectoryNode.fileDirectoryNodeParent) as HTMLDivElement;
+        App.appNodeContainer.appendChild(LocalFileDirectoryNode.fileDirectoryNodeParent) as HTMLDivElement;
 
         //browse folder button (temporary)
         LocalFileDirectoryNode.browseFolderBtn = document.createElement('button') as HTMLButtonElement;
@@ -81,7 +81,7 @@ export class LocalFileDirectoryNode {
         LocalFileDirectoryNode.fileDirectoryNode = document.createElement('div') as HTMLDivElement;
         LocalFileDirectoryNode.fileDirectoryNode.setAttribute("id", "fileDirectory");
         
-        App.appNode.appendChild(LocalFileDirectoryNode.fileDirectoryNode) as HTMLDivElement;
+        App.appNodeContainer.appendChild(LocalFileDirectoryNode.fileDirectoryNode) as HTMLDivElement;
         
         const fileDirectoryParent = document.querySelector('#fileDirectoryParent') as HTMLDivElement;
 
@@ -182,7 +182,7 @@ export class LocalFileDirectory {
         //exception handle
         if(this.openFolder) {
             const entries = await fs.readDir("Iris_Notes", {
-                dir: fs.BaseDirectory.Desktop,
+                dir: fs.BaseDirectory.Desktop || fs.BaseDirectory.Home,
                 recursive: true
             });
 
@@ -275,6 +275,9 @@ export class LocalFileDirectory {
 
                         //remove disabled attribute from markdown input label
                         ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
+
+                        //remove disabled attribute from reading input label
+                        ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
                     });
 
                     console.log(this.fileStr);
@@ -370,6 +373,9 @@ export class LocalFileDirectory {
 
                         //remove disabled attribute from markdown input label
                         ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
+
+                        //remove disabled attribute from reading input label
+                        ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
 
                         console.log(this.fileStr);
                     });
@@ -503,6 +509,9 @@ export class LocalFileDirectory {
 
                 //remove disabled attribute from markdown input label
                 ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
+
+                //remove disabled attribute from reading input label
+                ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
             } else {
                 ProseMirrorEditor.readonly = true;
 
@@ -522,6 +531,9 @@ export class LocalFileDirectory {
 
                 //remove disabled attribute from markdown input label
                 ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
+
+                //remove disabled attribute from reading input label
+                ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
             }
 
             //set window title to path of currernt opened file

@@ -18,16 +18,17 @@ import './styles/katex.min.css'
 //App class
 export class App {
     //ref
-    static appNode: HTMLDivElement;
+    static appNodeContainer: HTMLDivElement;
 
-    static appDivFn(): void {
-        App.appNode = document.createElement('div') as HTMLDivElement;
-        App.appNode.setAttribute("id", "app");
+    //app node
+    static appNode(): void {
+        App.appNodeContainer = document.createElement('div') as HTMLDivElement;
+        App.appNodeContainer.setAttribute("id", "app");
 
-        document.body.prepend(App.appNode) as void;
+        document.body.prepend(App.appNodeContainer) as void;
 
         //check if app node is connected
-        if(App.appNode.isConnected) {
+        if(App.appNodeContainer.isConnected) {
             console.log("App is connected to the DOM!");
         } else {
             console.error("App is not connected to the DOM!");
@@ -36,10 +37,10 @@ export class App {
 }
 
 //appMain function
-async function appMain(): Promise<void> {
-    App.appDivFn();
+async function app(): Promise<void> {
+    App.appNode();
 
     //set default app title on startup 
     return await appWindow.setTitle("Iris-dev-build");
 }
-appMain();
+app();

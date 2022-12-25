@@ -84,9 +84,9 @@ export class ProseMirrorEditorNode {
         ProseMirrorEditorNode.inputButtonNodeContainer.setAttribute("id", "inputButtonNodeContainer");
         ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "none";
 
-        //reading input button container
+        //reading input button parent
         ProseMirrorEditorNode.readingInputParentNode = document.createElement('div');
-        ProseMirrorEditorNode.readingInputParentNode.setAttribute("id", "readingInputParent");
+        ProseMirrorEditorNode.readingInputParentNode.setAttribute("id", "readingButtonParent");
 
         //reading input node
         ProseMirrorEditorNode.readingInputNode = document.createElement('input');
@@ -98,13 +98,13 @@ export class ProseMirrorEditorNode {
         ProseMirrorEditorNode.readingInputNode.setAttribute("disabled", "");
 
         ProseMirrorEditorNode.readingInputLabelNode = document.createElement('label');
-        ProseMirrorEditorNode.readingInputNode.setAttribute("for", "readingButton");
-        ProseMirrorEditorNode.readingInputNode.textContent = "Reading";
+        ProseMirrorEditorNode.readingInputLabelNode.setAttribute("for", "readingButton");
+        ProseMirrorEditorNode.readingInputLabelNode.textContent = "Reading";
 
         //append childs
-        App.appNode.appendChild(ProseMirrorEditorNode.inputButtonNodeContainer);
+        App.appNodeContainer.appendChild(ProseMirrorEditorNode.inputButtonNodeContainer);
 
-        App.appNode.appendChild(ProseMirrorEditorNode.editorNode);
+        App.appNodeContainer.appendChild(ProseMirrorEditorNode.editorNode);
 
         //containers
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.wysiwygInputParentNode);

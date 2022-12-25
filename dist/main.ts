@@ -7,30 +7,38 @@
 
 import { MainObjects } from './utilities/objects/main_objects'
 
-//main function
-function main(): void {
-    //Local File Directory Node
-    MainObjects.LFDirectoryNode.LFDirectoryDiv();
-    //
+class Main {
+    public main() {
+        //Local File Directory Node
+        MainObjects.LFDirectoryNode.LFDirectoryDiv();
+        //
+    
+        //ProseMirror Editor Node
+        MainObjects.PMEditorNode.PMEditorNode();
+        //
+    
+        //ProseMirror Editor State (Milkdown)
+        MainObjects.PMEditor.PM_State();
+    
+        //CodeMirror Editor Nodes
+        MainObjects.CMEditorNode.CodeMirrorEditorNode();
+    
+        //CodeMirror Editor View
+        MainObjects.CMEditorView.CodeMirror_EditorView();
+    
+        //Local Event Listeners
+        MainObjects.LocalEvt.openFolderListener();
+        MainObjects.LocalEvt.openFileListener();
+        MainObjects.LocalEvt.saveFileListener();
+        MainObjects.LocalEvt.editorMode();
+        //
+    }    
+}
 
-    //ProseMirror Editor Node
-    MainObjects.PMEditorNode.PMEditorNode();
-    //
+//invoke main
+const _main = new Main() as Main;
 
-    //ProseMirror Editor State (Milkdown)
-    MainObjects.PMEditor.PM_State();
-
-    //CodeMirror Editor Nodes
-    MainObjects.CMEditorNode.CodeMirrorEditorNode();
-
-    //CodeMirror Editor View
-    MainObjects.CMEditorView.CodeMirror_EditorView();
-
-    //Local Event Listeners
-    MainObjects.LocalEvt.openFolderListener();
-    MainObjects.LocalEvt.openFileListener();
-    MainObjects.LocalEvt.saveFileListener();
-    MainObjects.LocalEvt.editorMode();
-    //
-}   
-main();
+const _mainFn = (): void => {
+    _main.main(); 
+}
+_mainFn();

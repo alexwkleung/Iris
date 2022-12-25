@@ -17,5 +17,7 @@ export enum EditorModeConstants {
     WYSIWYG_Active = "WYSIWYG Active",
     WYSIWYG_Inactive = "WYSIWYG Inactive",
     Markdown_Active = "Markdown Active",
-    Markdown_Inactive = "Markdown Inactive"
+    Markdown_Inactive = "Markdown Inactive",
+    Reading_Active = "Reading Active",
+    Reading_Inactive = "Reading Inactive"
 }

@@ -12,6 +12,6 @@ export class CodeMirror_EditorNode {
 
         CodeMirror_EditorNode.editorNode.style.display = "none";
 
-        App.appNode.appendChild(CodeMirror_EditorNode.editorNode);
+        App.appNodeContainer.appendChild(CodeMirror_EditorNode.editorNode);
     }
 }

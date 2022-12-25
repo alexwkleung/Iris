@@ -36,8 +36,15 @@ export class CodeMirror_EditorState {
                     ...historyKeymap
                 ]),
                 //EditorView.lineWrapping
+                //move this theme into a separate file
                 EditorView.theme({
-                    '.cm-cursor, .cm-dropCursor': { borderLeftColor: '#DDDDDD' }
+                    '.cm-cursor, .cm-dropCursor': { 
+                        borderLeftColor: '#DDDDDD' 
+                    },
+                    '&': {
+                        fontSize: "25px",
+                      },
+                  
                 })
             ]
         });
