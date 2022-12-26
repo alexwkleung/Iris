@@ -23,16 +23,18 @@ import { App } from '../../app'
 import { dialog, fs, path } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
-import { ProseMirrorEditor } from '../../pm_editor/pm_editor_state/pm_editor_state'
+import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_state'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { FileSystemConstants } from '../constants/constants'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { EvaDOMBuilderUtil } from 'eva-dom-builder-util'
-import { ProseMirrorEditorNode } from '../../pm_editor/pm_editor_node'
+import { ProseMirrorEditorNode } from '../../prosemirror/pm_editor_node'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
+import { ReadingMode } from '../../reading_mode/reading_mode'
 
 //stylesheets
 import '../../styles/file_directory.css'
+import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
 
 //Local File Directory Node class
 export class LocalFileDirectoryNode {
@@ -101,6 +103,8 @@ export class LocalFileDirectoryNode {
 export class LocalFileDirectory {
     //FileDirectoryBuilder object
     private FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
+
+    private ReMode = new ReadingMode() as ReadingMode;
 
     //string to hold data from file
     static openFileString: string = "";
@@ -264,6 +268,20 @@ export class LocalFileDirectory {
                         //open file content in editor
                         ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
 
+                        //show editor
+                        ProseMirrorEditorNode.editorNode.style.display = "";
+
+                        this.ReMode.readingMode_ProseMirror();
+
+                        //check editor/reader display 
+                        if(CodeMirror_EditorNode.editorNode.style.display === "") {
+                            ProseMirrorEditorNode.editorNode.style.display = "none";
+                            ReadingMode.readingModeNodeContainer.style.display = "none";
+                        } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
+                            CodeMirror_EditorNode.editorNode.style.display = "none";
+                            ProseMirrorEditorNode.editorNode.style.display = "none";
+                        }
+
                         //show input button node container 
                         ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
 
@@ -354,13 +372,27 @@ export class LocalFileDirectory {
                         //console.log(fileStr);
                         //open file content in editor
                         ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
-
-                        //
-                        /*
+                        
                         CodeMirror_EditorView.editorView.dispatch({
-                            changes: { from: 0, insert: ProseMirrorEditor.editor.action(getMarkdown())}
+                            changes: {
+                                from: 0,
+                                to: CodeMirror_EditorView.editorView.state.doc.length,
+                                insert: ProseMirrorEditor.editor.action(getMarkdown())
+                            }
                         });
-                        */
+
+                        this.ReMode.readingMode_ProseMirror();
+
+                        //show editor
+                        ProseMirrorEditorNode.editorNode.style.display = "";
+
+                        if(CodeMirror_EditorNode.editorNode.style.display === "") {
+                            ProseMirrorEditorNode.editorNode.style.display = "none";
+                            ReadingMode.readingModeNodeContainer.style.display = "none";
+                        } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
+                            CodeMirror_EditorNode.editorNode.style.display = "none";
+                            ProseMirrorEditorNode.editorNode.style.display = "none";
+                        }
 
                         //show input button node container 
                         ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
@@ -499,6 +531,9 @@ export class LocalFileDirectory {
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
 
+                //show editor
+                ProseMirrorEditorNode.editorNode.style.display = "";
+
                 //show input button node container 
                 ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
 
@@ -520,6 +555,9 @@ export class LocalFileDirectory {
                 //insert raw markdown string into editor state by replacing 
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
+
+                //show editor
+                ProseMirrorEditorNode.editorNode.style.display = "";
 
                 //show input button node container 
                 ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";

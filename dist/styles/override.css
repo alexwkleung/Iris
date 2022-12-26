@@ -27,6 +27,22 @@
 }
 */
 
+/* reading mode node container */
+#readingModeNodeContainer {
+    /*border: 1px solid;*/
+    height: 100vh;
+    max-height: 90%;
+    position: fixed;
+    width: 64%;
+    margin-left: 335px;
+    overflow-y: scroll;
+    /*background-color: white;*/
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 #cm_editor { 
     /*font-size: 20px;*/
     margin-left: 320px;

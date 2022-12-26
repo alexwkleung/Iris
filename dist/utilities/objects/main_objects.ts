@@ -5,13 +5,14 @@
 *
 */
 
-import { ProseMirrorEditorNode } from '../../pm_editor/pm_editor_node'
+import { ProseMirrorEditorNode } from '../../prosemirror/pm_editor_node'
 import { LocalFileDirectoryNode } from '../file_directory/file_directory'
 import { LocalEventListeners } from '../event_listeners/event_listeners'
-import { ProseMirrorEditor } from '../../pm_editor/pm_editor_state/pm_editor_state'
+import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_state'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
+import { ReadingMode } from '../../reading_mode/reading_mode'
 
 //MainObjects class
 export class MainObjects {
@@ -39,4 +40,7 @@ export class MainObjects {
 
     //CodeMirror Editor View
     static CMEditorView = new CodeMirror_EditorView() as CodeMirror_EditorView;
+
+    //Reading Mode
+    static ReadingMode = new ReadingMode() as ReadingMode;
 }

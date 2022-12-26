@@ -9,16 +9,18 @@
 import { LocalFileDirectory } from '../file_directory/file_directory'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
-import { ProseMirrorEditorNode } from '../../pm_editor/pm_editor_node'
-import { ProseMirrorEditor } from '../../pm_editor/pm_editor_state/pm_editor_state'
+import { ProseMirrorEditorNode } from '../../prosemirror/pm_editor_node'
+import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_state'
 import { EditorModeConstants } from '../constants/constants'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
+import { ReadingMode } from '../../reading_mode/reading_mode'
 
-//const LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
     //local file directory object
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
+    
+    private ReMode_Evt = new ReadingMode() as ReadingMode;
 
     //constant refs
     public wysiwygConst: string;
@@ -77,21 +79,29 @@ export class LocalEventListeners extends LocalFileDirectory {
                     //set constants
                     this.wysiwygConst = EditorModeConstants.WYSIWYG_Active;
                     this.markdownConst = EditorModeConstants.Markdown_Inactive;
+                    this.readingConst = EditorModeConstants.Reading_Inactive;
 
                     //check if markdown editor is visible
                     if((document.querySelector('#cm_editor') as HTMLElement).style.display === "") {
                         //hide CM editor
                         CodeMirror_EditorNode.editorNode.style.display = "none";
 
+                        //hide reading editor
+                        ReadingMode.readingModeNodeContainer.style.display = "none";
+
                         //show PM editor
                         ProseMirrorEditorNode.editorNode.style.display = "";
 
                         //replace all contents of wysiwyg editor with markdown editor contents
                         ProseMirrorEditor.editor.action(replaceAll(CodeMirror_EditorView.editorView.state.doc.toString()));
+                    //check if codemirror instance is not displayed
                     } else if((document.querySelector('#cm_editor') as HTMLElement).style.display === "none") { 
                         this.wysiwygConst = EditorModeConstants.WYSIWYG_Active;
                         this.markdownConst = EditorModeConstants.Markdown_Inactive;
-                        
+
+                        //hide reading editor
+                        ReadingMode.readingModeNodeContainer.style.display = "none";
+
                         ProseMirrorEditorNode.editorNode.style.display = "";
 
                         ProseMirrorEditor.editor.action(replaceAll(CodeMirror_EditorView.editorView.state.doc.toString()));
@@ -101,11 +111,15 @@ export class LocalEventListeners extends LocalFileDirectory {
                     console.log("Markdown");
                     this.markdownConst = EditorModeConstants.Markdown_Active;
                     this.wysiwygConst = EditorModeConstants.WYSIWYG_Inactive;
+                    this.readingConst = EditorModeConstants.Reading_Inactive;
 
-                    //check if wysiwyg editor is visible
+                    //check if wysiwyg editor is displayed
                     if((document.querySelector('#editor') as HTMLElement).style.display === "") {                        
                         //hide PM editor
                         ProseMirrorEditorNode.editorNode.style.display = "none";
+
+                        //hide reading editor
+                        ReadingMode.readingModeNodeContainer.style.display = "none";
 
                         //show CM editor
                         CodeMirror_EditorNode.editorNode.style.display = "";
@@ -120,11 +134,19 @@ export class LocalEventListeners extends LocalFileDirectory {
                                 insert: ProseMirrorEditor.editor.action(getMarkdown())
                             }
                         });
-                    //check if wysiwyg editor is invisible 
+
+                        //update reading mode from prosemirror instance
+                        this.ReMode_Evt.readingMode_ProseMirror();
+                    //check if wysiwyg editor is not displayed
                     } else if((document.querySelector('#editor') as HTMLElement).style.display === "none") {
                         this.markdownConst = EditorModeConstants.Markdown_Active;
                         this.wysiwygConst = EditorModeConstants.WYSIWYG_Inactive;
-                        
+                        this.readingConst = EditorModeConstants.Reading_Inactive;
+
+                        ProseMirrorEditorNode.editorNode.style.display = "none";
+
+                        ReadingMode.readingModeNodeContainer.style.display = "none";
+
                         CodeMirror_EditorNode.editorNode.style.display = "";
 
                         CodeMirror_EditorView.editorView.dispatch({
@@ -134,9 +156,36 @@ export class LocalEventListeners extends LocalFileDirectory {
                                 insert: ProseMirrorEditor.editor.action(getMarkdown())
                             }
                         });
+                        
+                        //update reading mode from prosemirror  instance
+                        this.ReMode_Evt.readingMode_ProseMirror();
+
                     }
-                } else if(input[i].value === "readingButton") {
-                    
+                //check if reading button is clicked and if prosemirror instance was previously displayed
+                } else if(input[i].value === "readingButton" && ProseMirrorEditorNode.editorNode.style.display === "") {
+                    this.readingConst = EditorModeConstants.Reading_Active;
+                    this.wysiwygConst = EditorModeConstants.WYSIWYG_Inactive;
+                    this.markdownConst = EditorModeConstants.Markdown_Inactive;
+
+                    ProseMirrorEditorNode.editorNode.style.display = "none";
+                    CodeMirror_EditorNode.editorNode.style.display = "none";
+
+                    //update reading mode from prosemirror instance
+                    this.ReMode_Evt.readingMode_ProseMirror();
+
+                    ReadingMode.readingModeNodeContainer.style.display = "";
+                //check if reading button is clicked and check if codemirror instance was previously displayed
+                } else if(input[i].value === "readingButton" && CodeMirror_EditorNode.editorNode.style.display === "") {
+                    this.readingConst = EditorModeConstants.Reading_Active;
+                    this.wysiwygConst = EditorModeConstants.WYSIWYG_Inactive;
+                    this.markdownConst = EditorModeConstants.Markdown_Inactive;
+
+                    CodeMirror_EditorNode.editorNode.style.display = "none";
+
+                    //update reading mode from codemirror instance
+                    this.ReMode_Evt.readingMode_CodeMirror();
+
+                    ReadingMode.readingModeNodeContainer.style.display = "";
                 }
             });
         }

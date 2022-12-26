@@ -42,9 +42,8 @@ export class CodeMirror_EditorState {
                         borderLeftColor: '#DDDDDD' 
                     },
                     '&': {
-                        fontSize: "25px",
+                        fontSize: "20px",
                       },
-                  
                 })
             ]
         });

@@ -40,7 +40,8 @@ export class ProseMirrorEditorNode {
         //editor node
         ProseMirrorEditorNode.editorNode = document.createElement('div') as HTMLDivElement;
         ProseMirrorEditorNode.editorNode.setAttribute("id", "editor");
-
+        ProseMirrorEditorNode.editorNode.style.display = "none";
+        
         console.log("Created Editor Node");
 
         //wysiwyg button parent

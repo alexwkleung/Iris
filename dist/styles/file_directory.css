@@ -53,7 +53,7 @@
     user-select: none;
 }
 
-ul, .parentFolder {
+.parentFolder ul, .parentFolder {
     list-style-type: none;
 }
 
