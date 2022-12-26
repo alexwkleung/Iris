@@ -29,6 +29,12 @@
     word-wrap: break-word;
 }
 
+.noteFilesRef {
+    display: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 #openFile  {
     font-size: 15px;
     position: sticky;

@@ -93,12 +93,10 @@
     width: 10px; 
     height: 4px; 
 }
-
 ::-webkit-scrollbar-thumb {
     background-color:#939393; 
     -webkit-border-radius: 1ex;
 }
-
 ::-webkit-scrollbar-corner {
     background: transparent;
 }
@@ -129,7 +127,6 @@
     color: white;
     right: 330px;
 }
-
 #wysiwygButtonParent {
     display: inline;
     padding-right: 15px;
@@ -141,7 +138,6 @@
     margin-left: 350px;
     right: 330px;
 }
-
 #readingButtonParent {
     display: inline;
     padding-right: 15px;
@@ -152,53 +148,42 @@
     color: white;
     right: 330px;
 }
-
 #wysiwygButton {
     font-size: 15px;
     margin-top: 15px;
     /*position: relative;*/
 }
-
 #markdownButton {
     font-size: 15px;
     margin-top: 15px;
     /*position: relative;*/
 }
-
 #readingButton {
     font-size: 15px;
     margin-top: 15px;
 }
-
 /* 
 modify input buttons to get custom appearance
 
 credit: https://stackoverflow.com/questions/4253920/how-do-i-change-the-color-of-radio-buttons
 user: Vadim Ovchinnikov
 */
-
 input[type="radio"] {
-    /* remove standard background appearance */
     -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
-    /* create custom radiobutton appearance */
     display: inline-block;
     width: 25px;
     height: 25px;
     padding: 6px;
-    /* background-color only for content */
     background-clip: content-box;
     border: 1px solid #bbbbbb;
     background-color: #e7e6e7;
     border-radius: 20%;
     margin: -5px;
 }
-
 input[type="radio"]:checked {
     background-color: #b964fa;
 }
-
 label {
     margin-left: 10px;
     /*background-color: #343434;*/
@@ -241,6 +226,7 @@ label {
     pointer-events: none !important;
 }
 
+/* fix uncentered bullet list */
 #editor .milkdown .editor .list-item[data-list-type='bullet']>.list-item_label {
     line-height: 1.5;
 }
@@ -281,6 +267,11 @@ label {
     #editor .milkdown img {
         width: 650px;
     }
+
+    img {
+        width: 650px;
+        pointer-events: none !important;
+    }
 }
 
 /* full screen */
@@ -289,8 +280,8 @@ label {
         padding: 0px 0px;
         position: fixed;
         width: 65%;
-        left: 60%;
-        top: 50%;
+        left: 46%;
+        top: 47%;
         -webkit-transform: translate(-50%, -50%); /* Safari and Chrome*/
         transform: translate(-50%, -50%);
     }    
@@ -312,19 +303,12 @@ label {
     #editor .milkdown img {
         width: 1600px;
     }
-}
 
-/*
-#editor .milkdown .editor {
-    padding: 0px 0px;
-    position: fixed;
-    width: 65%;
-    left: 55%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    img { 
+        width: 1600px;
+        pointer-events: none !important;
+    }
 }
-*/
 
 /* slash menu */
 #editor .milkdown-xilf5l {
@@ -462,85 +446,54 @@ label {
     /* border-bottom: 0.5px solid; */
 }
 
+/* hr */
 .milkdown .editor hr {
     background-color: white;
 }
 
+
+/* for reading mode (doesn't have id or class, so these are default) */
+h1, h2, h3, h4, h5, h6 {
+    color: white;
+    font-family: 'Inter-Bold';
+    /* text-decoration: underline; */
+    /* border-bottom: 0.5px solid; */
+}
+hr {
+    background-color: white;
+}
 span { 
     color: white;
 }
-
+/*
 pre code {
     color: white;
 }
-
 pre { 
     color: white;
 }
-
+*/
 mark {
     background-color: #455A64;
     color: white;
 }
-
 img { 
-    max-width: 100%;
-	max-height: 100%;
-	object-fit: contain;
+    /*max-width: 100%;*/
+	/*max-height: 100%;*/
+	/*object-fit: contain;*/
+    pointer-events: none !important;
 }
-
-/*
-h1::before { 
-    content: '# ';
-    display: inline;
-    color: rgb(70, 69, 69);
-}
-
-h2::before { 
-    content: '## ';
-    display: inline;
-    color: rgb(70, 69, 69);
-}
-
-h3::before { 
-    content: '### ';
-    display: inline;
-    color: rgb(70, 69, 69);
-}
-
-h4::before { 
-    content: '#### ';
-    display: inline;
-    color: rgb(70, 69, 69);
-}
-
-h5::before { 
-    content: '##### ';
-    display: inline;
-    color: rgb(70, 69, 69);
-}
-
-h6::before { 
-    content: '###### ';
-    display: inline;
-    color: rgb(70, 69, 69);
-}
-*/
-
 ul {
     font-size: 22px;
     color: white;
 }
-
 ol {
     color: white;
     font-size: 22px;
 }
-
 details, summary {
     font-size: 22px;
 }
-
 blockquote  {
     border-left: 3px solid white;
     margin: 1.5em 10px;
@@ -548,7 +501,6 @@ blockquote  {
     margin-left: 1.5em;
     font-size: 22px;
 }
-
 blockquote:before {
     color: white;
     font-size: 4em;
@@ -556,12 +508,10 @@ blockquote:before {
     margin-right: 0.25em;
     vertical-align: -0.4em;
 }
-
 blockquote p {
     display: inline;
     font-size: 22px;
 }
-
 table, th, td {
     border: 1px solid;
     border-collapse: collapse;
@@ -569,12 +519,10 @@ table, th, td {
     color: white;
     padding: 6px 13px;
 }
-
 strong {
     color: #E0E0E0;
     font-size: 24px;
 }
-
 details summary {
     cursor: pointer;
     border-width: 1px;
@@ -584,7 +532,6 @@ details summary {
     border-color:rgb(71, 71, 71);
     color: white;
 }
-
 details p { 
     border-width: 1px;
     width: auto;
@@ -594,7 +541,6 @@ details p {
     border-color:rgb(71, 71, 71);
     color: white;
 }
-
 details summary > * {
     display: inline;
 }

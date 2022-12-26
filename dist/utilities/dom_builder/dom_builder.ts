@@ -98,7 +98,19 @@ export class FileDirectoryBuilder {
             'class',
             "noteFiles",
             EvaDOMBuilderUtil.prevChildNode,
-            stringArray
+            stringArray,
+            false
         );
+    }
+
+    public Eva_FileDirectoryTreeFilesRefBuilder(stringArray: string[]) {
+        this.EvaDOM.DOMBuilderChildWithStringArray(
+            'li',
+            'class',
+            "noteFilesRef",
+            EvaDOMBuilderUtil.prevChildNode,
+            stringArray,
+            false
+        )
     }
 }

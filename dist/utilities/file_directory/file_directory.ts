@@ -160,6 +160,12 @@ export class LocalFileDirectory {
     public localFolderArrSortRef: string[];
     public localFolderArrShiftRef: string | undefined;
 
+    //copy refs for local folder filter
+    public localFolderArrRefCopy: string[] = [];
+    public lfArrSortRefSplit: string[];
+    public mdExtensionArr: string[];
+    public filterMdFiles: string[];
+
     //recursively iterate over folder contents
     private OpenLFFolderRecursive(entries: e[]) {
         for(const entry of entries) {
@@ -169,9 +175,6 @@ export class LocalFileDirectory {
 
             //push paths of folder to recArr
             LocalFileDirectory.localFolderArr.push(entry.path);
-
-            //const mut = LocalFileDirectory.localFolderArr.shift();
-            //console.log(mut);
 
             //check if the children of opened folder path is a directory
             //...
@@ -198,6 +201,8 @@ export class LocalFileDirectory {
                 dir: fs.BaseDirectory.Desktop || fs.BaseDirectory.Home,
                 recursive: true
             });
+            
+            console.log(entries);
 
             //set recArr length to 0 to reset array
             LocalFileDirectory.localFolderArr.length = 0;
@@ -246,21 +251,56 @@ export class LocalFileDirectory {
             //further complications show up
             this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.localFolderArrSortRef);
+            //directly copy the local folder content array to a ref copy array for use later
+            this.localFolderArrRefCopy.length = 0;
+            for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
+                this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
+            }
+////
+            console.log(this.localFolderArrRefCopy);
+            
+            //split the ref array using regex character class array
+            this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
+            //let lfSortRefSplit2: string[] | undefined = this.localFolderArrShiftRef?.split(',');
+            console.log(this.lfArrSortRefSplit); 
+            //console.log(lfSortRefSplit2);
+            
+            this.mdExtensionArr = [".md"];
+            this.filterMdFiles = this.lfArrSortRefSplit.filter(
+                mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
+            ));
+            console.log(this.filterMdFiles);
+            
+            console.log("ARRAY REF COPY OUTPUT");
+            console.log(this.localFolderArrRefCopy);
+                        
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
+
+            //this will build the reference nodes for the directory tree files. 
+            //the reference nodes will be hidden and present in the DOM, however they
+            //will be used only for linking its full path to open files.
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesRefBuilder(this.localFolderArrSortRef);
 
             //logic for opening a file to the editor from an opened folder within 
             //the directory tree.
             const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
+            //list files dom ref
+            const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
             console.log(listFiles);
 
-            for(let i = 0; i < listFiles.length; i++) {
+            //iterate over files list
+            for(let i = 0; i < listFiles.length; i++) { 
                 listFiles[i].addEventListener('click', () => {
                     ProseMirrorEditor.readonly = true;
 
                     ProseMirrorEditor.editor.destroy();
                     ProseMirrorEditor.editor.create();
 
-                    this.listFilesRef = listFiles[i].textContent as string; 
+                    //iterate over list files dom ref array
+                    for(let j = 0; j < listFilesDOMRef.length; j++) {
+                        this.listFilesRef = listFilesDOMRef[i].textContent as string;
+                    }
+                    //this.listFilesRef = listFiles[i].textContent as string; 
 
                     console.log(this.listFilesRef);
 
@@ -362,11 +402,36 @@ export class LocalFileDirectory {
 
             this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.localFolderArrSortRef);
+            //directly copy the local folder content array to a ref copy array for use later
+            this.localFolderArrRefCopy.length = 0;
+            for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
+                this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
+            }
+////
+            console.log(this.localFolderArrRefCopy);
 
+            //split the ref array using regex character class array
+            this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
+            console.log(this.lfArrSortRefSplit); 
+            //console.log(lfSortRefSplit2);
+
+            this.mdExtensionArr = [".md"];
+            this.filterMdFiles = this.lfArrSortRefSplit.filter(
+                mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
+            ));
+            console.log(this.filterMdFiles);
+
+            console.log("ARRAY REF COPY OUTPUT");
+            console.log(this.localFolderArrRefCopy);
+            
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesRefBuilder(this.localFolderArrRefCopy);
+            
             //logic for opening a file to the editor from an opened folder within 
             //the directory tree.
             const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
+            //list files dom ref
+            const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
             console.log(listFiles);
 
             for(let i = 0; i < listFiles.length; i++) {
@@ -377,7 +442,12 @@ export class LocalFileDirectory {
                     ProseMirrorEditor.editor.destroy();
                     ProseMirrorEditor.editor.create();
 
-                    this.listFilesRef = listFiles[i].textContent as string; 
+                    //iterate over list files dom ref array
+                    for(let j = 0; j < listFilesDOMRef.length; j++) {
+                        this.listFilesRef = listFilesDOMRef[i].textContent as string;
+                    }
+
+                    //this.listFilesRef = listFiles[i].textContent as string; 
 
                     console.log(this.listFilesRef);
 
@@ -623,8 +693,6 @@ export class LocalFileDirectory {
 
                 this.ReMode.readingMode_ProseMirror();
 
-                //if(ProseMirrorEditorNode.editorNode.style.display === "none") {
-                    //ProseMirrorEditorNode.editorNode.style.display = "";
                 if(CodeMirror_EditorNode.editorNode.style.display === "") {
                     ReadingMode.readingModeNodeContainer.style.display = "none";
                     ProseMirrorEditorNode.editorNode.style.display = "none";
