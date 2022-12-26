@@ -149,10 +149,16 @@ export class LocalFileDirectory {
     private openFileConst: string;
     private saveFileConst: string;
 
+    //file array + string refs
     public fileArr: string[] = [];
     public fileStr: string = "";
 
+    //list files ref
     public listFilesRef: string = "";
+
+    //local folder array refs
+    public localFolderArrSortRef: string[];
+    public localFolderArrShiftRef: string | undefined;
 
     //recursively iterate over folder contents
     private OpenLFFolderRecursive(entries: e[]) {
@@ -163,6 +169,9 @@ export class LocalFileDirectory {
 
             //push paths of folder to recArr
             LocalFileDirectory.localFolderArr.push(entry.path);
+
+            //const mut = LocalFileDirectory.localFolderArr.shift();
+            //console.log(mut);
 
             //check if the children of opened folder path is a directory
             //...
@@ -200,7 +209,7 @@ export class LocalFileDirectory {
             console.log(LocalFileDirectory.localFolderArr);
             console.log(this.openFolder + " ---> " + typeof this.openFolder);
         } else if(this.openFolder === null) {
-            console.log("User canceled open dialog: Promise Rejected.")
+            throw console.log("User canceled open dialog: Promise Rejected.")
         } 
 
         this.splitFolderDirectory = this.openFolder.split('/');
@@ -225,11 +234,23 @@ export class LocalFileDirectory {
 
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(LocalFileDirectory.localFolderArr);
+            //sort localFolderArr alphabetically
+            this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
+
+            //shift localFolderArray
+            //since the array is alphabetically sorted, we can also assume that .DS_STORE 
+            //would be end up being the first element of the array.
+            //
+            //since .DS_STORE is the only dotfile we want to take out (so it doesn't show in the 
+            //file directory tree), then this method would work okay for now until 
+            //further complications show up
+            this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
+
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.localFolderArrSortRef);
 
             //logic for opening a file to the editor from an opened folder within 
             //the directory tree.
-            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('li');
+            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
             console.log(listFiles);
 
             for(let i = 0; i < listFiles.length; i++) {
@@ -267,6 +288,14 @@ export class LocalFileDirectory {
                         //console.log(fileStr);
                         //open file content in editor
                         ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
+
+                        CodeMirror_EditorView.editorView.dispatch({
+                            changes: {
+                                from: 0,
+                                to: CodeMirror_EditorView.editorView.state.doc.length,
+                                insert: ProseMirrorEditor.editor.action(getMarkdown())
+                            }
+                        });
 
                         //show editor
                         ProseMirrorEditorNode.editorNode.style.display = "";
@@ -329,16 +358,20 @@ export class LocalFileDirectory {
 
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(LocalFileDirectory.localFolderArr);
+            this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
+
+            this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
+
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.localFolderArrSortRef);
 
             //logic for opening a file to the editor from an opened folder within 
             //the directory tree.
-            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByTagName('li');
+            const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
             console.log(listFiles);
 
             for(let i = 0; i < listFiles.length; i++) {
                 listFiles[i].addEventListener('click', () => {
-                    console.log('lcick');
+                    console.log('click');
                     ProseMirrorEditor.readonly = true;
 
                     ProseMirrorEditor.editor.destroy();
@@ -531,8 +564,32 @@ export class LocalFileDirectory {
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
 
+                //update CodeMirror instance
+                CodeMirror_EditorView.editorView.dispatch({
+                    changes: {
+                        from: 0,
+                        to: CodeMirror_EditorView.editorView.state.doc.length,
+                        insert: ProseMirrorEditor.editor.action(getMarkdown())
+                    }
+                });
+
+                //update reader instance
+                this.ReMode.readingMode_ProseMirror();
+
+                ///adsasdasdasdasdas
+                if(ProseMirrorEditorNode.editorNode.style.display === "none") {
+                    ProseMirrorEditorNode.editorNode.style.display = "";
+                }
+                if(CodeMirror_EditorNode.editorNode.style.display === "") {
+                    ReadingMode.readingModeNodeContainer.style.display = "none";
+                    ProseMirrorEditorNode.editorNode.style.display = "none";
+                } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
+                    CodeMirror_EditorNode.editorNode.style.display = "none";
+                    ProseMirrorEditorNode.editorNode.style.display = "none";
+                }
+
                 //show editor
-                ProseMirrorEditorNode.editorNode.style.display = "";
+                //ProseMirrorEditorNode.editorNode.style.display = "";
 
                 //show input button node container 
                 ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
@@ -556,8 +613,28 @@ export class LocalFileDirectory {
                 //all its contents with the opened file string
                 ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
 
+                CodeMirror_EditorView.editorView.dispatch({
+                    changes: {
+                        from: 0,
+                        to: CodeMirror_EditorView.editorView.state.doc.length,
+                        insert: ProseMirrorEditor.editor.action(getMarkdown())
+                    }
+                });
+
+                this.ReMode.readingMode_ProseMirror();
+
+                //if(ProseMirrorEditorNode.editorNode.style.display === "none") {
+                    //ProseMirrorEditorNode.editorNode.style.display = "";
+                if(CodeMirror_EditorNode.editorNode.style.display === "") {
+                    ReadingMode.readingModeNodeContainer.style.display = "none";
+                    ProseMirrorEditorNode.editorNode.style.display = "none";
+                } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
+                    CodeMirror_EditorNode.editorNode.style.display = "none";
+                    ProseMirrorEditorNode.editorNode.style.display = "none";
+                }
+
                 //show editor
-                ProseMirrorEditorNode.editorNode.style.display = "";
+                //ProseMirrorEditorNode.editorNode.style.display = "";
 
                 //show input button node container 
                 ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
@@ -583,7 +660,7 @@ export class LocalFileDirectory {
 
             console.log(this.openFileConst);
 
-            console.error("Open Dialog (User Cancel): Promise Rejected!");
+            throw console.error("Open Dialog (User Cancel): Promise Rejected!");
         }
     }
 
@@ -593,12 +670,28 @@ export class LocalFileDirectory {
 
         console.log(this.saveFileConst);
 
-        //write to file
-        this.saveFile = await fs.writeTextFile({ 
-            path: this.listFilesRef, 
-            contents: ProseMirrorEditor.editor.action(getMarkdown())
-        }, { 
-            dir: fs.BaseDirectory.Desktop //|| fs.BaseDirectory.Home
-        });
+        console.log(this.listFilesRef);
+        
+        //check if prosemirror editor is displayed
+        if(ProseMirrorEditorNode.editorNode.style.display === "") {
+            //write to file
+            this.saveFile = await fs.writeTextFile({ 
+                path: this.listFilesRef, 
+                contents: ProseMirrorEditor.editor.action(getMarkdown())
+            }, { 
+                dir: fs.BaseDirectory.Desktop //|| fs.BaseDirectory.Home
+            });
+        //check if codemirror editor is displayed
+        } else if(CodeMirror_EditorNode.editorNode.style.display === "") {
+            //write to file
+            this.saveFile = await fs.writeTextFile({ 
+                path: this.listFilesRef, 
+                contents: CodeMirror_EditorView.editorView.state.doc.toString()
+            }, { 
+                dir: fs.BaseDirectory.Desktop //|| fs.BaseDirectory.Home
+            });
+        } else {
+            throw console.error("Cannot save from editor.");
+        }
     }
 } 

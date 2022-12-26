@@ -31,7 +31,7 @@ export class App {
         if(App.appNodeContainer.isConnected) {
             console.log("App is connected to the DOM!");
         } else {
-            console.error("App is not connected to the DOM!");
+            throw console.error("App is not connected to the DOM!");
         }
     }
 }

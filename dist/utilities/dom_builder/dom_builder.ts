@@ -35,8 +35,10 @@ export class FileDirectoryBuilder {
             true
         );
 
-        this.EvaDOM.DOMBuilderChildNoAttr(
+        this.EvaDOM.DOMBuilderChild(
             'li',
+            'class',
+            "parentFolderList",
             undefined,
             EvaDOMBuilderUtil.prevChildNode,
             1,
@@ -67,8 +69,10 @@ export class FileDirectoryBuilder {
         );
 
         if(fileName !== undefined) {
-            this.EvaDOM.DOMBuilderChildNoAttr(
+            this.EvaDOM.DOMBuilderChild(
                 'li',
+                'class',
+                'noteFiles',
                 fileName as string | undefined,
                 EvaDOMBuilderUtil.prevChildNode,
                 1,
@@ -91,6 +95,8 @@ export class FileDirectoryBuilder {
     public Eva_FileDirectoryTreeFilesBuilder(stringArray: string[]) {
         this.EvaDOM.DOMBuilderChildWithStringArray(
             'li',
+            'class',
+            "noteFiles",
             EvaDOMBuilderUtil.prevChildNode,
             stringArray
         );
