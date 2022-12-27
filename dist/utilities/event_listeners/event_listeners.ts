@@ -37,6 +37,12 @@ export class LocalEventListeners extends LocalFileDirectory {
                 console.log("Open Local Folder: Promise Resolved.");
             });
         });
+
+        (document.querySelector('#createFile') as HTMLElement).addEventListener('click', async () => {
+            await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
+                console.log("Open Local File: Promise Resolved.");
+            });
+        })
     }
 
     //open file listener
@@ -54,9 +60,25 @@ export class LocalEventListeners extends LocalFileDirectory {
 
     //save file listener
     public saveFileListener() {
-        const saveFile = document.querySelector('#saveFile') as HTMLButtonElement;
+        //const saveFile = document.querySelector('#saveFile') as HTMLButtonElement;
+        const editor = document.querySelector('#editor') as HTMLElement;
+        const cm_editor = document.querySelector('#cm_editor') as HTMLElement;
 
+        /*
         saveFile.addEventListener('click' , async () => {
+            await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
+                console.log("Save Local File: Promise Resolved.");
+            });
+        });
+        */
+       
+        //auto saving 
+        editor.addEventListener('keyup' , async () => {
+            await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
+                console.log("Save Local File: Promise Resolved.");
+            });
+        });
+        cm_editor.addEventListener('keyup' , async () => {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
                 console.log("Save Local File: Promise Resolved.");
             });
@@ -189,5 +211,15 @@ export class LocalEventListeners extends LocalFileDirectory {
                 }
             });
         }
+    }
+
+    public createFileTest() {
+        const cr = document.querySelector('#createFile') as HTMLElement;
+        cr.addEventListener('click', async () => {
+            this.createFile();
+            await Promise.resolve(this.openFolderListener()).then(() => {
+                console.log("created file!");
+            });
+        });
     }
 }

@@ -59,6 +59,14 @@
     user-select: none;
 }
 
+#createFile {
+    font-size: 15px;
+    position: sticky;
+    margin-top: 15px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .parentFolder ul, .parentFolder {
     list-style-type: none;
 }
@@ -103,9 +111,14 @@
     margin-bottom: 10px;
     -webkit-user-select: none;
     user-select: none;
+    cursor: pointer;
 }
 
 /* figure out this later */
 .fileClickCheck {
     border: 1px solid;
+}
+
+.activeFile {
+    background-color: rgb(69, 69, 69);
 }

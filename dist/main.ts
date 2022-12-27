@@ -39,6 +39,8 @@ class Main {
         //Reading Mode
         MainObjects.ReadingMode.readingModeNode();
         //
+
+        MainObjects.LocalEvt.createFileTest();
     }    
 }
 

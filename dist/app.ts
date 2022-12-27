@@ -7,7 +7,7 @@
 *
 */
 
-import { appWindow } from '@tauri-apps/api/window'
+import { appWindow, PhysicalSize, LogicalSize } from '@tauri-apps/api/window'
 
 //stylesheets
 import './styles/override.css'
@@ -39,6 +39,15 @@ export class App {
 //appMain function
 async function app(): Promise<void> {
     App.appNode();
+
+    //set min window size
+    await appWindow.setMinSize(new PhysicalSize(1200, 800));
+
+    //set max window size 
+    await appWindow.setMaxSize(new LogicalSize(1200, 800));
+
+    //disable resizable window
+    await appWindow.setResizable(false);
 
     //set default app title on startup 
     return await appWindow.setTitle("Iris-dev-build");

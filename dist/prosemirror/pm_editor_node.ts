@@ -60,7 +60,9 @@ export class ProseMirrorEditorNode {
         //wysiwyg input label node
         ProseMirrorEditorNode.wysiwygInputLabelNode = document.createElement('label');
         ProseMirrorEditorNode.wysiwygInputLabelNode.setAttribute("for", "wysiwygButton");
-        ProseMirrorEditorNode.wysiwygInputLabelNode.textContent = "WYSIWYG";
+        const wysiwygInputLabelTextNode = document.createTextNode("WYSIWYG");
+        ProseMirrorEditorNode.wysiwygInputLabelNode.appendChild(wysiwygInputLabelTextNode);
+        //ProseMirrorEditorNode.wysiwygInputLabelNode.textContent = "WYSIWYG";
 
         //markdown button parent
         ProseMirrorEditorNode.markdownInputParentNode = document.createElement('div');
@@ -78,7 +80,9 @@ export class ProseMirrorEditorNode {
         //markdown input label node
         ProseMirrorEditorNode.markdownInputLabelNode = document.createElement('label');
         ProseMirrorEditorNode.markdownInputLabelNode.setAttribute("for", "markdownButton");
-        ProseMirrorEditorNode.markdownInputLabelNode.textContent = "Markdown";
+        const markdownInputLabelTextNode = document.createTextNode("Markdown");
+        ProseMirrorEditorNode.markdownInputLabelNode.appendChild(markdownInputLabelTextNode);
+        //ProseMirrorEditorNode.markdownInputLabelNode.textContent = "Markdown";
         
         //input button container
         ProseMirrorEditorNode.inputButtonNodeContainer = document.createElement('div');
@@ -100,7 +104,9 @@ export class ProseMirrorEditorNode {
 
         ProseMirrorEditorNode.readingInputLabelNode = document.createElement('label');
         ProseMirrorEditorNode.readingInputLabelNode.setAttribute("for", "readingButton");
-        ProseMirrorEditorNode.readingInputLabelNode.textContent = "Reading";
+        const readingInputLabelTextNode = document.createTextNode("Reading");
+        ProseMirrorEditorNode.readingInputLabelNode.appendChild(readingInputLabelTextNode);
+        //ProseMirrorEditorNode.readingInputLabelNode.textContent = "Reading";
 
         //append childs
         App.appNodeContainer.appendChild(ProseMirrorEditorNode.inputButtonNodeContainer);
