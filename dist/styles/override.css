@@ -104,15 +104,15 @@
 
 /* input button node container (menu bar) */
 #inputButtonNodeContainer {
-    background-color:#212121;
+    background-color: #2c2b2b;
     height: 50px;
     overflow-x: scroll;
     overflow-y: hidden;
     position: relative;
     z-index: 1;
     /*border: 1px solid;*/
-    width: 800px;
-    margin-left: 320px;
+    width: 867px;
+    margin-left: 321px;
     -webkit-user-select: none;
     user-select: none;
 }
@@ -204,6 +204,16 @@ label {
     border-color: black;
 }
 */
+
+/* blockquote */
+#editor .milkdown .editor blockquote {
+    border-left-color: white;
+}
+
+/* strikethrough */
+#editor .milkdown .editor .strike-through {
+    text-decoration-color: white;
+}
 
 /* slash tooltip */
 #editor .milkdown-xilf5l {

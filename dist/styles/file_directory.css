@@ -17,16 +17,17 @@
     border-width: 1px;
     border-color: black;
     */
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
-    height: 100vh;
-    max-height: 100vh;
+    height: 655px;
+    max-height: 655px;
     width: 320px;
     position: fixed;
     white-space: pre-wrap;
     font-family: 'Inter-Regular';  
     font-size: 20px;
     word-wrap: break-word;
+    margin-top: 102px;
 }
 
 .noteFilesRef {
@@ -35,36 +36,76 @@
     user-select: none;
 }
 
+/*
 #openFile  {
-    font-size: 15px;
+    font-size: 20px;
     position: sticky;
     margin-top: 15px;
     -webkit-user-select: none;
     user-select: none;
+    border: none;
+    background-color: white;
 }
+*/
 
+/*
 #saveFile {
-    font-size: 15px;
+    font-size: 20px;
     position: sticky;
     margin-top: 15px;
     -webkit-user-select: none;
     user-select: none;
+    border: none;
+    background-color: white;
 }
+*/
 
 #openFolder {
-    font-size: 15px;
-    position: sticky;
+    font-size: 20px;
+    position: fixed;
     margin-top: 15px;
     -webkit-user-select: none;
     user-select: none;
+    border: none;
+    background-color: white;
 }
 
-#createFile {
-    font-size: 15px;
-    position: sticky;
+#createFileInput {
+    font-size: 20px;
+    height: 25px;
+    width: 220px;
+    position: fixed;
     margin-top: 15px;
+    border: none;
+    background-color: white;
+    font-family: 'Inter-Regular';
+    margin-top: 60px;
+}
+
+#inputBoxBtn {
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    height: 27.5px;
+    position: fixed;
+    border: none;
     -webkit-user-select: none;
     user-select: none;
+    background-color: white;
+    margin-left: 224px;
+    margin-top: 59px;
+}
+
+/* interaction container */
+#fileDirectoryInteractionContainer {
+    background-color: #2c2b2b;
+    width: 320px;
+    height: 100px;
+    position: fixed;
+
+}
+
+.parentFolderList {
+    margin-top: 0px;
 }
 
 .parentFolder ul, .parentFolder {
@@ -119,6 +160,7 @@
     border: 1px solid;
 }
 
+/* active file */
 .activeFile {
-    background-color: rgb(69, 69, 69);
+    background-color: rgb(91, 90, 90);
 }

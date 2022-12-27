@@ -31,16 +31,18 @@ class Main {
 
         //Local Event Listeners
         MainObjects.LocalEvt.openFolderListener();
-        MainObjects.LocalEvt.openFileListener();
+        //MainObjects.LocalEvt.openFileListener();
         MainObjects.LocalEvt.saveFileListener();
-        MainObjects.LocalEvt.editorMode();
+        MainObjects.LocalEvt.editorModeListener();
         //
 
         //Reading Mode
         MainObjects.ReadingMode.readingModeNode();
         //
 
-        MainObjects.LocalEvt.createFileTest();
+        //MainObjects.LocalEvt.createFileTest();
+
+        MainObjects.LocalEvt.createFileListener();
     }    
 }
 

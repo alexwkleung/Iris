@@ -53,23 +53,31 @@ export class LocalFileDirectoryNode {
         
         App.appNodeContainer.appendChild(LocalFileDirectoryNode.fileDirectoryNodeParent) as HTMLDivElement;
 
+        const fileDirectoryInteractionContainer = document.createElement('div') as HTMLDivElement;
+        fileDirectoryInteractionContainer.setAttribute("id", "fileDirectoryInteractionContainer");
+
+        App.appNodeContainer.appendChild(fileDirectoryInteractionContainer);
+
         //browse folder button (temporary)
         LocalFileDirectoryNode.browseFolderBtn = document.createElement('button') as HTMLButtonElement;
         LocalFileDirectoryNode.browseFolderBtn.setAttribute("id", "openFolder");
      
         //browse folder button text node (temporary)
         const FFTextNode1 = document.createTextNode("Open Folder");
-     
         LocalFileDirectoryNode.browseFolderBtn.appendChild(FFTextNode1);
-        LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.browseFolderBtn);
+
+        fileDirectoryInteractionContainer.appendChild(LocalFileDirectoryNode.browseFolderBtn);
+        //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.browseFolderBtn);
 
         //open file button (temporary)
+        /*
         LocalFileDirectoryNode.openFileBtn = document.createElement('button') as HTMLButtonElement;
         LocalFileDirectoryNode.openFileBtn.setAttribute("id", "openFile");
 
         const OFTextNode1 = document.createTextNode("Open File");
         LocalFileDirectoryNode.openFileBtn.appendChild(OFTextNode1);
         LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.openFileBtn);
+        */
 
         //save file button (temporary)
         /*
@@ -80,7 +88,7 @@ export class LocalFileDirectoryNode {
         LocalFileDirectoryNode.saveFileBtn.appendChild(SFTextNode1);
         LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.saveFileBtn);
         */
-       
+
         //file directory div (child)
         LocalFileDirectoryNode.fileDirectoryNode = document.createElement('div') as HTMLDivElement;
         LocalFileDirectoryNode.fileDirectoryNode.setAttribute("id", "fileDirectory");
@@ -97,12 +105,33 @@ export class LocalFileDirectoryNode {
                 
         //const folderContainer = document.querySelector('#fileDirectory') as HTMLDivElement;
         
-        const createFile = document.createElement('button');
-        createFile.setAttribute("id", "createFile");
-        const createFileTextNode = document.createTextNode("Create File");
+        //create file node
+        const createFile = document.createElement('input') as HTMLDivElement;
+        createFile.setAttribute("id", "createFileInput");
+        createFile.setAttribute("type", "text");
+        createFile.setAttribute("placeholder", "Create File...");
+        createFile.style.display = "none";
+
+        //create file text node
+        const createFileTextNode = document.createTextNode("Create File") as Text;
         createFile.appendChild(createFileTextNode);
 
-        LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(createFile);
+        fileDirectoryInteractionContainer.appendChild(createFile);
+
+        //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(createFile);
+
+        //input box button
+        const inputBoxBtn = document.createElement('button') as HTMLButtonElement;
+        inputBoxBtn.setAttribute("id", "inputBoxBtn");
+        inputBoxBtn.style.display = "none";
+
+        //input box button text node
+        const inputBoxBtnTextNode = document.createTextNode("->") as Text;
+        
+        inputBoxBtn.appendChild(inputBoxBtnTextNode);
+
+        //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(inputBoxBtn);
+        fileDirectoryInteractionContainer.appendChild(inputBoxBtn);
 
         return LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.fileDirectoryNode) as HTMLDivElement;
     }
@@ -155,7 +184,7 @@ export class LocalFileDirectory {
     public saveFile: void;
 
     //private variables to assign constants
-    private openFileConst: string;
+    //private openFileConst: string;
     private saveFileConst: string;
 
     //file array + string refs
@@ -196,8 +225,8 @@ export class LocalFileDirectory {
         }
     }
 
-    //open folder dialog (need to work on this!!)
-    public async OpenLFFolder() {
+    //open folder
+    public async OpenLFFolder(): Promise<void> {
         //open folder dialog
         this.openFolder = await dialog.open({
             directory: true,
@@ -207,7 +236,7 @@ export class LocalFileDirectory {
         //exception handle
         if(this.openFolder) {
             const entries = await fs.readDir("Iris_Notes", {
-                dir: fs.BaseDirectory.Desktop || fs.BaseDirectory.Home,
+                dir: fs.BaseDirectory.Desktop,
                 recursive: true
             });
             
@@ -230,6 +259,9 @@ export class LocalFileDirectory {
         this.splitFolderPop1 = this.splitFolderDirectory.pop() as string | null;
         this.splitFolderPop2 = this.splitFolderDirectory.pop()  as string | null;
         this.splitFolderConcat = this.splitFolderPop2 + "/" + this.splitFolderPop1 as string;
+
+        (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
+        (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
 
         //check if parentFolder is in the DOM
         if((document.querySelector('.parentFolder'))) {
@@ -399,7 +431,10 @@ export class LocalFileDirectory {
             this.splitFolderFile = this.folderFileString.split(',');
             this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
             console.log(typeof this.folderFileString);
-            
+
+            (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
+            (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
+
             ProseMirrorEditor.readonly = true;
 
             ProseMirrorEditor.editor.destroy();
@@ -556,6 +591,7 @@ export class LocalFileDirectory {
     }
 
     //open file dialog
+    /*
     public async OpenLF(): Promise<void> {
         //reset local file array
         LocalFileDirectory.localFileArr.length = 0;
@@ -748,6 +784,7 @@ export class LocalFileDirectory {
             throw console.error("Open Dialog (User Cancel): Promise Rejected!");
         }
     }
+    */
 
     //save file
     public async saveLF(): Promise<void> {
@@ -780,12 +817,13 @@ export class LocalFileDirectory {
         }
     }
 
-    public async createFile() {
+    //create file
+    public async createFile(fileName: string): Promise<void> {
         const createFile = await fs.writeFile({
-            path: "Iris_Notes/test.md",
+            path: `Iris_Notes/${fileName}.md`,
             contents: ""
         }, {
             dir: fs.BaseDirectory.Desktop
-        })
+        });
     }
 } 

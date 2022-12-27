@@ -38,14 +38,17 @@ export class LocalEventListeners extends LocalFileDirectory {
             });
         });
 
+        /*
         (document.querySelector('#createFile') as HTMLElement).addEventListener('click', async () => {
             await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
                 console.log("Open Local File: Promise Resolved.");
             });
-        })
+        });
+        */
     }
 
     //open file listener
+    /*
     public openFileListener() {
         const openFile = document.querySelector('#openFile') as HTMLButtonElement;
         
@@ -57,6 +60,7 @@ export class LocalEventListeners extends LocalFileDirectory {
             });
         });
     }   
+    */
 
     //save file listener
     public saveFileListener() {
@@ -71,7 +75,7 @@ export class LocalEventListeners extends LocalFileDirectory {
             });
         });
         */
-       
+
         //auto saving 
         editor.addEventListener('keyup' , async () => {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
@@ -86,7 +90,7 @@ export class LocalEventListeners extends LocalFileDirectory {
     }
 
     //editor mode
-    public editorMode() {
+    public editorModeListener() {
         //get all input elements from inputButtonNodeContainer
         const input = (document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input');
 
@@ -213,6 +217,7 @@ export class LocalEventListeners extends LocalFileDirectory {
         }
     }
 
+    /*
     public createFileTest() {
         const cr = document.querySelector('#createFile') as HTMLElement;
         cr.addEventListener('click', async () => {
@@ -220,6 +225,26 @@ export class LocalEventListeners extends LocalFileDirectory {
             await Promise.resolve(this.openFolderListener()).then(() => {
                 console.log("created file!");
             });
+        });
+    }
+    */
+
+    //create file listener
+    public createFileListener() {
+        const inputBox = document.querySelector('#createFileInput') as HTMLInputElement;
+        const inputBoxBtn = document.querySelector('#inputBoxBtn') as HTMLButtonElement;
+
+        inputBoxBtn.addEventListener('click', async () => {
+            if(inputBox.value) {
+                //console.log(inputBox.value);
+                this.LFDirectory.createFile(inputBox.value);
+                inputBox.value = "";
+                await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
+                    console.log("Open Local File: Promise Resolved.");
+                });
+            } else if(inputBox.value === "") {
+                throw console.error("Input box cannot be empty!");
+            }
         });
     }
 }
