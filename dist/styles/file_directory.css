@@ -66,8 +66,14 @@
     margin-top: 15px;
     -webkit-user-select: none;
     user-select: none;
-    border: none;
-    background-color: white;
+    border: 1px solid white;
+    background-color: #2c2b2b;
+    color: white;
+    border-radius: 10px;
+}
+
+#openFolder:active {
+    background-color: rgb(63, 63, 63);
 }
 
 #createFileInput {
@@ -77,9 +83,11 @@
     position: fixed;
     margin-top: 15px;
     border: none;
-    background-color: white;
+    background-color:#2c2b2b;
     font-family: 'Inter-Regular';
     margin-top: 60px;
+    color: white;
+    border: 1px solid white;
 }
 
 #inputBoxBtn {
@@ -90,9 +98,14 @@
     border: none;
     -webkit-user-select: none;
     user-select: none;
-    background-color: white;
+    background-color: #2c2b2b;
     margin-left: 224px;
     margin-top: 59px;
+    color: white;
+}
+
+#inputBoxBtn:active {
+    background-color: rgb(63, 63, 63);
 }
 
 /* interaction container */
@@ -130,6 +143,8 @@
     display: inline-block;
     margin-right: 6px;
     margin-bottom: 10px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);  
 }
 
 .caret-down::before {
@@ -138,7 +153,7 @@
 }
 
 .nested {
-    display: none;
+    display: "";
 }
 
 .active {

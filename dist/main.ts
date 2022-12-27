@@ -43,6 +43,8 @@ class Main {
         //MainObjects.LocalEvt.createFileTest();
 
         MainObjects.LocalEvt.createFileListener();
+
+        //MainObjects.LocalEvt.loadFolderListener();
     }    
 }
 

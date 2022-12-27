@@ -35,6 +35,7 @@ import { ReadingMode } from '../../reading_mode/reading_mode'
 //stylesheets
 import '../../styles/file_directory.css'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
+import { BreakTable } from '@milkdown/preset-gfm'
 
 //Local File Directory Node class
 export class LocalFileDirectoryNode {
@@ -63,10 +64,11 @@ export class LocalFileDirectoryNode {
         LocalFileDirectoryNode.browseFolderBtn.setAttribute("id", "openFolder");
      
         //browse folder button text node (temporary)
-        const FFTextNode1 = document.createTextNode("Open Folder");
+        const FFTextNode1 = document.createTextNode("Open/Sync Folder");
         LocalFileDirectoryNode.browseFolderBtn.appendChild(FFTextNode1);
 
         fileDirectoryInteractionContainer.appendChild(LocalFileDirectoryNode.browseFolderBtn);
+
         //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.browseFolderBtn);
 
         //open file button (temporary)
@@ -228,13 +230,413 @@ export class LocalFileDirectory {
     //open folder
     public async OpenLFFolder(): Promise<void> {
         //open folder dialog
+        /*
         this.openFolder = await dialog.open({
             directory: true,
             defaultPath: await path.desktopDir() //await path.homeDir()
         }) as string;
-        
+        */
+
         //exception handle
-        if(this.openFolder) {
+        //if(this.openFolder) {
+
+        if(await fs.exists("Iris_Notes", { dir: fs.BaseDirectory.Desktop})) {
+            const entries = await fs.readDir("Iris_Notes", {
+                dir: fs.BaseDirectory.Desktop,
+                recursive: true
+            });
+            
+            console.log(entries);
+
+            //call function again to that folder is synced after creating dir
+            //this.OpenLFFolder();
+
+            //set recArr length to 0 to reset array
+            LocalFileDirectory.localFolderArr.length = 0;
+
+            //call recursive function
+            this.OpenLFFolderRecursive(entries);
+
+            (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
+            (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
+    
+            //check if parentFolder is in the DOM
+            if((document.querySelector('.parentFolder'))) {
+                this.folderFileString = LocalFileDirectory.localFolderArr.toString();
+                this.splitFolderFile = this.folderFileString.split(',');
+                this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
+                console.log(typeof this.folderFileString);
+                
+                //remove parentFolder from DOM if found
+                (document.querySelector('.parentFolder') as ChildNode).remove();
+    
+                ProseMirrorEditor.readonly = false;
+    
+                ProseMirrorEditor.editor.destroy();
+                ProseMirrorEditor.editor.create();
+    
+                this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder("Desktop/Iris_Notes", undefined)
+    
+                //sort localFolderArr alphabetically
+                this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
+    
+                //shift localFolderArray
+                //since the array is alphabetically sorted, we can also assume that .DS_STORE 
+                //would be end up being the first element of the array.
+                //
+                //since .DS_STORE is the only dotfile we want to take out (so it doesn't show in the 
+                //file directory tree), then this method would work okay for now until 
+                //further complications show up
+                //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
+                //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
+                //this.localFolderArrSortRef.shift();
+    
+                //directly copy the local folder content array to a ref copy array for use later
+                this.localFolderArrRefCopy.length = 0;
+                for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
+                    this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
+                }
+    ////
+                console.log(this.localFolderArrRefCopy);
+                
+                this.localFolderArrRefCopy.shift();
+    
+                //split the ref array using regex character class array
+                this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
+                //let lfSortRefSplit2: string[] | undefined = this.localFolderArrShiftRef?.split(',');
+                console.log(this.lfArrSortRefSplit); 
+                //console.log(lfSortRefSplit2);
+                
+                this.mdExtensionArr = [".md"];
+                this.filterMdFiles = this.lfArrSortRefSplit.filter(
+                    mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
+                ));
+                console.log(this.filterMdFiles);
+                
+                console.log("ARRAY REF COPY OUTPUT");
+                console.log(this.localFolderArrRefCopy);
+                            
+                this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
+    
+                //this will build the reference nodes for the directory tree files. 
+                //the reference nodes will be hidden and present in the DOM, however they
+                //will be used only for linking its full path to open files.
+                this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesRefBuilder(this.localFolderArrSortRef);
+    
+                //logic for opening a file to the editor from an opened folder within 
+                //the directory tree.
+                const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
+                //list files dom ref
+                const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
+                console.log(listFiles);
+    
+                //iterate over files list
+                for(let i = 0; i < listFiles.length; i++) { 
+                    listFiles[i].addEventListener('click', () => {
+                        ProseMirrorEditor.readonly = true;
+    
+                        ProseMirrorEditor.editor.destroy();
+                        ProseMirrorEditor.editor.create();
+    
+                        //iterate over list files dom ref array
+                        for(let j = 0; j < listFilesDOMRef.length; j++) {
+                            this.listFilesRef = listFilesDOMRef[i].textContent as string;
+                        }
+                        //this.listFilesRef = listFiles[i].textContent as string; 
+    
+                        console.log(this.listFilesRef);
+    
+                        const readText= fs.readTextFile(this.listFilesRef, {
+                            dir: fs.BaseDirectory.Desktop
+                        });
+    
+                        //reset
+                        this.fileArr.length = 0;
+                        this.fileStr = " ";
+    
+                        //resolve promise for fs readTextFile 
+                        Promise.resolve(readText).then((fileData) => {
+                            //resolved promise value 
+                            //will be pushed into array
+                            this.fileArr.push(fileData);
+                            console.log(this.fileArr);
+    
+                            //iterate over array containing 
+                            //file content
+                            for(let fileIndex of this.fileArr) {
+                                this.fileStr = fileIndex;
+                            }
+    
+                            //console.log(fileStr);
+                            //open file content in editor
+                            ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
+    
+                            CodeMirror_EditorView.editorView.dispatch({
+                                changes: {
+                                    from: 0,
+                                    to: CodeMirror_EditorView.editorView.state.doc.length,
+                                    insert: ProseMirrorEditor.editor.action(getMarkdown())
+                                }
+                            });
+    
+                            //show editor
+                            ProseMirrorEditorNode.editorNode.style.display = "";
+    
+                            this.ReMode.readingMode_ProseMirror();
+    
+                            //check editor/reader display 
+                            if(CodeMirror_EditorNode.editorNode.style.display === "") {
+                                ProseMirrorEditorNode.editorNode.style.display = "none";
+                                ReadingMode.readingModeNodeContainer.style.display = "none";
+                            } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
+                                CodeMirror_EditorNode.editorNode.style.display = "none";
+                                ProseMirrorEditorNode.editorNode.style.display = "none";
+                            }
+    
+                            //show input button node container 
+                            ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
+    
+                            //remove disabled attribute from wysiwyg input label
+                            ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
+    
+                            //set wysiwyg input to checked
+                            ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
+    
+                            //remove disabled attribute from markdown input label
+                            ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
+    
+                            //remove disabled attribute from reading input label
+                            ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
+    
+                            //focus PM editor
+                            (document.querySelector('.ProseMirror') as HTMLElement).focus();
+                        });
+    
+                        console.log(this.fileStr);
+                        console.log(this.listFilesRef);
+    
+                        //temp naming
+                        const split1 = this.listFilesRef.split('/');
+                        const pop1 = split1.pop() as string | null;
+                        const pop2 = split1.pop() as string | null;
+                        const pop3 = split1.pop() as string | null
+                        const concat1 = pop3 + "/" + pop2;
+    
+                        console.log(pop1);
+                        console.log(concat1);
+    
+                        appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                    });
+    
+                    await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                }  
+            } else {
+                this.folderFileString = LocalFileDirectory.localFolderArr.toString();
+                this.splitFolderFile = this.folderFileString.split(',');
+                this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
+                console.log(typeof this.folderFileString);
+    
+                (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
+                (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
+    
+                ProseMirrorEditor.readonly = true;
+    
+                ProseMirrorEditor.editor.destroy();
+                ProseMirrorEditor.editor.create();
+    
+                this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder("Desktop/Iris_Notes", undefined);
+    
+                this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
+    
+                //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
+    
+                //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
+    
+                //directly copy the local folder content array to a ref copy array for use later
+                this.localFolderArrRefCopy.length = 0;
+                for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
+                    this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
+                }
+    ////
+                this.localFolderArrRefCopy.shift();
+    
+                console.log(this.localFolderArrRefCopy);
+    
+                //split the ref array using regex character class array
+                this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
+                console.log(this.lfArrSortRefSplit); 
+                //console.log(lfSortRefSplit2);
+    
+                this.mdExtensionArr = [".md"];
+                this.filterMdFiles = this.lfArrSortRefSplit.filter(
+                    mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
+                ));
+                console.log(this.filterMdFiles);
+    
+                console.log("ARRAY REF COPY OUTPUT");
+                console.log(this.localFolderArrRefCopy);
+                
+                this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
+                this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesRefBuilder(this.localFolderArrRefCopy);
+                
+                //logic for opening a file to the editor from an opened folder within 
+                //the directory tree.
+                const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
+                //list files dom ref
+                const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
+                console.log(listFiles);
+    
+                for(let i = 0; i < listFiles.length; i++) {
+                    listFiles[i].addEventListener('click', () => {
+                        let getElemWithClass = document.querySelector('.activeFile');
+                        if (getElemWithClass !== null) {
+                            getElemWithClass.classList.remove('activeFile');
+                        }
+                        //add the active class to the element from which click event triggered
+                        listFiles[i].classList.add('activeFile');
+    
+                        console.log('click');
+                        ProseMirrorEditor.readonly = true;
+    
+                        ProseMirrorEditor.editor.destroy();
+                        ProseMirrorEditor.editor.create();
+    
+                        //iterate over list files dom ref array
+                        for(let j = 0; j < listFilesDOMRef.length; j++) {
+                            this.listFilesRef = listFilesDOMRef[i].textContent as string;
+                        }
+    
+                        //this.listFilesRef = listFiles[i].textContent as string; 
+    
+                        console.log(this.listFilesRef);
+    
+                        const readText= fs.readTextFile(this.listFilesRef, {
+                            dir: fs.BaseDirectory.Desktop
+                        });
+    
+                        //reset
+                        this.fileArr.length = 0;
+                        this.fileStr = " "; 
+    
+                        //resolve promise for fs readTextFile 
+                        Promise.resolve(readText).then((fileData) => {
+                            //resolved promise value 
+                            //will be pushed into array
+                            this.fileArr.push(fileData);
+                            console.log(this.fileArr);
+    
+                            //iterate over array containing 
+                            //file content
+                            for(let fileIndex of this.fileArr) {
+                                this.fileStr = fileIndex;
+                            }
+    
+                            //console.log(fileStr);
+                            //open file content in editor
+                            ProseMirrorEditor.editor.action(replaceAll(this.fileStr, true));
+                            
+                            CodeMirror_EditorView.editorView.dispatch({
+                                changes: {
+                                    from: 0,
+                                    to: CodeMirror_EditorView.editorView.state.doc.length,
+                                    insert: ProseMirrorEditor.editor.action(getMarkdown())
+                                }
+                            });
+    
+                            this.ReMode.readingMode_ProseMirror();
+    
+                            //show editor
+                            ProseMirrorEditorNode.editorNode.style.display = "";
+    
+                            if(CodeMirror_EditorNode.editorNode.style.display === "") {
+                                ProseMirrorEditorNode.editorNode.style.display = "none";
+                                ReadingMode.readingModeNodeContainer.style.display = "none";
+                            } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
+                                CodeMirror_EditorNode.editorNode.style.display = "none";
+                                ProseMirrorEditorNode.editorNode.style.display = "none";
+                            }
+    
+                            //show input button node container 
+                            ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
+    
+                            //remove disabled attribute from wysiwyg input label
+                            ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
+    
+                            //set wysiwyg input to checked
+                            ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
+    
+                            //remove disabled attribute from markdown input label
+                            ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
+    
+                            //remove disabled attribute from reading input label
+                            ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
+    
+                            //focus PM editor
+                            (document.querySelector('.ProseMirror') as HTMLElement).focus();
+    
+                            console.log(this.fileStr);
+                        });
+                    
+                        console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
+    
+                        console.log(this.fileStr);
+                        console.log(this.listFilesRef);
+    
+                        //temp naming
+                        const split1 = this.listFilesRef.split('/');
+                        const pop1 = split1.pop() as string | null;
+                        const pop2 = split1.pop() as string | null;
+                        const pop3 = split1.pop() as string | null
+                        const concat1 = pop3 + "/" + pop2;
+    
+                        console.log(pop1);
+                        console.log(concat1);
+    
+                        appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                    });
+    
+                    await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                }  
+            }
+        } else {
+            const createDir = await fs.createDir("Iris_Notes", { 
+                dir: fs.BaseDirectory.Desktop 
+            });
+
+            const entries = await fs.readDir("Iris_Notes", {
+                dir: fs.BaseDirectory.Desktop,
+                recursive: true
+            });
+
+            /*
+            const createFileTemp = await fs.writeFile({
+                path: "Iris_Notes/.temp.md",
+                contents: ""
+            }, {
+                dir: fs.BaseDirectory.Desktop
+            });
+            */
+
+            const createFile = await fs.writeFile({
+                path: "Iris_Notes/Note.md",
+                contents: ""
+            }, {
+                dir: fs.BaseDirectory.Desktop
+            });
+
+            console.log(entries);
+
+            //call function again to that folder is synced after creating dir
+            this.OpenLFFolder();
+
+            //set recArr length to 0 to reset array
+            LocalFileDirectory.localFolderArr.length = 0;
+
+            //call recursive function
+            this.OpenLFFolderRecursive(entries);
+        }
+
+        /*
             const entries = await fs.readDir("Iris_Notes", {
                 dir: fs.BaseDirectory.Desktop,
                 recursive: true
@@ -247,19 +649,24 @@ export class LocalFileDirectory {
 
             //call recursive function
             this.OpenLFFolderRecursive(entries);
+            */
 
             console.log(LocalFileDirectory.localFolderArr);
             console.log(LocalFileDirectory.localFolderArr);
             console.log(this.openFolder + " ---> " + typeof this.openFolder);
+            /*
         } else if(this.openFolder === null) {
             throw console.log("User canceled open dialog: Promise Rejected.")
         } 
+        */
 
+        /*
         this.splitFolderDirectory = this.openFolder.split('/');
         this.splitFolderPop1 = this.splitFolderDirectory.pop() as string | null;
         this.splitFolderPop2 = this.splitFolderDirectory.pop()  as string | null;
         this.splitFolderConcat = this.splitFolderPop2 + "/" + this.splitFolderPop1 as string;
-
+        */
+       
         (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
         (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
 
@@ -278,7 +685,7 @@ export class LocalFileDirectory {
             ProseMirrorEditor.editor.destroy();
             ProseMirrorEditor.editor.create();
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder("Desktop/Iris_Notes", undefined)
 
             //sort localFolderArr alphabetically
             this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
@@ -290,7 +697,9 @@ export class LocalFileDirectory {
             //since .DS_STORE is the only dotfile we want to take out (so it doesn't show in the 
             //file directory tree), then this method would work okay for now until 
             //further complications show up
-            this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
+            //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
+            //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
+            //this.localFolderArrSortRef.shift();
 
             //directly copy the local folder content array to a ref copy array for use later
             this.localFolderArrRefCopy.length = 0;
@@ -300,6 +709,8 @@ export class LocalFileDirectory {
 ////
             console.log(this.localFolderArrRefCopy);
             
+            this.localFolderArrRefCopy.shift();
+
             //split the ref array using regex character class array
             this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
             //let lfSortRefSplit2: string[] | undefined = this.localFolderArrShiftRef?.split(',');
@@ -332,6 +743,13 @@ export class LocalFileDirectory {
             //iterate over files list
             for(let i = 0; i < listFiles.length; i++) { 
                 listFiles[i].addEventListener('click', () => {
+                    let getElemWithClass = document.querySelector('.activeFile');
+                    if (getElemWithClass !== null) {
+                        getElemWithClass.classList.remove('activeFile');
+                    }
+                    //add the active class to the element from which click event triggered
+                    listFiles[i].classList.add('activeFile');
+                    
                     ProseMirrorEditor.readonly = true;
 
                     ProseMirrorEditor.editor.destroy();
@@ -406,6 +824,9 @@ export class LocalFileDirectory {
 
                         //remove disabled attribute from reading input label
                         ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
+
+                        //focus PM editor
+                        (document.querySelector('.ProseMirror') as HTMLElement).focus();
                     });
 
                     console.log(this.fileStr);
@@ -424,7 +845,7 @@ export class LocalFileDirectory {
                     appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
                 });
 
-                await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                await appWindow.setTitle("Iris-dev-build - " + "Desktop/Iris_Notes");
             }  
         } else {
             this.folderFileString = LocalFileDirectory.localFolderArr.toString();
@@ -440,11 +861,13 @@ export class LocalFileDirectory {
             ProseMirrorEditor.editor.destroy();
             ProseMirrorEditor.editor.create();
 
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFolderConcat, undefined)
+            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder("Desktop/Iris_Notes", undefined);
 
             this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
 
-            this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
+            //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
+
+            //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
 
             //directly copy the local folder content array to a ref copy array for use later
             this.localFolderArrRefCopy.length = 0;
@@ -452,6 +875,8 @@ export class LocalFileDirectory {
                 this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
             }
 ////
+            this.localFolderArrRefCopy.shift();
+
             console.log(this.localFolderArrRefCopy);
 
             //split the ref array using regex character class array
@@ -564,6 +989,9 @@ export class LocalFileDirectory {
                         //remove disabled attribute from reading input label
                         ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
 
+                        //focus PM editor
+                        (document.querySelector('.ProseMirror') as HTMLElement).focus();
+
                         console.log(this.fileStr);
                     });
                 
@@ -585,7 +1013,7 @@ export class LocalFileDirectory {
                     appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
                 });
 
-                await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                await appWindow.setTitle("Iris-dev-build - " + "Desktop/Iris_Notes");
             }  
         }
     }

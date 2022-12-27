@@ -14,6 +14,8 @@ import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_s
 import { EditorModeConstants } from '../constants/constants'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { ReadingMode } from '../../reading_mode/reading_mode'
+import { EditorState } from '@milkdown/prose/state'
+import { $view } from '@milkdown/utils'
 
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
@@ -120,6 +122,9 @@ export class LocalEventListeners extends LocalFileDirectory {
 
                         //replace all contents of wysiwyg editor with markdown editor contents
                         ProseMirrorEditor.editor.action(replaceAll(CodeMirror_EditorView.editorView.state.doc.toString()));
+
+                        //focus PM editor
+                        (document.querySelector('.ProseMirror') as HTMLElement).focus();
                     //check if codemirror instance is not displayed
                     } else if((document.querySelector('#cm_editor') as HTMLElement).style.display === "none") { 
                         this.wysiwygConst = EditorModeConstants.WYSIWYG_Active;
@@ -131,6 +136,9 @@ export class LocalEventListeners extends LocalFileDirectory {
                         ProseMirrorEditorNode.editorNode.style.display = "";
 
                         ProseMirrorEditor.editor.action(replaceAll(CodeMirror_EditorView.editorView.state.doc.toString()));
+
+                        //focus PM editor
+                        (document.querySelector('.ProseMirror') as HTMLElement).focus();
                     }
                 //check if value is markdownButton
                 } else if(input[i].value === "markdownButton") {
@@ -163,6 +171,9 @@ export class LocalEventListeners extends LocalFileDirectory {
 
                         //update reading mode from prosemirror instance
                         this.ReMode_Evt.readingMode_ProseMirror();
+
+                        //focus editor view
+                        CodeMirror_EditorView.editorView.focus();
                     //check if wysiwyg editor is not displayed
                     } else if((document.querySelector('#editor') as HTMLElement).style.display === "none") {
                         this.markdownConst = EditorModeConstants.Markdown_Active;
@@ -183,9 +194,11 @@ export class LocalEventListeners extends LocalFileDirectory {
                             }
                         });
                         
-                        //update reading mode from prosemirror  instance
+                        //update reading mode from prosemirror instance
                         this.ReMode_Evt.readingMode_ProseMirror();
 
+                        //focus editor view
+                        CodeMirror_EditorView.editorView.focus();
                     }
                 //check if reading button is clicked and if prosemirror instance was previously displayed
                 } else if(input[i].value === "readingButton" && ProseMirrorEditorNode.editorNode.style.display === "") {
@@ -200,6 +213,9 @@ export class LocalEventListeners extends LocalFileDirectory {
                     this.ReMode_Evt.readingMode_ProseMirror();
 
                     ReadingMode.readingModeNodeContainer.style.display = "";
+
+                    //focus reading mode node container
+                    (document.querySelector("#readingModeNodeContainer") as HTMLElement).focus();
                 //check if reading button is clicked and check if codemirror instance was previously displayed
                 } else if(input[i].value === "readingButton" && CodeMirror_EditorNode.editorNode.style.display === "") {
                     this.readingConst = EditorModeConstants.Reading_Active;
@@ -212,27 +228,31 @@ export class LocalEventListeners extends LocalFileDirectory {
                     this.ReMode_Evt.readingMode_CodeMirror();
 
                     ReadingMode.readingModeNodeContainer.style.display = "";
+
+                    //focus reading mode node container
+                    (document.querySelector("#readingModeNodeContainer") as HTMLElement).focus();
                 }
             });
         }
     }
 
-    /*
-    public createFileTest() {
-        const cr = document.querySelector('#createFile') as HTMLElement;
-        cr.addEventListener('click', async () => {
-            this.createFile();
-            await Promise.resolve(this.openFolderListener()).then(() => {
-                console.log("created file!");
-            });
-        });
-    }
-    */
-
     //create file listener
     public createFileListener() {
         const inputBox = document.querySelector('#createFileInput') as HTMLInputElement;
         const inputBoxBtn = document.querySelector('#inputBoxBtn') as HTMLButtonElement;
+
+        inputBox.addEventListener('keydown', async (event) => {
+            if(event.key === 'Enter' && inputBox.value) {
+                //console.log(inputBox.value);
+                this.LFDirectory.createFile(inputBox.value);
+                inputBox.value = "";
+                await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
+                    console.log("Open Local File: Promise Resolved.");
+                });
+            } else if(inputBox.value === "") {
+                throw console.error("Input box cannot be empty!");
+            }
+        });
 
         inputBoxBtn.addEventListener('click', async () => {
             if(inputBox.value) {
@@ -247,4 +267,14 @@ export class LocalEventListeners extends LocalFileDirectory {
             }
         });
     }
+    
+    /*
+    public loadFolderListener() {
+        document.addEventListener('load', () => {
+            Promise.resolve(this.LFDirectory.OpenLFFolder).then(() => {
+                console.log("Opened folder");
+            })
+        });
+    } 
+    */  
 }

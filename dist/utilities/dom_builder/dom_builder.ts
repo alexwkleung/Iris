@@ -66,7 +66,7 @@ export class FileDirectoryBuilder {
             1,
             false, 
             true
-        );
+        );  
 
         if(fileName !== undefined) {
             this.EvaDOM.DOMBuilderChild(
@@ -81,6 +81,7 @@ export class FileDirectoryBuilder {
         }
 
         //logic for clicking folders and showing files
+        /*
         const toggle = document.getElementsByClassName('caret');
         const nested = document.querySelector('.nested') as HTMLElement;
 
@@ -90,6 +91,7 @@ export class FileDirectoryBuilder {
                 (this as Element).classList.toggle('caret-down');
             });
         }
+        */
     }
 
     public Eva_FileDirectoryTreeFilesBuilder(stringArray: string[]) {
