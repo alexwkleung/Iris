@@ -239,7 +239,6 @@ export class LocalEventListeners extends LocalFileDirectory {
     //create file listener
     public createFileListener() {
         const inputBox = document.querySelector('#createFileInput') as HTMLInputElement;
-        const inputBoxBtn = document.querySelector('#inputBoxBtn') as HTMLButtonElement;
 
         inputBox.addEventListener('keydown', async (event) => {
             if(event.key === 'Enter' && inputBox.value) {
@@ -255,6 +254,7 @@ export class LocalEventListeners extends LocalFileDirectory {
             }
         });
 
+        /*
         inputBoxBtn.addEventListener('click', async () => {
             if(inputBox.value) {
                 this.LFDirectory.createFile(inputBox.value);
@@ -268,16 +268,38 @@ export class LocalEventListeners extends LocalFileDirectory {
                 throw console.error("Input box cannot be empty!");
             }
         });
+        */
     }
 
     //rename file listener
     public renameFileListener() {
         const inputBoxRename = document.querySelector('#renameInputBox') as HTMLInputElement;
 
-        inputBoxRename.addEventListener('keydown', (event) => {
+        inputBoxRename.addEventListener('keydown', async (event) => {
             if(event.key === 'Enter' && inputBoxRename.value) {
-                
+                this.LFDirectory.renameFile()
+
+                inputBoxRename.value = "";
+
+                await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
+                    console.log("Open Local File: Promise Resolved.");
+                });
+            } else if(event.key === 'Enter' && inputBoxRename.value === "") {
+                throw console.error("Input box cannot be empty!");
             }
+        });
+    }
+
+    //delete file listener
+    public deleteFileListener() {
+        const deleteFileButton = document.querySelector('#deleteFileButton') as HTMLElement;
+
+        deleteFileButton.addEventListener('click', async (event) => {
+            await this.LFDirectory.deleteFile();
+
+            await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
+                console.log("Open Local File: Promise Resolved.");
+            });
         });
     }
 }

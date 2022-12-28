@@ -42,9 +42,15 @@ class Main {
 
         //MainObjects.LocalEvt.createFileTest();
 
+        //create file
         MainObjects.LocalEvt.createFileListener();
+        //
 
-        //MainObjects.LocalEvt.loadFolderListener();
+        //rename file
+        MainObjects.LocalEvt.renameFileListener();
+
+        //delete file 
+        MainObjects.LocalEvt.deleteFileListener();
     }    
 }
 

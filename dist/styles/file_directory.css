@@ -70,9 +70,10 @@
     background-color: #2c2b2b;
     color: white;
     border-radius: 10px;
+    margin-left: 10px;
 }
 
-#openFolder:active {
+#openFolder:hover {
     background-color: rgb(63, 63, 63);
 }
 
@@ -89,8 +90,11 @@
     color: white;
     border: 1px solid white;
     overflow-x: scroll;
+    border-radius: 10px;
+    margin-left: 10px;
 }
 
+/*
 #inputBoxBtn {
     font-size: 20px;
     font-family: 'Inter-Regular';
@@ -107,6 +111,24 @@
 
 #inputBoxBtn:active {
     background-color: rgb(63, 63, 63);
+}
+*/
+
+#deleteFileButton{
+    font-size: 20px;
+    position: fixed;
+    margin-top: 15px;
+    -webkit-user-select: none;
+    user-select: none;
+    border: 1px solid white;
+    background-color: #2c2b2b;
+    color: white;
+    border-radius: 10px;
+    margin-left: 192px
+}
+
+#deleteFileButton:hover {
+    background-color: rgb(206, 8, 8);
 }
 
 /* interaction container */

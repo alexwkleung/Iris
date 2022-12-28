@@ -162,8 +162,9 @@
     margin-top: 60px;
     color: white;
     border: 1px solid white;
-    left: 940px;
-    top: -37px;
+    left: 740px;
+    top: -38px;
+    border-radius: 10px;
 }
 #renameInputBoxHidden {
     display: inline;
@@ -182,6 +183,7 @@
     top: -37px;
     -webkit-user-select: none;
     user-select: none;
+    display: none;
 }
 #wysiwygButton {
     font-size: 15px;

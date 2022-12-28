@@ -44,6 +44,7 @@ export class LocalFileDirectoryNode {
     static saveFileBtn: HTMLButtonElement;
     static fileDirectoryNode: HTMLDivElement;
     static folderContainerNode: HTMLDivElement;
+    static deleteFileBtn: HTMLButtonElement;
 
     public LFDirectoryDiv() {
         //file directory div (parent)
@@ -121,6 +122,7 @@ export class LocalFileDirectoryNode {
         //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(createFile);
 
         //input box button
+        /*
         const inputBoxBtn = document.createElement('button') as HTMLButtonElement;
         inputBoxBtn.setAttribute("id", "inputBoxBtn");
         inputBoxBtn.style.display = "none";
@@ -132,6 +134,18 @@ export class LocalFileDirectoryNode {
 
         //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(inputBoxBtn);
         fileDirectoryInteractionContainer.appendChild(inputBoxBtn);
+        */
+
+        //delete file button
+        LocalFileDirectoryNode.deleteFileBtn = document.createElement('button');
+        LocalFileDirectoryNode.deleteFileBtn.setAttribute("id", "deleteFileButton");
+
+        //delete file button text node
+        const deleteFileBtnTextNode = document.createTextNode("Delete File");
+        LocalFileDirectoryNode.deleteFileBtn.appendChild(deleteFileBtnTextNode);
+        LocalFileDirectoryNode.deleteFileBtn.style.display = "none";
+
+        fileDirectoryInteractionContainer.appendChild(LocalFileDirectoryNode.deleteFileBtn);
 
         return LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.fileDirectoryNode) as HTMLDivElement;
     }
@@ -256,8 +270,8 @@ export class LocalFileDirectory {
             this.OpenLFFolderRecursive(entries);
 
             (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
-            (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
-    
+            LocalFileDirectoryNode.deleteFileBtn.style.display = "";
+
             //check if parentFolder is in the DOM
             if((document.querySelector('.parentFolder'))) {
                 this.folderFileString = LocalFileDirectory.localFolderArr.toString();
@@ -277,7 +291,13 @@ export class LocalFileDirectory {
     
                 //sort localFolderArr alphabetically
                 this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
-    
+                
+                //remove .DS_Store from sorted ref array
+                if(this.localFolderArrSortRef[0].toString().split('/').pop() === ".DS_Store") {
+                    //this.localFolderArrSortRef.splice(0, 1);
+                    //or
+                    this.localFolderArrSortRef.shift();
+                }
                 //shift localFolderArray
                 //since the array is alphabetically sorted, we can also assume that .DS_STORE 
                 //would be end up being the first element of the array.
@@ -435,8 +455,8 @@ export class LocalFileDirectory {
                 console.log(typeof this.folderFileString);
     
                 (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
-                (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
-    
+                LocalFileDirectoryNode.deleteFileBtn.style.display = "";
+
                 ProseMirrorEditor.readonly = true;
     
                 ProseMirrorEditor.editor.destroy();
@@ -445,7 +465,14 @@ export class LocalFileDirectory {
                 this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder("Desktop/Iris_Notes", undefined);
     
                 this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
-    
+                
+                //remove .DS_Store from sorted ref array
+                if(this.localFolderArrSortRef[0].toString().split('/').pop() === ".DS_Store") {
+                    //this.localFolderArrSortRef.splice(0, 1);
+                    //or
+                    this.localFolderArrSortRef.shift();
+                }
+
                 //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
     
                 //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
@@ -487,7 +514,7 @@ export class LocalFileDirectory {
                 for(let i = 0; i < listFiles.length; i++) {
                     listFiles[i].addEventListener('click', () => {
                         const getElemWithClass = document.querySelector('.activeFile');
-                        if (getElemWithClass !== null) {
+                        if(getElemWithClass !== null) {
                             getElemWithClass.classList.remove('activeFile');
                         }
                         //add the active class to the element from which click event triggered
@@ -666,7 +693,7 @@ export class LocalFileDirectory {
         */
        
         (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
-        (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
+        LocalFileDirectoryNode.deleteFileBtn.style.display = "";
 
         //check if parentFolder is in the DOM
         if((document.querySelector('.parentFolder'))) {
@@ -698,6 +725,20 @@ export class LocalFileDirectory {
             //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
             //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
             //this.localFolderArrSortRef.shift();
+
+            console.log("OPOPO");
+            console.log(this.localFolderArrSortRef);
+
+            console.log(this.localFolderArrSortRef[0].toString().split('/').pop());
+
+            //remove .DS_Store from sorted ref array
+            if(this.localFolderArrSortRef[0].toString().split('/').pop() === ".DS_Store") {
+                //this.localFolderArrSortRef.splice(0, 1);
+                //or
+                this.localFolderArrSortRef.shift();
+            }
+
+            //console.log(this.localFolderArrSortRef);
 
             //directly copy the local folder content array to a ref copy array for use later
             this.localFolderArrRefCopy.length = 0;
@@ -855,7 +896,7 @@ export class LocalFileDirectory {
             console.log(typeof this.folderFileString);
 
             (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
-            (document.querySelector('#inputBoxBtn') as HTMLElement).style.display = "";
+            LocalFileDirectoryNode.deleteFileBtn.style.display = "";
 
             ProseMirrorEditor.readonly = true;
 
@@ -1000,8 +1041,6 @@ export class LocalFileDirectory {
 
                     console.log(this.fileStr);
                     console.log(this.listFilesRef);
-                    
-                    ProseMirrorEditorNode.renameInputNodeHidden.value = "HI";
 
                     //temp naming
                     const split1 = this.listFilesRef.split('/');
@@ -1259,12 +1298,35 @@ export class LocalFileDirectory {
     }
 
     //rename file 
-    public async renameFile(fileName: string): Promise<void> {
+    public async renameFile(): Promise<void> {
         const renameFile = await fs.renameFile(
-            ProseMirrorEditorNode.renameInputNodeHidden.value, 
-            ProseMirrorEditorNode.renameInputNode.value, {
+            "Iris_Notes/" + ProseMirrorEditorNode.renameInputNodeHidden.value, 
+            "Iris_Notes/" + ProseMirrorEditorNode.renameInputNode.value + ".md", {
                 dir: fs.BaseDirectory.Desktop
             }
         );
     }   
+    
+    //delete file 
+    public async deleteFile() {
+        const confirmDeletion = await dialog.ask(
+            "Are you sure you want to delete " + ProseMirrorEditorNode.renameInputNodeHidden.value 
+            + " from Desktop/Iris_Notes?", { 
+            title: "Iris", 
+            type: 'warning'
+        });
+
+        //check if user clicked yes or no
+        if(confirmDeletion === true) {  
+            await fs.removeFile(
+                "Iris_Notes/" + ProseMirrorEditorNode.renameInputNodeHidden.value, {
+                    dir: fs.BaseDirectory.Desktop
+                }
+            );
+
+            console.log("DELETED FILE");
+        } else if(confirmDeletion === false) {
+            console.log("CANCELED DELETION OF FILE");
+        }
+    }
 } 
