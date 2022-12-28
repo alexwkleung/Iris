@@ -14,6 +14,7 @@ import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_s
 import { EditorModeConstants } from '../constants/constants'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { ReadingMode } from '../../reading_mode/reading_mode'
+import { EvaSTUtil } from 'eva-st-util'
 
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
@@ -176,6 +177,14 @@ export class LocalEventListeners extends LocalFileDirectory {
                     //update reading mode from prosemirror instance
                     this.ReMode_Evt.readingMode_ProseMirror();
 
+                    CodeMirror_EditorView.editorView.dispatch({
+                        changes: {
+                            from: 0,
+                            to: CodeMirror_EditorView.editorView.state.doc.length,
+                            insert: EvaSTUtil.HTMLtoMarkdown_ST(ReadingMode.readingModeNodeContainer.innerHTML)
+                        }
+                    });
+
                     ReadingMode.readingModeNodeContainer.style.display = "";
 
                     //focus reading mode node container
@@ -190,6 +199,14 @@ export class LocalEventListeners extends LocalFileDirectory {
 
                     //update reading mode from codemirror instance
                     this.ReMode_Evt.readingMode_CodeMirror();
+
+                    CodeMirror_EditorView.editorView.dispatch({
+                        changes: {
+                            from: 0,
+                            to: CodeMirror_EditorView.editorView.state.doc.length,
+                            insert: EvaSTUtil.HTMLtoMarkdown_ST(ReadingMode.readingModeNodeContainer.innerHTML)
+                        }
+                    });
 
                     ReadingMode.readingModeNodeContainer.style.display = "";
 

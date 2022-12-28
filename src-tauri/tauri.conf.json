@@ -106,7 +106,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.tauri.dev-iris",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

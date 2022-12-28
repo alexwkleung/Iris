@@ -7,7 +7,7 @@
 # build
 .PHONY: build
 build:
-	npx vite build && npx tsc --build --clean && npx tsc --build
+	npx vite build && npx tsc --build --clean && npx tsc --build && npm run tauri build -- --target universal-apple-darwin
 
 # tauri dev
 .PHONY: tauri
