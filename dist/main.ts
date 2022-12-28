@@ -11,40 +11,29 @@ class Main {
     public main() {
         //Local File Directory Node
         MainObjects.LFDirectoryNode.LFDirectoryDiv();
-        //
     
         //ProseMirror Editor Node
         MainObjects.PMEditorNode.PMEditorNode();
-        //
     
         //ProseMirror Editor State (Milkdown)
         MainObjects.PMEditor.PM_State();
-        //
 
         //CodeMirror Editor Nodes
         MainObjects.CMEditorNode.CodeMirrorEditorNode();
-        //
 
         //CodeMirror Editor View
         MainObjects.CMEditorView.CodeMirror_EditorView();
-        //
 
         //Local Event Listeners
         MainObjects.LocalEvt.openFolderListener();
-        //MainObjects.LocalEvt.openFileListener();
         MainObjects.LocalEvt.saveFileListener();
         MainObjects.LocalEvt.editorModeListener();
-        //
 
         //Reading Mode
         MainObjects.ReadingMode.readingModeNode();
-        //
-
-        //MainObjects.LocalEvt.createFileTest();
 
         //create file
         MainObjects.LocalEvt.createFileListener();
-        //
 
         //rename file
         MainObjects.LocalEvt.renameFileListener();

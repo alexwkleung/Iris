@@ -50,6 +50,6 @@ async function app(): Promise<void> {
     await appWindow.setResizable(false);
 
     //set default app title on startup 
-    return await appWindow.setTitle("Iris-dev");
+    return await appWindow.setTitle("Iris");
 }
 app();

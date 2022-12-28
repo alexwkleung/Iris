@@ -13,25 +13,20 @@ import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
 import { ReadingMode } from '../../reading_mode/reading_mode'
-import { LocalFileDirectory } from '../file_directory/file_directory'
 
 //MainObjects class
 export class MainObjects {
     //ProseMirror Editor Node object
     static PMEditorNode = new ProseMirrorEditorNode() as ProseMirrorEditorNode;
-    //
 
     //ProseMirror Editor object
     static PMEditor = new ProseMirrorEditor() as ProseMirrorEditor;
-    //
 
     //Local File Directory object
     static LFDirectoryNode = new LocalFileDirectoryNode() as LocalFileDirectoryNode;
-    //
 
     //Local Event Listeners object
     static LocalEvt = new LocalEventListeners() as LocalEventListeners;
-    //
 
     //DOM Builders
     static FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
@@ -44,6 +39,4 @@ export class MainObjects {
 
     //Reading Mode
     static ReadingMode = new ReadingMode() as ReadingMode;
-
-    static LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 }

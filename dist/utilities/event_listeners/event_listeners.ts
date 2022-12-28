@@ -14,14 +14,13 @@ import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_s
 import { EditorModeConstants } from '../constants/constants'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { ReadingMode } from '../../reading_mode/reading_mode'
-import { EditorState } from '@milkdown/prose/state'
-import { $view } from '@milkdown/utils'
 
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
     //local file directory object
     private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
-    
+
+    //reading mode object
     private ReMode_Evt = new ReadingMode() as ReadingMode;
 
     //constant refs
@@ -34,60 +33,32 @@ export class LocalEventListeners extends LocalFileDirectory {
         const browseFolder = document.querySelector('#openFolder') as HTMLButtonElement;
 
         browseFolder.addEventListener('click', async () => {
-            console.log("Open Local Folder: Promise Resolved.");
             await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
-                console.log("Open Local Folder: Promise Resolved.");
-            });
+                //console.log("Open Local Folder: Promise Resolved.");
+                return;
+            }).catch(() => console.error("Unable to open folder"));
         });
-
-        /*
-        (document.querySelector('#createFile') as HTMLElement).addEventListener('click', async () => {
-            await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
-                console.log("Open Local File: Promise Resolved.");
-            });
-        });
-        */
     }
-
-    //open file listener
-    /*
-    public openFileListener() {
-        const openFile = document.querySelector('#openFile') as HTMLButtonElement;
-        
-        openFile.addEventListener('click', async () => {
-            console.log("Clicked open file button");
-
-            await Promise.resolve(this.LFDirectory.OpenLF()).then(() => {
-                console.log("Open Local File: Promise Resolved.");
-            });
-        });
-    }   
-    */
 
     //save file listener
     public saveFileListener() {
-        //const saveFile = document.querySelector('#saveFile') as HTMLButtonElement;
         const editor = document.querySelector('#editor') as HTMLElement;
         const cm_editor = document.querySelector('#cm_editor') as HTMLElement;
-
-        /*
-        saveFile.addEventListener('click' , async () => {
-            await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
-                console.log("Save Local File: Promise Resolved.");
-            });
-        });
-        */
 
         //auto saving 
         editor.addEventListener('keyup', async () => {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
-                console.log("Save Local File: Promise Resolved.");
+                //console.log("Save Local File: Promise Resolved.");
+                return;
+                //console.clear();
             });
         });
         cm_editor.addEventListener('keyup', async () => {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
-                console.log("Save Local File: Promise Resolved.");
-            });
+                //console.log("Save Local File: Promise Resolved.");
+                return;
+                //console.clear();
+            }).catch(() => console.error("Unable to save file"));
         });
     }
 
@@ -102,8 +73,6 @@ export class LocalEventListeners extends LocalFileDirectory {
             input[i].addEventListener('click', () => {
                 //check if value is wysiwyg
                 if(input[i].value === "wysiwygButton") {
-                    console.log("WYSIWYG");
-
                     //set constants
                     this.wysiwygConst = EditorModeConstants.WYSIWYG_Active;
                     this.markdownConst = EditorModeConstants.Markdown_Inactive;
@@ -130,19 +99,16 @@ export class LocalEventListeners extends LocalFileDirectory {
                         this.wysiwygConst = EditorModeConstants.WYSIWYG_Active;
                         this.markdownConst = EditorModeConstants.Markdown_Inactive;
 
-                        //hide reading editor
                         ReadingMode.readingModeNodeContainer.style.display = "none";
 
                         ProseMirrorEditorNode.editorNode.style.display = "";
 
                         ProseMirrorEditor.editor.action(replaceAll(CodeMirror_EditorView.editorView.state.doc.toString()));
 
-                        //focus PM editor
                         (document.querySelector('.ProseMirror') as HTMLElement).focus();
                     }
                 //check if value is markdownButton
                 } else if(input[i].value === "markdownButton") {
-                    console.log("Markdown");
                     this.markdownConst = EditorModeConstants.Markdown_Active;
                     this.wysiwygConst = EditorModeConstants.WYSIWYG_Inactive;
                     this.readingConst = EditorModeConstants.Reading_Inactive;
@@ -194,10 +160,8 @@ export class LocalEventListeners extends LocalFileDirectory {
                             }
                         });
                         
-                        //update reading mode from prosemirror instance
                         this.ReMode_Evt.readingMode_ProseMirror();
 
-                        //focus editor view
                         CodeMirror_EditorView.editorView.focus();
                     }
                 //check if reading button is clicked and if prosemirror instance was previously displayed
@@ -241,34 +205,22 @@ export class LocalEventListeners extends LocalFileDirectory {
         const inputBox = document.querySelector('#createFileInput') as HTMLInputElement;
 
         inputBox.addEventListener('keydown', async (event) => {
+            //check if user presses enter on input box with some x value
             if(event.key === 'Enter' && inputBox.value) {
                 this.LFDirectory.createFile(inputBox.value);
 
                 inputBox.value = "";
 
+                //resync folder
                 await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
-                    console.log("Open Local File: Promise Resolved.");
-                });
+                    //console.log("Open Local Folder: Promise Resolved.");
+                    return;
+                    //console.clear();
+                }).catch(() => console.error("Unable to open folder"));
             } else if(inputBox.value === "") {
                 throw console.error("Input box cannot be empty!");
             }
         });
-
-        /*
-        inputBoxBtn.addEventListener('click', async () => {
-            if(inputBox.value) {
-                this.LFDirectory.createFile(inputBox.value);
-
-                inputBox.value = "";
-
-                await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
-                    console.log("Open Local File: Promise Resolved.");
-                });
-            } else if(inputBox.value === "") {
-                throw console.error("Input box cannot be empty!");
-            }
-        });
-        */
     }
 
     //rename file listener
@@ -276,14 +228,17 @@ export class LocalEventListeners extends LocalFileDirectory {
         const inputBoxRename = document.querySelector('#renameInputBox') as HTMLInputElement;
 
         inputBoxRename.addEventListener('keydown', async (event) => {
+            //check if user presses enter on input box with some x value
             if(event.key === 'Enter' && inputBoxRename.value) {
                 this.LFDirectory.renameFile()
 
                 inputBoxRename.value = "";
 
+                //resync folder
                 await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
-                    console.log("Open Local File: Promise Resolved.");
-                });
+                    //console.log("Open Local Folder: Promise Resolved.");
+                    return;
+                }).catch(() => "Unable to open folder.");
             } else if(event.key === 'Enter' && inputBoxRename.value === "") {
                 throw console.error("Input box cannot be empty!");
             }
@@ -297,9 +252,11 @@ export class LocalEventListeners extends LocalFileDirectory {
         deleteFileButton.addEventListener('click', async (event) => {
             await this.LFDirectory.deleteFile();
 
+            //resync folder
             await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
-                console.log("Open Local File: Promise Resolved.");
-            });
-        });
+                //console.log("Open Local Folder: Promise Resolved.");
+                return;
+            }).catch(() => console.error("Unable to open folder"));
+        }); 
     }
 }

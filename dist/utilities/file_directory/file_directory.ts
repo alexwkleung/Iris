@@ -20,7 +20,7 @@
 */
 
 import { App } from '../../app'
-import { dialog, fs, path } from '@tauri-apps/api'
+import { dialog, fs } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
 import { e } from '@tauri-apps/api/fs-4bb77382'
 import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_state'
@@ -68,43 +68,17 @@ export class LocalFileDirectoryNode {
 
         fileDirectoryInteractionContainer.appendChild(LocalFileDirectoryNode.browseFolderBtn);
 
-        //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.browseFolderBtn);
-
-        //open file button (temporary)
-        /*
-        LocalFileDirectoryNode.openFileBtn = document.createElement('button') as HTMLButtonElement;
-        LocalFileDirectoryNode.openFileBtn.setAttribute("id", "openFile");
-
-        const OFTextNode1 = document.createTextNode("Open File");
-        LocalFileDirectoryNode.openFileBtn.appendChild(OFTextNode1);
-        LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.openFileBtn);
-        */
-
-        //save file button (temporary)
-        /*
-        LocalFileDirectoryNode.saveFileBtn = document.createElement('button') as HTMLButtonElement;
-        LocalFileDirectoryNode.saveFileBtn.setAttribute("id", "saveFile");
-
-        const SFTextNode1 = document.createTextNode("Save File");
-        LocalFileDirectoryNode.saveFileBtn.appendChild(SFTextNode1);
-        LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(LocalFileDirectoryNode.saveFileBtn);
-        */
-
         //file directory div (child)
         LocalFileDirectoryNode.fileDirectoryNode = document.createElement('div') as HTMLDivElement;
         LocalFileDirectoryNode.fileDirectoryNode.setAttribute("id", "fileDirectory");
         
         App.appNodeContainer.appendChild(LocalFileDirectoryNode.fileDirectoryNode) as HTMLDivElement;
-        
-        //const fileDirectoryParent = document.querySelector('#fileDirectoryParent') as HTMLDivElement;
 
         //folder directory container
         LocalFileDirectoryNode.folderContainerNode = document.createElement('div') as HTMLDivElement;
         LocalFileDirectoryNode.folderContainerNode.setAttribute("id", "folderContainer");
                 
         LocalFileDirectoryNode.fileDirectoryNode.appendChild(LocalFileDirectoryNode.folderContainerNode) as HTMLDivElement;
-                
-        //const folderContainer = document.querySelector('#fileDirectory') as HTMLDivElement;
         
         //create file node
         const createFile = document.createElement('input') as HTMLDivElement;
@@ -118,23 +92,6 @@ export class LocalFileDirectoryNode {
         createFile.appendChild(createFileTextNode);
 
         fileDirectoryInteractionContainer.appendChild(createFile);
-
-        //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(createFile);
-
-        //input box button
-        /*
-        const inputBoxBtn = document.createElement('button') as HTMLButtonElement;
-        inputBoxBtn.setAttribute("id", "inputBoxBtn");
-        inputBoxBtn.style.display = "none";
-
-        //input box button text node
-        const inputBoxBtnTextNode = document.createTextNode("->") as Text;
-        
-        inputBoxBtn.appendChild(inputBoxBtnTextNode);
-
-        //LocalFileDirectoryNode.fileDirectoryNodeParent.appendChild(inputBoxBtn);
-        fileDirectoryInteractionContainer.appendChild(inputBoxBtn);
-        */
 
         //delete file button
         LocalFileDirectoryNode.deleteFileBtn = document.createElement('button');
@@ -221,9 +178,9 @@ export class LocalFileDirectory {
     //recursively iterate over folder contents
     private OpenLFFolderRecursive(entries: e[]) {
         for(const entry of entries) {
-            console.log(entry.path);
+            //console.log(entry.path);
             //check type of path
-            console.log(typeof entry.path);
+            //console.log(typeof entry.path);
 
             //push paths of folder to recArr
             LocalFileDirectory.localFolderArr.push(entry.path);
@@ -241,27 +198,13 @@ export class LocalFileDirectory {
 
     //open folder
     public async OpenLFFolder(): Promise<void> {
-        //open folder dialog
-        /*
-        this.openFolder = await dialog.open({
-            directory: true,
-            defaultPath: await path.desktopDir() //await path.homeDir()
-        }) as string;
-        */
-
-        //exception handle
-        //if(this.openFolder) {
-
         if(await fs.exists("Iris_Notes", { dir: fs.BaseDirectory.Desktop})) {
             const entries = await fs.readDir("Iris_Notes", {
                 dir: fs.BaseDirectory.Desktop,
                 recursive: true
             });
             
-            console.log(entries);
-
-            //call function again to that folder is synced after creating dir
-            //this.OpenLFFolder();
+            //console.log(entries);
 
             //set recArr length to 0 to reset array
             LocalFileDirectory.localFolderArr.length = 0;
@@ -277,7 +220,7 @@ export class LocalFileDirectory {
                 this.folderFileString = LocalFileDirectory.localFolderArr.toString();
                 this.splitFolderFile = this.folderFileString.split(',');
                 this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
-                console.log(typeof this.folderFileString);
+                //console.log(typeof this.folderFileString);
                 
                 //remove parentFolder from DOM if found
                 (document.querySelector('.parentFolder') as ChildNode).remove();
@@ -298,41 +241,30 @@ export class LocalFileDirectory {
                     //or
                     this.localFolderArrSortRef.shift();
                 }
-                //shift localFolderArray
-                //since the array is alphabetically sorted, we can also assume that .DS_STORE 
-                //would be end up being the first element of the array.
-                //
-                //since .DS_STORE is the only dotfile we want to take out (so it doesn't show in the 
-                //file directory tree), then this method would work okay for now until 
-                //further complications show up
-                //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
-                //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
-                //this.localFolderArrSortRef.shift();
     
                 //directly copy the local folder content array to a ref copy array for use later
                 this.localFolderArrRefCopy.length = 0;
                 for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
                     this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
                 }
-    ////
-                console.log(this.localFolderArrRefCopy);
+
+                //console.log(this.localFolderArrRefCopy);
                 
                 this.localFolderArrRefCopy.shift();
     
                 //split the ref array using regex character class array
                 this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
-                //let lfSortRefSplit2: string[] | undefined = this.localFolderArrShiftRef?.split(',');
-                console.log(this.lfArrSortRefSplit); 
+                //console.log(this.lfArrSortRefSplit); 
                 //console.log(lfSortRefSplit2);
                 
                 this.mdExtensionArr = [".md"];
                 this.filterMdFiles = this.lfArrSortRefSplit.filter(
                     mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
                 ));
-                console.log(this.filterMdFiles);
-                
-                console.log("ARRAY REF COPY OUTPUT");
-                console.log(this.localFolderArrRefCopy);
+
+                //console.log(this.filterMdFiles);
+                //console.log("ARRAY REF COPY OUTPUT");
+                //console.log(this.localFolderArrRefCopy);
                             
                 this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
     
@@ -344,9 +276,10 @@ export class LocalFileDirectory {
                 //logic for opening a file to the editor from an opened folder within 
                 //the directory tree.
                 const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
+
                 //list files dom ref
                 const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
-                console.log(listFiles);
+                //console.log(listFiles);
     
                 //iterate over files list
                 for(let i = 0; i < listFiles.length; i++) { 
@@ -360,11 +293,10 @@ export class LocalFileDirectory {
                         for(let j = 0; j < listFilesDOMRef.length; j++) {
                             this.listFilesRef = listFilesDOMRef[i].textContent as string;
                         }
-                        //this.listFilesRef = listFiles[i].textContent as string; 
     
-                        console.log(this.listFilesRef);
+                        //console.log(this.listFilesRef);
     
-                        const readText= fs.readTextFile(this.listFilesRef, {
+                        const readText = fs.readTextFile(this.listFilesRef, {
                             dir: fs.BaseDirectory.Desktop
                         });
     
@@ -377,7 +309,8 @@ export class LocalFileDirectory {
                             //resolved promise value 
                             //will be pushed into array
                             this.fileArr.push(fileData);
-                            console.log(this.fileArr);
+
+                            //console.log(this.fileArr);
     
                             //iterate over array containing 
                             //file content
@@ -428,10 +361,10 @@ export class LocalFileDirectory {
     
                             //focus PM editor
                             (document.querySelector('.ProseMirror') as HTMLElement).focus();
-                        });
+                        }).catch(() => console.error("Unable to read text file."));
     
-                        console.log(this.fileStr);
-                        console.log(this.listFilesRef);
+                        //console.log(this.fileStr);
+                        //console.log(this.listFilesRef);
     
                         //temp naming
                         const split1 = this.listFilesRef.split('/');
@@ -440,19 +373,19 @@ export class LocalFileDirectory {
                         const pop3 = split1.pop() as string | null
                         const concat1 = pop3 + "/" + pop2;
     
-                        console.log(pop1);
-                        console.log(concat1);
+                        //console.log(pop1);
+                        //console.log(concat1);
     
-                        appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                        appWindow.setTitle("Iris - " + pop1 + " @ " + concat1);
                     });
     
-                    await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                    await appWindow.setTitle("Iris - " + this.splitFolderConcat);
                 }  
             } else {
                 this.folderFileString = LocalFileDirectory.localFolderArr.toString();
                 this.splitFolderFile = this.folderFileString.split(',');
                 this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
-                console.log(typeof this.folderFileString);
+                //console.log(typeof this.folderFileString);
     
                 (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
                 LocalFileDirectoryNode.deleteFileBtn.style.display = "";
@@ -472,34 +405,31 @@ export class LocalFileDirectory {
                     //or
                     this.localFolderArrSortRef.shift();
                 }
-
-                //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
-    
-                //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
     
                 //directly copy the local folder content array to a ref copy array for use later
                 this.localFolderArrRefCopy.length = 0;
                 for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
                     this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
                 }
-    ////
+
                 this.localFolderArrRefCopy.shift();
     
-                console.log(this.localFolderArrRefCopy);
+                //console.log(this.localFolderArrRefCopy);
     
                 //split the ref array using regex character class array
                 this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
-                console.log(this.lfArrSortRefSplit); 
+                
+                //console.log(this.lfArrSortRefSplit); 
                 //console.log(lfSortRefSplit2);
     
                 this.mdExtensionArr = [".md"];
                 this.filterMdFiles = this.lfArrSortRefSplit.filter(
                     mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
                 ));
-                console.log(this.filterMdFiles);
-    
-                console.log("ARRAY REF COPY OUTPUT");
-                console.log(this.localFolderArrRefCopy);
+
+                //console.log(this.filterMdFiles);
+                //console.log("ARRAY REF COPY OUTPUT");
+                //console.log(this.localFolderArrRefCopy);
                 
                 this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
                 this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesRefBuilder(this.localFolderArrRefCopy);
@@ -507,9 +437,11 @@ export class LocalFileDirectory {
                 //logic for opening a file to the editor from an opened folder within 
                 //the directory tree.
                 const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
+
                 //list files dom ref
                 const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
-                console.log(listFiles);
+
+                //console.log(listFiles);
     
                 for(let i = 0; i < listFiles.length; i++) {
                     listFiles[i].addEventListener('click', () => {
@@ -520,7 +452,6 @@ export class LocalFileDirectory {
                         //add the active class to the element from which click event triggered
                         listFiles[i].classList.add('activeFile');
     
-                        console.log('click');
                         ProseMirrorEditor.readonly = true;
     
                         ProseMirrorEditor.editor.destroy();
@@ -531,9 +462,7 @@ export class LocalFileDirectory {
                             this.listFilesRef = listFilesDOMRef[i].textContent as string;
                         }
     
-                        //this.listFilesRef = listFiles[i].textContent as string; 
-    
-                        console.log(this.listFilesRef);
+                        //console.log(this.listFilesRef);
     
                         const readText= fs.readTextFile(this.listFilesRef, {
                             dir: fs.BaseDirectory.Desktop
@@ -548,7 +477,8 @@ export class LocalFileDirectory {
                             //resolved promise value 
                             //will be pushed into array
                             this.fileArr.push(fileData);
-                            console.log(this.fileArr);
+
+                            //console.log(this.fileArr);
     
                             //iterate over array containing 
                             //file content
@@ -599,13 +529,13 @@ export class LocalFileDirectory {
                             //focus PM editor
                             (document.querySelector('.ProseMirror') as HTMLElement).focus();
     
-                            console.log(this.fileStr);
-                        });
+                            //console.log(this.fileStr);
+                        }).catch(() => console.error("Unable to read text file."));
                     
-                        console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
+                        //console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
     
-                        console.log(this.fileStr);
-                        console.log(this.listFilesRef);
+                        //console.log(this.fileStr);
+                        //console.log(this.listFilesRef);
     
                         //temp naming
                         const split1 = this.listFilesRef.split('/');
@@ -614,13 +544,13 @@ export class LocalFileDirectory {
                         const pop3 = split1.pop() as string | null
                         const concat1 = pop3 + "/" + pop2;
     
-                        console.log(pop1);
-                        console.log(concat1);
+                        //console.log(pop1);
+                        //console.log(concat1);
     
-                        appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                        appWindow.setTitle("Iris - " + pop1 + " @ " + concat1);
                     });
     
-                    await appWindow.setTitle("Iris-dev-build - " + this.splitFolderConcat);
+                    await appWindow.setTitle("Iris - " + this.splitFolderConcat);
                 }  
             }
         } else {
@@ -633,15 +563,6 @@ export class LocalFileDirectory {
                 recursive: true
             });
 
-            /*
-            const createFileTemp = await fs.writeFile({
-                path: "Iris_Notes/.temp.md",
-                contents: ""
-            }, {
-                dir: fs.BaseDirectory.Desktop
-            });
-            */
-
             const createFile = await fs.writeFile({
                 path: "Iris_Notes/Note.md",
                 contents: ""
@@ -649,7 +570,7 @@ export class LocalFileDirectory {
                 dir: fs.BaseDirectory.Desktop
             });
 
-            console.log(entries);
+            //console.log(entries);
 
             //call function again to that folder is synced after creating dir
             this.OpenLFFolder();
@@ -661,36 +582,9 @@ export class LocalFileDirectory {
             this.OpenLFFolderRecursive(entries);
         }
 
-        /*
-            const entries = await fs.readDir("Iris_Notes", {
-                dir: fs.BaseDirectory.Desktop,
-                recursive: true
-            });
-            
-            console.log(entries);
-
-            //set recArr length to 0 to reset array
-            LocalFileDirectory.localFolderArr.length = 0;
-
-            //call recursive function
-            this.OpenLFFolderRecursive(entries);
-            */
-
-            console.log(LocalFileDirectory.localFolderArr);
-            console.log(LocalFileDirectory.localFolderArr);
-            console.log(this.openFolder + " ---> " + typeof this.openFolder);
-            /*
-        } else if(this.openFolder === null) {
-            throw console.log("User canceled open dialog: Promise Rejected.")
-        } 
-        */
-
-        /*
-        this.splitFolderDirectory = this.openFolder.split('/');
-        this.splitFolderPop1 = this.splitFolderDirectory.pop() as string | null;
-        this.splitFolderPop2 = this.splitFolderDirectory.pop()  as string | null;
-        this.splitFolderConcat = this.splitFolderPop2 + "/" + this.splitFolderPop1 as string;
-        */
+            //console.log(LocalFileDirectory.localFolderArr);
+            //console.log(LocalFileDirectory.localFolderArr);
+            //console.log(this.openFolder + " ---> " + typeof this.openFolder);
        
         (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
         LocalFileDirectoryNode.deleteFileBtn.style.display = "";
@@ -700,7 +594,7 @@ export class LocalFileDirectory {
             this.folderFileString = LocalFileDirectory.localFolderArr.toString();
             this.splitFolderFile = this.folderFileString.split(',');
             this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
-            console.log(typeof this.folderFileString);
+            //console.log(typeof this.folderFileString);
             
             //remove parentFolder from DOM if found
             (document.querySelector('.parentFolder') as ChildNode).remove();
@@ -715,21 +609,9 @@ export class LocalFileDirectory {
             //sort localFolderArr alphabetically
             this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
 
-            //shift localFolderArray
-            //since the array is alphabetically sorted, we can also assume that .DS_STORE 
-            //would be end up being the first element of the array.
-            //
-            //since .DS_STORE is the only dotfile we want to take out (so it doesn't show in the 
-            //file directory tree), then this method would work okay for now until 
-            //further complications show up
-            //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
-            //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
-            //this.localFolderArrSortRef.shift();
+            //console.log(this.localFolderArrSortRef);
 
-            console.log("OPOPO");
-            console.log(this.localFolderArrSortRef);
-
-            console.log(this.localFolderArrSortRef[0].toString().split('/').pop());
+            //console.log(this.localFolderArrSortRef[0].toString().split('/').pop());
 
             //remove .DS_Store from sorted ref array
             if(this.localFolderArrSortRef[0].toString().split('/').pop() === ".DS_Store") {
@@ -738,32 +620,29 @@ export class LocalFileDirectory {
                 this.localFolderArrSortRef.shift();
             }
 
-            //console.log(this.localFolderArrSortRef);
-
             //directly copy the local folder content array to a ref copy array for use later
             this.localFolderArrRefCopy.length = 0;
             for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
                 this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
             }
-////
-            console.log(this.localFolderArrRefCopy);
+
+            //console.log(this.localFolderArrRefCopy);
             
             this.localFolderArrRefCopy.shift();
 
             //split the ref array using regex character class array
             this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
-            //let lfSortRefSplit2: string[] | undefined = this.localFolderArrShiftRef?.split(',');
-            console.log(this.lfArrSortRefSplit); 
+            //console.log(this.lfArrSortRefSplit); 
             //console.log(lfSortRefSplit2);
             
             this.mdExtensionArr = [".md"];
             this.filterMdFiles = this.lfArrSortRefSplit.filter(
                 mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
             ));
-            console.log(this.filterMdFiles);
-            
-            console.log("ARRAY REF COPY OUTPUT");
-            console.log(this.localFolderArrRefCopy);
+
+            //console.log(this.filterMdFiles);
+            //console.log("ARRAY REF COPY OUTPUT");
+            //console.log(this.localFolderArrRefCopy);
                         
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
 
@@ -777,7 +656,7 @@ export class LocalFileDirectory {
             const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
             //list files dom ref
             const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
-            console.log(listFiles);
+            //console.log(listFiles);
 
             //iterate over files list
             for(let i = 0; i < listFiles.length; i++) { 
@@ -798,9 +677,8 @@ export class LocalFileDirectory {
                     for(let j = 0; j < listFilesDOMRef.length; j++) {
                         this.listFilesRef = listFilesDOMRef[i].textContent as string;
                     }
-                    //this.listFilesRef = listFiles[i].textContent as string; 
 
-                    console.log(this.listFilesRef);
+                    //console.log(this.listFilesRef);
 
                     const readText= fs.readTextFile(this.listFilesRef, {
                         dir: fs.BaseDirectory.Desktop
@@ -815,7 +693,8 @@ export class LocalFileDirectory {
                         //resolved promise value 
                         //will be pushed into array
                         this.fileArr.push(fileData);
-                        console.log(this.fileArr);
+
+                        //console.log(this.fileArr);
 
                         //iterate over array containing 
                         //file content
@@ -866,10 +745,10 @@ export class LocalFileDirectory {
 
                         //focus PM editor
                         (document.querySelector('.ProseMirror') as HTMLElement).focus();
-                    });
+                    }).catch(() => console.error("Unable to read text file."));
 
-                    console.log(this.fileStr);
-                    console.log(this.listFilesRef);
+                    //console.log(this.fileStr);
+                    //console.log(this.listFilesRef);
 
                     //set hidden rename input value to file name
                     ProseMirrorEditorNode.renameInputNodeHidden.value = listFiles[i].innerHTML;
@@ -881,19 +760,19 @@ export class LocalFileDirectory {
                     const pop3 = split1.pop() as string | null
                     const concat1 = pop3 + "/" + pop2;
 
-                    console.log(pop1);
-                    console.log(concat1);
+                    //console.log(pop1);
+                    //console.log(concat1);
 
-                    appWindow.setTitle("Iris-dev - " + pop1 + " @ " + concat1);
+                    appWindow.setTitle("Iris - " + pop1 + " @ " + concat1);
                 });
 
-                await appWindow.setTitle("Iris-dev - " + "@ " + "Desktop/Iris_Notes");
+                await appWindow.setTitle("Iris - " + "@ " + "Desktop/Iris_Notes");
             }  
         } else {
             this.folderFileString = LocalFileDirectory.localFolderArr.toString();
             this.splitFolderFile = this.folderFileString.split(',');
             this.splitFolderFilePop1 = this.splitFolderFile.pop() as string | null;
-            console.log(typeof this.folderFileString);
+            //console.log(typeof this.folderFileString);
 
             (document.querySelector('#createFileInput') as HTMLElement).style.display = "";
             LocalFileDirectoryNode.deleteFileBtn.style.display = "";
@@ -907,33 +786,30 @@ export class LocalFileDirectory {
 
             this.localFolderArrSortRef = LocalFileDirectory.localFolderArr.sort();
 
-            //this.localFolderArrShiftRef = this.localFolderArrSortRef.splice(0, 1).toString();
-
-            //this.localFolderArrShiftRef = this.localFolderArrSortRef.shift();
-
             //directly copy the local folder content array to a ref copy array for use later
             this.localFolderArrRefCopy.length = 0;
             for(let i = 0; i < this.localFolderArrSortRef.length; i++) {
                 this.localFolderArrRefCopy.push(this.localFolderArrSortRef[i]);
             }
-////
+
             this.localFolderArrRefCopy.shift();
 
-            console.log(this.localFolderArrRefCopy);
+            //console.log(this.localFolderArrRefCopy);
 
             //split the ref array using regex character class array
             this.lfArrSortRefSplit = this.localFolderArrSortRef.toString().split(/[,/]/);
-            console.log(this.lfArrSortRefSplit); 
+
+            //console.log(this.lfArrSortRefSplit); 
             //console.log(lfSortRefSplit2);
 
             this.mdExtensionArr = [".md"];
             this.filterMdFiles = this.lfArrSortRefSplit.filter(
                 mdFilter => this.mdExtensionArr.some(end => mdFilter.endsWith(end)
             ));
-            console.log(this.filterMdFiles);
 
-            console.log("ARRAY REF COPY OUTPUT");
-            console.log(this.localFolderArrRefCopy);
+            //console.log(this.filterMdFiles);
+            //console.log("ARRAY REF COPY OUTPUT");
+            //console.log(this.localFolderArrRefCopy);
             
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesBuilder(this.filterMdFiles);
             this.FileDirectoryBuilder.Eva_FileDirectoryTreeFilesRefBuilder(this.localFolderArrRefCopy);
@@ -941,13 +817,14 @@ export class LocalFileDirectory {
             //logic for opening a file to the editor from an opened folder within 
             //the directory tree.
             const listFiles = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFiles');
+
             //list files dom ref
             const listFilesDOMRef = (document.querySelector('.nested') as HTMLElement).getElementsByClassName('noteFilesRef');
-            console.log(listFiles);
+
+            //console.log(listFiles);
 
             for(let i = 0; i < listFiles.length; i++) {
                 listFiles[i].addEventListener('click', () => {
-                    // if so then remove the class from it
                     const getElemWithClass = document.querySelector('.activeFile');
                     if(getElemWithClass !== null) {
                         getElemWithClass.classList.remove('activeFile');
@@ -955,7 +832,8 @@ export class LocalFileDirectory {
                     //add the active class to the element from which click event triggered
                     listFiles[i].classList.add('activeFile');
 
-                    console.log('click');
+                    //console.log('click');
+
                     ProseMirrorEditor.readonly = true;
 
                     ProseMirrorEditor.editor.destroy();
@@ -968,7 +846,7 @@ export class LocalFileDirectory {
 
                     //this.listFilesRef = listFiles[i].textContent as string; 
 
-                    console.log(this.listFilesRef);
+                    //console.log(this.listFilesRef);
 
                     const readText= fs.readTextFile(this.listFilesRef, {
                         dir: fs.BaseDirectory.Desktop
@@ -983,7 +861,7 @@ export class LocalFileDirectory {
                         //resolved promise value 
                         //will be pushed into array
                         this.fileArr.push(fileData);
-                        console.log(this.fileArr);
+                        //console.log(this.fileArr);
 
                         //iterate over array containing 
                         //file content
@@ -1034,13 +912,12 @@ export class LocalFileDirectory {
                         //focus PM editor
                         (document.querySelector('.ProseMirror') as HTMLElement).focus();
 
-                        console.log(this.fileStr);
-                    });
+                        //console.log(this.fileStr);
+                    }).catch(() => console.error("Unable to read text file."));;
                 
-                    console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
-
-                    console.log(this.fileStr);
-                    console.log(this.listFilesRef);
+                    //console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
+                    //console.log(this.fileStr);
+                    //console.log(this.listFilesRef);
 
                     //temp naming
                     const split1 = this.listFilesRef.split('/');
@@ -1049,220 +926,24 @@ export class LocalFileDirectory {
                     const pop3 = split1.pop() as string | null
                     const concat1 = pop3 + "/" + pop2;
 
-                    console.log(pop1);
-                    console.log(concat1);
+                    //console.log(pop1);
+                    //console.log(concat1);
 
-                    appWindow.setTitle("Iris-dev - " + pop1 + " @ " + concat1);
+                    appWindow.setTitle("Iris - " + pop1 + " @ " + concat1);
                 });
 
-                await appWindow.setTitle("Iris-dev - " + "Desktop/Iris_Notes");
+                await appWindow.setTitle("Iris - " + "Desktop/Iris_Notes");
             }  
         }
     }
-
-    //open file dialog
-    /*
-    public async OpenLF(): Promise<void> {
-        //reset local file array
-        LocalFileDirectory.localFileArr.length = 0;
-
-        LocalFileDirectory.openFileString = " ";
-
-        //open file dialog
-        this.openFile = await dialog.open({
-            filters: [{
-                name: "Accepted File Types",
-                extensions: ["md"],
-            }], 
-            recursive: true,
-        }) as string;
-
-        const readFileToArr = fs.readTextFile(this.openFile, {
-            dir: fs.BaseDirectory.Desktop //|| fs.BaseDirectory.Home
-        })
-
-        //const fileDirectory = document.querySelector('#fileDirectory') as HTMLElement;
-        
-        //temporary directory folder title
-        this.splitFileDirectory = this.openFile.split('/');
-        this.splitFilePop1 = this.splitFileDirectory.pop() as string | null;
-        this.splitFilePop2 = this.splitFileDirectory.pop() as string | null;
-        this.splitFilePop3 = this.splitFileDirectory.pop() as string | null;
-        this.splitFileConcat1 = this.splitFilePop3 + "/" + this.splitFilePop2 as string;
-
-        this.splitFileConcat2 = this.splitFilePop3 + "/" + this.splitFilePop2;
-
-        //check if parentFolder is in DOM
-        if((document.querySelector('.parentFolder'))) {
-            //remove parentFolder from DOM if found
-            (document.querySelector('.parentFolder') as ChildNode).remove();
-
-            //then
-
-            //re-build file directory tree based on opened file
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFileConcat2, this.splitFilePop1);
-        } else {
-            //build file directory based on opened file
-            this.FileDirectoryBuilder.Eva_FileDirectoryTreeBuilder(this.splitFileConcat2, this.splitFilePop1);
-        }
-
-        console.log(EvaDOMBuilderUtil.prevParentNode);
-
-        Promise.resolve(this.openFile).then((): void => {
-            Promise.resolve(readFileToArr).then((fileData): void => {
-                LocalFileDirectory.localFileArr.push(fileData);
-
-                console.log(LocalFileDirectory.localFileArr);
-            });
-        });
-
-        //exception handle 
-        if(this.openFile) {
-            //set openFileConst to OpenFile constant ("File Opened")
-            this.openFileConst = FileSystemConstants.OpenFile;
-
-            console.log(this.openFileConst);
-
-            //log path to file
-            console.log(this.openFile);
-
-            //resolve promise from readTextFile to handle data
-            //and push that data into fileArr array
-            await Promise.resolve(readFileToArr).then((fileData) => {
-                LocalFileDirectory.localFileArr.push(fileData);
-            }); 
-
-            //ensure data is passed 
-            //
-            //this logic must be tweaked in order to handle multiple files
-            //
-            for(let folderIndex of LocalFileDirectory.localFileArr) {
-                LocalFileDirectory.openFileString = folderIndex;
-
-                //console.log("INSIDE LOOP:");
-                //console.log(LocalFileDirectory.openFileString);
-                //break;
-            }
-
-            //console.log("OUTSIDE LOOP:")
-            //console.log(LocalFileDirectory.openFileString);
-
-            //check if editor node is present in the DOM before inserting file content
-            if(document.querySelector('.milkdown')) {
-                //await ProseMirrorEditor.editor.destroy();
-                ProseMirrorEditor.readonly = true;
-                //await ProseMirrorEditor.editor.create();
-
-                //insert raw markdown string into editor state by replacing 
-                //all its contents with the opened file string
-                ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
-
-                //update CodeMirror instance
-                CodeMirror_EditorView.editorView.dispatch({
-                    changes: {
-                        from: 0,
-                        to: CodeMirror_EditorView.editorView.state.doc.length,
-                        insert: ProseMirrorEditor.editor.action(getMarkdown())
-                    }
-                });
-
-                //update reader instance
-                this.ReMode.readingMode_ProseMirror();
-
-                ///adsasdasdasdasdas
-                if(ProseMirrorEditorNode.editorNode.style.display === "none") {
-                    ProseMirrorEditorNode.editorNode.style.display = "";
-                }
-                if(CodeMirror_EditorNode.editorNode.style.display === "") {
-                    ReadingMode.readingModeNodeContainer.style.display = "none";
-                    ProseMirrorEditorNode.editorNode.style.display = "none";
-                } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
-                    CodeMirror_EditorNode.editorNode.style.display = "none";
-                    ProseMirrorEditorNode.editorNode.style.display = "none";
-                }
-
-                //show editor
-                //ProseMirrorEditorNode.editorNode.style.display = "";
-
-                //show input button node container 
-                ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
-
-                //remove disabled attribute from wysiwyg input label
-                ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
-                //set wysiwyg input to checked
-                ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
-
-                //remove disabled attribute from markdown input label
-                ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
-
-                //remove disabled attribute from reading input label
-                ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
-            } else {
-                ProseMirrorEditor.readonly = true;
-
-                await ProseMirrorEditor.editor.create();
-
-                //insert raw markdown string into editor state by replacing 
-                //all its contents with the opened file string
-                ProseMirrorEditor.editor.action(replaceAll(LocalFileDirectory.openFileString, true));
-
-                CodeMirror_EditorView.editorView.dispatch({
-                    changes: {
-                        from: 0,
-                        to: CodeMirror_EditorView.editorView.state.doc.length,
-                        insert: ProseMirrorEditor.editor.action(getMarkdown())
-                    }
-                });
-
-                this.ReMode.readingMode_ProseMirror();
-
-                if(CodeMirror_EditorNode.editorNode.style.display === "") {
-                    ReadingMode.readingModeNodeContainer.style.display = "none";
-                    ProseMirrorEditorNode.editorNode.style.display = "none";
-                } else if(ReadingMode.readingModeNodeContainer.style.display === "") {
-                    CodeMirror_EditorNode.editorNode.style.display = "none";
-                    ProseMirrorEditorNode.editorNode.style.display = "none";
-                }
-
-                //show editor
-                //ProseMirrorEditorNode.editorNode.style.display = "";
-
-                //show input button node container 
-                ProseMirrorEditorNode.inputButtonNodeContainer.style.display = "";
-
-                //remove disabled attribute from wysiwyg input label
-                ProseMirrorEditorNode.wysiwygInputNode.removeAttribute("disabled");
-                //set wysiwyg input to checked
-                ProseMirrorEditorNode.wysiwygInputNode.setAttribute("checked", "");
-
-                //remove disabled attribute from markdown input label
-                ProseMirrorEditorNode.markdownInputNode.removeAttribute("disabled");
-
-                //remove disabled attribute from reading input label
-                ProseMirrorEditorNode.readingInputNode.removeAttribute("disabled");
-            }
-
-            //set window title to path of currernt opened file
-            await appWindow.setTitle("Iris-dev-build - " + this.splitFilePop1 + " @ " + this.splitFileConcat2);
-        } else if(this.openFile === null) {
-            //set openFileConst to CloseDialog constant ("Dialog Closed") 
-            //when a file is not opened from dialog (user cancels it)
-            this.openFileConst = FileSystemConstants.CloseDialog;
-
-            console.log(this.openFileConst);
-
-            throw console.error("Open Dialog (User Cancel): Promise Rejected!");
-        }
-    }
-    */
 
     //save file
     public async saveLF(): Promise<void> {
         this.saveFileConst = FileSystemConstants.SaveFile;
 
-        console.log(this.saveFileConst);
+        //console.log(this.saveFileConst);
 
-        console.log(this.listFilesRef);
+        //console.log(this.listFilesRef);
         
         //check if prosemirror editor is displayed
         if(ProseMirrorEditorNode.editorNode.style.display === "") {
@@ -1323,10 +1004,8 @@ export class LocalFileDirectory {
                     dir: fs.BaseDirectory.Desktop
                 }
             );
-
-            console.log("DELETED FILE");
         } else if(confirmDeletion === false) {
-            console.log("CANCELED DELETION OF FILE");
+            throw console.error("Canceled deletion of file.");
         }
     }
 } 

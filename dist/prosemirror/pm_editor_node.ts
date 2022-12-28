@@ -25,27 +25,30 @@ export class ProseMirrorEditorNode {
     static wysiwygInputParentNode: HTMLDivElement;
     static wysiwygInputNode: HTMLInputElement;
     static wysiwygInputLabelNode: HTMLLabelElement;
+    static wysiwygInputLabelTextNode: Text;
 
     //markdown input
     static markdownInputParentNode: HTMLDivElement;
     static markdownInputNode: HTMLInputElement;
     static markdownInputLabelNode: HTMLLabelElement;
+    static markdownInputLabelTextNode: Text;
 
     //reading input 
     static readingInputParentNode: HTMLDivElement;
     static readingInputNode: HTMLInputElement;
     static readingInputLabelNode: HTMLLabelElement;
+    static readingInputLabelTextNode: Text;
 
+    //rename input
     static renameInputNode: HTMLInputElement;
     static renameInputNodeHidden: HTMLInputElement;
 
+    //prosemirror editor node
     public PMEditorNode() {
         //editor node
         ProseMirrorEditorNode.editorNode = document.createElement('div') as HTMLDivElement;
         ProseMirrorEditorNode.editorNode.setAttribute("id", "editor");
         ProseMirrorEditorNode.editorNode.style.display = "none";
-        
-        console.log("Created Editor Node");
 
         //wysiwyg button parent
         ProseMirrorEditorNode.wysiwygInputParentNode = document.createElement('div');
@@ -63,9 +66,8 @@ export class ProseMirrorEditorNode {
         //wysiwyg input label node
         ProseMirrorEditorNode.wysiwygInputLabelNode = document.createElement('label');
         ProseMirrorEditorNode.wysiwygInputLabelNode.setAttribute("for", "wysiwygButton");
-        const wysiwygInputLabelTextNode = document.createTextNode("WYSIWYG");
-        ProseMirrorEditorNode.wysiwygInputLabelNode.appendChild(wysiwygInputLabelTextNode);
-        //ProseMirrorEditorNode.wysiwygInputLabelNode.textContent = "WYSIWYG";
+        ProseMirrorEditorNode.wysiwygInputLabelTextNode = document.createTextNode("WYSIWYG");
+        ProseMirrorEditorNode.wysiwygInputLabelNode.appendChild(ProseMirrorEditorNode.wysiwygInputLabelTextNode);
 
         //markdown button parent
         ProseMirrorEditorNode.markdownInputParentNode = document.createElement('div');
@@ -83,9 +85,8 @@ export class ProseMirrorEditorNode {
         //markdown input label node
         ProseMirrorEditorNode.markdownInputLabelNode = document.createElement('label');
         ProseMirrorEditorNode.markdownInputLabelNode.setAttribute("for", "markdownButton");
-        const markdownInputLabelTextNode = document.createTextNode("Markdown");
-        ProseMirrorEditorNode.markdownInputLabelNode.appendChild(markdownInputLabelTextNode);
-        //ProseMirrorEditorNode.markdownInputLabelNode.textContent = "Markdown";
+        ProseMirrorEditorNode.markdownInputLabelTextNode = document.createTextNode("Markdown");
+        ProseMirrorEditorNode.markdownInputLabelNode.appendChild(ProseMirrorEditorNode.markdownInputLabelTextNode);
         
         //input button container
         ProseMirrorEditorNode.inputButtonNodeContainer = document.createElement('div');
@@ -107,9 +108,8 @@ export class ProseMirrorEditorNode {
 
         ProseMirrorEditorNode.readingInputLabelNode = document.createElement('label');
         ProseMirrorEditorNode.readingInputLabelNode.setAttribute("for", "readingButton");
-        const readingInputLabelTextNode = document.createTextNode("Reading");
-        ProseMirrorEditorNode.readingInputLabelNode.appendChild(readingInputLabelTextNode);
-        //ProseMirrorEditorNode.readingInputLabelNode.textContent = "Reading";
+        ProseMirrorEditorNode.readingInputLabelTextNode = document.createTextNode("Reading");
+        ProseMirrorEditorNode.readingInputLabelNode.appendChild(ProseMirrorEditorNode.readingInputLabelTextNode);
 
         ProseMirrorEditorNode.renameInputNode = document.createElement('input');
         ProseMirrorEditorNode.renameInputNode.setAttribute("id", "renameInputBox");
@@ -123,24 +123,27 @@ export class ProseMirrorEditorNode {
 
         //append childs
         App.appNodeContainer.appendChild(ProseMirrorEditorNode.inputButtonNodeContainer);
-
         App.appNodeContainer.appendChild(ProseMirrorEditorNode.editorNode);
 
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.renameInputNode);
-
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.renameInputNodeHidden);
 
         //containers
+
+        //input
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.wysiwygInputParentNode);
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.markdownInputParentNode);
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.readingInputParentNode)
 
+        //wysiwg
         ProseMirrorEditorNode.wysiwygInputParentNode.appendChild(ProseMirrorEditorNode.wysiwygInputNode);
         ProseMirrorEditorNode.wysiwygInputParentNode.appendChild(ProseMirrorEditorNode.wysiwygInputLabelNode);
 
+        //markdown
         ProseMirrorEditorNode.markdownInputParentNode.appendChild(ProseMirrorEditorNode.markdownInputNode);
         ProseMirrorEditorNode.markdownInputParentNode.appendChild(ProseMirrorEditorNode.markdownInputLabelNode);
 
+        //reading
         ProseMirrorEditorNode.readingInputParentNode.appendChild(ProseMirrorEditorNode.readingInputNode);
         ProseMirrorEditorNode.readingInputParentNode.appendChild(ProseMirrorEditorNode.readingInputLabelNode);
     }

@@ -1,4 +1,4 @@
-import { EditorState, Compartment } from '@codemirror/state'
+import { EditorState } from '@codemirror/state'
 import { 
     keymap, 
     rectangularSelection, 
@@ -35,7 +35,6 @@ export class CodeMirror_EditorState {
                     ...[indentWithTab],
                     ...historyKeymap
                 ]),
-                //EditorView.lineWrapping
                 //move this theme into a separate file
                 EditorView.theme({
                     '.cm-cursor, .cm-dropCursor': { 
