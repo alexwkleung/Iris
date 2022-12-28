@@ -21,12 +21,6 @@
 
 /* CodeMirror overrides */
 
-/*
-.ͼ1 .cm-line {
-    font-size: 20px;
-}
-*/
-
 /* reading mode node container */
 #readingModeNodeContainer {
     /*border: 1px solid;*/
@@ -60,12 +54,6 @@
 .cm-editor {
     font-family: 'Inter-Bold';
 }
-
-/*
-.ͼ1 .cm-line {
-    margin-top: 20px;
-}
-*/
 
 /*
 * ProseMirror overrides
@@ -321,44 +309,6 @@ label {
     }
 }
 
-/* full screen */
-/*
-@media (min-width: 1600px) {
-    #editor .milkdown .editor {
-        padding: 0px 0px;
-        position: fixed;
-        width: 65%;
-        left: 46%;
-        top: 47%;
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    }    
-
-    #cm_editor { 
-        font-size: 20px;
-        margin-left: 320px;
-        overflow: scroll;
-        border: 1px solid;
-        top: 200px;
-        width: 68%;
-        margin-top: 20px;
-        height: 100vh;
-        max-height: 90%;
-        position: fixed;
-        margin-top: 30px;
-    }
-
-    #editor .milkdown img {
-        width: 1600px;
-    }
-
-    img { 
-        width: 1600px;
-        pointer-events: none !important;
-    }
-}
-*/
-
 /* slash menu */
 #editor .milkdown-xilf5l {
     background: #313131;
@@ -527,9 +477,6 @@ mark {
     color: white;
 }
 img { 
-    /*max-width: 100%;*/
-	/*max-height: 100%;*/
-	/*object-fit: contain;*/
     pointer-events: none !important;
 }
 ul {

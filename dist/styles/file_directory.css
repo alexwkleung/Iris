@@ -36,30 +36,6 @@
     user-select: none;
 }
 
-/*
-#openFile  {
-    font-size: 20px;
-    position: sticky;
-    margin-top: 15px;
-    -webkit-user-select: none;
-    user-select: none;
-    border: none;
-    background-color: white;
-}
-*/
-
-/*
-#saveFile {
-    font-size: 20px;
-    position: sticky;
-    margin-top: 15px;
-    -webkit-user-select: none;
-    user-select: none;
-    border: none;
-    background-color: white;
-}
-*/
-
 #openFolder {
     font-size: 20px;
     position: fixed;
@@ -93,26 +69,6 @@
     border-radius: 10px;
     margin-left: 10px;
 }
-
-/*
-#inputBoxBtn {
-    font-size: 20px;
-    font-family: 'Inter-Regular';
-    height: 27.5px;
-    position: fixed;
-    border: none;
-    -webkit-user-select: none;
-    user-select: none;
-    background-color: #2c2b2b;
-    margin-left: 224px;
-    margin-top: 59px;
-    color: white;
-}
-
-#inputBoxBtn:active {
-    background-color: rgb(63, 63, 63);
-}
-*/
 
 #deleteFileButton{
     font-size: 20px;
