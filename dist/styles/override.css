@@ -149,6 +149,40 @@
     color: white;
     right: 330px;
 }
+#renameInputBox {
+    display: inline;
+    padding-right: 15px;
+    font-size: 20px;
+    height: 25px;
+    width: 170px;
+    position: fixed;
+    border: none;
+    background-color:#2c2b2b;
+    font-family: 'Inter-Regular';
+    margin-top: 60px;
+    color: white;
+    border: 1px solid white;
+    left: 940px;
+    top: -37px;
+}
+#renameInputBoxHidden {
+    display: inline;
+    padding-right: 15px;
+    font-size: 20px;
+    height: 25px;
+    width: 165px;
+    position: fixed;
+    border: none;
+    background-color:#2c2b2b;
+    font-family: 'Inter-Regular';
+    margin-top: 60px;
+    color: white;
+    border: 1px solid white;
+    left: 750px;
+    top: -37px;
+    -webkit-user-select: none;
+    user-select: none;
+}
 #wysiwygButton {
     font-size: 15px;
     margin-top: 15px;

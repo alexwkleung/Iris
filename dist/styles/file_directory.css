@@ -88,6 +88,7 @@
     margin-top: 60px;
     color: white;
     border: 1px solid white;
+    overflow-x: scroll;
 }
 
 #inputBoxBtn {
@@ -161,7 +162,6 @@
     margin-left: -15px;
 }
 
-/* temp */
 .nested li {
     color: #e2e2e2;
     margin-bottom: 10px;
@@ -170,7 +170,6 @@
     cursor: pointer;
 }
 
-/* figure out this later */
 .fileClickCheck {
     border: 1px solid;
 }

@@ -79,12 +79,12 @@ export class LocalEventListeners extends LocalFileDirectory {
         */
 
         //auto saving 
-        editor.addEventListener('keyup' , async () => {
+        editor.addEventListener('keyup', async () => {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
                 console.log("Save Local File: Promise Resolved.");
             });
         });
-        cm_editor.addEventListener('keyup' , async () => {
+        cm_editor.addEventListener('keyup', async () => {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
                 console.log("Save Local File: Promise Resolved.");
             });
@@ -243,9 +243,10 @@ export class LocalEventListeners extends LocalFileDirectory {
 
         inputBox.addEventListener('keydown', async (event) => {
             if(event.key === 'Enter' && inputBox.value) {
-                //console.log(inputBox.value);
                 this.LFDirectory.createFile(inputBox.value);
+
                 inputBox.value = "";
+
                 await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
                     console.log("Open Local File: Promise Resolved.");
                 });
@@ -256,9 +257,10 @@ export class LocalEventListeners extends LocalFileDirectory {
 
         inputBoxBtn.addEventListener('click', async () => {
             if(inputBox.value) {
-                //console.log(inputBox.value);
                 this.LFDirectory.createFile(inputBox.value);
+
                 inputBox.value = "";
+
                 await Promise.resolve(this.LFDirectory.OpenLFFolder()).then(() => {
                     console.log("Open Local File: Promise Resolved.");
                 });
@@ -267,14 +269,15 @@ export class LocalEventListeners extends LocalFileDirectory {
             }
         });
     }
-    
-    /*
-    public loadFolderListener() {
-        document.addEventListener('load', () => {
-            Promise.resolve(this.LFDirectory.OpenLFFolder).then(() => {
-                console.log("Opened folder");
-            })
+
+    //rename file listener
+    public renameFileListener() {
+        const inputBoxRename = document.querySelector('#renameInputBox') as HTMLInputElement;
+
+        inputBoxRename.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter' && inputBoxRename.value) {
+                
+            }
         });
-    } 
-    */  
+    }
 }

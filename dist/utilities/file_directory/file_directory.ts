@@ -8,12 +8,12 @@
 * processing folders/files in the OS
 *
 * for now, the majority of file operations will be done through the TypeScript API and will move 
-* to the Rust API later once the core structure is down
+* to the Rust API later once the core structure is down (maybe)
 *
 * at the moment, the file directory will only handle local files
 *
-* later on, a local/remote database implementation will be added in here in parallel 
-* to the local file directory
+* later on, there is a possibly of a local/remote database that will be added in here 
+* in parallel to the local file directory
 *
 * note that implementations may change over time
 *
@@ -27,7 +27,6 @@ import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_s
 import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { FileSystemConstants } from '../constants/constants'
 import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
-import { EvaDOMBuilderUtil } from 'eva-dom-builder-util'
 import { ProseMirrorEditorNode } from '../../prosemirror/pm_editor_node'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
 import { ReadingMode } from '../../reading_mode/reading_mode'
@@ -35,7 +34,6 @@ import { ReadingMode } from '../../reading_mode/reading_mode'
 //stylesheets
 import '../../styles/file_directory.css'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
-import { BreakTable } from '@milkdown/preset-gfm'
 
 //Local File Directory Node class
 export class LocalFileDirectoryNode {
@@ -488,7 +486,7 @@ export class LocalFileDirectory {
     
                 for(let i = 0; i < listFiles.length; i++) {
                     listFiles[i].addEventListener('click', () => {
-                        let getElemWithClass = document.querySelector('.activeFile');
+                        const getElemWithClass = document.querySelector('.activeFile');
                         if (getElemWithClass !== null) {
                             getElemWithClass.classList.remove('activeFile');
                         }
@@ -743,13 +741,13 @@ export class LocalFileDirectory {
             //iterate over files list
             for(let i = 0; i < listFiles.length; i++) { 
                 listFiles[i].addEventListener('click', () => {
-                    let getElemWithClass = document.querySelector('.activeFile');
+                    const getElemWithClass = document.querySelector('.activeFile');
                     if (getElemWithClass !== null) {
                         getElemWithClass.classList.remove('activeFile');
                     }
                     //add the active class to the element from which click event triggered
                     listFiles[i].classList.add('activeFile');
-                    
+
                     ProseMirrorEditor.readonly = true;
 
                     ProseMirrorEditor.editor.destroy();
@@ -832,6 +830,9 @@ export class LocalFileDirectory {
                     console.log(this.fileStr);
                     console.log(this.listFilesRef);
 
+                    //set hidden rename input value to file name
+                    ProseMirrorEditorNode.renameInputNodeHidden.value = listFiles[i].innerHTML;
+
                     //temp naming
                     const split1 = this.listFilesRef.split('/');
                     const pop1 = split1.pop() as string | null;
@@ -842,10 +843,10 @@ export class LocalFileDirectory {
                     console.log(pop1);
                     console.log(concat1);
 
-                    appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                    appWindow.setTitle("Iris-dev - " + pop1 + " @ " + concat1);
                 });
 
-                await appWindow.setTitle("Iris-dev-build - " + "Desktop/Iris_Notes");
+                await appWindow.setTitle("Iris-dev - " + "@ " + "Desktop/Iris_Notes");
             }  
         } else {
             this.folderFileString = LocalFileDirectory.localFolderArr.toString();
@@ -906,8 +907,8 @@ export class LocalFileDirectory {
             for(let i = 0; i < listFiles.length; i++) {
                 listFiles[i].addEventListener('click', () => {
                     // if so then remove the class from it
-                    let getElemWithClass = document.querySelector('.activeFile');
-                    if (getElemWithClass !== null) {
+                    const getElemWithClass = document.querySelector('.activeFile');
+                    if(getElemWithClass !== null) {
                         getElemWithClass.classList.remove('activeFile');
                     }
                     //add the active class to the element from which click event triggered
@@ -999,6 +1000,8 @@ export class LocalFileDirectory {
 
                     console.log(this.fileStr);
                     console.log(this.listFilesRef);
+                    
+                    ProseMirrorEditorNode.renameInputNodeHidden.value = "HI";
 
                     //temp naming
                     const split1 = this.listFilesRef.split('/');
@@ -1010,10 +1013,10 @@ export class LocalFileDirectory {
                     console.log(pop1);
                     console.log(concat1);
 
-                    appWindow.setTitle("Iris-dev-build - " + pop1 + " @ " + concat1);
+                    appWindow.setTitle("Iris-dev - " + pop1 + " @ " + concat1);
                 });
 
-                await appWindow.setTitle("Iris-dev-build - " + "Desktop/Iris_Notes");
+                await appWindow.setTitle("Iris-dev - " + "Desktop/Iris_Notes");
             }  
         }
     }
@@ -1254,4 +1257,14 @@ export class LocalFileDirectory {
             dir: fs.BaseDirectory.Desktop
         });
     }
+
+    //rename file 
+    public async renameFile(fileName: string): Promise<void> {
+        const renameFile = await fs.renameFile(
+            ProseMirrorEditorNode.renameInputNodeHidden.value, 
+            ProseMirrorEditorNode.renameInputNode.value, {
+                dir: fs.BaseDirectory.Desktop
+            }
+        );
+    }   
 } 

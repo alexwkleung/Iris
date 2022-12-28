@@ -36,6 +36,9 @@ export class ProseMirrorEditorNode {
     static readingInputNode: HTMLInputElement;
     static readingInputLabelNode: HTMLLabelElement;
 
+    static renameInputNode: HTMLInputElement;
+    static renameInputNodeHidden: HTMLInputElement;
+
     public PMEditorNode() {
         //editor node
         ProseMirrorEditorNode.editorNode = document.createElement('div') as HTMLDivElement;
@@ -108,10 +111,24 @@ export class ProseMirrorEditorNode {
         ProseMirrorEditorNode.readingInputLabelNode.appendChild(readingInputLabelTextNode);
         //ProseMirrorEditorNode.readingInputLabelNode.textContent = "Reading";
 
+        ProseMirrorEditorNode.renameInputNode = document.createElement('input');
+        ProseMirrorEditorNode.renameInputNode.setAttribute("id", "renameInputBox");
+        ProseMirrorEditorNode.renameInputNode.setAttribute("type", "text");
+        ProseMirrorEditorNode.renameInputNode.setAttribute("placeholder", "Rename File...");
+
+        ProseMirrorEditorNode.renameInputNodeHidden = document.createElement('input');
+        ProseMirrorEditorNode.renameInputNodeHidden.setAttribute("id", "renameInputBoxHidden");
+        ProseMirrorEditorNode.renameInputNodeHidden.setAttribute("type", "text");
+        ProseMirrorEditorNode.renameInputNodeHidden.setAttribute("disabled", "");
+
         //append childs
         App.appNodeContainer.appendChild(ProseMirrorEditorNode.inputButtonNodeContainer);
 
         App.appNodeContainer.appendChild(ProseMirrorEditorNode.editorNode);
+
+        ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.renameInputNode);
+
+        ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.renameInputNodeHidden);
 
         //containers
         ProseMirrorEditorNode.inputButtonNodeContainer.appendChild(ProseMirrorEditorNode.wysiwygInputParentNode);
