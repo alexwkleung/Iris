@@ -8,7 +8,7 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "Iris",
+    "productName": "Iris-public-stable",
     "version": "0.1.0"
   },
   "tauri": {
