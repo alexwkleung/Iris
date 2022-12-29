@@ -1,6 +1,12 @@
 <h1 align="center">✨ Iris</h1>
 
-![Platforms](https://img.shields.io/badge/Platforms-macOS-lightgrey) ![Architecture](https://img.shields.io/badge/Architecture-x64%20%7C%20arm64-lightgrey)
+<p align="center">
+<img src="https://img.shields.io/badge/Platforms-macOS-lightgrey">
+</p>
+
+<p align="center">
+<img src="https://img.shields.io/badge/Architecture-x64%20%7C%20arm64-lightgrey">
+</p>
 
 <p align="center">Iris is a WYSIWYG Markdown note-taking app. Created with TypeScript and Tauri.</p>
 
@@ -50,7 +56,9 @@
 
     - Milkdown is the WYSIWYG editor, which is a framework based off of ProseMirror. It does the heavy lifting to make the out of the box WYSIWYG Markdown experience nice and easy to use.
 
-    - CodeMirror is the editor used for the Markdown mode of the app. You can write in pure Markdown syntax in plain-text style if you don't like WYSIWYG. 
+    - CodeMirror is the editor used for Markdown mode. You can write in pure Markdown syntax, similar to plain-text style if you don't like WYSIWYG. 
+
+4. A simple and comfortable User Interface.
 
 # Why
 
@@ -108,7 +116,7 @@ npm run tauri-dev
 
 # Utilities (Development)
 
-I created some utilities that are used in the app (in separate repositories), which are codenamed "Eva". 
+I created some utilities that are used in the app (in separate repositories), which are codenamed "*Eva*". 
 
 I recommend that you fork the repositories, uninstall my versions, and install your forked ones. This is so you can have full control over the utilities because what I modify/add in these repositories might break your development build.
 
@@ -124,13 +132,13 @@ I recommend that you fork the repositories, uninstall my versions, and install y
 
 # Limitations
 
-1. No cross-platform support at the moment. If I decided to add cross-platform support, I would have to manually compile and test different WebViews on three platforms (two of them using Virtual Machines), which is slightly too time consuming. 
+1. No cross-platform support at the moment. If I decided to add cross-platform support, I would have to manually compile and test different WebViews on three platforms (two of them using Virtual Machines). It's slightly too time consuming, so I'm holding that off for now. 
 
-2. Fixed directory path. Unfortunately, Iris only supports the `Desktop/Iris_Notes` path for now. I'm not familiar with how multiple directories/scopes work in Tauri, since most of the `fs` functions in the TypeScript API only allows one `baseDirectory` path.
+2. Fixed directory path. Unfortunately, Iris only supports the `Desktop/Iris_Notes` path for now. I'm not familiar with how multiple directories/scopes work in Tauri, since most of the `fs` functions in the TypeScript API only allows one `baseDirectory` path. As much as I would love to support multiple directories, I think it's best if I keep it scoped and limited for now.
 
 3. Large notes, not exactly sure how large, cause the app to become very slow (as in freezing/slow motion). From my limited testing, the memory usage spikes to at least 100-200mb+ depending on how bad it affects the app. When you switch to a smaller note, it goes away. My code is not optimized for performance, so that is most likely the reason.
 
-4. Local images must be dragged into the editor. Protocols are a little tricky unfortunately. However, Milkdown allows dragging images into the editor to be converted into base64, so I think that's a good tradeoff. 
+4. Local images must be dragged into the editor in order to be used. Protocols are a little tricky to setup unfortunately. However, Milkdown allows dragging images into the editor to be converted into base64, so I think that's a good tradeoff. 
 
 # Submitting Bugs, Issues, and Concerns
 
