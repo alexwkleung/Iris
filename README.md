@@ -78,7 +78,7 @@ Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the late
 
 **For convenience**, here is the universal dmg for the latest public stable build (v0.1.0):
 
-[macOS (Intel/Apple Silicon Universal)]()
+[macOS (Intel/Apple Silicon Universal)](https://github.com/alexwkleung/Iris/releases/download/v0.1.0/Iris_0.1.0_universal.dmg)
 
 # Installation and Setup (Development)
 
