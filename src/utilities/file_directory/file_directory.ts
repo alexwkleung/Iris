@@ -1,21 +1,7 @@
 /* 
 * file: `file_directory.ts`
 *
-* this file creates the file directory that is beside the editor within the 
-* main window in the front-end 
-*
-* TypeScript and/or Rust (Tauri/Native API) will be used for
-* processing folders/files in the OS
-*
-* for now, the majority of file operations will be done through the TypeScript API and will move 
-* to the Rust API later once the core structure is down (maybe)
-*
-* at the moment, the file directory will only handle local files
-*
-* later on, there is a possibly of a local/remote database that will be added in here 
-* in parallel to the local file directory
-*
-* note that implementations may change over time
+* this file creates the file directory
 *
 */
 
@@ -449,7 +435,6 @@ export class LocalFileDirectory {
                         if(getElemWithClass !== null) {
                             getElemWithClass.classList.remove('activeFile');
                         }
-                        //add the active class to the element from which click event triggered
                         listFiles[i].classList.add('activeFile');
     
                         ProseMirrorEditor.readonly = true;
@@ -665,7 +650,6 @@ export class LocalFileDirectory {
                     if (getElemWithClass !== null) {
                         getElemWithClass.classList.remove('activeFile');
                     }
-                    //add the active class to the element from which click event triggered
                     listFiles[i].classList.add('activeFile');
 
                     ProseMirrorEditor.readonly = true;
@@ -829,10 +813,7 @@ export class LocalFileDirectory {
                     if(getElemWithClass !== null) {
                         getElemWithClass.classList.remove('activeFile');
                     }
-                    //add the active class to the element from which click event triggered
                     listFiles[i].classList.add('activeFile');
-
-                    //console.log('click');
 
                     ProseMirrorEditor.readonly = true;
 
@@ -843,8 +824,6 @@ export class LocalFileDirectory {
                     for(let j = 0; j < listFilesDOMRef.length; j++) {
                         this.listFilesRef = listFilesDOMRef[i].textContent as string;
                     }
-
-                    //this.listFilesRef = listFiles[i].textContent as string; 
 
                     //console.log(this.listFilesRef);
 

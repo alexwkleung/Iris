@@ -1,8 +1,15 @@
+/*
+* file: `reading_mode.ts`
+*
+* this file contains functions related to the reading mode
+*
+*/
+
 import { EvaSTUtil } from "eva-st-util"
 import { App } from "../app"
 import { ProseMirrorEditor } from "../prosemirror/pm_editor_state/pm_editor_state"
 import { CodeMirror_EditorView } from "../codemirror/cm_editor_view/cm_editor_view"
-import { getMarkdown, getHTML } from "@milkdown/utils"
+import { getMarkdown } from "@milkdown/utils"
 
 export class ReadingMode {
     //reading mode node container ref

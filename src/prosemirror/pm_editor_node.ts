@@ -1,7 +1,7 @@
 /*
-* file: `editor.ts`
+* file: `pm_editor_node.ts`
 *
-* this is the main file that holds the editor node
+* this file holds the prosemirror editor node
 *
 */
 

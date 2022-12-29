@@ -1,5 +1,5 @@
 /* 
-* file: `main-objects.ts`
+* file: `main_objects.ts`
 *
 * this file is used to create any objects that are utilized in the `main.ts` file
 *

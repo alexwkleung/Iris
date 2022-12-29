@@ -51,14 +51,12 @@ export class LocalEventListeners extends LocalFileDirectory {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
                 //console.log("Save Local File: Promise Resolved.");
                 return;
-                //console.clear();
             });
         });
         cm_editor.addEventListener('keyup', async () => {
             await Promise.resolve(this.LFDirectory.saveLF()).then(() => {
                 //console.log("Save Local File: Promise Resolved.");
                 return;
-                //console.clear();
             }).catch(() => console.error("Unable to save file"));
         });
     }
@@ -174,7 +172,6 @@ export class LocalEventListeners extends LocalFileDirectory {
                     ProseMirrorEditorNode.editorNode.style.display = "none";
                     CodeMirror_EditorNode.editorNode.style.display = "none";
 
-                    //update reading mode from prosemirror instance
                     this.ReMode_Evt.readingMode_ProseMirror();
 
                     CodeMirror_EditorView.editorView.dispatch({

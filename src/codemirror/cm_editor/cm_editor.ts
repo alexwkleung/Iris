@@ -1,3 +1,10 @@
+/*
+* file: `cm_editor.ts`
+*
+* this file holds the editor node for the codemirror editor
+*
+*/
+
 import { App } from "../../app"
 
 //CodeMirror Editor Node

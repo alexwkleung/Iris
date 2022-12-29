@@ -3,7 +3,7 @@
 *
 * be aware that conflicts can/will happen, so treat this file as a global
 * 
-* this big stylesheet will be cleaned up in the near future as it is currently 
+* this big stylesheet will be cleaned up in the near future as it is
 * quite difficult to navigate around
 *
 */
@@ -20,22 +20,6 @@
 }
 
 /* CodeMirror overrides */
-
-/* reading mode node container */
-#readingModeNodeContainer {
-    /*border: 1px solid;*/
-    height: 100vh;
-    max-height: 90%;
-    position: fixed;
-    width: 71%;
-    margin-left: 335px;
-    overflow-y: scroll;
-    /*background-color: white;*/
-    font-size: 20px;
-    font-family: 'Inter-Regular';
-    -webkit-user-select: none;
-    user-select: none;
-}
 
 #cm_editor { 
     /*font-size: 20px;*/
@@ -214,6 +198,22 @@ label {
     /*background-color: #343434;*/
 }
 
+/* reading mode node container */
+#readingModeNodeContainer {
+    /*border: 1px solid;*/
+    height: 100vh;
+    max-height: 90%;
+    position: fixed;
+    width: 71%;
+    margin-left: 335px;
+    overflow-y: scroll;
+    /*background-color: white;*/
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 /*
 * html tag/element overrides (used to globally style the editor)
 *
@@ -271,8 +271,7 @@ label {
     color: rgb(104, 116, 122);
 }
 
-/* media queries for window sizes */
-/* default window */
+/* media query for default window */
 @media (max-width: 1200px) {
     #editor .milkdown .editor {
         padding: 0px 0px;

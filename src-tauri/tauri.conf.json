@@ -37,13 +37,6 @@
       "path": {
         "all": true
       },
-      "shell": {
-        "all": true,
-        "execute": false,
-        "open": true,
-        "scope": [],
-        "sidecar": false
-      },
       "window": {
         "all": true,
         "center": true,
@@ -76,19 +69,10 @@
         "unmaximize": true,
         "unminimize": true
       },
-      "protocol": {
-        "all": true,
-        "asset": true
-      },
       "clipboard": {
         "all": true,
         "readText": true,
         "writeText": true
-      },
-      "http": {
-        "all": true,
-        "request": true,
-        "scope": []
       }
     },
     "bundle": {

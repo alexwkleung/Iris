@@ -1,3 +1,10 @@
+/*
+* file: `cm_editor_state.ts`
+*
+* this file holds the editor state for the codemirror editor
+*
+*/
+
 import { EditorState } from '@codemirror/state'
 import { 
     keymap, 
@@ -12,7 +19,7 @@ import {
 } from '@codemirror/commands'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
-import { EditorView } from '@codemirror/view'
+import { CM_Theme } from '../cm_theme/cm_theme'
 
 //CodeMirror EditorState class
 export class CodeMirror_EditorState {
@@ -35,15 +42,7 @@ export class CodeMirror_EditorState {
                     ...[indentWithTab],
                     ...historyKeymap
                 ]),
-                //move this theme into a separate file
-                EditorView.theme({
-                    '.cm-cursor, .cm-dropCursor': { 
-                        borderLeftColor: '#DDDDDD' 
-                    },
-                    '&': {
-                        fontSize: "20px",
-                      },
-                })
+                CM_Theme
             ]
         });
 

@@ -1,13 +1,8 @@
 /* 
 * file: `dom_builder.ts`
 *
-* this file holds the dom builder functions from EvaDOMBuilderUtil 
-* from https://github.com/alexwkleung/Eva-DOM-Builder-Util
+* this file holds the dom builder functions from EvaDOMBuilderUtil: https://github.com/alexwkleung/Eva-DOM-Builder-Util
 * 
-* since the utility is tailored towards this application, other
-* developers may find it difficult to create DOM structures based 
-* on their own needs
-*
 */
 
 /* file directory tree reference: https://www.w3schools.com/howto/howto_js_treeview.asp */

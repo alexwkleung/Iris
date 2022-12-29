@@ -1,7 +1,7 @@
 /*
-* file: `editor_state.ts`
+* file: `pm_editor_state.ts`
 *
-* this is the file that holds the prosemirror (milkdown) editorstate
+* this file that holds the prosemirror (milkdown) editorstate
 *
 */
 

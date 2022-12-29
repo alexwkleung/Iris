@@ -1,9 +1,7 @@
 /*
 * file: `app.ts`
 *
-* this file contains the creation of the app node
-*
-* there shouldn't be any major changes to this file besides implementing more efficient mounting methods
+* this file contains the creation of the app node in the DOM
 *
 */
 
@@ -29,7 +27,8 @@ export class App {
 
         //check if app node is connected
         if(App.appNodeContainer.isConnected) {
-            console.log("App is connected to the DOM!");
+            //console.log("App is connected to the DOM!");
+            return;
         } else {
             throw console.error("App is not connected to the DOM!");
         }
