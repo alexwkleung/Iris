@@ -7,8 +7,8 @@
 
 import { MainObjects } from './utilities/objects/main_objects'
 
-class Main {
-    public main() {
+export class Main {
+    public static main() {
         //Local File Directory Node
         MainObjects.LFDirectoryNode.LFDirectoryDiv();
     
@@ -44,9 +44,7 @@ class Main {
 }
 
 //invoke main
-const _main = new Main() as Main;
-
 const _mainFn = (): void => {
-    _main.main(); 
+    Main.main();
 }
 _mainFn();

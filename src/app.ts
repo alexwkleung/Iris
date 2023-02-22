@@ -18,9 +18,6 @@ export class App {
     //appNode ref
     static appNodeContainer: HTMLDivElement;
 
-    //readonly node connection check
-    readonly isConnected: boolean = App.appNodeContainer.isConnected;
-
     //app node
     static appNode(): void {
         App.appNodeContainer = document.createElement('div') as HTMLDivElement;

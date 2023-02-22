@@ -97,9 +97,9 @@ export class LocalFileDirectoryNode {
 //Local File Directory class
 export class LocalFileDirectory {
     //FileDirectoryBuilder object
-    private FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
+    private readonly FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
 
-    private ReMode = new ReadingMode() as ReadingMode;
+    private readonly ReMode = new ReadingMode() as ReadingMode;
 
     //string to hold data from file
     static openFileString: string = "";

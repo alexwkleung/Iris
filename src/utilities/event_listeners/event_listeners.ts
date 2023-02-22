@@ -19,10 +19,10 @@ import { EvaSTUtil } from 'eva-st-util'
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
     //local file directory object
-    private LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
+    private readonly LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 
     //reading mode object
-    private ReMode_Evt = new ReadingMode() as ReadingMode;
+    private readonly ReMode_Evt = new ReadingMode() as ReadingMode;
 
     //constant refs
     public wysiwygConst: string;

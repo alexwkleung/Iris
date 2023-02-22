@@ -26,6 +26,8 @@ export class ProseMirrorEditor {
     static readonly: boolean;
 
     //readonly prism plugin config 
+    //refractor config fix for production build
+    //https://github.com/Milkdown/milkdown/blob/v6/website/component/MilkdownEditor/docRendererFactory.ts
     readonly prismPluginConfig: $Prose = prismPlugin({ 
         configureRefractor: () => refractor
     });
@@ -47,8 +49,6 @@ export class ProseMirrorEditor {
             .use(tooltip)
             .use(nord)
             .use(slash)
-            //refractor config fix for production build
-            //https://github.com/Milkdown/milkdown/blob/v6/website/component/MilkdownEditor/docRendererFactory.ts
             .use(this.prismPluginConfig)
             .use(upload)
             .config((ctx) => {

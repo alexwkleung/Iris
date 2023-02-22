@@ -11,7 +11,7 @@ import { EvaDOMBuilderUtil } from "eva-dom-builder-util"
 import { LocalFileDirectoryNode } from "../file_directory/file_directory"
 
 export class FileDirectoryBuilder {
-    private EvaDOM = new EvaDOMBuilderUtil() as EvaDOMBuilderUtil;
+    private readonly EvaDOM = new EvaDOMBuilderUtil() as EvaDOMBuilderUtil;
 
     public Eva_FileDirectoryTreeBuilder(folderName: string, fileName: string | null | undefined) {
         //ul node
