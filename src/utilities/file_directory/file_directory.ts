@@ -114,52 +114,52 @@ export class LocalFileDirectory {
     static localFileArr: string[] = [];
 
     //open folder variables
-    public openFolder: string;
-    public splitFolderDirectory: string[];
-    public splitFolderPop1: string | null;
-    public splitFolderPop2: string | null;
-    public splitFolderConcat: string;
+    private openFolder: string;
+    private splitFolderDirectory: string[];
+    private splitFolderPop1: string | null;
+    private splitFolderPop2: string | null;
+    private splitFolderConcat: string;
 
-    public folderFileString: string;
-    public splitFolderFile: string[];
-    public splitFolderFilePop1: string | null;
-    public splitFolderFilePop2: string | null;
-    public splitFolderFileConcat1: string;
-    public splitFolderFileConcat2: string;
-    public splitFolderFileConcat3: string;
+    private folderFileString: string;
+    private splitFolderFile: string[];
+    private splitFolderFilePop1: string | null;
+    private splitFolderFilePop2: string | null;
+    private splitFolderFileConcat1: string;
+    private splitFolderFileConcat2: string;
+    private splitFolderFileConcat3: string;
 
     //open file variables
-    public openFile: string;
-    public splitFileDirectory: string[];
-    public splitFilePop1: string | null;
-    public splitFilePop2: string | null;
-    public splitFilePop3: string | null;
-    public splitFileConcat1: string;
-    public splitFileConcat2: string;
+    private openFile: string;
+    private splitFileDirectory: string[];
+    private splitFilePop1: string | null;
+    private splitFilePop2: string | null;
+    private splitFilePop3: string | null;
+    private splitFileConcat1: string;
+    private splitFileConcat2: string;
 
     //save file variables
-    public saveFile: void;
+    private saveFile: void;
 
     //private variables to assign constants
     //private openFileConst: string;
     private saveFileConst: string;
 
     //file array + string refs
-    public fileArr: string[] = [];
-    public fileStr: string = "";
+    private fileArr: string[] = [];
+    private fileStr: string = "";
 
     //list files ref
-    public listFilesRef: string = "";
+    private listFilesRef: string = "";
 
     //local folder array refs
-    public localFolderArrSortRef: string[];
-    public localFolderArrShiftRef: string | undefined;
+    private localFolderArrSortRef: string[];
+    private localFolderArrShiftRef: string | undefined;
 
     //copy refs for local folder filter
-    public localFolderArrRefCopy: string[] = [];
-    public lfArrSortRefSplit: string[];
-    public mdExtensionArr: string[];
-    public filterMdFiles: string[];
+    private localFolderArrRefCopy: string[] = [];
+    private lfArrSortRefSplit: string[];
+    private mdExtensionArr: string[];
+    private filterMdFiles: string[];
 
     //recursively iterate over folder contents
     private OpenLFFolderRecursive(entries: e[]) {
