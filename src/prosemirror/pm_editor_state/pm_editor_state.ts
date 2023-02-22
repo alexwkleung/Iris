@@ -14,16 +14,22 @@ import { history } from '@milkdown/plugin-history'
 import { indent } from '@milkdown/plugin-indent'
 import { tooltip } from '@milkdown/plugin-tooltip'
 import { slash } from '@milkdown/plugin-slash'
-import { prism, prismPlugin } from '@milkdown/plugin-prism'
+import { prismPlugin } from '@milkdown/plugin-prism'
 import { upload } from '@milkdown/plugin-upload'
 import { refractor } from 'refractor/lib/common'
+import { $Prose } from '@milkdown/utils'
 
 //ProseMirrorState class
 export class ProseMirrorEditor {
     //refs
     static editor: Editor;
     static readonly: boolean;
-    
+
+    //readonly prism plugin config 
+    readonly prismPluginConfig: $Prose = prismPlugin({ 
+        configureRefractor: () => refractor
+    });
+
     public async PM_State(): Promise<Editor> {
         //set initial readonly
         ProseMirrorEditor.readonly = false;
@@ -43,11 +49,7 @@ export class ProseMirrorEditor {
             .use(slash)
             //refractor config fix for production build
             //https://github.com/Milkdown/milkdown/blob/v6/website/component/MilkdownEditor/docRendererFactory.ts
-            .use(
-                prismPlugin({
-                    configureRefractor: () => refractor,
-                })
-            )
+            .use(this.prismPluginConfig)
             .use(upload)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('#editor'))
