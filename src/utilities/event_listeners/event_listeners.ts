@@ -25,9 +25,9 @@ export class LocalEventListeners extends LocalFileDirectory {
     private readonly ReMode_Evt = new ReadingMode() as ReadingMode;
 
     //constant refs
-    public wysiwygConst: string;
-    public markdownConst: string
-    public readingConst: string;
+    private wysiwygConst: string;
+    private markdownConst: string
+    private readingConst: string;
 
     //open folder listener
     public openFolderListener() {
