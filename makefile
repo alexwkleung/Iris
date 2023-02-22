@@ -9,6 +9,10 @@
 build:
 	npx vite build && npx tsc --build --clean && npx tsc --build && npm run tauri build -- --target universal-apple-darwin
 
+# build debug
+build-debug:
+	npx vite build && npx tsc --build --clean && npx tsc --build && npm run tauri build -- --target universal-apple-darwin --debug
+
 # tauri dev
 .PHONY: tauri
 tauri:

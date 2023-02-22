@@ -14,8 +14,9 @@ import { history } from '@milkdown/plugin-history'
 import { indent } from '@milkdown/plugin-indent'
 import { tooltip } from '@milkdown/plugin-tooltip'
 import { slash } from '@milkdown/plugin-slash'
-import { prism } from '@milkdown/plugin-prism'
+import { prism, prismPlugin } from '@milkdown/plugin-prism'
 import { upload } from '@milkdown/plugin-upload'
+import { refractor } from 'refractor/lib/common'
 
 //ProseMirrorState class
 export class ProseMirrorEditor {
@@ -40,7 +41,13 @@ export class ProseMirrorEditor {
             .use(tooltip)
             .use(nord)
             .use(slash)
-            .use(prism)
+            //refractor config fix for production build
+            //https://github.com/Milkdown/milkdown/blob/v6/website/component/MilkdownEditor/docRendererFactory.ts
+            .use(
+                prismPlugin({
+                    configureRefractor: () => refractor,
+                })
+            )
             .use(upload)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('#editor'))
