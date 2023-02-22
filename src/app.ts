@@ -15,8 +15,11 @@ import './styles/katex.min.css'
 
 //App class
 export class App {
-    //ref
+    //appNode ref
     static appNodeContainer: HTMLDivElement;
+
+    //readonly node connection check
+    readonly isConnected: boolean = App.appNodeContainer.isConnected;
 
     //app node
     static appNode(): void {
@@ -25,8 +28,10 @@ export class App {
 
         document.body.prepend(App.appNodeContainer) as void;
 
+        const isConnected: boolean = App.appNodeContainer.isConnected;
+
         //check if app node is connected
-        if(App.appNodeContainer.isConnected) {
+        if(isConnected) {
             //console.log("App is connected to the DOM!");
             return;
         } else {
@@ -43,10 +48,10 @@ async function app(): Promise<void> {
     await appWindow.setMinSize(new PhysicalSize(1200, 800));
 
     //set max window size 
-    await appWindow.setMaxSize(new LogicalSize(1200, 800));
+    //await appWindow.setMaxSize(new LogicalSize(1200, 800));
 
     //disable resizable window
-    await appWindow.setResizable(false);
+    await appWindow.setResizable(true);
 
     //set default app title on startup 
     return await appWindow.setTitle("Iris");
