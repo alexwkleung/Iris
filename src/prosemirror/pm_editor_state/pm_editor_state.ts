@@ -36,8 +36,10 @@ export class ProseMirrorEditor {
         //set initial readonly
         ProseMirrorEditor.readonly = false;
         
-        //editable bool
-        const editable = (): boolean => ProseMirrorEditor.readonly;
+        //editable boolean
+        const editable = (): boolean => {
+            return ProseMirrorEditor.readonly;
+        }
 
         //create editor
         ProseMirrorEditor.editor = await Editor.make()
