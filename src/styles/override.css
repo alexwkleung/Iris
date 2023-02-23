@@ -65,7 +65,7 @@
     padding: 0px 0px;
     position: fixed;
     width: 100%;
-    max-width: 66%;
+    max-width: 100vw;
     left: 30%;
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -312,11 +312,11 @@ label {
     }
 
     #editor .milkdown img {
-        width: 650px;
+        width: auto;
     }
 
     img {
-        width: 650px;
+        width: auto;
         pointer-events: none !important;
     }
 }
