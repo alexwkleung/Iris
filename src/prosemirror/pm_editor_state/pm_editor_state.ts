@@ -18,6 +18,7 @@ import { prismPlugin } from '@milkdown/plugin-prism'
 import { upload } from '@milkdown/plugin-upload'
 import { refractor } from 'refractor/lib/common'
 import { $Prose } from '@milkdown/utils'
+import { Refractor } from 'refractor/lib/core'
 
 //ProseMirrorState class
 export class ProseMirrorEditor {
@@ -29,7 +30,9 @@ export class ProseMirrorEditor {
     //refractor config fix for production build
     //https://github.com/Milkdown/milkdown/blob/v6/website/component/MilkdownEditor/docRendererFactory.ts
     readonly prismPluginConfig: $Prose = prismPlugin({ 
-        configureRefractor: () => refractor
+        configureRefractor: (): Refractor => { 
+            return refractor;
+        }
     });
 
     public async PM_State(): Promise<Editor> {
