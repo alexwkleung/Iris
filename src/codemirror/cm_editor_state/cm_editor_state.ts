@@ -20,6 +20,7 @@ import {
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { CM_Theme } from '../cm_theme/cm_theme'
+import { EditorView } from '@codemirror/view'
 
 //CodeMirror EditorState class
 export class CodeMirror_EditorState {
@@ -42,7 +43,8 @@ export class CodeMirror_EditorState {
                     ...[indentWithTab],
                     ...historyKeymap
                 ]),
-                CM_Theme
+                CM_Theme,
+                EditorView.lineWrapping
             ]
         });
 
