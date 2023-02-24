@@ -49,6 +49,7 @@ export class ProseMirrorEditorNode {
         ProseMirrorEditorNode.editorNode = document.createElement('div') as HTMLDivElement;
         ProseMirrorEditorNode.editorNode.setAttribute("id", "editor");
         ProseMirrorEditorNode.editorNode.style.display = "none";
+        ProseMirrorEditorNode.editorNode.setAttribute("spellcheck", "false");
 
         //wysiwyg button parent
         ProseMirrorEditorNode.wysiwygInputParentNode = document.createElement('div');
