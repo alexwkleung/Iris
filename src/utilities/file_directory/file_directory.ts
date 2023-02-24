@@ -144,8 +144,7 @@ export class LocalFileDirectory {
     //private openFileConst: string;
     private saveFileConst: string;
 
-    //file array + string refs
-    private fileArr: string[] = [];
+    //file string ref
     private fileStr: string = "";
 
     //list files ref
@@ -183,6 +182,9 @@ export class LocalFileDirectory {
     }
 
     //open folder
+    /*
+    * THIS NEEDS TO BE OPTIMIZED!
+    */
     public async OpenLFFolder(): Promise<void> {
         if(await fs.exists("Iris_Notes", { dir: fs.BaseDirectory.Desktop})) {
             const entries = await fs.readDir("Iris_Notes", {
@@ -287,22 +289,12 @@ export class LocalFileDirectory {
                         });
     
                         //reset
-                        this.fileArr.length = 0;
+                        //this.fileArr.length = 0;
                         this.fileStr = " ";
     
                         //resolve promise for fs readTextFile 
                         Promise.resolve(readText).then((fileData) => {
-                            //resolved promise value 
-                            //will be pushed into array
-                            this.fileArr.push(fileData);
-
-                            //console.log(this.fileArr);
-    
-                            //iterate over array containing 
-                            //file content
-                            for(let fileIndex of this.fileArr) {
-                                this.fileStr = fileIndex;
-                            }
+                            this.fileStr = fileData;
     
                             //console.log(fileStr);
                             //open file content in editor
@@ -454,22 +446,12 @@ export class LocalFileDirectory {
                         });
     
                         //reset
-                        this.fileArr.length = 0;
+                        //this.fileArr.length = 0;
                         this.fileStr = " "; 
     
                         //resolve promise for fs readTextFile 
                         Promise.resolve(readText).then((fileData) => {
-                            //resolved promise value 
-                            //will be pushed into array
-                            this.fileArr.push(fileData);
-
-                            //console.log(this.fileArr);
-    
-                            //iterate over array containing 
-                            //file content
-                            for(let fileIndex of this.fileArr) {
-                                this.fileStr = fileIndex;
-                            }
+                            this.fileStr = fileData;
     
                             //console.log(fileStr);
                             //open file content in editor
@@ -669,22 +651,12 @@ export class LocalFileDirectory {
                     });
 
                     //reset
-                    this.fileArr.length = 0;
+                    //this.fileArr.length = 0;
                     this.fileStr = " ";
 
                     //resolve promise for fs readTextFile 
                     Promise.resolve(readText).then((fileData) => {
-                        //resolved promise value 
-                        //will be pushed into array
-                        this.fileArr.push(fileData);
-
-                        //console.log(this.fileArr);
-
-                        //iterate over array containing 
-                        //file content
-                        for(let fileIndex of this.fileArr) {
-                            this.fileStr = fileIndex;
-                        }
+                        this.fileStr = fileData;
 
                         //console.log(fileStr);
                         //open file content in editor
@@ -832,21 +804,12 @@ export class LocalFileDirectory {
                     });
 
                     //reset
-                    this.fileArr.length = 0;
+                    //this.fileArr.length = 0;
                     this.fileStr = " "; 
 
                     //resolve promise for fs readTextFile 
                     Promise.resolve(readText).then((fileData) => {
-                        //resolved promise value 
-                        //will be pushed into array
-                        this.fileArr.push(fileData);
-                        //console.log(this.fileArr);
-
-                        //iterate over array containing 
-                        //file content
-                        for(let fileIndex of this.fileArr) {
-                            this.fileStr = fileIndex;
-                        }
+                        this.fileStr = fileData;
 
                         //console.log(fileStr);
                         //open file content in editor
