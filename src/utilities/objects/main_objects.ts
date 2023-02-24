@@ -13,7 +13,6 @@ import { FileDirectoryBuilder } from '../dom_builder/dom_builder'
 import { CodeMirror_EditorNode } from '../../codemirror/cm_editor/cm_editor'
 import { CodeMirror_EditorView } from '../../codemirror/cm_editor_view/cm_editor_view'
 import { ReadingMode } from '../../reading_mode/reading_mode'
-import { Main } from '../../main'
 
 //MainObjects class
 export class MainObjects {

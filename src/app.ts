@@ -5,7 +5,7 @@
 *
 */
 
-import { appWindow, PhysicalSize, LogicalSize } from '@tauri-apps/api/window'
+import { appWindow, PhysicalSize, /* LogicalSize */ } from '@tauri-apps/api/window'
 
 //stylesheets
 import './styles/override.css'

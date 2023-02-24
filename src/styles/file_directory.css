@@ -28,6 +28,7 @@
     font-size: 20px;
     word-wrap: break-word;
     margin-top: 102px;
+    z-index: 1;
 }
 
 .noteFilesRef {
@@ -155,4 +156,5 @@
 /* active file */
 .activeFile {
     background-color: rgb(91, 90, 90);
+    border-radius: 10px;
 }
