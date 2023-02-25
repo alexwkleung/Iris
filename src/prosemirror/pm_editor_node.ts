@@ -11,11 +11,23 @@ import { App } from '../app'
 import '../styles/prosemirror.css'
 import '../styles/themes/prism-coldark-dark.css'
 
-//ProseMirror Editor Div class
+/**
+ * @class ProseMirrorEditorNode
+ * 
+ * @file: `pm_editor_node.ts`
+ */
 export class ProseMirrorEditorNode {
     //passable created DOM node variables to reference later
 
     //editor node ref
+    /**
+     * editorNode variable
+     * 
+     * Used as a reference for the editor node
+     * 
+     * @member static
+     * @returns HTMLDivElement
+     */
     static editorNode: HTMLDivElement;
 
     //input button node container

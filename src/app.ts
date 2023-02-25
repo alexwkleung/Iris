@@ -13,12 +13,30 @@ import './styles/mainwindow.css'
 import './styles/material.css'
 import './styles/katex.min.css'
 
-//App class
+/**
+ * @class App
+ * 
+ * @file `app.ts`
+ */
 export class App {
     //appNode ref
+    /**
+     * app node container variable 
+     * 
+     * @member static
+     * @returns HTMLDivElement
+     */
     static appNodeContainer: HTMLDivElement;
 
     //app node
+    /**
+     * App node function
+     * 
+     * Appends app node to the DOM.
+     * 
+     * @member static
+     * @returns void
+     */
     static appNode(): void {
         App.appNodeContainer = document.createElement('div') as HTMLDivElement;
         App.appNodeContainer.setAttribute("id", "app");
@@ -37,7 +55,15 @@ export class App {
     }
 }
 
-//appMain function
+/**
+ * @function app. 
+ * 
+ * 1) Calls `App.appNode`
+ * 2) Set WebviewWindow config using `appWindow`
+ * 
+ * @async function
+ * @returns Promise<void\>
+ */
 async function app(): Promise<void> {
     App.appNode();
 

@@ -11,6 +11,11 @@ import { ProseMirrorEditor } from "../prosemirror/pm_editor_state/pm_editor_stat
 import { CodeMirror_EditorView } from "../codemirror/cm_editor_view/cm_editor_view"
 import { getMarkdown } from "@milkdown/utils"
 
+/**
+ * @class ReadingMode
+ * 
+ * @file `reading_mode.ts`
+ */
 export class ReadingMode {
     //reading mode node container ref
     static readingModeNodeContainer: HTMLDivElement;

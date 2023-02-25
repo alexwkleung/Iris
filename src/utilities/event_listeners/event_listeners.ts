@@ -18,10 +18,18 @@ import { EvaSTUtil } from 'eva-st-util'
 
 //Local Event Listeners class
 export class LocalEventListeners extends LocalFileDirectory {
-    //local file directory object
+    /**
+     * Local File Directory object
+     * 
+     * @access private readonly
+     */
     private readonly LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
 
-    //reading mode object
+    /**
+     * Reading Mode object
+     * 
+     * @access private readonly
+     */
     private readonly ReMode_Evt = new ReadingMode() as ReadingMode;
 
     //constant refs

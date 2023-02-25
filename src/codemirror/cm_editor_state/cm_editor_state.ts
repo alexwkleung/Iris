@@ -24,10 +24,18 @@ import { EditorView } from '@codemirror/view'
 
 //CodeMirror EditorState class
 export class CodeMirror_EditorState {
-    //ref
+    /**
+     * editorState variable
+     * 
+     * @member static
+     * @returns EditorState
+     */
     static editorState: EditorState;
-
-    //CodeMirror Editor State function
+    
+    /**
+     * @function CodeMirror EditorState
+     * @returns EditorState
+     */
     static CodeMirror_EditorState(): EditorState {
         CodeMirror_EditorState.editorState = EditorState.create({
             extensions: [

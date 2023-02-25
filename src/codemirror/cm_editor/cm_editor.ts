@@ -8,8 +8,20 @@
 import { App } from "../../app"
 
 //CodeMirror Editor Node
+/**
+ * @class CodeMirror_EditorNode
+ * 
+ * @file `cm_editor.ts`
+ */
 export class CodeMirror_EditorNode {
     //ref
+    /**
+     * editorNode variable
+     * 
+     * Used as as reference for the editor node
+     * 
+     * @member static
+     */
     static editorNode: HTMLDivElement;
 
     //CodeMirror Editor Node function

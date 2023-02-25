@@ -7,8 +7,22 @@
 
 import { MainObjects } from './utilities/objects/main_objects'
 
+/**
+ * @class Main
+ * 
+ * @file `main.ts`
+ */
 export class Main {
-    public static main() {
+    /**
+     * @function main 
+     * 
+     * Holds new objects imported from `MainObjects`
+     * 
+     * @member static
+     * @access public
+     * @returns void
+     */
+    public static main(): void {
         //Local File Directory Node
         MainObjects.LFDirectoryNode.LFDirectoryDiv();
     
@@ -43,7 +57,14 @@ export class Main {
     }    
 }
 
-//invoke main
+/**
+ * @function _mainFn
+ * 
+ * 1. Calls `Main.main()`
+ * 
+ * @constant arrow function
+ * @returns void
+ */
 const _mainFn = (): void => {
     Main.main();
 }
