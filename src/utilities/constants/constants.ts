@@ -5,7 +5,13 @@
 *
 */
 
-//File System Constants
+/**
+ * FileSystemConstants
+ * 
+ * Constants for file system
+ * 
+ * @type enum
+ */
 export enum FileSystemConstants {
     OpenFile = "File Opened",
     SaveFile = "File Saved",
@@ -13,6 +19,13 @@ export enum FileSystemConstants {
     OpenFolder = "Folder Opened",
 }
 
+/**
+ * EditorModeConstants
+ * 
+ * Constants for editor modes
+ * 
+ * @type enum
+ */
 export enum EditorModeConstants {
     WYSIWYG_Active = "WYSIWYG Active",
     WYSIWYG_Inactive = "WYSIWYG Inactive",

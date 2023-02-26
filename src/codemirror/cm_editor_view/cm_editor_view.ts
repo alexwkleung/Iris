@@ -8,6 +8,11 @@
 import { EditorView } from '@codemirror/view'
 import { CodeMirror_EditorState } from '../cm_editor_state/cm_editor_state'
 
+/**
+ * @class CodeMirror_EditorView
+ * 
+ * @file `cm_editor_view.ts`
+ */
 export class CodeMirror_EditorView {
     //ref
     /**

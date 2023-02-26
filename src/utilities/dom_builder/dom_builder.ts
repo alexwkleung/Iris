@@ -10,6 +10,11 @@
 import { EvaDOMBuilderUtil } from "eva-dom-builder-util"
 import { LocalFileDirectoryNode } from "../file_directory/file_directory_node"
 
+/**
+ * @class FileDirectoryBuilder
+ * 
+ * @file `dom_builder.ts`
+ */
 export class FileDirectoryBuilder {
     private readonly EvaDOM = new EvaDOMBuilderUtil() as EvaDOMBuilderUtil;
 

@@ -72,13 +72,7 @@ Enjoy! ✨
 
 # Installation and Setup (User/Client)
 
-Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the latest version available.
-
-**Note for Intel/Apple Silicon Mac users:** A universal dmg is supplied for best compatibility.
-
-**For convenience**, here is the universal dmg for the latest public stable build (v0.1.0):
-
-[macOS (Intel/Apple Silicon Universal)](https://github.com/alexwkleung/Iris/releases/download/v0.1.0/Iris_0.1.0_universal.dmg)
+Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the latest version available. The naming scheme for the installer is `Iris_0.x.x_universal.dmg`.
 
 # Installation and Setup (Development)
 
@@ -114,6 +108,21 @@ make tauri
 npm run tauri-dev
 ```
 
+Building for production
+
+```bash
+# via make 
+
+make build
+```
+
+If you need to use the dev tools in the production build
+
+```bash
+# via make
+
+make build-debug
+```
 # Utilities (Development)
 
 I created some utilities that are used in the app (in separate repositories), which are codenamed "*Eva*". 
@@ -132,13 +141,13 @@ I recommend that you fork the repositories, uninstall my versions, and install y
 
 # Limitations
 
-1. No cross-platform support at the moment. If I decided to add cross-platform support, I would have to manually compile and test different WebViews on three platforms (two of them using Virtual Machines). It's slightly too time consuming, so I'm holding that off for now. 
+1. No cross-platform support at the moment. If I decided to add cross-platform support, I would have to manually compile and test different WebViews on three platforms due to how Tauri handles platform compilation. It's slightly too time consuming, so I'm holding that off for now. 
 
 2. Fixed directory path. Unfortunately, Iris only supports the `Desktop/Iris_Notes` path for now. I'm not familiar with how multiple directories/scopes work in Tauri, since most of the `fs` functions in the TypeScript API only allows one `baseDirectory` path. As much as I would love to support multiple directories, I think it's best if I keep it scoped and limited for now.
 
-3. Large notes, not exactly sure how large, cause the app to become very slow (as in freezing/slow motion). From my limited testing, the memory usage spikes to at least 100-200mb+ depending on how bad it affects the app. When you switch to a smaller note, it goes away. My code is not optimized for performance, so that is most likely the reason.
+3. Large notes make the app unstable. From limited testing, the memory usage spikes fairly high depending on the content of the note. The issue goes away when you switch to a smaller note. There is a lot of unoptimized code related to the parsing of the notes and the core app logic, so that's why issues like this occur.
 
-4. Local images must be dragged into the editor in order to be used. Protocols are a little tricky to setup unfortunately. However, Milkdown allows dragging images into the editor to be converted into base64, so I think that's a good tradeoff. 
+4. Local images must be copy and pasted into the editor in order to be used. Protocols are a little tricky to setup. Milkdown allows copy and pasting images into the editor to be converted into base64 by default, so I think that's a good tradeoff for now. 
 
 # Submitting Bugs, Issues, and Concerns
 

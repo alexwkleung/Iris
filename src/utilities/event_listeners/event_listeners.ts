@@ -17,6 +17,13 @@ import { ReadingMode } from '../../reading_mode/reading_mode'
 import { EvaSTUtil } from 'eva-st-util'
 
 //Local Event Listeners class
+/**
+ * @class LocalEventListeners
+ * 
+ * @extends LocalFileDirectory
+ * 
+ * @file `event_listeners.ts`
+ */
 export class LocalEventListeners extends LocalFileDirectory {
     /**
      * Local File Directory object

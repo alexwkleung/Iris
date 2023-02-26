@@ -22,7 +22,6 @@ import { LocalFileDirectoryNode } from './file_directory_node'
 //stylesheets
 import '../../styles/file_directory.css'
 
-//Local File Directory class
 /**
  * @class LocalFileDirectory
  * 

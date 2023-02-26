@@ -23,6 +23,11 @@ import { CM_Theme } from '../cm_theme/cm_theme'
 import { EditorView } from '@codemirror/view'
 
 //CodeMirror EditorState class
+/**
+ * @class CodeMirror_EditorState
+ * 
+ * @file `cm_editor_state.ts`
+ */
 export class CodeMirror_EditorState {
     /**
      * editorState variable

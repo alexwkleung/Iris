@@ -19,7 +19,6 @@ import '../styles/themes/prism-coldark-dark.css'
 export class ProseMirrorEditorNode {
     //passable created DOM node variables to reference later
 
-    //editor node ref
     /**
      * editorNode variable
      * 

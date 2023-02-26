@@ -7,7 +7,6 @@
 
 import { EditorView } from "@codemirror/view";
 
-//codemirror theme
 /**
  * CM_Theme variable
  * 

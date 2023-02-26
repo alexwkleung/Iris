@@ -44,7 +44,6 @@ export class ProseMirrorEditor {
      */
     static readonly: boolean;
 
-    //readonly prism plugin config 
     //refractor config fix for production build
     //https://github.com/Milkdown/milkdown/blob/v6/website/component/MilkdownEditor/docRendererFactory.ts
     /**
