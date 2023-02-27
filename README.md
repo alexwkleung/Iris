@@ -12,7 +12,7 @@
 
 > <p align="center">"Inspired by my favourite Markdown note-taking apps and made with magical intelligence."</p>
 
-<p align="center">Currently a work-in-progress application. I have released a public stable build for users to try.</p> 
+<p align="center">Currently a work-in-progress application.</p> 
 
 ![WYSIWYG](/screenshots/wysiwyg.png)
 
@@ -58,7 +58,7 @@
 
     - CodeMirror is the editor used for Markdown mode. You can write in pure Markdown syntax, similar to plain-text style if you don't like WYSIWYG. 
 
-4. A simple and comfortable User Interface.
+4. A simple and comfortable user interface.
 
 # Why
 
@@ -165,4 +165,6 @@ If there are any improvements you would like to share, feel free to send a [Pull
 
 Take a peek at the code and do whatever you want with it!
 
-If you want to give credit, you can do so via adding a link to this repository within your projects' README. No hard restrictions. It's okay if you don't want to, but it would be appreciated.
+If you want to give credit, you can do so via adding a link to this repository within your projects' README. It's okay if you don't want to, but it would be appreciated.
+
+In respect to the above, there are no hard restrictions.

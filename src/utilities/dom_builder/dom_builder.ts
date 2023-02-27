@@ -16,6 +16,11 @@ import { LocalFileDirectoryNode } from "../file_directory/file_directory_node"
  * @file `dom_builder.ts`
  */
 export class FileDirectoryBuilder {
+    /**
+     * Eva DOM builder util object
+     * 
+     * @access private readonly
+     */
     private readonly EvaDOM = new EvaDOMBuilderUtil() as EvaDOMBuilderUtil;
 
     public Eva_FileDirectoryTreeBuilder(folderName: string, fileName: string | null | undefined) {

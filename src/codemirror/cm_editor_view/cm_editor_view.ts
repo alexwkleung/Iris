@@ -14,7 +14,6 @@ import { CodeMirror_EditorState } from '../cm_editor_state/cm_editor_state'
  * @file `cm_editor_view.ts`
  */
 export class CodeMirror_EditorView {
-    //ref
     /**
      * editorView variable
      * 
@@ -24,7 +23,6 @@ export class CodeMirror_EditorView {
      */
     static editorView: EditorView;
 
-    //CodeMirror Editor View
     /**
      * CodeMirror EditorView function
      * 

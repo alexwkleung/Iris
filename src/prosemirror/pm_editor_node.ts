@@ -25,6 +25,7 @@ export class ProseMirrorEditorNode {
      * Used as a reference for the editor node
      * 
      * @member static
+     * @type HTMLDivElement
      * @returns HTMLDivElement
      */
     static editorNode: HTMLDivElement;

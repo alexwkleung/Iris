@@ -20,7 +20,6 @@ import { ReadingMode } from '../../reading_mode/reading_mode'
  * @file `main_objects.ts`
  */
 export class MainObjects {
-    //ProseMirror Editor Node object
     /**
      * ProseMirror Editor node object
      * 
@@ -29,7 +28,6 @@ export class MainObjects {
      */
     static readonly PMEditorNode = new ProseMirrorEditorNode() as ProseMirrorEditorNode;
 
-    //ProseMirror Editor object
     /**
      * ProseMirror Editor object
      * 
@@ -38,7 +36,6 @@ export class MainObjects {
      */
     static readonly PMEditor = new ProseMirrorEditor() as ProseMirrorEditor;
 
-    //Local File Directory Node object
     /**
      * Local File Directory Node object
      * 
@@ -47,7 +44,6 @@ export class MainObjects {
      */
     static readonly LFDirectoryNode = new LocalFileDirectoryNode() as LocalFileDirectoryNode;
 
-    //Local Event Listeners object
     /**
      * Local Event Listeners object
      * 
@@ -56,7 +52,6 @@ export class MainObjects {
      */
     static readonly LocalEvt = new LocalEventListeners() as LocalEventListeners;
 
-    //DOM Builders
     /**
      * File Directory Builder object
      * 
@@ -65,7 +60,6 @@ export class MainObjects {
      */
     static readonly FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
 
-    //CodeMirror Editor Node
     /**
      * CodeMirror Editor Node object
      * 
@@ -74,7 +68,6 @@ export class MainObjects {
      */
     static readonly CMEditorNode = new CodeMirror_EditorNode() as CodeMirror_EditorNode;
 
-    //CodeMirror Editor View
     /**
      * CodeMirror EditorView object
      * 
@@ -83,7 +76,6 @@ export class MainObjects {
      */
     static readonly CMEditorView = new CodeMirror_EditorView() as CodeMirror_EditorView;
 
-    //Reading Mode object
     /**
      * Reading Mode object
      * 

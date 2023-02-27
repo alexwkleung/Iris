@@ -19,16 +19,14 @@ import './styles/katex.min.css'
  * @file `app.ts`
  */
 export class App {
-    //appNode ref
     /**
-     * app node container variable 
+     * App node container variable 
      * 
      * @member static
      * @returns HTMLDivElement
      */
     static appNodeContainer: HTMLDivElement;
 
-    //app node
     /**
      * App node function
      * 
@@ -56,7 +54,7 @@ export class App {
 }
 
 /**
- * @function app. 
+ * @function app
  * 
  * 1) Calls `App.appNode`
  * 2) Set WebviewWindow config using `appWindow`
