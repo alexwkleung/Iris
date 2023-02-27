@@ -5,10 +5,8 @@
 *
 */
 
-import { App } from '../../app'
 import { dialog, fs } from '@tauri-apps/api'
 import { appWindow } from '@tauri-apps/api/window'
-import { e } from '@tauri-apps/api/fs-4bb77382'
 import { ProseMirrorEditor } from '../../prosemirror/pm_editor_state/pm_editor_state'
 import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { FileSystemConstants } from '../constants/constants'
@@ -28,9 +26,18 @@ import '../../styles/file_directory.css'
  * @file `file_directory.ts`
  */
 export class LocalFileDirectory {
-    //FileDirectoryBuilder object
+    /**
+     * File directory builder object
+     * 
+     * @access private readonly
+     */
     private readonly FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
 
+    /**
+     * Reading mode object
+     * 
+     * @access private readonly
+     */
     private readonly ReMode = new ReadingMode() as ReadingMode;
 
     //string to hold data from file
@@ -93,7 +100,7 @@ export class LocalFileDirectory {
     private filterMdFiles: string[];
 
     //recursively iterate over folder contents
-    private OpenLFFolderRecursive(entries: e[]) {
+    private OpenLFFolderRecursive(entries: fs.FileEntry[]) {
         for(const entry of entries) {
             //console.log(entry.path);
             //check type of path
@@ -116,6 +123,8 @@ export class LocalFileDirectory {
     //open folder
     /*
     * THIS NEEDS TO BE OPTIMIZED!
+    *
+    * need to reduce code repetition, especially when handling edge cases (~600+ lines of code in total!)
     */
     public async OpenLFFolder(): Promise<void> {
         if(await fs.exists("Iris_Notes", { dir: fs.BaseDirectory.Desktop})) {
