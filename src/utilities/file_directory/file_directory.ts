@@ -41,7 +41,7 @@ export class LocalFileDirectory {
     private readonly ReMode = new ReadingMode() as ReadingMode;
 
     //string to hold data from file
-    static openFileString: string = "";
+    static openFileString = "";
 
     //string to hold data from file
     static saveFileString: string;
@@ -84,10 +84,10 @@ export class LocalFileDirectory {
     private saveFileConst: string;
 
     //file string ref
-    private fileStr: string = "";
+    private fileStr = "";
 
     //list files ref
-    private listFilesRef: string = "";
+    private listFilesRef = "";
 
     //local folder array refs
     private localFolderArrSortRef: string[];
@@ -796,7 +796,7 @@ export class LocalFileDirectory {
                         (document.querySelector('.ProseMirror') as HTMLElement).focus();
 
                         //console.log(this.fileStr);
-                    }).catch(() => console.error("Unable to read text file."));;
+                    }).catch(() => console.error("Unable to read text file."));
                 
                     //console.log((document.querySelector('#inputButtonNodeContainer') as HTMLElement).getElementsByTagName('input'));
                     //console.log(this.fileStr);
@@ -819,7 +819,7 @@ export class LocalFileDirectory {
             }  
         }
     }
-
+   
     //save file
     public async saveLF(): Promise<void> {
         this.saveFileConst = FileSystemConstants.SaveFile;

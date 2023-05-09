@@ -278,7 +278,7 @@ export class LocalEventListeners extends LocalFileDirectory {
     public deleteFileListener() {
         const deleteFileButton = document.querySelector('#deleteFileButton') as HTMLElement;
 
-        deleteFileButton.addEventListener('click', async (event) => {
+        deleteFileButton.addEventListener('click', async () => {
             await this.LFDirectory.deleteFile();
 
             //resync folder
