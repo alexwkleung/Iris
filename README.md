@@ -123,21 +123,6 @@ If you need to use the dev tools in the production build
 
 make build-debug
 ```
-# Utilities (Development)
-
-I created some utilities that are used in the app (in separate repositories), which are codenamed "*Eva*". 
-
-I recommend that you fork the repositories, uninstall my versions, and install your forked ones. This is so you can have full control over the utilities because what I modify/add in these repositories might break your development build.
-
-1. [Eva-DOM-Builder-Util](https://github.com/alexwkleung/Eva-DOM-Builder-Util)
-
-    - The Eva DOM Builder Util is a utility that mainly helped create the file directory. This isn't limited to creating file directories, so you can create pretty much any element node you want given that the function(s) are set up correctly.
-
-2. [Eva-ST-Util](https://github.com/alexwkleung/Eva-ST-Util)
-
-    - The Eva ST (Syntax Tree) Util is a wrapper utility around unist syntax tree utils to convert between mdast/hast (and vice versa) for Markdown/HTML. This is used in the Reader mode of the app, which you can think of as the preview mode in other note-taking apps without WYSIWYG.
-
-    - This utility is nice to use for your own projects, as it's simple to use. I myself may use this in future projects since installing only 1 dependency instead of multiple is a plus when you just want to convert between Markdown/HTML quickly and efficiently.
 
 # Limitations
 
