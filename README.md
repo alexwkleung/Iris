@@ -10,7 +10,7 @@
 
 <p align="center">Iris is a WYSIWYG Markdown note-taking app. Created with TypeScript and Tauri.</p>
 
-> <p align="center">"Inspired by my favourite Markdown note-taking apps and made with magical intelligence."</p>
+> <p align="center">"Inspired by my favourite Markdown note-taking apps"</p>
 
 <p align="center">Currently a work-in-progress application.</p> 
 
@@ -81,7 +81,7 @@ Make sure you have [Rust](https://www.rust-lang.org/tools/install) installed.
 Clone the repository.
 
 ```bash 
-git clone <SSH/HTTPS URL of the repo>
+git clone <SSH/HTTPS URL>
 ```
 
 Change directory 
@@ -100,11 +100,9 @@ Run development build
 
 ```bash
 # via make 
-
 make tauri
 
 # via npm
-
 npm run tauri-dev
 ```
 
@@ -112,7 +110,6 @@ Building for production
 
 ```bash
 # via make 
-
 make build
 ```
 
@@ -120,7 +117,6 @@ If you need to use the dev tools in the production build
 
 ```bash
 # via make
-
 make build-debug
 ```
 
@@ -134,22 +130,12 @@ make build-debug
 
 4. Local images must be copy and pasted into the editor in order to be used. Protocols are a little tricky to setup. Milkdown allows copy and pasting images into the editor to be converted into base64 by default, so I think that's a good tradeoff for now. 
 
-# Submitting Bugs, Issues, and Concerns
-
-You can submit a [new issue](https://github.com/alexwkleung/Iris/issues) or a [discussion post](https://github.com/alexwkleung/Iris/discussions) regarding any bugs, issues, concerns, and the related that you may have.
-
 # Contributions
 
 Contributions are welcomed, but it's 100% optional. 
 
-If there are any improvements you would like to share, feel free to send a [Pull Request](https://github.com/alexwkleung/Iris/pulls).
+Feel free to submit a [new issue](https://github.com/alexwkleung/Iris/issues) or a [pull request](https://github.com/alexwkleung/Iris/pulls) if you have any improvements or concerns.
 
 # License 
 
 [MIT License](LICENSE).
-
-Take a peek at the code and do whatever you want with it!
-
-If you want to give credit, you can do so via adding a link to this repository within your projects' README. It's okay if you don't want to, but it would be appreciated.
-
-In respect to the above, there are no hard restrictions.
