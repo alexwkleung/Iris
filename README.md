@@ -38,13 +38,9 @@
 
 5. [Utilities (Development)](#utilities-development)
 
-6. [Limitations](#limitations)
+6. [Contributions](#contributions)
 
-7. [Submitting Bugs, Issues, and Concerns](#submitting-bugs-issues-and-concerns)
-
-8. [Contributions](#contributions)
-
-9. [License](#license)
+7. [License](#license)
 
 # Features
 
@@ -119,16 +115,6 @@ If you need to use the dev tools in the production build
 # via make
 make build-debug
 ```
-
-# Limitations
-
-1. No cross-platform support at the moment. If I decided to add cross-platform support, I would have to manually compile and test different WebViews on three platforms due to how Tauri handles platform compilation. It's slightly too time consuming, so I'm holding that off for now. 
-
-2. Fixed directory path. Unfortunately, Iris only supports the `Desktop/Iris_Notes` path for now. I'm not familiar with how multiple directories/scopes work in Tauri, since most of the `fs` functions in the TypeScript API only allows one `baseDirectory` path. As much as I would love to support multiple directories, I think it's best if I keep it scoped and limited for now.
-
-3. Large notes make the app unstable. From limited testing, the memory usage spikes fairly high depending on the content of the note. The issue goes away when you switch to a smaller note. There is a lot of unoptimized code related to the parsing of the notes and the core app logic, so that's why issues like this occur.
-
-4. Local images must be copy and pasted into the editor in order to be used. Protocols are a little tricky to setup. Milkdown allows copy and pasting images into the editor to be converted into base64 by default, so I think that's a good tradeoff for now. 
 
 # Contributions
 
