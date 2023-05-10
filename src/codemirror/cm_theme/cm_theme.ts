@@ -5,7 +5,8 @@
 *
 */
 
-import { EditorView } from "@codemirror/view";
+import { EditorView } from "@codemirror/view"
+import { Extension } from "@codemirror/state"
 
 /**
  * CM_Theme variable
@@ -14,7 +15,7 @@ import { EditorView } from "@codemirror/view";
  * 
  * @returns Extension
  */
-export const CM_Theme = EditorView.theme({
+export const CM_Theme: Extension = EditorView.theme({
     '.cm-cursor, .cm-dropCursor': { 
         borderLeftColor: '#DDDDDD' 
     },

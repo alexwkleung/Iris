@@ -33,7 +33,6 @@ export class App {
      * Appends app node to the DOM.
      * 
      * @member static
-     * @returns void
      */
     static appNode(): void {
         App.appNodeContainer = document.createElement('div') as HTMLDivElement;
@@ -59,8 +58,8 @@ export class App {
  * 1) Calls `App.appNode`
  * 2) Set WebviewWindow config using `appWindow`
  * 
- * @async function
- * @returns Promise<void\>
+ * @async
+ * @returns Resolved promise to set window title
  */
 async function app(): Promise<void> {
     App.appNode();

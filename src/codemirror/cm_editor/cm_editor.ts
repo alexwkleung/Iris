@@ -14,7 +14,6 @@ import { App } from "../../app"
  * @file `cm_editor.ts`
  */
 export class CodeMirror_EditorNode {
-    //ref
     /**
      * editorNode variable
      * 

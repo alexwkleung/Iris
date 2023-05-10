@@ -21,7 +21,13 @@ export class FileDirectoryBuilder {
      * 
      * @access private readonly
      */
-    private readonly EvaDOM = new EvaDOMBuilderUtil() as EvaDOMBuilderUtil;
+    private readonly EvaDOM: EvaDOMBuilderUtil = new EvaDOMBuilderUtil();
+
+    //note: EvaDOMBuilderUtil is being deprecated in the near future. 
+    //
+    //iris will need a utility to create a tree structure that can handle nested folders
+    //
+    //file directory tree will be rewritten alongside the open local folder sync
 
     public Eva_FileDirectoryTreeBuilder(folderName: string, fileName: string | null | undefined) {
         //ul node

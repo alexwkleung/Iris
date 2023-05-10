@@ -16,7 +16,6 @@ import { getMarkdown, replaceAll } from '@milkdown/utils'
 import { ReadingMode } from '../../reading_mode/reading_mode'
 import { EvaSTUtil } from 'eva-st-util'
 
-//Local Event Listeners class
 /**
  * @class LocalEventListeners
  * 
@@ -30,14 +29,14 @@ export class LocalEventListeners extends LocalFileDirectory {
      * 
      * @access private readonly
      */
-    private readonly LFDirectory = new LocalFileDirectory() as LocalFileDirectory;
+    private readonly LFDirectory: LocalFileDirectory = new LocalFileDirectory();
 
     /**
      * Reading Mode object
      * 
      * @access private readonly
      */
-    private readonly ReMode_Evt = new ReadingMode() as ReadingMode;
+    private readonly ReMode_Evt: ReadingMode = new ReadingMode();
 
     //constant refs
     private wysiwygConst: string;

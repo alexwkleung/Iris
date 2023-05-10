@@ -26,7 +26,7 @@ export class MainObjects {
      * @member static
      * @access readonly
      */
-    static readonly PMEditorNode = new ProseMirrorEditorNode() as ProseMirrorEditorNode;
+    static readonly PMEditorNode: ProseMirrorEditorNode = new ProseMirrorEditorNode();
 
     /**
      * ProseMirror Editor object
@@ -34,7 +34,7 @@ export class MainObjects {
      * @member static
      * @access readonly
      */
-    static readonly PMEditor = new ProseMirrorEditor() as ProseMirrorEditor;
+    static readonly PMEditor: ProseMirrorEditor = new ProseMirrorEditor();
 
     /**
      * Local File Directory Node object
@@ -42,7 +42,7 @@ export class MainObjects {
      * @member static
      * @access readonly
      */
-    static readonly LFDirectoryNode = new LocalFileDirectoryNode() as LocalFileDirectoryNode;
+    static readonly LFDirectoryNode: LocalFileDirectoryNode = new LocalFileDirectoryNode();
 
     /**
      * Local Event Listeners object
@@ -50,7 +50,7 @@ export class MainObjects {
      * @member static
      * @access readonly
      */
-    static readonly LocalEvt = new LocalEventListeners() as LocalEventListeners;
+    static readonly LocalEvt: LocalEventListeners = new LocalEventListeners();
 
     /**
      * File Directory Builder object
@@ -58,7 +58,7 @@ export class MainObjects {
      * @member static
      * @access readonly
      */
-    static readonly FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
+    static readonly FileDirectoryBuilder: FileDirectoryBuilder = new FileDirectoryBuilder();
 
     /**
      * CodeMirror Editor Node object
@@ -66,7 +66,7 @@ export class MainObjects {
      * @member static
      * @access readonly
      */
-    static readonly CMEditorNode = new CodeMirror_EditorNode() as CodeMirror_EditorNode;
+    static readonly CMEditorNode: CodeMirror_EditorNode = new CodeMirror_EditorNode();
 
     /**
      * CodeMirror EditorView object
@@ -74,13 +74,13 @@ export class MainObjects {
      * @member static
      * @access readonly
      */
-    static readonly CMEditorView = new CodeMirror_EditorView() as CodeMirror_EditorView;
-
+    static readonly CMEditorView: CodeMirror_EditorView = new CodeMirror_EditorView();
     /**
+
      * Reading Mode object
      * 
      * @member static
      * @access readonly
      */
-    static readonly ReadingMode = new ReadingMode() as ReadingMode;
+    static readonly ReadingMode: ReadingMode = new ReadingMode();
 }

@@ -22,7 +22,6 @@ import { languages } from '@codemirror/language-data'
 import { CM_Theme } from '../cm_theme/cm_theme'
 import { EditorView } from '@codemirror/view'
 
-//CodeMirror EditorState class
 /**
  * @class CodeMirror_EditorState
  * 
@@ -39,7 +38,7 @@ export class CodeMirror_EditorState {
     
     /**
      * @function CodeMirror EditorState
-     * @returns EditorState
+     * @returns EditorState instance
      */
     static CodeMirror_EditorState(): EditorState {
         CodeMirror_EditorState.editorState = EditorState.create({

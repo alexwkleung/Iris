@@ -31,14 +31,14 @@ export class LocalFileDirectory {
      * 
      * @access private readonly
      */
-    private readonly FileDirectoryBuilder = new FileDirectoryBuilder() as FileDirectoryBuilder;
+    private readonly FileDirectoryBuilder: FileDirectoryBuilder = new FileDirectoryBuilder();
 
     /**
      * Reading mode object
      * 
      * @access private readonly
      */
-    private readonly ReMode = new ReadingMode() as ReadingMode;
+    private readonly ReMode: ReadingMode = new ReadingMode();
 
     //string to hold data from file
     static openFileString = "";
@@ -120,11 +120,8 @@ export class LocalFileDirectory {
         }
     }
 
-    //open folder
     /*
-    * THIS NEEDS TO BE OPTIMIZED!
-    *
-    * need to reduce code repetition, especially when handling edge cases (~600+ lines of code in total!)
+    * this needs to be rewritten!
     */
     public async OpenLFFolder(): Promise<void> {
         if(await fs.exists("Iris_Notes", { dir: fs.BaseDirectory.Desktop})) {

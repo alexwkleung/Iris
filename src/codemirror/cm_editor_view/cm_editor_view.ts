@@ -26,12 +26,12 @@ export class CodeMirror_EditorView {
     /**
      * CodeMirror EditorView function
      * 
-     * @returns EditorView
+     * @returns EditorView instance
      */
     public CodeMirror_EditorView(): EditorView {
         CodeMirror_EditorView.editorView = new EditorView({
             state: CodeMirror_EditorState.CodeMirror_EditorState(),
-            doc: "",
+            doc: "", //initial empty
             parent: document.querySelector('#cm_editor') as HTMLElement
         });
 

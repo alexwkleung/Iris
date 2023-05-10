@@ -14,13 +14,12 @@ import { MainObjects } from './utilities/objects/main_objects'
  */
 export class Main {
     /**
-     * @function main 
+     * main function
      * 
      * Holds new objects imported from `MainObjects`
      * 
      * @member static
      * @access public
-     * @returns void
      */
     public static main(): void {
         //Local File Directory Node

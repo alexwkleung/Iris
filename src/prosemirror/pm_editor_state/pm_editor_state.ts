@@ -51,7 +51,7 @@ export class ProseMirrorEditor {
      * 
      * @access readonly
      * @type $Prose
-     * @returns Refractor for `configureRefractor` within `prismPluginConfig`
+     * @returns Refractor configuration for the milkdown prism plugin
      */
     readonly prismPluginConfig: $Prose = prismPlugin({ 
         configureRefractor: (): Refractor => { 
@@ -64,7 +64,7 @@ export class ProseMirrorEditor {
      * 
      * @access public
      * @async function
-     * @returns Promise<Editor\>
+     * @returns Resolved promise to create milkdown editor instance
      */
     public async PM_State(): Promise<Editor> {
         //set initial readonly
