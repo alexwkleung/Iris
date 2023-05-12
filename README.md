@@ -36,11 +36,9 @@
 
 4. [Installation and Setup (Development)](#installation-and-setup-development)
 
-5. [Utilities (Development)](#utilities-development)
+5. [Contributions](#contributions)
 
-6. [Contributions](#contributions)
-
-7. [License](#license)
+6. [License](#license)
 
 # Features
 
@@ -48,7 +46,7 @@
 
 2. Auto saving. You will never have to press Cmd/Ctrl+S to save your notes. It magically saves on its own!
 
-3. [Milkdown (ProseMirror)](https://milkdown.dev/) and [CodeMirror](https://codemirror.net/) as the editors. 
+3. [Milkdown v6 (ProseMirror)](https://milkdown.dev/) and [CodeMirror](https://codemirror.net/) as the editors. 
 
     - Milkdown is the WYSIWYG editor, which is a framework based off of ProseMirror. It does the heavy lifting to make the out of the box WYSIWYG Markdown experience nice and easy to use.
 
@@ -60,21 +58,21 @@
 
 *Why did I create Iris?*
 
-I created Iris because as a person who enjoys Markdown and nice note-taking apps, I imagined of creating my own. Also being inspired by my favourite Markdown note-taking apps, I wanted to turn that dream into a reality. Pushing through many hours, I am finally here now - living the reality. In the short period of creating this, I never imagined how quick I got things pieced together and working to the extent that it is currently.
+I created Iris because as a person who enjoys Markdown and note-taking apps, I imagined of creating my own. Being inspired by my favourite Markdown note-taking apps encouraged me to make that dream into a reality.
 
-While this isn't the best written code, bug-free, or 100% usable/stable by any means, I know that with time and patience, I can improve further. I'm glad that I learned a few things while doing this project, such as creating a basic working file directory tree and switching between different views.
+While this isn't the best written code or 100% usable/stable by any means, I know that with time and patience, Iris can be further improved.
 
 Enjoy! ✨
 
-# Installation and Setup (User/Client)
+# Installation (User/Client)
 
-Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the latest version available. The naming scheme for the installer is `Iris_0.x.x_universal.dmg`.
+Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the latest version available. The current naming scheme for the installer is `Iris_0.x.x_universal.dmg`.
 
-# Installation and Setup (Development)
+# Installation (Development)
 
-Make sure you have [Rust](https://www.rust-lang.org/tools/install) installed. 
+Install [Rust](https://www.rust-lang.org/tools/install)
 
-Clone the repository.
+Clone the repository
 
 ```bash 
 git clone <SSH/HTTPS URL>
