@@ -1,10 +1,6 @@
 <h1 align="center">✨ Iris</h1>
 
 <p align="center">
-<img src="https://img.shields.io/badge/Platforms-macOS-lightgrey">
-</p>
-
-<p align="center">
 <img src="https://img.shields.io/badge/Architecture-x64%20%7C%20arm64-lightgrey">
 </p>
 
@@ -30,15 +26,13 @@
 
 1. [Features](#features)
 
-2. [Why](#why)
+2. [Installation and Setup (User/Client)](#installation-and-setup-userclient)
 
-3. [Installation and Setup (User/Client)](#installation-and-setup-userclient)
+3. [Installation and Setup (Development)](#installation-and-setup-development)
 
-4. [Installation and Setup (Development)](#installation-and-setup-development)
+4. [Contributions](#contributions)
 
-5. [Contributions](#contributions)
-
-6. [License](#license)
+5. [License](#license)
 
 # Features
 
@@ -54,19 +48,9 @@
 
 4. A simple and comfortable user interface.
 
-# Why
-
-*Why did I create Iris?*
-
-I created Iris because as a person who enjoys Markdown and note-taking apps, I imagined of creating my own. Being inspired by my favourite Markdown note-taking apps encouraged me to make that dream into a reality.
-
-While this isn't the best written code or 100% usable/stable by any means, I know that with time and patience, Iris can be further improved.
-
-Enjoy! ✨
-
 # Installation (User/Client)
 
-Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the latest version available. The current naming scheme for the installer is `Iris_0.x.x_universal.dmg`.
+Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the latest version available.
 
 # Installation (Development)
 
