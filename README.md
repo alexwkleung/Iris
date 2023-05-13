@@ -48,7 +48,7 @@
 
 4. A simple and comfortable user interface.
 
-# Installation (User/Client)
+# Installation (User)
 
 Go to [releases](https://github.com/alexwkleung/Iris/releases) and find the latest version available.
 
