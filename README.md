@@ -24,17 +24,29 @@
 
 # Table of Contents
 
-1. [Features](#features)
+1. [PSA](#psa)
 
-2. [Installation and Setup (User/Client)](#installation-and-setup-userclient)
+2. [Features](#features)
 
-3. [Installation and Setup (Development)](#installation-and-setup-development)
+3. [Installation and Setup (User)](#installation-and-setup-userclient)
 
-4. [Contributions](#contributions)
+4. [Installation and Setup (Development)](#installation-and-setup-development)
 
-5. [License](#license)
+5. [Contributions](#contributions)
 
-# Features
+6. [License](#license)
+
+# PSA
+
+*Taken from v0.1.1 release notes:*
+
+1. v0.1.x are considered prototype builds.
+
+2. v0.2.0 is currently in progress. Please be advised that it may contain implementations that are incompatible with v0.1.x, such as the source code.
+
+3. It is recommended that you install v0.2.0 once it's released since it will be the initial mainstream build for Iris.
+
+# Features (v0.1.x)
 
 1. Mode switching. Switch between WYSIWYG, Markdown, and Reading mode views. 
 
