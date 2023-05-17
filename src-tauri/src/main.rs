@@ -1,7 +1,12 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use tauri::Window;
-use tauri::WindowBuilder;
+use tauri::{
+  Window, 
+  WindowBuilder, 
+  WindowUrl, 
+  Size, 
+  LogicalSize
+};
 
 use iris::{
   __cmd__is_file, 
@@ -27,14 +32,14 @@ use iris::{
 fn main() {
   tauri::Builder::default()
   .setup(|app| {
-      let window: Window = WindowBuilder::new(app, "main", tauri::WindowUrl::App("index.html".into())).build()?;
+      let window: Window = WindowBuilder::new(app, "main", WindowUrl::App("index.html".into())).build()?;
 
-      match window.set_size(tauri::Size::Logical(tauri::LogicalSize { width: 1200.0, height: 800.0 })) {
+      match window.set_size(Size::Logical(LogicalSize { width: 1200.0, height: 800.0 })) {
         Ok(o) => o,
         Err(error) => panic!("Unable to set window size: {:}", error)
       }
 
-      match window.set_min_size(Some(tauri::Size::Logical(tauri::LogicalSize { width: 1200.0, height: 800.0 }))) {
+      match window.set_min_size(Some(Size::Logical(LogicalSize { width: 1200.0, height: 800.0 }))) {
         Ok(o) => o,
         Err(error) => panic!("Unable to set window min_size: {:?}", error)
       }

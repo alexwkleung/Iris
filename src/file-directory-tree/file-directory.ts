@@ -17,13 +17,21 @@ FileDirectoryTreeNode.fileDirectoryNode.setAttribute("id", "file-directory-tree"
 App.appNode.appendChild(FileDirectoryTreeNode.fileDirectoryNode);
 
 export class DirectoryTree {
-    private readonly folderNames: Promise<string[]> = this.getFolderNames();
+    /**
+     * folderNames
+     * 
+     * @access protected 
+     * @readonly
+     */
+    protected readonly folderNames: Promise<string[]> = this.getRootNames();
 
-    public async getFolderNames() {
+    public async getRootNames(): Promise<string[]> {
+        //eslint-disable-next-line @typescript-eslint/no-unused-vars
         let walkRef: string[] = [];
-            //walk directory recursively
-            await walk(await baseDir("home").then((v) => v) + "/Iris/Notes").then((elem) => {
-                walkRef = (elem as string[]).slice(1);
+
+        //walk directory recursively
+        await walk(await baseDir("home").then((v) => v) + "/Iris/Notes").then((elem) => {
+            walkRef = (elem as string[]).slice(1);
             }
         ).catch((v) => { throw console.error(v) });
     
@@ -55,7 +63,7 @@ export class DirectoryTree {
      * 
      * @async
      */
-    public async createDirTreeParentNodes() {  
+    public async createDirTreeParentNodes(): Promise<void> {  
         this.folderNames.then((names) => {
             names.map(async (elem) => {
                 await this.isFolderNode("home", "/Iris/Notes/" + elem).then(
@@ -96,13 +104,13 @@ export class DirectoryTree {
      * createDirTreeChildNodes
      * 
      * @async 
-     * @param parentTags The parent tag to append to (based on clicked parent)
+     * @param parentTags The parent tag to append to
      * @param parentNameTags The parent name tag
      */
     public async createDirTreeChildNodes(
         parentTags: Element, 
         parentNameTags: string,
-        base: string) {
+        base: string): Promise<void> {
 
         let walkRef: string[] = [];
         
