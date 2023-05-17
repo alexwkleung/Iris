@@ -40,7 +40,6 @@ export class DirectoryTreeListeners extends DirectoryTree {
                 }
             }
 
-           
             //call child node listener once parent listener finishes execution
             this.childNodeListener();
           });
@@ -52,6 +51,7 @@ export class DirectoryTreeListeners extends DirectoryTree {
                 e.stopImmediatePropagation();
 
                 //console.log(e);
+                
                 v.classList.toggle('is-active-child');
 
                 //console.log("child file");

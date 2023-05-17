@@ -53,14 +53,6 @@
     "updater": {
       "active": false
     },
-    "windows": [
-      {
-        "fullscreen": false,
-        "height": 800,
-        "resizable": true,
-        "title": "Iris",
-        "width": 1200
-      }
-    ]
+    "windows": []
   }
 }

@@ -17,7 +17,7 @@ export class App {
             if(isConnected) {
                 //console.log("App node is connected");
                 return;
-            } else {
+            } else if(!isConnected) {
                 throw console.error("App node is not connected");
             }
         } else {

@@ -22,16 +22,16 @@ export class DirectoryTree {
     public async getFolderNames() {
         let walkRef: string[] = [];
             //walk directory recursively
-            await walk(await baseDir("home").then((v) => v) + "/Iris/Notes").then(async (v) => {
-                walkRef = (v as string[]).slice(1);
+            await walk(await baseDir("home").then((v) => v) + "/Iris/Notes").then((elem) => {
+                walkRef = (elem as string[]).slice(1);
             }
         ).catch((v) => { throw console.error(v) });
     
         const nameVecTemp: string[] = [];
     
-        await getNameVec(await baseDir("home").then((v) => v) + "/Iris/Notes").then(async (props) => {
-            (props as string[]).map(async (v) => {
-                nameVecTemp.push(v);
+        await getNameVec(await baseDir("home").then((v) => v) + "/Iris/Notes").then((vec) => {
+            (vec as string[]).map((elem) => {
+                nameVecTemp.push(elem);
             }
         )}).catch((e) => { throw console.error(e) });
     
@@ -57,10 +57,10 @@ export class DirectoryTree {
      */
     public async createDirTreeParentNodes() {  
         this.folderNames.then((names) => {
-            names.map(async (props) => {
-                await this.isFolderNode("home", "/Iris/Notes/" + props).then(
-                    async (vv) => {
-                      if(vv) {
+            names.map(async (elem) => {
+                await this.isFolderNode("home", "/Iris/Notes/" + elem).then(
+                    async (isFolder) => {
+                      if(isFolder) {
                             //create parent folder node
                             const parentFolder: HTMLDivElement = document.createElement('div');
                             parentFolder.setAttribute("class", "parent-of-root-folder");
@@ -71,9 +71,9 @@ export class DirectoryTree {
                             parentFolder.appendChild(parentFolderName);
     
                             //create text node based on directory name
-                            const pfTextNode: Text = document.createTextNode(props);
+                            const pfTextNode: Text = document.createTextNode(elem);
                             parentFolderName.appendChild(pfTextNode);
-                        } else if(!vv) {
+                        } else if(!isFolder) {
                             //create parent folder node
                             const childFileRoot: HTMLDivElement = document.createElement('div');
     
@@ -81,7 +81,7 @@ export class DirectoryTree {
                             FileDirectoryTreeNode.fileDirectoryNode.appendChild(childFileRoot);
     
                             //create text node based on directory name
-                            const pfTextNode: Text = document.createTextNode(props);
+                            const pfTextNode: Text = document.createTextNode(elem);
                             childFileRoot.appendChild(pfTextNode);
                         }
                     }
@@ -110,24 +110,24 @@ export class DirectoryTree {
         await walk(
             await baseDir(base).then((v) => v) + "/Iris/Notes/" + parentNameTags
         ).catch((e) => { throw console.error(e) }).then(
-            (v) => {
-                walkRef = (v as string[]).slice(1);
+            (elem) => {
+                walkRef = (elem as string[]).slice(1);
             }
         ).catch((v) => { throw console.error(v) });
 
         const dirNamesArr: string[] = [];
         //get directory name (canonical)
         for(let i = 0; i < walkRef.length; i++) {
-            await getDirectoryName(walkRef[i]).then((props) => {
-                dirNamesArr.push(props as string);
+            await getDirectoryName(walkRef[i]).then((elem) => {
+                dirNamesArr.push(elem as string);
             }).catch((e) => { throw console.error(e) });
         }
         const namesArr: string[] = [];
 
         //get file name (includes parent dir name) 
         for(let i = 0; i < walkRef.length; i++) {
-            await getName(walkRef[i]).then((props) => {
-                namesArr.push(props as string);
+            await getName(walkRef[i]).then((elem) => {
+                namesArr.push(elem as string);
             }).catch((e) => { throw console.error(e) });
         }
 

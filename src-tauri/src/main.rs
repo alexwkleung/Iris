@@ -1,10 +1,9 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::Window;
-use tauri::Manager;
+use tauri::WindowBuilder;
 
-use app::{
+use iris::{
   __cmd__is_file, 
   __cmd__is_directory,
   __cmd__is_file_canonical,
@@ -28,13 +27,32 @@ use app::{
 fn main() {
   tauri::Builder::default()
   .setup(|app| {
-      let main_window: Window = app.get_window("main").unwrap();
-    
-      main_window.set_min_size(Some(tauri::Size::Logical(tauri::LogicalSize { width: 1200.0, height: 800.0 })));
+      let window: Window = WindowBuilder::new(app, "main", tauri::WindowUrl::App("index.html".into())).build()?;
 
-      main_window.set_resizable(true);
+      match window.set_size(tauri::Size::Logical(tauri::LogicalSize { width: 1200.0, height: 800.0 })) {
+        Ok(o) => o,
+        Err(error) => panic!("Unable to set window size: {:}", error)
+      }
 
-      main_window.set_title("Iris");
+      match window.set_min_size(Some(tauri::Size::Logical(tauri::LogicalSize { width: 1200.0, height: 800.0 }))) {
+        Ok(o) => o,
+        Err(error) => panic!("Unable to set window min_size: {:?}", error)
+      }
+
+      match window.set_title("Iris") {
+        Ok(o) => o,
+        Err(error) => panic!("Unable to set window title: {:}", error)
+      }
+
+      match window.center() {
+        Ok(o) => o,
+        Err(error) => panic!("Unable to center window {:}", error)
+      }
+
+      match window.set_resizable(true) {
+        Ok(o) => o,
+        Err(error) => panic!("Unable to set window resizable property: {:}", error)
+      }
 
       Ok(())
     })
