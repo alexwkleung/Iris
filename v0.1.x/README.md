@@ -1,9 +1,5 @@
 <h1 align="center">✨ Iris</h1>
 
-<p align=center><b>This is the README for v0.1.x.</b</p>
-
-<p align=center><b>v0.2.0 is currently in progress.</b</p>
-
 <p align="center">
 <img src="https://img.shields.io/badge/Architecture-x64%20%7C%20arm64-lightgrey">
 </p>

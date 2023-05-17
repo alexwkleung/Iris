@@ -1,79 +1,46 @@
-/*
-* file: `app.ts`
-*
-* this file contains the creation of the app node in the DOM
-*
-*/
-
-import { appWindow, PhysicalSize, /* LogicalSize */ } from '@tauri-apps/api/window'
-
-//stylesheets
-import './styles/override.css'
-import './styles/mainwindow.css'
-import './styles/material.css'
-import './styles/katex.min.css'
-
-/**
- * @class App
- * 
- * @file `app.ts`
- */
 export class App {
-    /**
-     * App node container variable 
-     * 
-     * @member static
-     * @returns HTMLDivElement
-     */
-    static appNodeContainer: HTMLDivElement;
+    static appNode: HTMLDivElement = document.createElement('div') as HTMLDivElement;
 
-    /**
-     * App node function
-     * 
-     * Appends app node to the DOM.
-     * 
-     * @member static
-     */
-    static appNode(): void {
-        App.appNodeContainer = document.createElement('div') as HTMLDivElement;
-        App.appNodeContainer.setAttribute("id", "app");
+    static async app() {
+        //check if any app nodes exist in document
+        if(document.querySelector('#app')) {
+            //remove the app node
+            document.querySelector('#app').remove();
 
-        document.body.prepend(App.appNodeContainer) as void;
-
-        const isConnected: boolean = App.appNodeContainer.isConnected;
-
-        //check if app node is connected
-        if(isConnected) {
-            //console.log("App is connected to the DOM!");
-            return;
+            //create app node
+            App.appNode.setAttribute("id", "app");
+            document.body.prepend(App.appNode);
+            
+            const isConnected: boolean = App.appNode.isConnected;
+    
+            //check if app node is connected
+            if(isConnected) {
+                //console.log("App node is connected");
+                return;
+            } else {
+                throw console.error("App node is not connected");
+            }
         } else {
-            throw console.error("App is not connected to the DOM!");
+            App.appNode = document.createElement('div') as HTMLDivElement;
+            App.appNode.setAttribute("id", "app");
+    
+            document.body.prepend(App.appNode);
+    
+            const isConnected: boolean = App.appNode.isConnected;
+    
+            //check if app node is connected
+            if(isConnected) {
+                //console.log("App node is connected");
+                return;
+            } else if(!isConnected) {
+                throw console.error("App node is not connected");
+            }
         }
     }
 }
 
-/**
- * @function app
- * 
- * 1) Calls `App.appNode`
- * 2) Set WebviewWindow config using `appWindow`
- * 
- * @async
- * @returns Resolved promise to set window title
- */
-async function app(): Promise<void> {
-    App.appNode();
-
-    //set min window size
-    await appWindow.setMinSize(new PhysicalSize(1200, 800));
-
-    //set max window size 
-    //await appWindow.setMaxSize(new LogicalSize(1200, 800));
-
-    //disable resizable window
-    await appWindow.setResizable(true);
-
-    //set default app title on startup 
-    return await appWindow.setTitle("Iris");
+function createApp() {
+    //call app
+    App.app();
 }
-app();
+createApp();
