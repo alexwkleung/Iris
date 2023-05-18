@@ -1,7 +1,12 @@
 export class App {
-    static appNode: HTMLDivElement = document.createElement('div') as HTMLDivElement;
+    /**
+     * App node
+     * 
+     * Reference variable for app node
+     */
+    public static appNode: HTMLDivElement = document.createElement('div') as HTMLDivElement;
 
-    static async app() {
+    public static app() {
         //check if any app nodes exist in document
         if(document.querySelector('#app')) {
             //remove the app node

@@ -1,22 +1,22 @@
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { readFile, readFileRoot, readFileFolder } from "../utils/file-system/fs"
+import { MilkdownEditor } from "../milkdown/milkdown-editor"
 
 export class DirectoryTreeListeners extends DirectoryTree {
+    /**
+     * Get parent tags
+     * 
+     * @private
+     */
     private getParentTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree').getElementsByClassName('parent-of-root-folder');
+
+    /**
+     * Get parent name tags
+     * 
+     * @private
+     */
     private getParentNameTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree').getElementsByClassName('parent-folder-name');
-
-    /*
-    private parentTagsArr(): string[] {
-        const parentTagsArr: string[] = [];
-
-        Array.from(this.getParentTags).forEach(
-            (v) => parentTagsArr.push((v.textContent))
-        );
-
-        return parentTagsArr;
-    }
-    */
-
+    
     private parentNameTagsArr(): string[] {    
         const parentNameTagsArr: string[] = [];
 
@@ -27,10 +27,13 @@ export class DirectoryTreeListeners extends DirectoryTree {
         return parentNameTagsArr;
     }
 
+    /**
+     * Parent root listener 
+     */
     public parentRootListener(): void {
-        (document.querySelector('#file-directory-tree') as HTMLDivElement).addEventListener("click", (e) => {
+        (document.querySelector('#file-directory-tree-container') as HTMLDivElement).addEventListener("click", (e) => {
             //must use event delegation to handle events on dynamically created nodes or else it gets executed too early!
-            const target = (e.target as Element).closest("#file-directory-tree");
+            const target = (e.target as Element).closest("#file-directory-tree-container");
           
             if(target) {
                 for(let i = 0; i < this.getParentTags.length; i++) {
@@ -57,29 +60,35 @@ export class DirectoryTreeListeners extends DirectoryTree {
           });
     }
 
-    public childNodeListener(): void {
+    /**
+     * Child node listener
+     */
+    public childNodeListener() {
         document.querySelectorAll('.child-file-name').forEach(
-            (childFileName) => childFileName.addEventListener('click', async (e) => {
+            (childFileName) => childFileName.addEventListener('click', (e) => {
                 e.stopImmediatePropagation();
+
+                //MilkdownEditor.createEditor();
+
+                //need to deal with the state of active files
+                //only allowing one file to be active at a time
 
                 childFileName.classList.toggle('is-active-child');
 
                 //console.log(e);
 
                 for(let i = 0; i < this.getParentTags.length; i++) {
-                    if(this.getParentTags[i].contains(childFileName) /* && !getParentNameTags[i].classList.contains('child-active-in-folder') */) {
-                        childFileName.classList.add('is-active-child');
-                        //getParentNameTags[i].classList.add("child-active-in-folder");
+                    if(this.getParentTags[i].contains(childFileName)/* && !getParentNameTags[i].classList.contains('child-active-in-folder') */) {
+                            //read file
+                            readFileFolder(this.getParentNameTags[i].textContent, childFileName.textContent).then(
+                                (fileContent) => {
+                                    console.log(fileContent);
+                                }
+                            );
 
-                        //read file
-                        readFileFolder(this.getParentNameTags[i].textContent, childFileName.textContent).then(
-                            (fileContent) => console.log(fileContent)
-                        );
-                    } 
-                    /*else {
-                        getParentNameTags[i].classList.remove("child-active-in-folder");
+                        //childFileName.classList.add('is-active-child');
+                        //getParentNameTags[i].classList.add("child-active-in-folder");
                     }
-                    */
                 }
         }));
     }

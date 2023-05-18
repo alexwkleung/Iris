@@ -4,21 +4,28 @@ import { walk } from '../utils/file-system/walkdir.js'
 import { getName, getDirectoryName, getNameVec } from '../utils/file-system/file.js'
 //import { getCanonicalPath } from './get-canonical-path.js'
 import { baseDir } from '../utils/file-system/base-dir.js'
-import { /* bgNode, fileDirectoryNode,*/ FileDirectoryTreeNode } from './file-directory-nodes'
 
-import '../styles/style.css'
 
-//file directory tree background node
-//FileDirectoryTreeNode.bgNode.setAttribute("id", "file-directory-bg");
-//App.appNode.appendChild(FileDirectoryTreeNode.bgNode);
+export class FileDirectoryTreeNode {
+    /**
+     * File directory tree node 
+     * 
+     * Reference variable for file directory node
+     */
+    public static fileDirectoryNode: HTMLDivElement;
 
-//file directory tree node
-FileDirectoryTreeNode.fileDirectoryNode.setAttribute("id", "file-directory-tree");
-App.appNode.appendChild(FileDirectoryTreeNode.fileDirectoryNode);
+    public static createFileDirectoryInit() {        
+        FileDirectoryTreeNode.fileDirectoryNode = document.createElement('div');
+        FileDirectoryTreeNode.fileDirectoryNode.setAttribute("id", "file-directory-tree-container");
+        App.appNode.appendChild(FileDirectoryTreeNode.fileDirectoryNode);
+    }
+}
 
 export class DirectoryTree {
     /**
-     * folderNames
+     * folder names
+     * 
+     * Calls `getRootNames` function
      * 
      * @access protected 
      * @readonly
@@ -59,7 +66,7 @@ export class DirectoryTree {
     }
 
     /**
-     * createDirTreeParentNodes
+     * Create directory tree parent nodes
      * 
      * @async
      */
@@ -101,7 +108,7 @@ export class DirectoryTree {
     }
 
     /**
-     * createDirTreeChildNodes
+     * Create directory tree child nodes
      * 
      * @async 
      * @param parentTags The parent tag to append to

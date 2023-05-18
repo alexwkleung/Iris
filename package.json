@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "tauri": "tauri",
-    "tauri-dev": "npm run tauri dev",
+    "tauri:dev": "npm run tauri dev",
     "dev": "vite dev --host",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
@@ -31,5 +31,11 @@
     "eslint": "^8.40.0",
     "typescript": "^5.0.4",
     "vite": "^4.3.7"
+  },
+  "dependencies": {
+    "@milkdown/core": "^6.5.4",
+    "@milkdown/preset-commonmark": "^6.5.4",
+    "@milkdown/prose": "^6.5.4",
+    "@milkdown/utils": "^6.5.4"
   }
 }

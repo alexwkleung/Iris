@@ -29,12 +29,6 @@ pub fn walk(dir: String) -> Vec<String> {
         .map(|x| x.path().to_owned())
         .collect();
 
-    /*
-    for i in walkdir_vec {
-        println!("{}", i.into_os_string().into_string().unwrap());
-    }
-    */
-
     let mut path_vec: Vec<String> = Vec::new();
 
     for entry in walkdir_vec {
@@ -59,12 +53,6 @@ pub fn walk_no_ext(dir: String) -> Vec<String> {
         .filter_map(|e| e.ok())
         .map(|x| x.path().to_owned())
         .collect();
-
-    /*
-    for i in walkdir_vec {
-        println!("{}", i.into_os_string().into_string().unwrap());
-    }
-    */
 
     let mut path_vec: Vec<String> = Vec::new();
 

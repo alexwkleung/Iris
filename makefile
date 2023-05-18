@@ -1,3 +1,3 @@
 .PHONY: tauri
 tauri: 
-	npm run tauri-dev 
+	npm run tauri:dev
