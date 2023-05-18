@@ -8,14 +8,14 @@ export class DirectoryTreeListeners extends DirectoryTree {
      * 
      * @private
      */
-    private getParentTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree').getElementsByClassName('parent-of-root-folder');
+    private getParentTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-of-root-folder');
 
     /**
      * Get parent name tags
      * 
      * @private
      */
-    private getParentNameTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree').getElementsByClassName('parent-folder-name');
+    private getParentNameTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-folder-name');
     
     private parentNameTagsArr(): string[] {    
         const parentNameTagsArr: string[] = [];
