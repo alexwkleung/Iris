@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Iris</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  </head>
+  <body>
+    <link href="./assets/global.css" type="text/css" rel="stylesheet">
+    <link href="./assets/prosemirror.css" type="text/css" rel="stylesheet">
+
+    <script type="module" src="./app.ts"></script>
+    <script type="module" src="./src/renderer.ts"></script>
+
+    <!-- make listener load asynchronously -->
+    <script async type="module" src="./listener.ts"></script>
+  </body>
+</html>

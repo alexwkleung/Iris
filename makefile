@@ -1,3 +1,4 @@
-.PHONY: tauri
-tauri: 
-	npm run tauri:dev
+.PHONY: dev
+dev:
+	npm run dev
+
