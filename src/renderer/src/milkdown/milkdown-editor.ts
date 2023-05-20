@@ -1,4 +1,5 @@
 import { App } from '../../app'
+import { EditorContainerNode } from '../../editor'
 import { Editor, rootCtx } from '@milkdown/core'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { gfm } from '@milkdown/preset-gfm'
@@ -14,10 +15,10 @@ export class MilkdownEditorNode {
 
     public static createMilkdownEditorNode(): void {
         MilkdownEditorNode.editorNode = document.createElement('div');
-        MilkdownEditorNode.editorNode.setAttribute("id", "milkdown-editor-container");
+        MilkdownEditorNode.editorNode.setAttribute("class", "milkdown-editor-container");
         MilkdownEditorNode.editorNode.setAttribute("spellcheck", "false");
 
-        App.appNode.insertBefore(MilkdownEditorNode.editorNode, App.appNode.firstChild);
+        EditorContainerNode.editorContainer.appendChild(MilkdownEditorNode.editorNode);
     }
 }
 
@@ -34,7 +35,7 @@ export class MilkdownEditor {
             .use(commonmark)
             .use(gfm)
             .config((ctx) => {
-                ctx.set(rootCtx, document.querySelector('#milkdown-editor-container'));
+                ctx.set(rootCtx, document.querySelector('.milkdown-editor-container'));
                 ctx.set(defaultValueCtx, ""); //explicitly set default value for new editor
             })
             .create()

@@ -10,14 +10,14 @@ export class DirectoryTreeListeners extends DirectoryTree {
      * 
      * @private
      */
-    private getParentTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-of-root-folder');
+    private getParentTags: HTMLCollectionOf<Element>;
 
     /**
      * Get parent name tags
      * 
      * @private
      */
-    private getParentNameTags: HTMLCollectionOf<Element> = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-folder-name');
+    private getParentNameTags: HTMLCollectionOf<Element>;
     
     private parentNameTagsArr(): string[] {    
         const parentNameTagsArr: string[] = [];
@@ -33,20 +33,27 @@ export class DirectoryTreeListeners extends DirectoryTree {
      * Parent root listener 
      */
     public parentRootListener(): void {
-        for(let i = 0; i < this.getParentTags.length; i++) {
-            //console.log(getParentTags[i]);
-            this.getParentNameTags[i].addEventListener('click', () => {                         
-                this.getParentTags[i].classList.toggle('is-active-parent');
+        this.getParentTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-of-root-folder');
+        this.getParentNameTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-folder-name');
 
-                if(this.getParentTags[i].classList.contains('is-active-parent')) {
-                    this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
+        if(this.getParentTags !== null && this.getParentNameTags !== null) {
+            for(let i = 0; i < this.getParentTags.length; i++) {
+                //console.log(getParentTags[i]);
+                this.getParentNameTags[i].addEventListener('click', () => {                         
+                    this.getParentTags[i].classList.toggle('is-active-parent');
 
-                    //call child node listener when parent is active 
-                    this.childNodeListener();
-                } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
-                    this.getParentTags[i].querySelectorAll('.child-file-name').forEach((elem) => elem.remove());
-                }
-            });
+                    if(this.getParentTags[i].classList.contains('is-active-parent')) {
+                        this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
+
+                        //call child node listener when parent is active 
+                        this.childNodeListener();
+                    } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
+                        this.getParentTags[i].querySelectorAll('.child-file-name').forEach((elem) => elem.remove());
+                    }
+                });
+            }
+        } else {
+            throw console.error("Generic error. Cannot find parent and parent name tags.");
         }
     }
 
@@ -59,7 +66,7 @@ export class DirectoryTreeListeners extends DirectoryTree {
 
             //for all child file names
             for(let i = 0; i < childFileName.length; i++) {
-                childFileName[i].addEventListener('click', () => {
+                childFileName[i].addEventListener('click', async () => {
                     //if document contains at least one active child
                     if(document.querySelector('.is-active-child')) {
                         //select all active children and remove them from the dom (active status)
@@ -72,15 +79,21 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     //for all clicked children files, add 'is-active-child' class
                     childFileName[i].classList.add('is-active-child');
 
-                    //log read file 
-                    //console.log(fsMod._readFileFolder(this.getParentNameTags[i].textContent, childFileName.textContent));
+                    //console.log(document.querySelector('#editor-container'));
+
+                    for(let j = 0; j < this.getParentTags.length, j < this.getParentNameTags.length; j++) {
+                        if(this.getParentTags[j].contains(childFileName[i])) {
+                            //log parent folder
+                            console.log(this.getParentNameTags[j]);
+                            //log child file that corresponds to parent folder
+                            console.log(childFileName[i]);
+
+                            //insert contents of clicked child file into milkdown editor
+                            //use parent folder and child file names as arguments
+                            MilkdownEditor.editor.action(replaceAll(fsMod._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent)));      
+                        }
+                    }
                     
-                    //temp
-                    //await MilkdownEditor.editor.create();
-
-                    //temp insert markdown into editor
-                    //MilkdownEditor.editor.action(replaceAll(fsMod._readFileFolder(this.getParentNameTags[i].textContent, childFileName.textContent)));
-
                     //change document title so it corresponds to the opened file
                     //as a visual indicator
                     document.title = "Iris - " + childFileName[i].textContent;

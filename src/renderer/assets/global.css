@@ -1,9 +1,18 @@
+@font-face {
+    font-family: 'Inter-Regular';
+    src: url('./default-fonts/Inter-Regular.ttf');
+}
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url('./default-fonts/Inter-Medium.ttf');
+}
+
 /* body */
 body {
-    background-color: #ffff;
+    background-color: #212121;
     
     /* no scroll on x and y axis */
-    /*overflow: hidden;*/
+    /*overflow: overlay;*/
 
     /* fix margin */
     margin: 0 auto;
@@ -11,17 +20,28 @@ body {
 
 /* file directory tree */
 #file-directory-tree-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
     border: 1px solid black; 
-    background-color: #2c2b2b;
+    background-color: #3d3d3d;
     width: 320px;
-    height: 90vh;
+    height: 100vh;
     overflow-y: scroll;
     /* ux purposes */
     -webkit-user-select: none;
     user-select: none;
+    font-family: 'Inter-Medium';
+    /*border-radius: 25px;*/
+    margin-top: 10px;
+    /*padding-bottom: 10px;*/
+    margin: 0;
 }
 .parent-folder-name {
     color: white;
+    font-size: 20px;
+    margin-left: 15px;
+    padding-top: 10px;
 }
 .parent-folder-name:hover {
     cursor: pointer
@@ -31,7 +51,21 @@ body {
 }
 .child-file-name {
     color: grey;
+    font-size: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: 15px;
 }
 .child-file-name:hover {
     cursor: pointer;
+}
+
+#editor-container {
+    /* border: 1px solid black; */
+    width: 100vw; /* need to fix width */
+    height: 100vh; /* height is okay for now */
+    margin-left: 322px;
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
