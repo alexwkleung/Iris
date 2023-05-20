@@ -1,6 +1,8 @@
 import { App } from '../../app'
 import { Editor, rootCtx } from '@milkdown/core'
 import { commonmark } from '@milkdown/preset-commonmark'
+import { gfm } from '@milkdown/preset-gfm'
+import { defaultValueCtx } from '@milkdown/core'
 
 export class MilkdownEditorNode {
     /**
@@ -30,12 +32,14 @@ export class MilkdownEditor {
     public static async createEditor(): Promise<Editor> {
         MilkdownEditor.editor = await Editor.make()
             .use(commonmark)
+            .use(gfm)
             .config((ctx) => {
-                ctx.set(rootCtx, document.querySelector('#milkdown-editor-container'))
+                ctx.set(rootCtx, document.querySelector('#milkdown-editor-container'));
+                ctx.set(defaultValueCtx, ""); //explicitly set default value for new editor
             })
             .create()
             .catch((e) => { throw console.error(e) })
-    
+            
         return MilkdownEditor.editor;
     }
 }

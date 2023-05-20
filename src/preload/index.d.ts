@@ -3,6 +3,9 @@ import { ElectronAPI } from '@electron-toolkit/preload'
 //global type declaration for Window and preload API's
 declare global {
     interface Window {
+        /**
+         * ElectronAPI (from @electron-toolkit/preload)
+         */
         electron: ElectronAPI
         fsMod: {
             _baseDir(base: string): string,
