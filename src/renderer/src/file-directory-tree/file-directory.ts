@@ -79,8 +79,8 @@ export class DirectoryTree {
                 const parentFolderCaret: HTMLDivElement = document.createElement('div');
                 parentFolderCaret.setAttribute("class", "parent-folder-caret");
 
-                //create text node with caret
-                const parentFolderCaretTextNode: Text = document.createTextNode("^");
+                //create text node with caret (use ascii value)
+                const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
                 parentFolderCaret.appendChild(parentFolderCaretTextNode);
 
                 parentFolder.appendChild(parentFolderCaret);
