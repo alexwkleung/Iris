@@ -96,7 +96,9 @@ export class DirectoryTreeListeners extends DirectoryTree {
 
                             //insert contents of clicked child file into milkdown editor
                             //use parent folder and child file names as arguments
-                            MilkdownEditor.editor.action(replaceAll(fsMod._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent)));      
+                            //note: by setting flush to true, it (somewhat) helps performance when inserting large note content
+                            //since it resets the contenteditable buffer in memory
+                            MilkdownEditor.editor.action(replaceAll(fsMod._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent), true));      
 
                             const proseMirrorNode = (document.querySelector('.ProseMirror') as HTMLDivElement);
                             const getSelection = window.getSelection();

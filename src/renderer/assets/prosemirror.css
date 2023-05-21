@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: 'Inter-Regular';
-  src: url('./fonts/app/Inter-Regular.ttf');
+  src: url('./default-fonts/Inter-Regular.ttf');
 }
 @font-face {
   font-family: 'Inter-Medium';
@@ -26,7 +26,7 @@
   position: fixed;
   overflow-y: scroll;
   overflow-x: scroll;
-  width: 71.5%;
+  width: 73.5%;
   max-width: 100vw; /* need to fix width */
   height: 100vh; /* height is okay for now */
   font-size: 20px;

@@ -27,13 +27,13 @@ body {
     flex-direction: column;
     /* border: 1px solid black;*/
     background-color: #3c3c3c;
-    width: 320px;
+    width: 300px;
     height: 100vh;
     overflow-y: scroll;
     /* ux purposes */
     -webkit-user-select: none;
     user-select: none;
-    font-family: 'Inter-Medium';
+    font-family: 'Inter-Regular';
     /* border-radius: 25px; */
     margin-top: 10px;
     /*padding-bottom: 10px;*/
@@ -70,21 +70,26 @@ body {
     transform: rotate(180deg);
 }
 .child-file-name {
-    color: rgb(179, 178, 178);
+    color: white;
     font-size: 20px;
     padding-top: 2px;
     padding-bottom: 2px;
-    margin-left: 20px;
+    margin-left: 35px;
 }
 .child-file-name:hover {
     cursor: pointer;
+}
+.child-file-name.is-active-child {
+    /*color: orange;*/
+    /*border: 1px solid black;*/
+    background-color: grey;
 }
 
 #editor-container {
     /* border: 1px solid black; */
     width: 100vw; /* need to fix width */
     height: 100vh; /* height is okay for now */
-    margin-left: 322px;
+    margin-left: 300px;
     position: fixed;
     overflow-y: scroll;
     overflow-x: scroll;
