@@ -4,6 +4,8 @@ import { Editor, rootCtx } from '@milkdown/core'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { gfm } from '@milkdown/preset-gfm'
 import { defaultValueCtx } from '@milkdown/core'
+import { prism } from '@milkdown/plugin-prism'
+import { indent, indentConfig } from '@milkdown/plugin-indent'
 
 export class MilkdownEditorNode {
     /**
@@ -34,6 +36,8 @@ export class MilkdownEditor {
         MilkdownEditor.editor = await Editor.make()
             .use(commonmark)
             .use(gfm)
+            .use(prism)
+            .use(indent)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('.milkdown-editor-container'));
                 ctx.set(defaultValueCtx, ""); //explicitly set default value for new editor

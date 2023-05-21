@@ -1,3 +1,4 @@
+import { create } from "domain";
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor, MilkdownEditorNode } from "../milkdown/milkdown-editor"
 import { replaceAll } from '@milkdown/utils'
@@ -95,6 +96,28 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //insert contents of clicked child file into milkdown editor
                             //use parent folder and child file names as arguments
                             MilkdownEditor.editor.action(replaceAll(fsMod._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent)));      
+
+                            const proseMirrorNode = (document.querySelector('.ProseMirror') as HTMLDivElement);
+                            const getSelection = window.getSelection();
+                            const createRange = document.createRange();
+
+                            //adopted from: https://stackoverflow.com/questions/2388164/set-focus-on-div-contenteditable-element
+
+                            //set start range to the first node
+                            createRange.setStart(proseMirrorNode, 1);
+
+                            //set end range to the first node
+                            createRange.setEnd(proseMirrorNode, 1);
+
+                            //remove all current ranges
+                            getSelection.removeAllRanges();
+
+                            //add range based on new setStart and setEnd values
+                            //the cursor will be at the end of the first node instead of random
+                            getSelection.addRange(createRange);
+
+                            //focus editor when file is active 
+                            proseMirrorNode.focus();
                         }
                     }
                     

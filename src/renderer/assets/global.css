@@ -16,6 +16,8 @@ body {
 
     /* fix margin */
     margin: 0 auto;
+    /* caret colour */
+    caret-color: #ffffff;
 }
 
 /* file directory tree */
