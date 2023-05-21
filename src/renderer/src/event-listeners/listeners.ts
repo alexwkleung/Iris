@@ -45,10 +45,14 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     if(this.getParentTags[i].classList.contains('is-active-parent')) {
                         this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
 
+                        //document.querySelector('.parent-folder-caret').classList.toggle('is-active-parent-folder');
+
+                        document.querySelectorAll('.parent-folder-caret')[i].classList.toggle('is-active-parent-folder');
                         //call child node listener when parent is active 
                         this.childNodeListener();
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
                         this.getParentTags[i].querySelectorAll('.child-file-name').forEach((elem) => elem.remove());
+                        this.getParentTags[i].querySelectorAll('.parent-folder-caret').forEach((elem) => elem.classList.remove('is-active-parent-folder'));
                     }
                 });
             }

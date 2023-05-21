@@ -17,24 +17,24 @@
 }
 
 .ProseMirror {
-  position: fixed;
-  overflow-y: scroll;
-  overflow-x: scroll;
-  max-width: 100vw; /* need to fix width */
-  height: 100vh; /* height is okay for now */
-  font-size: 20px;
-  font-family: 'Inter-Medium';
-  background-color: #212121;
-  color: white;
-}
-
-.ProseMirror {
   word-wrap: break-word;
   white-space: pre-wrap;
   white-space: break-spaces;
   -webkit-font-variant-ligatures: none;
   font-variant-ligatures: none;
   font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  width: 71.5%;
+  max-width: 100vw; /* need to fix width */
+  height: 100vh; /* height is okay for now */
+  font-size: 20px;
+  font-family: 'Inter-Medium';
+  background-color: #1b1b1b;
+  color: white;
+  /*border-radius: 20px;*/
+  padding-left: 20px;
 }
 
 .ProseMirror pre {

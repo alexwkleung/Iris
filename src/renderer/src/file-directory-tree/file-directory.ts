@@ -63,18 +63,27 @@ export class DirectoryTree {
 
         this.folderNames.map((elem) => {
             if(this.isFolderNode("home", "/Iris/Notes/" + elem)) {
-                 //create parent folder node
-                 const parentFolder: HTMLDivElement = document.createElement('div');
-                 parentFolder.setAttribute("class", "parent-of-root-folder");
-                 FileDirectoryTreeNode.fileDirectoryNode.appendChild(parentFolder);
+                //create parent folder node
+                const parentFolder: HTMLDivElement = document.createElement('div');
+                parentFolder.setAttribute("class", "parent-of-root-folder");
+                FileDirectoryTreeNode.fileDirectoryNode.appendChild(parentFolder);
 
-                 const parentFolderName: HTMLDivElement = document.createElement('div');
-                 parentFolderName.setAttribute("class", "parent-folder-name");
-                 parentFolder.appendChild(parentFolderName);
+                const parentFolderName: HTMLDivElement = document.createElement('div');
+                parentFolderName.setAttribute("class", "parent-folder-name");
+                parentFolder.appendChild(parentFolderName);
 
-                 //create text node based on directory name
-                 const pfTextNode: Text = document.createTextNode(elem);
-                 parentFolderName.appendChild(pfTextNode);
+                //create text node based on directory name
+                const pfTextNode: Text = document.createTextNode(elem);
+                parentFolderName.appendChild(pfTextNode);
+
+                const parentFolderCaret: HTMLDivElement = document.createElement('div');
+                parentFolderCaret.setAttribute("class", "parent-folder-caret");
+
+                //create text node with caret
+                const parentFolderCaretTextNode: Text = document.createTextNode("^");
+                parentFolderCaret.appendChild(parentFolderCaretTextNode);
+
+                parentFolder.appendChild(parentFolderCaret);
             } else if(!this.isFolderNode("home", "/Iris/Notes/" + elem)) {
                   //create parent folder node
                   const childFileRoot: HTMLDivElement = document.createElement('div');
