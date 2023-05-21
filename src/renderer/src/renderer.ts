@@ -1,11 +1,13 @@
 import { directory } from '../directory'
+import { editor } from '../editor'
 
 export function initRenderer(): void {
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
         directory();
+        await editor();
   });
 }
-
 initRenderer();
 
-console.log(window.fsMod._baseDir("home"));
+//log test
+//console.log(window.fsMod._baseDir("home"));

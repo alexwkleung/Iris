@@ -11,7 +11,7 @@ export class EditorContainerNode {
     }
 }
 
-async function editor(): Promise<void> {
+export async function editor(): Promise<void> {
     EditorContainerNode.createEditorContainer();
     
     //milkdown
@@ -22,4 +22,3 @@ async function editor(): Promise<void> {
 
     await MilkdownEditor.createEditor();
 }
-editor();
