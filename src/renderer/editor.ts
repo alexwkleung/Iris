@@ -12,13 +12,15 @@ export class EditorContainerNode {
 }
 
 export async function editor(): Promise<void> {
+    //create editor container
     EditorContainerNode.createEditorContainer();
     
-    //milkdown
+    //milkdown editor node
     MilkdownEditorNode.createMilkdownEditorNode();
 
     //for testing purposes, spawn editors in here initially
     //all editor node containers will be created in the dom regardless if they're used or not (for now)
 
+    //create milkdown editor
     await MilkdownEditor.createEditor();
 }

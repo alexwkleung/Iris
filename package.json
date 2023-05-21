@@ -29,6 +29,8 @@
     "@electron-toolkit/preload": "^1.0.3",
     "@electron-toolkit/utils": "^1.0.2",
     "@milkdown/core": "^7.2.1",
+    "@milkdown/plugin-clipboard": "^7.2.1",
+    "@milkdown/plugin-history": "^7.2.1",
     "@milkdown/plugin-indent": "^7.2.1",
     "@milkdown/plugin-prism": "^7.2.1",
     "@milkdown/preset-commonmark": "^7.2.1",

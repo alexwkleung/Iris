@@ -1,11 +1,12 @@
-import { App } from '../../app'
 import { EditorContainerNode } from '../../editor'
 import { Editor, rootCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { gfm } from '@milkdown/preset-gfm'
 import { defaultValueCtx } from '@milkdown/core'
 import { prism } from '@milkdown/plugin-prism'
-import { indent, indentConfig } from '@milkdown/plugin-indent'
+import { indent } from '@milkdown/plugin-indent'
+import { clipboard } from '@milkdown/plugin-clipboard'
+import { history } from '@milkdown/plugin-history'
 
 export class MilkdownEditorNode {
     /**
@@ -27,8 +28,12 @@ export class MilkdownEditorNode {
 export class MilkdownEditor {
     /**
      * Milkdown editor readonly variable
+     * 
+     * `false` enables readonly 
+     * 
+     * `true` disables readonly
      */
-    static readonly: boolean;
+    public static readonly: boolean;
 
     /**
      * Editor
@@ -50,6 +55,8 @@ export class MilkdownEditor {
             .use(gfm)
             .use(prism)
             .use(indent)
+            .use(clipboard)
+            .use(history)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('.milkdown-editor-container'));
                 ctx.set(defaultValueCtx, ""); //explicitly set default value for new editor
