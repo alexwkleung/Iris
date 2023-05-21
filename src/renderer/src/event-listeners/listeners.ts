@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor, MilkdownEditorNode } from "../milkdown/milkdown-editor"
 import { replaceAll } from '@milkdown/utils'
