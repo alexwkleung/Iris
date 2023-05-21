@@ -45,9 +45,8 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     if(this.getParentTags[i].classList.contains('is-active-parent')) {
                         this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
 
-                        //document.querySelector('.parent-folder-caret').classList.toggle('is-active-parent-folder');
-
                         document.querySelectorAll('.parent-folder-caret')[i].classList.toggle('is-active-parent-folder');
+                        
                         //call child node listener when parent is active 
                         this.childNodeListener();
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
@@ -88,9 +87,12 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     for(let j = 0; j < this.getParentTags.length, j < this.getParentNameTags.length; j++) {
                         if(this.getParentTags[j].contains(childFileName[i])) {
                             //log parent folder
-                            console.log(this.getParentNameTags[j]);
+                            //console.log(this.getParentNameTags[j]);
                             //log child file that corresponds to parent folder
-                            console.log(childFileName[i]);
+                            //console.log(childFileName[i]);
+
+                            //set milkdown editor readonly to true (disables readonly)
+                            MilkdownEditor.readonly = true;
 
                             //insert contents of clicked child file into milkdown editor
                             //use parent folder and child file names as arguments

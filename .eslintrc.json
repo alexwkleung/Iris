@@ -8,7 +8,8 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-        "@typescript-eslint/explicit-function-return-type": "error"
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-inferrable-types": "false"
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
