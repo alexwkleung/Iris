@@ -107,16 +107,16 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //adopted from: https://stackoverflow.com/questions/2388164/set-focus-on-div-contenteditable-element
 
                             //set start range to the first node
-                            createRange.setStart(proseMirrorNode, 1);
+                            createRange.setStart(proseMirrorNode, 0);
 
                             //set end range to the first node
-                            createRange.setEnd(proseMirrorNode, 1);
+                            createRange.setEnd(proseMirrorNode, 0);
 
                             //remove all current ranges
                             getSelection.removeAllRanges();
 
                             //add range based on new setStart and setEnd values
-                            //the cursor will be at the end of the first node instead of random
+                            //the cursor will be at the beginning of the first node instead of random
                             getSelection.addRange(createRange);
 
                             //focus editor when file is active 
