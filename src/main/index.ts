@@ -1,9 +1,17 @@
 import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 //import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
+  //esm version of __dirname 
+  const _dirname: string = dirname(fileURLToPath(import.meta.url));
+
+  //isomorphic version of __dirname for both cjs/esm compatibility (https://antfu.me/posts/isomorphic-dirname)
+  //const _dirname: string = typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
+
   const mainWindow = new BrowserWindow({
       width: 1200,
       height: 800,
@@ -11,7 +19,7 @@ function createWindow(): void {
       autoHideMenuBar: true,
       //...(process.platform === 'linux' ? { icon } : {}),
       webPreferences: {
-        preload: join(__dirname, '../preload/index.js'),
+        preload: join(_dirname, '../preload/index.js'),
         sandbox: false
       }
   });
