@@ -22,7 +22,7 @@ export class MilkdownEditorNode {
         //disabling spellcheck (somewhat) helps performance for contenteditable divs
         MilkdownEditorNode.editorNode.setAttribute("spellcheck", "false");
         //setting aria-hidden to true removes unnecessary hidden nodes in the accessibility tree
-        //correlates to content-visibility in css for scroll performance
+        //correlates to content-visibility in css for performance
         MilkdownEditorNode.editorNode.setAttribute("aria-hidden", "true");
         EditorContainerNode.editorContainer.appendChild(MilkdownEditorNode.editorNode);
     }
