@@ -1,5 +1,5 @@
 import { DirectoryTree } from "../file-directory-tree/file-directory"
-import { MilkdownEditor, MilkdownEditorNode } from "../milkdown/milkdown-editor"
+import { MilkdownEditor } from "../milkdown/milkdown-editor"
 import { replaceAll } from '@milkdown/utils'
 
 const fsMod = window.fsMod;
