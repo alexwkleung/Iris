@@ -39,6 +39,11 @@
   color: white;
   /*border-radius: 20px;*/
   padding-left: 20px;
+  /* 
+  https://web.dev/content-visibility/ 
+  */
+  content-visibility: auto; /* helps with scroll performance */
+  contain-intrinsic-size: auto; /* relates to content-visibility */
 }
 
 .ProseMirror pre {

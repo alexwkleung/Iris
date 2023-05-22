@@ -19,8 +19,11 @@ export class MilkdownEditorNode {
     public static createMilkdownEditorNode(): void {
         MilkdownEditorNode.editorNode = document.createElement('div');
         MilkdownEditorNode.editorNode.setAttribute("class", "milkdown-editor-container");
+        //disabling spellcheck (somewhat) helps performance for contenteditable divs
         MilkdownEditorNode.editorNode.setAttribute("spellcheck", "false");
-
+        //setting aria-hidden to true removes unnecessary hidden nodes in the accessibility tree
+        //correlates to content-visibility in css for scroll performance
+        MilkdownEditorNode.editorNode.setAttribute("aria-hidden", "true");
         EditorContainerNode.editorContainer.appendChild(MilkdownEditorNode.editorNode);
     }
 }

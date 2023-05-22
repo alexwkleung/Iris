@@ -69,7 +69,7 @@ export class DirectoryTreeListeners extends DirectoryTree {
 
             //for all child file names
             for(let i = 0; i < childFileName.length; i++) {
-                childFileName[i].addEventListener('click', async () => {
+                childFileName[i].addEventListener('click', () => {
                     //if document contains at least one active child
                     if(document.querySelector('.is-active-child')) {
                         //select all active children and remove them from the dom (active status)
