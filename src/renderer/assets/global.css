@@ -41,12 +41,15 @@ body {
     margin-top: 10px;
     /*padding-bottom: 10px;*/
     margin: 0;
+    content-visibility: auto; /* helps with scroll performance and load performance */
+    contain-intrinsic-size: auto 300px; /* relates to content-visibility */
 }
 .parent-folder-name {
-    color: white;
+    color: rgb(250, 248, 248);
     font-size: 20px;
     margin-left: 20px;
     padding-top: 10px;
+    font-family: 'Inter-Bold';
 }
 .parent-folder-name:hover {
     cursor: pointer
@@ -55,7 +58,7 @@ body {
     cursor: pointer;
 }
 .parent-folder-caret {
-    position: fixed;
+    position: absolute;
     margin-top: -25px;
     margin-right: 100px;
     margin-left: 3px;
@@ -126,4 +129,8 @@ body {
 .milkdown blockquote p {
     display: inline;
     font-size: 22px;
+}
+
+.milkdown a {
+    color: rgb(103, 103, 167);
 }

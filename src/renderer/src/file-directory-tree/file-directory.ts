@@ -14,6 +14,8 @@ export class FileDirectoryTreeNode {
     public static createFileDirectoryInit(): void {        
         FileDirectoryTreeNode.fileDirectoryNode = document.createElement('div');
         FileDirectoryTreeNode.fileDirectoryNode.setAttribute("id", "file-directory-tree-container");
+        //same as editor
+        FileDirectoryTreeNode.fileDirectoryNode.setAttribute("aria-hidden", "true");
         App.appNode.appendChild(FileDirectoryTreeNode.fileDirectoryNode);
     }
 }
