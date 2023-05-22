@@ -6,16 +6,19 @@
     font-family: 'Inter-Medium';
     src: url('./default-fonts/Inter-Medium.ttf');
 }
+@font-face {
+    font-family: 'Inter-Bold';
+    src: url('./default-fonts/Inter-Bold.ttf');
+}
 
 /* body */
 body {
-    background-color: #ffffff;
-    
-    /* no scroll on x and y axis */
-    /*overflow: overlay;*/
+    /* should be #ffffff but make the background colour the same as the editor until media queries are added */
+    background-color: #1b1b1b;
 
     /* fix margin */
     margin: 0 auto;
+    
     /* caret colour */
     caret-color: #ffffff;
 }
@@ -96,6 +99,9 @@ body {
     overflow-x: scroll;
 }
 
+.milkdown h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter-Bold';
+}
 .milkdown table, th, td {
     border: 1px solid;
     border-collapse: collapse;
