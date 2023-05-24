@@ -4,7 +4,14 @@ Author: Simurai, adapted from DuoTone themes for Atom (http://simurai.com/projec
 
 Conversion: Bram de Haan (http://atelierbram.github.io/Base2Tone-prism/output/prism/prism-base2tone-evening-dark.css)
 Generated with Base16 Builder (https://github.com/base16-builder/base16-builder)
+
+contains modifications by @alexwkleung
 */
+
+pre { 
+	background-color: #211f29;
+	padding: 10px;
+}
 
 code[class*="language-"],
 pre[class*="language-"] {

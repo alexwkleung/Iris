@@ -14,7 +14,7 @@
 /* body */
 body {
     /* should be #ffffff but make the background colour the same as the editor until media queries are added */
-    background-color: #1b1b1b;
+    background-color: #1a1a1a;
 
     /* fix margin */
     margin: 0 auto;
@@ -123,7 +123,7 @@ body {
     border-collapse: collapse;
     font-size: 22px;
     color: white;
-    padding: 6px 13px;
+    padding: 0px 10px;
 }
 
 .milkdown blockquote  {
@@ -146,4 +146,8 @@ body {
 
 .milkdown a {
     color: rgb(103, 103, 167);
+}
+
+.milkdown strong {
+    font-family: 'Inter-Bold'
 }

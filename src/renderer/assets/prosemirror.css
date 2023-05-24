@@ -3,7 +3,7 @@
 *
 * taken from https://github.com/ProseMirror/prosemirror-view/blob/master/style/prosemirror.css
 *
-* contains modifications
+* contains modifications by @alexwkleung
 *
 */
 
@@ -35,7 +35,7 @@
   height: 100vh; /* height is okay for now */
   font-size: 20px;
   font-family: 'Inter-Regular';
-  background-color: #1b1b1b;
+  background-color: #1a1a1a;
   color: white;
   /*border-radius: 20px;*/
   padding-left: 20px;
