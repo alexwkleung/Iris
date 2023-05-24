@@ -4,7 +4,7 @@ import { MilkdownEditor } from "../milkdown/milkdown-editor"
 import { replaceAll, getMarkdown } from '@milkdown/utils'
 
 namespace RefsNs {
-    interface IParentChildNames {
+    interface IParentChildData {
         parentFolder: string,
         childFile: string
     }
@@ -17,7 +17,7 @@ namespace RefsNs {
     * It's a global within `listeners.ts` with strict usage so it doesn't pollute
     * 
     */
-    export const parentChildNames: IParentChildNames[] = [
+    export const parentChildNames: IParentChildData[] = [
         {
             parentFolder: "",
             childFile: ""
@@ -54,6 +54,12 @@ export class DirectoryTreeListeners extends DirectoryTree {
      */
     protected childFileNameRef: string = "";
 
+    /**
+     * Parent name tags array
+     * 
+     * @private
+     * @returns An array of strings with parent name tag nodes
+     */
     private parentNameTagsArr(): string[] {    
         const parentNameTagsArr: string[] = [];
 
@@ -119,9 +125,9 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     for(let j = 0; j < this.getParentTags.length, j < this.getParentNameTags.length; j++) {
                         if(this.getParentTags[j].contains(childFileName[i])) {
                             //log parent folder
-                            console.log(this.getParentNameTags[j].textContent);
+                            //console.log(this.getParentNameTags[j].textContent);
                             //log child file that corresponds to parent folder
-                            console.log(childFileName[i].textContent);
+                            //console.log(childFileName[i].textContent);
 
                             //set milkdown editor readonly to true (disables readonly)
                             MilkdownEditor.readonly = true;
@@ -158,9 +164,6 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //focus editor when file is active 
                             proseMirrorNode.focus();
 
-                            //this.editorListeners.autoSaveListener(this.getParentNameTags[j].textContent, childFileName[i].textContent, MilkdownEditor.editor.action(getMarkdown()));
-                            //console.log(MilkdownEditor.editor.action(getMarkdown()));
-
                             //assign parent name tag to ref variable
                             this.parentNameTagRef = this.getParentNameTags[j].textContent;
 
@@ -178,9 +181,9 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     document.title = "Iris - " + childFileName[i].textContent;
 
                     //assign references to corresponding key properties
-                    RefsNs.parentChildNames.map((v) => {
-                        v.parentFolder = this.parentNameTagRef;
-                        v.childFile = this.childFileNameRef;
+                    RefsNs.parentChildNames.map((props) => {
+                        props.parentFolder = this.parentNameTagRef;
+                        props.childFile = this.childFileNameRef;
                     })
                 });
             }
@@ -189,15 +192,15 @@ export class DirectoryTreeListeners extends DirectoryTree {
 }
 
 export class EditorListeners extends DirectoryTreeListeners {
-    public autoSaveListener(/*folder: string, file: string, content: string*/) {
+    public autoSaveListener() {
         const editors = document.querySelector('.ProseMirror');
 
+        //when a keyboard press is released
         editors.addEventListener('keyup', () => {
-            //doesn't work yet
-            //need to fix either rust side or ts side or both...
-            //fsMod._writeToFile((folder + "/" + file), content);
-            
-            RefsNs.parentChildNames.map((v) =>  console.log(v));
+            RefsNs.parentChildNames.map((props) =>  {
+                //write to file
+                fsMod.fs._writeToFile(props.parentFolder + "/" + props.childFile, MilkdownEditor.editor.action(getMarkdown()));
+            });
         });
     }
 }
