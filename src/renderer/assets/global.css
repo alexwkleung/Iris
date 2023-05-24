@@ -76,7 +76,7 @@ body {
     transform: rotate(180deg);
 }
 .child-file-name {
-    color: white;
+    color: rgb(237, 235, 235);
     font-size: 20px;
     padding-top: 2px;
     padding-bottom: 2px;
@@ -86,9 +86,8 @@ body {
     cursor: pointer;
 }
 .child-file-name.is-active-child {
-    /*color: orange;*/
     /*border: 1px solid black;*/
-    background-color: grey;
+    background-color: rgb(114, 113, 113);
     width: 250px;
 }
 

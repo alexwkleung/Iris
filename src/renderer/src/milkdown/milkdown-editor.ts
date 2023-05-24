@@ -1,4 +1,4 @@
-import { EditorContainerNode } from '../../editor'
+import { EditorNs } from '../../editor'
 import { Editor, rootCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { gfm } from '@milkdown/preset-gfm'
@@ -24,7 +24,7 @@ export class MilkdownEditorNode {
         //setting aria-hidden to true removes unnecessary hidden nodes in the accessibility tree
         //correlates to content-visibility in css for performance
         MilkdownEditorNode.editorNode.setAttribute("aria-hidden", "true");
-        EditorContainerNode.editorContainer.appendChild(MilkdownEditorNode.editorNode);
+        EditorNs.EditorContainerNode.editorContainer.appendChild(MilkdownEditorNode.editorNode);
     }
 }
 

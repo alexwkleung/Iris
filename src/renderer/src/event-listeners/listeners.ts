@@ -1,8 +1,29 @@
+import { fsMod } from "../utils/alias"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor } from "../milkdown/milkdown-editor"
-import { replaceAll } from '@milkdown/utils'
+import { replaceAll, getMarkdown } from '@milkdown/utils'
 
-const fsMod = window.fsMod;
+namespace RefsNs {
+    interface IParentChildNames {
+        parentFolder: string,
+        childFile: string
+    }
+
+    /**
+    * Refs array of objects
+    * 
+    * References of parent folder and child file names can be accessed. 
+    * 
+    * It's a global within `listeners.ts` with strict usage so it doesn't pollute
+    * 
+    */
+    export const parentChildNames: IParentChildNames[] = [
+        {
+            parentFolder: "",
+            childFile: ""
+        }
+    ];
+}
 
 export class DirectoryTreeListeners extends DirectoryTree {
     /**
@@ -18,7 +39,21 @@ export class DirectoryTreeListeners extends DirectoryTree {
      * @private
      */
     private getParentNameTags: HTMLCollectionOf<Element>;
-    
+
+    /**
+     * Parent name tag reference variable
+     * 
+     * @protected
+     */
+    protected parentNameTagRef: string = "";
+
+    /**
+     * Child file name reference variable
+     * 
+     * @protected
+     */
+    protected childFileNameRef: string = "";
+
     private parentNameTagsArr(): string[] {    
         const parentNameTagsArr: string[] = [];
 
@@ -38,7 +73,6 @@ export class DirectoryTreeListeners extends DirectoryTree {
 
         if(this.getParentTags !== null && this.getParentNameTags !== null) {
             for(let i = 0; i < this.getParentTags.length; i++) {
-                //console.log(getParentTags[i]);
                 this.getParentNameTags[i].addEventListener('click', () => {                         
                     this.getParentTags[i].classList.toggle('is-active-parent');
 
@@ -82,14 +116,12 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     //for all clicked children files, add 'is-active-child' class
                     childFileName[i].classList.add('is-active-child');
 
-                    //console.log(document.querySelector('#editor-container'));
-
                     for(let j = 0; j < this.getParentTags.length, j < this.getParentNameTags.length; j++) {
                         if(this.getParentTags[j].contains(childFileName[i])) {
                             //log parent folder
-                            //console.log(this.getParentNameTags[j]);
+                            console.log(this.getParentNameTags[j].textContent);
                             //log child file that corresponds to parent folder
-                            //console.log(childFileName[i]);
+                            console.log(childFileName[i].textContent);
 
                             //set milkdown editor readonly to true (disables readonly)
                             MilkdownEditor.readonly = true;
@@ -98,7 +130,11 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //use parent folder and child file names as arguments
                             //note: by setting flush to true, it (somewhat) helps performance when inserting large note content
                             //since it resets the contenteditable buffer in memory
-                            MilkdownEditor.editor.action(replaceAll(fsMod._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent), true));      
+                            const t0: number = performance.now(); //start perf timer
+                            MilkdownEditor.editor.action(replaceAll(fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent), true));      
+                            const t1: number = performance.now(); //end perf timer
+                            //log perf timer
+                            console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
 
                             const proseMirrorNode = (document.querySelector('.ProseMirror') as HTMLDivElement);
                             const getSelection = window.getSelection();
@@ -121,14 +157,47 @@ export class DirectoryTreeListeners extends DirectoryTree {
 
                             //focus editor when file is active 
                             proseMirrorNode.focus();
+
+                            //this.editorListeners.autoSaveListener(this.getParentNameTags[j].textContent, childFileName[i].textContent, MilkdownEditor.editor.action(getMarkdown()));
+                            //console.log(MilkdownEditor.editor.action(getMarkdown()));
+
+                            //assign parent name tag to ref variable
+                            this.parentNameTagRef = this.getParentNameTags[j].textContent;
+
+                            //assign child file name to ref variable
+                            this.childFileNameRef = childFileName[i].textContent;
+
+                            //assign parent name tags and child file names to ref variables
+                            this.parentNameTagRef = this.getParentNameTags[j].textContent;
+                            this.childFileNameRef =  childFileName[i].textContent;
                         }
                     }
                     
                     //change document title so it corresponds to the opened file
                     //as a visual indicator
                     document.title = "Iris - " + childFileName[i].textContent;
+
+                    //assign references to corresponding key properties
+                    RefsNs.parentChildNames.map((v) => {
+                        v.parentFolder = this.parentNameTagRef;
+                        v.childFile = this.childFileNameRef;
+                    })
                 });
             }
+        });
+    }
+}
+
+export class EditorListeners extends DirectoryTreeListeners {
+    public autoSaveListener(/*folder: string, file: string, content: string*/) {
+        const editors = document.querySelector('.ProseMirror');
+
+        editors.addEventListener('keyup', () => {
+            //doesn't work yet
+            //need to fix either rust side or ts side or both...
+            //fsMod._writeToFile((folder + "/" + file), content);
+            
+            RefsNs.parentChildNames.map((v) =>  console.log(v));
         });
     }
 }

@@ -1,7 +1,5 @@
 import { App } from '../../app'
-
-//fsMod API alias 
-const fsMod = window.fsMod;
+import { fsMod } from '../utils/alias'
 
 export class FileDirectoryTreeNode {
     /**
@@ -37,11 +35,11 @@ export class DirectoryTree {
 
         //walk directory recursively
         //eslint-disable-next-line @typescript-eslint/no-unused-vars
-        walkRef = fsMod._walk(fsMod._baseDir("home") + "/Iris/Notes").slice(1);
+        walkRef = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes").slice(1);
 
         const nameVecTemp: string[] = [];
     
-        fsMod._getNameVec(fsMod._baseDir("home") + "/Iris/Notes").map((elem) => nameVecTemp.push(elem));
+        fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/Notes").map((elem) => nameVecTemp.push(elem));
     
         const filteredRootFolderNamesVec: string[] = nameVecTemp.filter((filter: string): boolean => {
             return [".DS_Store"].some((end) => {
@@ -53,7 +51,7 @@ export class DirectoryTree {
     }
 
     public isFolderNode(baseDir: string, dirPropName: string): boolean {
-        return fsMod._isDirectory(baseDir, dirPropName);
+        return fsMod.fs._isDirectory(baseDir, dirPropName);
     }
 
     /**
@@ -115,18 +113,18 @@ export class DirectoryTree {
         let walkRef: string[] = [];
         
         //walk directory recursively
-        walkRef = fsMod._walk(fsMod._baseDir(base) + "/Iris/Notes/" + parentNameTags).slice(1);
+        walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes/" + parentNameTags).slice(1);
 
         const dirNamesArr: string[] = [];
         //get directory name (canonical)
         for(let i = 0; i < walkRef.length; i++) {
-            dirNamesArr.push(fsMod._getDirectoryName(walkRef[i]));
+            dirNamesArr.push(fsMod.fs._getDirectoryName(walkRef[i]));
         }
         const namesArr: string[] = [];
 
         //get file name (includes parent dir name) 
         for(let i = 0; i < walkRef.length; i++) {
-            namesArr.push(fsMod._getName(walkRef[i]));
+            namesArr.push(fsMod.fs._getName(walkRef[i]));
         }
 
         for(let i = 0; i < namesArr.length; i++) {

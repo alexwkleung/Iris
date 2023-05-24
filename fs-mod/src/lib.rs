@@ -9,3 +9,4 @@ pub mod get_canonical_path;
 pub mod is;
 pub mod readfile;
 pub mod walkdir;
+pub mod write_to_file;

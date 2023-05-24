@@ -1,10 +1,10 @@
-import { directory } from '../directory'
-import { editor } from '../editor'
+import { directoryNs } from '../directory'
+import { EditorNs } from '../editor'
 
 export function initRenderer(): void {
     window.addEventListener('DOMContentLoaded', async () => {
-        directory();
-        await editor();
+        directoryNs.directory();
+        await EditorNs.editor();
   });
 }
 initRenderer();

@@ -1,8 +1,19 @@
 import { DirectoryTreeListeners } from "./src/event-listeners/listeners.js"
+import { EditorListeners } from "./src/event-listeners/listeners.js"
 
-export function listener(): void {
-    const dirTreeListeners = new DirectoryTreeListeners();
+export namespace ListenerNs {
+    export function directoryTreeListener(): void {
+        const dirTreeListeners = new DirectoryTreeListeners();
     
-    dirTreeListeners.parentRootListener();
+        dirTreeListeners.parentRootListener();
+    }
+
+    export function editorListener() {
+        const editorListeners = new EditorListeners();
+        editorListeners.autoSaveListener();
+    }
 }
-listener();
+
+ListenerNs.directoryTreeListener();
+
+ListenerNs.editorListener();

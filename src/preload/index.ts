@@ -12,7 +12,8 @@ import {
     isDirectoryCanonical, 
     readFile, 
     walk, 
-    walkNoExt 
+    walkNoExt, 
+    writeToFile
 } from 'fs-mod'
 
 //fsMod API
@@ -58,6 +59,9 @@ const fsMod = {
     },
     _readFileFolder(folder: string, file: string): string {
         return readFile(baseDir("home") + "/Iris/Notes/"+ folder + "/" + file);
+    },
+    _writeToFile(path: string, content: string): void {
+        return writeToFile(baseDir("home") + "/Iris/Notes/" + path, content);
     }
 }
 

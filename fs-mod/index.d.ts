@@ -15,3 +15,4 @@ export function isDirectoryCanonical(canonicalPath: string): boolean
 export function readFile(dir: string): string
 export function walk(dir: string): Array<string>
 export function walkNoExt(dir: string): Array<string>
+export function writeToFile(path: string, content: string): void
