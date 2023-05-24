@@ -23,6 +23,19 @@ body {
     caret-color: #ffffff;
 }
 
+/* scroll bar customization */
+::-webkit-scrollbar {
+    width: 10px; 
+    height: 4px; 
+}
+::-webkit-scrollbar-thumb {
+    background-color:#939393; 
+    -webkit-border-radius: 1ex;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
 /* file directory tree */
 #file-directory-tree-container {
     position: fixed;
@@ -89,6 +102,7 @@ body {
     /*border: 1px solid black;*/
     background-color: rgb(114, 113, 113);
     width: 250px;
+    border-radius: 25px;
 }
 
 #editor-container {

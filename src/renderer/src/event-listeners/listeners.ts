@@ -136,11 +136,12 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //use parent folder and child file names as arguments
                             //note: by setting flush to true, it (somewhat) helps performance when inserting large note content
                             //since it resets the contenteditable buffer in memory
-                            const t0: number = performance.now(); //start perf timer
+
+                            //const t0: number = performance.now(); //start perf timer
                             MilkdownEditor.editor.action(replaceAll(fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent), true));      
-                            const t1: number = performance.now(); //end perf timer
+                            //const t1: number = performance.now(); //end perf timer
                             //log perf timer
-                            console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
+                            //console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
 
                             const proseMirrorNode = (document.querySelector('.ProseMirror') as HTMLDivElement);
                             const getSelection = window.getSelection();
@@ -199,7 +200,11 @@ export class EditorListeners extends DirectoryTreeListeners {
         editors.addEventListener('keyup', () => {
             RefsNs.parentChildNames.map((props) =>  {
                 //write to file
+                //const t0: number = performance.now(); //start perf timer
                 fsMod.fs._writeToFile(props.parentFolder + "/" + props.childFile, MilkdownEditor.editor.action(getMarkdown()));
+                //const t1: number = performance.now(); //end perf timer
+                //log perf timer
+                //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
             });
         });
     }
