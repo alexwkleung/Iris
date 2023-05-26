@@ -15,8 +15,8 @@ namespace RefsNs {
      * `K` corresponds to type `Element`
      */
     interface ICurrentParentChildData<T, K> {
-        parentFolder: T,
-        childFile: T,
+        parentFolderName: T,
+        childFileName: T,
         parentFolderNode: K,
         childFileNode: K
     }
@@ -31,8 +31,8 @@ namespace RefsNs {
     */
     export const currentParentChildData: ICurrentParentChildData<string, Element>[] = [
         {
-            parentFolder: "",
-            childFile: "",
+            parentFolderName: "",
+            childFileName: "",
             parentFolderNode: {} as Element,
             childFileNode: {} as Element
         }
@@ -231,10 +231,10 @@ export class DirectoryTreeListeners extends DirectoryTree {
 
                     //assign references to corresponding key properties
                     RefsNs.currentParentChildData.map((props) => {
-                        //parent folder
-                        props.parentFolder = this.parentNameTagRef;
-                        //child file
-                        props.childFile = this.childFileNameRef;
+                        //parent folder name
+                        props.parentFolderName = this.parentNameTagRef;
+                        //child file name
+                        props.childFileName = this.childFileNameRef;
                         //parent folder node
                         props.parentFolderNode = this.parentTagNodeRef;
                         //child file node
@@ -264,7 +264,7 @@ export class EditorListeners extends DirectoryTreeListeners {
             RefsNs.currentParentChildData.map((props) =>  {
                 //write to file
                 //const t0: number = performance.now(); //start perf timer
-                fsMod.fs._writeToFile(props.parentFolder + "/" + props.childFile, MilkdownEditor.editor.action(getMarkdown()));
+                fsMod.fs._writeToFile(props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));
                 //const t1: number = performance.now(); //end perf timer
                 //log perf timer
                 //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");

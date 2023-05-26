@@ -7,6 +7,7 @@ import { prism } from '@milkdown/plugin-prism'
 import { indent } from '@milkdown/plugin-indent'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { history } from '@milkdown/plugin-history'
+import { upload } from '@milkdown/plugin-upload'
 
 export class MilkdownEditorNode {
     /**
@@ -71,6 +72,7 @@ export class MilkdownEditor {
             .use(indent)
             .use(clipboard)
             .use(history)
+            .use(upload)
             .config((ctx) => {
                 ctx.set(rootCtx, document.querySelector('.milkdown-editor-container'));
                 ctx.set(defaultValueCtx, ""); //explicitly set default value for new editor
