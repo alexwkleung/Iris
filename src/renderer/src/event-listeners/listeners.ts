@@ -1,26 +1,40 @@
-import { fsMod } from "../utils/alias"
+import { fsMod }  from "../utils/alias"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor } from "../milkdown/milkdown-editor"
 import { replaceAll, getMarkdown } from '@milkdown/utils'
 
+//eslint-disable-next-line @typescript-eslint/no-namespace
 namespace RefsNs {
-    interface IParentChildData {
-        parentFolder: string,
-        childFile: string
+    /**
+     * Generic interface for current parent child data
+     * 
+     * Anything that implements `ICurrentParentChildData` should default to `<string, Element>` unless other types are necessary:
+     * 
+     * `T` corresponds to type `string`
+     * 
+     * `K` corresponds to type `Element`
+     */
+    interface ICurrentParentChildData<T, K> {
+        parentFolder: T,
+        childFile: T,
+        parentFolderNode: K,
+        childFileNode: K
     }
 
     /**
-    * Refs array of objects
+    * Current parent child data array of objects
     * 
-    * References of parent folder and child file names can be accessed. 
+    * References of the current parent folder and child file data can be accessed here.
     * 
     * It's a global within `listeners.ts` with strict usage so it doesn't pollute
     * 
     */
-    export const parentChildNames: IParentChildData[] = [
+    export const currentParentChildData: ICurrentParentChildData<string, Element>[] = [
         {
             parentFolder: "",
-            childFile: ""
+            childFile: "",
+            parentFolderNode: {} as Element,
+            childFileNode: {} as Element
         }
     ];
 }
@@ -45,14 +59,28 @@ export class DirectoryTreeListeners extends DirectoryTree {
      * 
      * @protected
      */
-    protected parentNameTagRef: string = "";
+    protected parentNameTagRef: string;
 
     /**
      * Child file name reference variable
      * 
      * @protected
      */
-    protected childFileNameRef: string = "";
+    protected childFileNameRef: string;
+
+    /**
+     * Parent name tag node reference variable
+     * 
+     * @protected
+     */
+    protected parentTagNodeRef: Element; 
+
+    /**
+     * Child file node reference variable
+     * 
+     * @protected
+     */
+    protected childFileNodeRef: Element;
 
     /**
      * Parent name tags array
@@ -71,6 +99,21 @@ export class DirectoryTreeListeners extends DirectoryTree {
     }
 
     /**
+     * Create file listener
+     */
+    public createFileListener(): void {
+        const parentFolderName: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
+
+        parentFolderName.forEach((elem) => {
+            //temp testing 
+            elem.addEventListener('mouseover', (/*e*/) => {
+                //e.stopPropagation();
+                console.log("mouse over parent folder");
+            })
+        })
+    }
+
+    /**
      * Parent root listener 
      */
     public parentRootListener(): void {
@@ -81,6 +124,7 @@ export class DirectoryTreeListeners extends DirectoryTree {
             for(let i = 0; i < this.getParentTags.length; i++) {
                 this.getParentNameTags[i].addEventListener('click', () => {                         
                     this.getParentTags[i].classList.toggle('is-active-parent');
+                    this.getParentNameTags[i].classList.toggle('is-active-folder');
 
                     if(this.getParentTags[i].classList.contains('is-active-parent')) {
                         this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
@@ -89,6 +133,8 @@ export class DirectoryTreeListeners extends DirectoryTree {
                         
                         //call child node listener when parent is active 
                         this.childNodeListener();
+
+                        //this.createFileListener();
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
                         this.getParentTags[i].querySelectorAll('.child-file-name').forEach((elem) => elem.remove());
                         this.getParentTags[i].querySelectorAll('.parent-folder-caret').forEach((elem) => elem.classList.remove('is-active-parent-folder'));
@@ -171,9 +217,11 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //assign child file name to ref variable
                             this.childFileNameRef = childFileName[i].textContent;
 
-                            //assign parent name tags and child file names to ref variables
+                            //assign parent name tags/nodes and child file names/nodes to ref variables
                             this.parentNameTagRef = this.getParentNameTags[j].textContent;
                             this.childFileNameRef =  childFileName[i].textContent;
+                            this.parentTagNodeRef = this.getParentNameTags[j];
+                            this.childFileNodeRef = childFileName[i];
                         }
                     }
                     
@@ -182,9 +230,19 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     document.title = "Iris - " + childFileName[i].textContent;
 
                     //assign references to corresponding key properties
-                    RefsNs.parentChildNames.map((props) => {
+                    RefsNs.currentParentChildData.map((props) => {
+                        //parent folder
                         props.parentFolder = this.parentNameTagRef;
+                        //child file
                         props.childFile = this.childFileNameRef;
+                        //parent folder node
+                        props.parentFolderNode = this.parentTagNodeRef;
+                        //child file node
+                        props.childFileNode = this.childFileNodeRef;
+                        //log
+                        //console.log(props.parentFolderNode);
+                        //log
+                        //console.log(props.childFileNode);
                     })
                 });
             }
@@ -193,12 +251,17 @@ export class DirectoryTreeListeners extends DirectoryTree {
 }
 
 export class EditorListeners extends DirectoryTreeListeners {
-    public autoSaveListener() {
+    /**
+     * Auto save listener
+     * 
+     * @public
+     */
+    public autoSaveListener(): void {
         const editors = document.querySelector('.ProseMirror');
 
         //when a keyboard press is released
         editors.addEventListener('keyup', () => {
-            RefsNs.parentChildNames.map((props) =>  {
+            RefsNs.currentParentChildData.map((props) =>  {
                 //write to file
                 //const t0: number = performance.now(); //start perf timer
                 fsMod.fs._writeToFile(props.parentFolder + "/" + props.childFile, MilkdownEditor.editor.action(getMarkdown()));

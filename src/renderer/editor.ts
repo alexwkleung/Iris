@@ -1,6 +1,7 @@
 import { App } from "./app"
 import { MilkdownEditorNode, MilkdownEditor } from "./src/milkdown/milkdown-editor"
 
+//eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
     export class EditorContainerNode {
         public static editorContainer: HTMLDivElement;

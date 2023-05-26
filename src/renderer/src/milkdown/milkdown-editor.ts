@@ -13,6 +13,8 @@ export class MilkdownEditorNode {
      * Editor node
      * 
      * Reference variable for editor node
+     * 
+     * @static
      */
     public static editorNode: HTMLDivElement;
 
@@ -42,9 +44,18 @@ export class MilkdownEditor {
      * Editor
      * 
      * Reference variable for Milkdown editor
+     * 
+     * @static
      */
     public static editor: Editor;
 
+    /**
+     * Create editor 
+     * 
+     * @async
+     * @static
+     * @returns Promise for Milkdown editor
+     */
     public static async createEditor(): Promise<Editor> {
         //set readonly to false (enables readonly)
         MilkdownEditor.readonly = false;

@@ -6,9 +6,16 @@ export class FileDirectoryTreeNode {
      * File directory tree node 
      * 
      * Reference variable for file directory node
+     * 
+     * @static
      */
     public static fileDirectoryNode: HTMLDivElement;
 
+    /**
+     * Create file directory init 
+     * 
+     * @static
+     */
     public static createFileDirectoryInit(): void {        
         FileDirectoryTreeNode.fileDirectoryNode = document.createElement('div');
         FileDirectoryTreeNode.fileDirectoryNode.setAttribute("id", "file-directory-tree-container");
@@ -20,15 +27,18 @@ export class FileDirectoryTreeNode {
 
 export class DirectoryTree {
     /**
-     * folder names
-     * 
      * Calls `getRootNames` function
      * 
-     * @access protected 
+     * @protected 
      * @readonly
      */
     protected readonly folderNames: string[]  = this.getRootNames();
 
+    /**
+     * Get root names 
+     * 
+     * @returns Filtered names of folders from root
+     */
     public getRootNames(): string[] {
         //eslint-disable-next-line @typescript-eslint/no-unused-vars
         let walkRef: string[] = [];
@@ -56,11 +66,8 @@ export class DirectoryTree {
 
     /**
      * Create directory tree parent nodes
-     * 
-     * @async
      */
     public createDirTreeParentNodes(): void {  
-
         this.folderNames.map((elem) => {
             if(this.isFolderNode("home", "/Iris/Notes/" + elem)) {
                 //create parent folder node
@@ -108,8 +115,8 @@ export class DirectoryTree {
     public async createDirTreeChildNodes(
         parentTags: Element, 
         parentNameTags: string,
-        base: string): Promise<void> {
-
+        base: string
+    ): Promise<void> {
         let walkRef: string[] = [];
         
         //walk directory recursively
