@@ -8,5 +8,9 @@ export namespace directoryNs {
         const dirTree = new DirectoryTree();
 
         dirTree.createDirTreeParentNodes();
+
+        dirTree.createFolderNode();
+
+        dirTree.settingsNode();
     }
 }

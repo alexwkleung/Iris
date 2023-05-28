@@ -10,6 +10,8 @@ export class FileDirectoryTreeNode {
      * @static
      */
     public static fileDirectoryNode: HTMLDivElement;
+    
+    public static fileDirectoryNodeInner: HTMLDivElement;
 
     /**
      * Create file directory init 
@@ -22,10 +24,86 @@ export class FileDirectoryTreeNode {
         //same as editor
         FileDirectoryTreeNode.fileDirectoryNode.setAttribute("aria-hidden", "true");
         App.appNode.appendChild(FileDirectoryTreeNode.fileDirectoryNode);
+
+        FileDirectoryTreeNode.fileDirectoryNodeInner = document.createElement('div');
+        FileDirectoryTreeNode.fileDirectoryNodeInner.setAttribute("id", "file-directory-tree-container-inner");
+        FileDirectoryTreeNode.fileDirectoryNode.appendChild(FileDirectoryTreeNode.fileDirectoryNodeInner);
     }
 }
 
-export class DirectoryTree {
+export class DirectoryTreeUIModals {
+    public static createFileModalContainer: HTMLDivElement;
+    public static createFileModalInnerWindow: HTMLDivElement;
+    public static createFileModalExit: HTMLDivElement;
+
+    public createFileModal(): void {
+        //create file modal container node
+        DirectoryTreeUIModals.createFileModalContainer = document.createElement('div');
+        DirectoryTreeUIModals.createFileModalContainer.setAttribute("id", "create-file-modal-container");
+        App.appNode.insertBefore(DirectoryTreeUIModals.createFileModalContainer, App.appNode.firstChild);
+
+        //create file modal inner window node
+        DirectoryTreeUIModals.createFileModalInnerWindow = document.createElement('div');
+        DirectoryTreeUIModals.createFileModalInnerWindow.setAttribute("id", "create-file-modal-inner-window");
+        DirectoryTreeUIModals.createFileModalContainer.appendChild(DirectoryTreeUIModals.createFileModalInnerWindow);
+
+        //create file modal exit node
+        DirectoryTreeUIModals.createFileModalExit = document.createElement('div');
+        DirectoryTreeUIModals.createFileModalExit.setAttribute("id", "create-file-modal-exit");
+        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalExit);
+
+        //create file modal exit text node
+        const createFileModalExitTextNode: Text = document.createTextNode("Cancel");
+        DirectoryTreeUIModals.createFileModalExit .appendChild(createFileModalExitTextNode);
+    }
+}
+
+class DirectoryTreeUIElements {
+    /**
+     * Create file node 
+     * 
+     * @protected
+     * @param parentFolder Parent folder node to append to
+     */
+    protected createFileNode(parentFolder: HTMLElement): void {
+        //create file node
+        const createFileNode: HTMLDivElement = document.createElement('div');
+        createFileNode.setAttribute("class", "create-new-file");
+        parentFolder.appendChild(createFileNode);
+
+        //create file text node
+        const createFileTextNode: Text = document.createTextNode("New File");
+        createFileNode.appendChild(createFileTextNode);
+    }
+    
+    /**
+     * Create folder node 
+     *  
+     * @protected
+     * @param parentFolder Parent folder node to append to 
+     */
+    public createFolderNode(): void { 
+        //create folder node
+        const createFolderNode: HTMLDivElement = document.createElement('div');
+        createFolderNode.setAttribute("id", "create-folder");
+        document.querySelector('#file-directory-tree-container').appendChild(createFolderNode);
+
+        //create folder text node
+        const createFolderTextNode: Text = document.createTextNode("Create Folder");
+        createFolderNode.appendChild(createFolderTextNode);
+    }
+
+    public settingsNode(): void {
+        const settingsNode: HTMLDivElement = document.createElement('div');
+        settingsNode.setAttribute("id", "settings-node");
+        document.querySelector('#file-directory-tree-container').appendChild(settingsNode);
+
+        const settingsTextNode: Text = document.createTextNode("Settings");
+        settingsNode.appendChild(settingsTextNode);
+    }
+}
+
+export class DirectoryTree extends DirectoryTreeUIElements {
     /**
      * Calls `getRootNames` function
      * 
@@ -73,7 +151,7 @@ export class DirectoryTree {
                 //create parent folder node
                 const parentFolder: HTMLDivElement = document.createElement('div');
                 parentFolder.setAttribute("class", "parent-of-root-folder");
-                FileDirectoryTreeNode.fileDirectoryNode.appendChild(parentFolder);
+                FileDirectoryTreeNode.fileDirectoryNodeInner.appendChild(parentFolder);
 
                 const parentFolderName: HTMLDivElement = document.createElement('div');
                 parentFolderName.setAttribute("class", "parent-folder-name");
@@ -89,8 +167,10 @@ export class DirectoryTree {
                 //create text node with caret (use ascii value)
                 const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
                 parentFolderCaret.appendChild(parentFolderCaretTextNode);
-
                 parentFolder.appendChild(parentFolderCaret);
+
+                //temp
+                this.createFileNode(parentFolder);
             } else if(!this.isFolderNode("home", "/Iris/Notes/" + elem)) {
                   //create parent folder node
                   const childFileRoot: HTMLDivElement = document.createElement('div');

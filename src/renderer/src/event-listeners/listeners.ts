@@ -2,6 +2,7 @@ import { fsMod }  from "../utils/alias"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor } from "../milkdown/milkdown-editor"
 import { replaceAll, getMarkdown } from '@milkdown/utils'
+import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 namespace RefsNs {
@@ -37,6 +38,36 @@ namespace RefsNs {
             childFileNode: {} as Element
         }
     ];
+}
+
+export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
+    public createFileModalExitListener(): void {
+        DirectoryTreeUIModals.createFileModalExit.addEventListener('click', () => {
+            const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+            createFileNode.forEach((elem) => {
+                elem.classList.remove('is-active-create-new-file-modal');
+            });
+
+            DirectoryTreeUIModals.createFileModalContainer.remove();
+        })
+    }
+
+    /**
+     * Create file listener
+     */
+    public createFileListener(): void {
+        const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+
+        createFileNode.forEach((elem) => {
+            elem.addEventListener('click', async () => {
+                elem.classList.add('is-active-create-new-file-modal');
+
+                this.createFileModal();
+
+                this.createFileModalExitListener();
+            })
+        });
+    }
 }
 
 export class DirectoryTreeListeners extends DirectoryTree {
@@ -99,21 +130,6 @@ export class DirectoryTreeListeners extends DirectoryTree {
     }
 
     /**
-     * Create file listener
-     */
-    public createFileListener(): void {
-        const parentFolderName: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
-
-        parentFolderName.forEach((elem) => {
-            //temp testing 
-            elem.addEventListener('mouseover', (/*e*/) => {
-                //e.stopPropagation();
-                console.log("mouse over parent folder");
-            })
-        })
-    }
-
-    /**
      * Parent root listener 
      */
     public parentRootListener(): void {
@@ -133,8 +149,6 @@ export class DirectoryTreeListeners extends DirectoryTree {
                         
                         //call child node listener when parent is active 
                         this.childNodeListener();
-
-                        //this.createFileListener();
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
                         this.getParentTags[i].querySelectorAll('.child-file-name').forEach((elem) => elem.remove());
                         this.getParentTags[i].querySelectorAll('.parent-folder-caret').forEach((elem) => elem.classList.remove('is-active-parent-folder'));

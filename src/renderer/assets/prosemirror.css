@@ -31,14 +31,18 @@
   overflow-y: scroll;
   overflow-x: scroll;
   width: 73.1%; /* need to fix width */
-  max-width: 100vw; /* need to fix width */
-  height: 100vh; /* height is okay for now */
+  max-width: 100%; /* need to fix width */
+  height: 90%; /* height is okay for now */
   font-size: 20px;
   font-family: 'Inter-Regular';
-  background-color: #1a1a1a;
+  background-color: #202020;
   color: white;
-  /*border-radius: 20px;*/
   padding-left: 20px;
+  top: 2px;
+  bottom: 200px;
+  border: 1px solid #2e2e2e;
+  border-radius: 25px;
+  margin-top: 65px;
   /* 
   https://web.dev/content-visibility/ 
   */
