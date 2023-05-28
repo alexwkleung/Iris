@@ -41,6 +41,9 @@ namespace RefsNs {
 }
 
 export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
+    /**
+     * Create file modal exit listener
+     */
     public createFileModalExitListener(): void {
         DirectoryTreeUIModals.createFileModalExit.addEventListener('click', () => {
             const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');

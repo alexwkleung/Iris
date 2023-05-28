@@ -36,6 +36,9 @@ export class DirectoryTreeUIModals {
     public static createFileModalInnerWindow: HTMLDivElement;
     public static createFileModalExit: HTMLDivElement;
 
+    /**
+     * Create file modal
+     */
     public createFileModal(): void {
         //create file modal container node
         DirectoryTreeUIModals.createFileModalContainer = document.createElement('div');
@@ -72,14 +75,13 @@ class DirectoryTreeUIElements {
         parentFolder.appendChild(createFileNode);
 
         //create file text node
-        const createFileTextNode: Text = document.createTextNode("New File");
+        const createFileTextNode: Text = document.createTextNode("+");
         createFileNode.appendChild(createFileTextNode);
     }
     
     /**
      * Create folder node 
      *  
-     * @protected
      * @param parentFolder Parent folder node to append to 
      */
     public createFolderNode(): void { 
@@ -93,6 +95,9 @@ class DirectoryTreeUIElements {
         createFolderNode.appendChild(createFolderTextNode);
     }
 
+    /**
+     * Settings node
+     */
     public settingsNode(): void {
         const settingsNode: HTMLDivElement = document.createElement('div');
         settingsNode.setAttribute("id", "settings-node");

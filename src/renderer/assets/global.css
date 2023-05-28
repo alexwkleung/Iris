@@ -65,13 +65,13 @@ body {
 }
 #file-directory-tree-container-inner {
     position: relative;
-    margin-top: 50px;
+    margin-top: 70px;
 }
 .parent-folder-name {
     color: rgb(250, 248, 248);
     font-size: 22px;
     margin-left: 20px;
-    padding-top: 10px;
+    padding-top: 15px;
     font-family: 'Inter-Bold';
 }
 .parent-folder-name:hover {
@@ -101,7 +101,7 @@ body {
 .child-file-name {
     color: rgb(237, 235, 235);
     font-size: 20px;
-    padding-top: 2px;
+    padding-top: 10px;
     padding-bottom: 2px;
     margin-left: 35px;
 }
@@ -111,8 +111,9 @@ body {
 .child-file-name.is-active-child {
     /*border: 1px solid black;*/
     background-color: rgb(92, 91, 91);
-    width: 250px;
+    width: 240px;
     border-radius: 5px;
+    height: auto;
 }
 
 /* editor container */
@@ -129,13 +130,16 @@ body {
 /* new file */
 .create-new-file {
     position: absolute;
-    margin-top: -24px;
-    margin-left: 205px;
-    width: 70px;
+    margin-top: -28px;
+    margin-left: 260px;
+    width: 18px;
+    height: 24px;
+    text-align: center;
     color: white;
     border-radius: 5px;
     border: 1px solid;
     background-color: #232222;
+    font-size: 20px;
 }
 .create-new-file:hover {
     cursor: pointer;
@@ -153,6 +157,7 @@ body {
     margin-left: 25px;
     background-color: #232222;
     font-size: 18px;
+    text-align: center;
 }
 #create-folder:hover {
     cursor: pointer;
@@ -166,10 +171,11 @@ body {
     color: white;
     border: 1px solid;
     border-radius: 5px;
-    width: 75px;
+    width: 76px;
     margin-left: 200px;
     background-color: #232222;
     font-size: 18px;
+    text-align: center;
 }
 #settings-node:hover {
     cursor: pointer;
@@ -191,11 +197,13 @@ body {
     height: 20px;
     color: white;
     border: 1px solid;
+    border-radius: 5px;
     right: 8px;
     bottom: 5px;
     -webkit-user-select: none;
     user-select: none;
     font-size: 18px;
+    text-align: center;
 }
 #create-file-modal-exit:hover {
     cursor: pointer;
@@ -212,6 +220,7 @@ body {
     background-color: #232222;
     z-index: 100000
 }
+
 /* 
 * milkdown editor nodes 
 */

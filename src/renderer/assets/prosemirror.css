@@ -30,7 +30,7 @@
   position: fixed;
   overflow-y: scroll;
   overflow-x: scroll;
-  width: 73.1%; /* need to fix width */
+  width: 72.5%; /* need to fix width */
   max-width: 100%; /* need to fix width */
   height: 90%; /* height is okay for now */
   font-size: 20px;
