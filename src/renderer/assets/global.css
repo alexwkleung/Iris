@@ -60,6 +60,7 @@ body {
     margin-top: 0px;
     top: 2px;
     /*margin: 0;*/
+    left: 4px;
     content-visibility: auto; /* helps with scroll performance and load performance */
     contain-intrinsic-size: auto 300px; /* relates to content-visibility */
 }
