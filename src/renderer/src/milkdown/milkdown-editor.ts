@@ -3,11 +3,13 @@ import { Editor, rootCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { gfm } from '@milkdown/preset-gfm'
 import { defaultValueCtx } from '@milkdown/core'
-import { prism } from '@milkdown/plugin-prism'
+import { prism, prismConfig } from '@milkdown/plugin-prism'
 import { indent } from '@milkdown/plugin-indent'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { history } from '@milkdown/plugin-history'
 import { upload } from '@milkdown/plugin-upload'
+import { Refractor } from 'refractor/lib/core'
+import { refractor } from 'refractor/lib/all'
 
 export class MilkdownEditorNode {
     /**
@@ -19,6 +21,11 @@ export class MilkdownEditorNode {
      */
     public static editorNode: HTMLDivElement;
 
+    /**
+     * Create milkdown editor node
+     * 
+     * @static
+     */
     public static createMilkdownEditorNode(): void {
         MilkdownEditorNode.editorNode = document.createElement('div');
         MilkdownEditorNode.editorNode.setAttribute("class", "milkdown-editor-container");
@@ -61,6 +68,8 @@ export class MilkdownEditor {
         //set readonly to false (enables readonly)
         MilkdownEditor.readonly = false;
 
+        //editable arrow function that returns the readonly value (boolean)
+        //this is used in the editor update config for editorViewOptionsCtx
         const editable = (): boolean => {
             return MilkdownEditor.readonly;
         }
@@ -79,6 +88,12 @@ export class MilkdownEditor {
                 ctx.update(editorViewOptionsCtx, () => ({
                     editable,
                 }))
+                //this should load all languages supported by refractor in production
+                //by default, refractor loads all languages in dev mode
+                //in production, it loads no languages so you need to add them yourself
+                ctx.set(prismConfig.key, {
+                    configureRefractor: (): Refractor => refractor
+                })
             })
             .create()
             .catch((e) => { throw console.error(e) })

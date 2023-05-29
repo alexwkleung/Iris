@@ -42,11 +42,26 @@ namespace RefsNs {
 
 export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
     /**
+     * Get parent tags
+     * 
+     * @private
+     */
+    private parentTags: HTMLCollectionOf<Element>;
+
+    /**
+     * Get parent name tags
+     * 
+     * @private
+     */
+    private parentNameTags: HTMLCollectionOf<Element>;
+
+    /**
      * Create file modal exit listener
      */
     public createFileModalExitListener(): void {
         DirectoryTreeUIModals.createFileModalExit.addEventListener('click', () => {
             const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+
             createFileNode.forEach((elem) => {
                 elem.classList.remove('is-active-create-new-file-modal');
             });
@@ -59,17 +74,39 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
      * Create file listener
      */
     public createFileListener(): void {
-        const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+        const createFileNode: NodeListOf<Element> = document.querySelectorAll('.create-new-file');
 
-        createFileNode.forEach((elem) => {
-            elem.addEventListener('click', async () => {
-                elem.classList.add('is-active-create-new-file-modal');
+        this.parentTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-of-root-folder');
+        this. parentNameTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-folder-name');
 
-                this.createFileModal();
+        for(let i = 0; i < this.parentNameTags.length; i++) {
+            //when a parent name tag is clicked 
+            this.parentNameTags[i].addEventListener('click', () => {
+                //check if parent tag contains is-active-parent class
+                if(this.parentTags[i].classList.contains('is-active-parent')) {
+                    //toggle show-create-file class on create-new-file node
+                    createFileNode[i].classList.toggle('show-create-file');
 
-                this.createFileModalExitListener();
-            })
-        });
+                    //when a create-new-file node is clicked
+                    createFileNode[i].addEventListener('click', (e) => {
+                        //need stopImmediatePropagation so parentNameTag listener doesn't conflict with the createFileNode listener
+                        e.stopImmediatePropagation();
+
+                        if(createFileNode[i].classList.contains('show-create-file')) {
+                            //invoke create file modal
+                            this.createFileModal();
+
+                            //invoke the exit listener for the create file modal
+                            this.createFileModalExitListener();
+                        } else if(!createFileNode[i].classList.contains('show-create-file')) {
+                            createFileNode[i].classList.remove('show-create-file');        
+                        }
+                    });
+                } else if(!this.parentTags[i].classList.contains('is-active-parent')) {
+                    createFileNode[i].classList.remove('show-create-file');
+                }
+            });
+        }
     }
 }
 
@@ -141,10 +178,14 @@ export class DirectoryTreeListeners extends DirectoryTree {
 
         if(this.getParentTags !== null && this.getParentNameTags !== null) {
             for(let i = 0; i < this.getParentTags.length; i++) {
-                this.getParentNameTags[i].addEventListener('click', () => {                         
+                this.getParentNameTags[i].addEventListener('click', () => {          
+                    //toggle is-active-parent class on parent tag               
                     this.getParentTags[i].classList.toggle('is-active-parent');
+                    
+                    //toggle is-active-folder class on parent name tag
                     this.getParentNameTags[i].classList.toggle('is-active-folder');
 
+                    //check if parent tag contains is-active-parent class
                     if(this.getParentTags[i].classList.contains('is-active-parent')) {
                         this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
 
@@ -152,8 +193,12 @@ export class DirectoryTreeListeners extends DirectoryTree {
                         
                         //call child node listener when parent is active 
                         this.childNodeListener();
+                    //if parent tag doesn't contain is-active-parent class
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
+                        //remove all child files
                         this.getParentTags[i].querySelectorAll('.child-file-name').forEach((elem) => elem.remove());
+
+                        //remove is-active-parent-folder class
                         this.getParentTags[i].querySelectorAll('.parent-folder-caret').forEach((elem) => elem.classList.remove('is-active-parent-folder'));
                     }
                 });
@@ -239,6 +284,8 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             this.childFileNameRef =  childFileName[i].textContent;
                             this.parentTagNodeRef = this.getParentNameTags[j];
                             this.childFileNodeRef = childFileName[i];
+                        } else if(!this.getParentTags[j].contains(childFileName[i])) {
+                            continue;
                         }
                     }
                     
