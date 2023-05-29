@@ -64,6 +64,7 @@ body {
     content-visibility: auto; /* helps with scroll performance and load performance */
     contain-intrinsic-size: auto 300px; /* relates to content-visibility */
 }
+
 /*
 * file directory tree container inner 
 */
@@ -71,6 +72,7 @@ body {
     position: relative;
     margin-top: 70px;
 }
+
 /*
 * parent folder related nodes
 */
@@ -119,16 +121,15 @@ body {
 }
 .child-file-name:hover {
     cursor: pointer;
-    background: rgb(92, 91, 91);
+    text-decoration: underline;
+    text-decoration-color: rgb(140, 89, 234);
     width: 240px;
     border-radius: 5px;
-    height: auto;
 }
 .child-file-name.is-active-child {
-    background-color: rgb(92, 91, 91);
+    color: orange;
     width: 240px;
     border-radius: 5px;
-    height: auto;
 }
 
 /* editor container */
@@ -198,27 +199,34 @@ body {
     background-color: rgb(88, 88, 88);
 }
 
-/* create file modal container */
+/* 
+* create file modal nodes 
+*/
 #create-file-modal-container {
     position: relative;
     z-index: 1;
-    background-color: rgb(10, 10, 10);
+    /* 
+    * transparent background without messing with opacity property in CSS
+    * set rgb values to 0 
+    * set alpha value to a float or integer to control opacity
+    */
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100vw;
     height: 100vh;
 }
 #create-file-modal-exit {
     z-index: 1;
     position: fixed;
-    width: 60px;
-    height: 20px;
+    width: 68px;
+    height: 25px;
     color: white;
     border: 1px solid;
     border-radius: 5px;
-    right: 8px;
-    bottom: 5px;
+    right: 20px;
+    bottom: 10px;
     -webkit-user-select: none;
     user-select: none;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     font-family: 'Inter-Regular';
 }
@@ -228,14 +236,15 @@ body {
 }
 #create-file-modal-inner-window {
     position: fixed;
-    /*border: 1px solid white;*/
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px;
-    height: 600px;
+    width: 700px;
+    height: 400px;
     background-color: #232222;
-    z-index: 100000
+    z-index: 1;
+    border: 1px solid grey;
+    border-radius: 25px;
 }
 
 /* 
