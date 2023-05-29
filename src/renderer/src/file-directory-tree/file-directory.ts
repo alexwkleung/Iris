@@ -39,11 +39,10 @@ export class FileDirectoryTreeNode {
 class DirectoryTreeUIElements {
     /**
      * Create file node 
-     *
-     * @protected
+     * 
      * @param parentFolder Parent folder node to append to
      */
-    protected createFileNode(parentFolder: HTMLElement): void {
+    public createFileNode(parentFolder: HTMLElement): void {
         //create file node
         const createFileNode: HTMLDivElement = document.createElement('div');
         createFileNode.setAttribute("class", "create-new-file");
@@ -56,15 +55,12 @@ class DirectoryTreeUIElements {
     
     /**
      * Create folder node 
-     *  
-     * @protected
-     * @param parentFolder Parent folder node to append to 
      */
-    protected createFolderNode(): void { 
+    public createFolderNode(): void { 
         //create folder node
         const createFolderNode: HTMLDivElement = document.createElement('div');
         createFolderNode.setAttribute("id", "create-folder");
-        document.querySelector('#file-directory-tree-container').appendChild(createFolderNode);
+        (document.querySelector('#file-directory-tree-container') as HTMLDivElement).appendChild(createFolderNode);
 
         //create folder text node
         const createFolderTextNode: Text = document.createTextNode("Create Folder");
@@ -73,13 +69,11 @@ class DirectoryTreeUIElements {
 
     /**
      * Settings node
-     * 
-     * @protected
      */
-    protected settingsNode(): void {
+    public settingsNode(): void {
         const settingsNode: HTMLDivElement = document.createElement('div');
         settingsNode.setAttribute("id", "settings-node");
-        document.querySelector('#file-directory-tree-container').appendChild(settingsNode);
+        (document.querySelector('#file-directory-tree-container') as HTMLDivElement).appendChild(settingsNode);
 
         const settingsTextNode: Text = document.createTextNode("Settings");
         settingsNode.appendChild(settingsTextNode);
@@ -150,12 +144,9 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * @returns Filtered names of folders from root
      */
     public getRootNames(): string[] {
-        //eslint-disable-next-line @typescript-eslint/no-unused-vars
-        let walkRef: string[] = [];
-
         //walk directory recursively
         //eslint-disable-next-line @typescript-eslint/no-unused-vars
-        walkRef = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes").slice(1);
+        const walkRef: string[] = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes").slice(1);
 
         const nameVecTemp: string[] = [];
     
@@ -229,12 +220,12 @@ export class DirectoryTree extends DirectoryTreeUIElements {
         parentNameTags: string,
         base: string
     ): Promise<void> {
-        let walkRef: string[] = [];
-        
         //walk directory recursively
-        walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes/" + parentNameTags).slice(1);
+        //eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const walkRef: string[] = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes/" + parentNameTags).slice(1);
 
         const dirNamesArr: string[] = [];
+        
         //get directory name (canonical)
         for(let i = 0; i < walkRef.length; i++) {
             dirNamesArr.push(fsMod.fs._getDirectoryName(walkRef[i]));
