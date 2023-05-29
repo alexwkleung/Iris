@@ -4,15 +4,16 @@ export class App {
      * 
      * Reference variable for app node
      */
-    public static appNode: HTMLDivElement = document.createElement('div') as HTMLDivElement;
+    public static appNode: HTMLDivElement;
 
     public static app(): void {
         //check if any app nodes exist in document
         if(document.querySelector('#app')) {
             //remove the app node
-            document.querySelector('#app').remove();
+            (document.querySelector('#app') as HTMLDivElement).remove();
 
             //create app node
+            App.appNode = document.createElement('div') as HTMLDivElement;
             App.appNode.setAttribute("id", "app");
             document.body.prepend(App.appNode);
             
@@ -29,7 +30,8 @@ export class App {
             App.appNode = document.createElement('div') as HTMLDivElement;
             App.appNode.setAttribute("id", "app");
     
-            document.body.prepend(App.appNode);
+            //use insertBefore instead of prepend
+            document.body.insertBefore(App.appNode, document.body.firstChild);
     
             const isConnected: boolean = App.appNode.isConnected;
     

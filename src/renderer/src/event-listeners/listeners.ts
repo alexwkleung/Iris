@@ -9,13 +9,13 @@ namespace RefsNs {
     /**
      * Generic interface for current parent child data
      * 
-     * Anything that implements `ICurrentParentChildData` should default to `<string, Element>` unless other types are necessary:
+     * Anything that implements `ICurrentParentChildData` should default to any type that inherits `string` or `Element` only, for example:
      * 
      * `T` corresponds to type `string`
      * 
      * `K` corresponds to type `Element`
      */
-    interface ICurrentParentChildData<T, K> {
+    interface ICurrentParentChildData<T extends string, K extends Element> {
         parentFolderName: T,
         childFileName: T,
         parentFolderNode: K,
@@ -28,7 +28,6 @@ namespace RefsNs {
     * References of the current parent folder and child file data can be accessed here.
     * 
     * It's a global within `listeners.ts` with strict usage so it doesn't pollute
-    * 
     */
     export const currentParentChildData: ICurrentParentChildData<string, Element>[] = [
         {
@@ -42,18 +41,18 @@ namespace RefsNs {
 
 export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
     /**
-     * Get parent tags
+     * Parent tags
      * 
      * @private
      */
-    private parentTags: HTMLCollectionOf<Element>;
+    private parentTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
 
     /**
-     * Get parent name tags
+     * Parent name tags
      * 
      * @private
      */
-    private parentNameTags: HTMLCollectionOf<Element>;
+    private parentNameTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
 
     /**
      * Create file modal exit listener
@@ -76,8 +75,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
     public createFileListener(): void {
         const createFileNode: NodeListOf<Element> = document.querySelectorAll('.create-new-file');
 
-        this.parentTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-of-root-folder');
-        this. parentNameTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-folder-name');
+        this.parentTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-of-root-folder');
+        this. parentNameTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-folder-name');
 
         for(let i = 0; i < this.parentNameTags.length; i++) {
             //when a parent name tag is clicked 
@@ -116,42 +115,42 @@ export class DirectoryTreeListeners extends DirectoryTree {
      * 
      * @private
      */
-    private getParentTags: HTMLCollectionOf<Element>;
+    private getParentTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
 
     /**
      * Get parent name tags
      * 
      * @private
      */
-    private getParentNameTags: HTMLCollectionOf<Element>;
+    private getParentNameTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
 
     /**
      * Parent name tag reference variable
      * 
      * @protected
      */
-    protected parentNameTagRef: string;
+    protected parentNameTagRef: string = "";
 
     /**
      * Child file name reference variable
      * 
      * @protected
      */
-    protected childFileNameRef: string;
+    protected childFileNameRef: string = "";
 
     /**
      * Parent name tag node reference variable
      * 
      * @protected
      */
-    protected parentTagNodeRef: Element; 
+    protected parentTagNodeRef: Element = {} as Element; 
 
     /**
      * Child file node reference variable
      * 
      * @protected
      */
-    protected childFileNodeRef: Element;
+    protected childFileNodeRef: Element = {} as Element;
 
     /**
      * Parent name tags array
@@ -163,7 +162,11 @@ export class DirectoryTreeListeners extends DirectoryTree {
         const parentNameTagsArr: string[] = [];
 
         Array.from(this.getParentNameTags).forEach(
-            (elem) => parentNameTagsArr.push(elem.textContent)
+            (elem) => {
+                if(elem !== null) {
+                    parentNameTagsArr.push(elem.textContent as string);
+                }
+            }
         );
 
         return parentNameTagsArr;
@@ -173,8 +176,8 @@ export class DirectoryTreeListeners extends DirectoryTree {
      * Parent root listener 
      */
     public parentRootListener(): void {
-        this.getParentTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-of-root-folder');
-        this.getParentNameTags = document.querySelector('#file-directory-tree-container').getElementsByClassName('parent-folder-name');
+        this.getParentTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-of-root-folder');
+        this.getParentNameTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-folder-name');
 
         if(this.getParentTags !== null && this.getParentNameTags !== null) {
             for(let i = 0; i < this.getParentTags.length; i++) {
@@ -246,7 +249,7 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //since it resets the contenteditable buffer in memory
 
                             //const t0: number = performance.now(); //start perf timer
-                            MilkdownEditor.editor.action(replaceAll(fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent, childFileName[i].textContent), true));      
+                            MilkdownEditor.editor.action(replaceAll(fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, childFileName[i].textContent as string), true));      
                             //const t1: number = performance.now(); //end perf timer
                             //log perf timer
                             //console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
@@ -263,27 +266,32 @@ export class DirectoryTreeListeners extends DirectoryTree {
                             //set end range to the first node
                             createRange.setEnd(proseMirrorNode, 0);
 
-                            //remove all current ranges
-                            getSelection.removeAllRanges();
+                            if(getSelection !== null) {
+                                //remove all current ranges
+                                getSelection.removeAllRanges();
 
-                            //add range based on new setStart and setEnd values
-                            //the cursor will be at the beginning of the first node instead of random
-                            getSelection.addRange(createRange);
+                                //add range based on new setStart and setEnd values
+                                //the cursor will be at the beginning of the first node instead of random
+                                getSelection.addRange(createRange);
+                            }
 
                             //focus editor when file is active 
                             proseMirrorNode.focus();
 
-                            //assign parent name tag to ref variable
-                            this.parentNameTagRef = this.getParentNameTags[j].textContent;
+                            if(this.parentNameTagRef !== null && this.childFileNodeRef !== null) {
+                                //assign parent name tag to ref variable
+                                this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
 
-                            //assign child file name to ref variable
-                            this.childFileNameRef = childFileName[i].textContent;
+                                //assign child file name to ref variable
+                                this.childFileNameRef = childFileName[i].textContent as string;
 
-                            //assign parent name tags/nodes and child file names/nodes to ref variables
-                            this.parentNameTagRef = this.getParentNameTags[j].textContent;
-                            this.childFileNameRef =  childFileName[i].textContent;
-                            this.parentTagNodeRef = this.getParentNameTags[j];
-                            this.childFileNodeRef = childFileName[i];
+                                //assign parent name tags/nodes and child file names/nodes to ref variables
+                                this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
+                                this.childFileNameRef =  childFileName[i].textContent as string;
+
+                                this.parentTagNodeRef = this.getParentNameTags[j];
+                                this.childFileNodeRef = childFileName[i];
+                            }
                         } else if(!this.getParentTags[j].contains(childFileName[i])) {
                             continue;
                         }
@@ -321,7 +329,7 @@ export class EditorListeners extends DirectoryTreeListeners {
      * @public
      */
     public autoSaveListener(): void {
-        const editors = document.querySelector('.ProseMirror');
+        const editors: HTMLDivElement = document.querySelector('.ProseMirror') as HTMLDivElement;
 
         //when a keyboard press is released
         editors.addEventListener('keyup', () => {
