@@ -86,6 +86,9 @@ body {
     overflow-x: scroll;
     width: 220px;
 }
+.parent-folder-name::-webkit-scrollbar {
+    display: none;
+}
 .parent-folder-name:hover {
     cursor: pointer;
 }
@@ -120,18 +123,23 @@ body {
     padding-top: 10px;
     padding-bottom: 2px;
     margin-left: 35px;
-    width: 240px;
+    width: 200px;
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+.child-file-name::-webkit-scrollbar {
+    display: none;
 }
 .child-file-name:hover {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-color: rgb(140, 89, 234);
-    width: 240px;
+    width: 200px;
     border-radius: 5px;
 }
 .child-file-name.is-active-child {
     color: orange;
-    width: 240px;
+    width: 200px;
     border-radius: 5px;
 }
 
