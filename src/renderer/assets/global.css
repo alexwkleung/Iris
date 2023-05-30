@@ -26,19 +26,6 @@ body {
     caret-color: #ffffff;
 }
 
-/* scroll bar customization */
-::-webkit-scrollbar {
-    width: 10px; 
-    height: 4px; 
-}
-::-webkit-scrollbar-thumb {
-    background-color:#939393; 
-    -webkit-border-radius: 1ex;
-}
-::-webkit-scrollbar-corner {
-    background: transparent;
-}
-
 /* 
 * file directory tree 
 */
@@ -97,7 +84,7 @@ body {
 }
 .parent-folder-caret {
     position: absolute;
-    margin-top: -28px;
+    margin-top: -25px;
     margin-right: 100px;
     margin-left: 3px;
     color: rgb(223, 222, 222);
@@ -106,7 +93,7 @@ body {
 }
 .parent-folder-caret.is-active-parent-folder {
     position: absolute;
-    margin-top: -30px;
+    margin-top: -28px;
     margin-right: 100px;
     margin-left: 5px;
     color: rgb(223, 222, 222);
