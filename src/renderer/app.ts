@@ -1,3 +1,5 @@
+import { setWindowTitle } from "./src/utils/window-title"
+
 export class App {
     /**
      * App node
@@ -7,6 +9,9 @@ export class App {
     public static appNode: HTMLDivElement;
 
     public static app(): void {
+        //set window title
+        setWindowTitle("Iris", false, null);
+
         //check if any app nodes exist in document
         if(document.querySelector('#app')) {
             //remove the app node

@@ -1,21 +1,26 @@
 /**
- * Window title function
+ * Set window title function
  * 
- * @param includeDefaultText Option to include the default title
- * @param dash Option to add a dash after default title
- * @param leadingText Custom leading text for document title
+ * Window title is based on the `document.title` value
+ * 
+ * @param defaultTitle Option to set the default window title
+ * @param dash Option to add a dash (`'-'`) after the default title
+ * @param leadingText Option to add custom leading text
+ * 
  * @returns Updated document title 
  */
-export function windowTitle(includeDefaultTitle: boolean, dash: boolean, leadingText: string | null): string {
-    let docTitle: string = "";
+export function setWindowTitle(defaultTitle: string, dash: boolean, leadingText: string | null): string {
+    let docTitle: string | null = "";
 
-    //check if includeDefaultText and dash is true and leading isn't null
-    if(includeDefaultTitle && dash && leadingText !== null) {
-        docTitle = (document.title = "Iris" + " - " + leadingText);
-    } else if(!includeDefaultTitle && !dash && leadingText !== null) {
+    if(defaultTitle && dash && leadingText !== null) {
+        docTitle = (document.title = defaultTitle + " - " + leadingText);
+    } else if(!defaultTitle && !dash && leadingText !== null) {
         docTitle = (document.title = leadingText);
-    } else { 
-        docTitle = (document.title = "Iris");
+    } else if(defaultTitle && !dash && leadingText === null) { 
+        docTitle = (document.title = defaultTitle);
+    } else {
+        //default is empty title
+        docTitle = (document.title = "");
     }
 
     //return doc title

@@ -3,7 +3,7 @@ import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor } from "../milkdown/milkdown-editor"
 import { replaceAll, getMarkdown } from '@milkdown/utils'
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
-import { windowTitle } from "../utils/window-title"
+import { setWindowTitle } from "../utils/window-title"
 import { 
     IDirectoryTreeUIModalListeners, 
     IDirectoryTreeListeners, 
@@ -307,7 +307,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     
                     //change document title so it corresponds to the opened file
                     //as a visual indicator
-                    windowTitle(true, true, childFileName[i].textContent);
+                    setWindowTitle("Iris", true, childFileName[i].textContent);
 
                     //assign references to corresponding key properties
                     RefsNs.currentParentChildData.map((props) => {
