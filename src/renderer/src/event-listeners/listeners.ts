@@ -3,6 +3,12 @@ import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor } from "../milkdown/milkdown-editor"
 import { replaceAll, getMarkdown } from '@milkdown/utils'
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
+import { windowTitle } from "../utils/window-title"
+import { 
+    IDirectoryTreeUIModalListeners, 
+    IDirectoryTreeListeners, 
+    IEditorListeners 
+} from "../interfaces/listener-interfaces"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 namespace RefsNs {
@@ -39,7 +45,7 @@ namespace RefsNs {
     ];
 }
 
-export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
+export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals implements IDirectoryTreeUIModalListeners {
     /**
      * Parent tags
      * 
@@ -58,7 +64,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
      * Create file modal exit listener
      */
     public createFileModalExitListener(): void {
-        DirectoryTreeUIModals.createFileModalExit.addEventListener('click', () => {
+        DirectoryTreeUIModals.createFileModalExitButton.addEventListener('click', () => {
             const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
 
             createFileNode.forEach((elem) => {
@@ -109,7 +115,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals {
     }
 }
 
-export class DirectoryTreeListeners extends DirectoryTree {
+export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryTreeListeners {
     /**
      * Get parent tags
      * 
@@ -196,6 +202,8 @@ export class DirectoryTreeListeners extends DirectoryTree {
                         
                         //call child node listener when parent is active 
                         this.childNodeListener();
+
+                        //console.log(this.getParentTags[i].getElementsByClassName('child-file-name').length);
                     //if parent tag doesn't contain is-active-parent class
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
                         //remove all child files
@@ -299,7 +307,7 @@ export class DirectoryTreeListeners extends DirectoryTree {
                     
                     //change document title so it corresponds to the opened file
                     //as a visual indicator
-                    document.title = "Iris - " + childFileName[i].textContent;
+                    windowTitle(true, true, childFileName[i].textContent);
 
                     //assign references to corresponding key properties
                     RefsNs.currentParentChildData.map((props) => {
@@ -322,7 +330,7 @@ export class DirectoryTreeListeners extends DirectoryTree {
     }
 }
 
-export class EditorListeners extends DirectoryTreeListeners {
+export class EditorListeners extends DirectoryTreeListeners implements IEditorListeners {
     /**
      * Auto save listener
      * 

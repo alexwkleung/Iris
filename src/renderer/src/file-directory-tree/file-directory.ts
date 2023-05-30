@@ -96,11 +96,48 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
     public static createFileModalInnerWindow: HTMLDivElement;
 
     /**
-     * Create file modal exit reference variable
+     * Create file modal exit button reference variable
      * 
      * @static 
      */
-    public static createFileModalExit: HTMLDivElement;
+    public static createFileModalExitButton: HTMLDivElement;
+
+    /**
+     * Create file modal continue button 
+     * 
+     * @static
+     */
+    public static createFileModalContinueButton: HTMLDivElement;
+
+    /**
+     * Create file modal exit node 
+     * 
+     * @private
+     */
+    private createFileModalExitNode(): void {
+        //create file modal exit node
+        DirectoryTreeUIModals.createFileModalExitButton = document.createElement('div');
+        DirectoryTreeUIModals.createFileModalExitButton.setAttribute("id", "create-file-modal-exit");
+        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalExitButton);
+       
+        //create file modal exit text node
+        const createFileModalExitTextNode: Text = document.createTextNode("Cancel");
+        DirectoryTreeUIModals.createFileModalExitButton.appendChild(createFileModalExitTextNode);
+    }
+
+    /**
+     * Create file modal continue node
+     * 
+     * @private
+     */
+    private createFileModalContinueNode(): void {
+        DirectoryTreeUIModals.createFileModalContinueButton = document.createElement('div');
+        DirectoryTreeUIModals.createFileModalContinueButton.setAttribute("id", "create-file-modal-continue");
+        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalContinueButton);
+
+        const createFileModalContinueTextNode: Text = document.createTextNode("Continue");
+        DirectoryTreeUIModals.createFileModalContinueButton.appendChild(createFileModalContinueTextNode);
+    }
 
     /**
      * Create file modal
@@ -118,14 +155,11 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         DirectoryTreeUIModals.createFileModalInnerWindow.setAttribute("id", "create-file-modal-inner-window");
         DirectoryTreeUIModals.createFileModalContainer.appendChild(DirectoryTreeUIModals.createFileModalInnerWindow);
 
-        //create file modal exit node
-        DirectoryTreeUIModals.createFileModalExit = document.createElement('div');
-        DirectoryTreeUIModals.createFileModalExit.setAttribute("id", "create-file-modal-exit");
-        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalExit);
+        //invoke createFileModalExitNode
+        this.createFileModalExitNode();
 
-        //create file modal exit text node
-        const createFileModalExitTextNode: Text = document.createTextNode("Cancel");
-        DirectoryTreeUIModals.createFileModalExit.appendChild(createFileModalExitTextNode);
+        //invoke createFileModalContinueNode
+        this.createFileModalContinueNode();
     }
 }
 
