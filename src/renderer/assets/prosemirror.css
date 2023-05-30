@@ -30,9 +30,9 @@
   position: fixed;
   overflow-y: scroll;
   overflow-x: scroll;
-  width: 72.7%; /* need to fix width */
+  width: 73.1%; /* need to fix width */
   max-width: 100%; /* need to fix width */
-  height: 90.5%; /* need to fix height */
+  height: 99%; /* need to fix height */
   font-size: 20px;
   font-family: 'Inter-Regular';
   background-color: #202020;
@@ -42,7 +42,7 @@
   bottom: 200px;
   border: 1px solid #2e2e2e;
   border-radius: 25px;
-  margin-top: 65px;
+  margin-top: 0px;
   /* 
   https://web.dev/content-visibility/ 
   */

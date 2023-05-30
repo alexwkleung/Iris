@@ -46,7 +46,7 @@ body {
     position: fixed;
     display: flex;
     flex-direction: column;
-    border: 1px solid #383535;
+    border: 1px solid #2e2e2e;
     background-color: #131212;
     width: 290px;
     height: 99%;
@@ -82,6 +82,9 @@ body {
     margin-left: 20px;
     padding-top: 15px;
     font-family: 'Inter-Bold';
+    white-space: nowrap; /* don't wrap name and set overflow-x to handle the nowrap */
+    overflow-x: scroll;
+    width: 220px;
 }
 .parent-folder-name:hover {
     cursor: pointer;
@@ -91,7 +94,7 @@ body {
 }
 .parent-folder-caret {
     position: absolute;
-    margin-top: -25px;
+    margin-top: -28px;
     margin-right: 100px;
     margin-left: 3px;
     color: rgb(223, 222, 222);
@@ -100,7 +103,7 @@ body {
 }
 .parent-folder-caret.is-active-parent-folder {
     position: absolute;
-    margin-top: -27px;
+    margin-top: -30px;
     margin-right: 100px;
     margin-left: 5px;
     color: rgb(223, 222, 222);
@@ -153,7 +156,7 @@ body {
     border: 1px solid;
     background-color: #232222;
     font-size: 20px;
-    display: none
+    display: none;
 }
 .create-new-file:hover {
     cursor: pointer;
@@ -214,6 +217,18 @@ body {
     width: 100vw;
     height: 100vh;
 }
+#create-file-modal-inner-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 400px;
+    background-color: #232222;
+    z-index: 1;
+    border: 1px solid grey;
+    border-radius: 25px;
+}
 #create-file-modal-exit {
     z-index: 1;
     position: fixed;
@@ -234,17 +249,25 @@ body {
     cursor: pointer;
     background-color: rgb(88, 88, 88);
 }
-#create-file-modal-inner-window {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 700px;
-    height: 400px;
-    background-color: #232222;
+#create-file-modal-continue {
     z-index: 1;
-    border: 1px solid grey;
-    border-radius: 25px;
+    position: fixed;
+    width: 90px;
+    height: 25px;
+    color: white;
+    border: 1px solid;
+    border-radius: 5px;
+    right: 105px;
+    bottom: 10px;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Inter-Regular';
+}
+#create-file-modal-continue:hover {
+    cursor: pointer;
+    background-color: rgb(88, 88, 88);
 }
 
 /* 
