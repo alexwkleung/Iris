@@ -7,9 +7,9 @@
  * @param dash Option to add a dash (`'-'`) after the default title
  * @param leadingText Option to add custom leading text
  * 
- * @returns Updated document title 
+ * @returns Promise for updated document title to be resolved
  */
-export function setWindowTitle(defaultTitle: string, dash: boolean, leadingText: string | null): string {
+export async function setWindowTitle(defaultTitle: string, dash: boolean, leadingText: string | null): Promise<string> {
     let docTitle: string | null = "";
 
     if(defaultTitle && dash && leadingText !== null) {
@@ -23,6 +23,6 @@ export function setWindowTitle(defaultTitle: string, dash: boolean, leadingText:
         docTitle = (document.title = "");
     }
 
-    //return doc title
-    return docTitle;
+    //return doc title promise
+    return new Promise((resolve) => resolve(docTitle as string));
 }

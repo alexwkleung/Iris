@@ -44,7 +44,6 @@ namespace RefsNs {
     ];
 }
 
-
 export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryTreeListeners {
     /**
      * Get parent tags
@@ -132,7 +131,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                         
                         //call child node listener when parent is active 
                         this.childNodeListener();
-
                         //console.log(this.getParentTags[i].getElementsByClassName('child-file-name').length);
                     //if parent tag doesn't contain is-active-parent class
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
@@ -154,20 +152,19 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             }
                         );
                     }
-
+                    
                     //assign refs
                     if(this.parentNameTagRef !== null && this.parentTagNodeRef !== null) {            
-                        this.parentNameTagRef = this.getParentNameTags[i].textContent as string;
-            
+                        this.parentNameTagRef = this.getParentNameTags[i].textContent as string;                                            
                         this.parentTagNodeRef = this.getParentNameTags[i];
                     }
-
+                                
                     RefsNs.currentParentChildData.map((props) => {
                         //null check
                         if(props !== null) {
                             //parent folder name
                             props.parentFolderName = this.parentNameTagRef;
-
+                                      
                             //parent folder node
                             props.parentFolderNode = this.parentTagNodeRef;
                         }
@@ -188,7 +185,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
             //for all child file names
             for(let i = 0; i < childFileName.length; i++) {
-                childFileName[i].addEventListener('click', () => {
+                childFileName[i].addEventListener('click', async () => {
                     //if document contains at least one active child
                     if(document.querySelector('.is-active-child')) {
                         //select all active children and remove them from the dom (active status)
@@ -250,11 +247,10 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //focus editor when file is active 
                             proseMirrorNode.focus();
 
-                            //assign refs
+                            //null check
                             if(this.parentNameTagRef !== null && this.childFileNodeRef !== null) {
-                                //assign child file name to ref variable
+                                //assign refs
                                 this.childFileNameRef =  childFileName[i].textContent as string;
-                                
                                 this.childFileNodeRef = childFileName[i];
                             }
                         } else if(!this.getParentTags[j].contains(childFileName[i])) {
@@ -264,7 +260,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     
                     //change document title so it corresponds to the opened file
                     //as a visual indicator
-                    setWindowTitle("Iris", true, childFileName[i].textContent);
+                    await setWindowTitle("Iris", true, childFileName[i].textContent).catch((e) => { throw console.error(e) });
 
                     //assign references to corresponding key properties
                     RefsNs.currentParentChildData.map((props) => {
@@ -275,8 +271,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                             //child file node
                             props.childFileNode = this.childFileNodeRef;
+
                             //log
-                            //console.log(props.parentFolderNode);
+                            //console.log(props.childFileName);
                             //log
                             //console.log(props.childFileNode);
                         }
@@ -351,18 +348,25 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                             //invoke the exit listener for the create file modal
                             this.createFileModalExitListener();
+                            
+                            //map over parent child data props
+                            RefsNs.currentParentChildData.map((props) => {
+                                //null check
+                                if(props !== null) {
+                                    //override current parent folder name ref
+                                    props.parentFolderName = this.parentNameTags[i].textContent as string;
+
+                                    this.createFileModalCurrentFolderNode(props.parentFolderName);
+
+                                    //log
+                                    //console.log(props.parentFolderName);
+                                    //log
+                                    //console.log(props.parentFolderNode);
+                                }
+                            });
                         } else if(!createFileNode[i].classList.contains('show-create-file')) {
                             createFileNode[i].classList.remove('show-create-file');        
                         }
-
-                        //map over parent child data props
-                        RefsNs.currentParentChildData.map((props) => {
-                            //null check
-                            if(props !== null) {
-                                console.log(props.parentFolderName);
-                                console.log(props.parentFolderNode);
-                            }
-                        })
                     });
                 } else if(!this.parentTags[i].classList.contains('is-active-parent')) {
                     createFileNode[i].classList.remove('show-create-file');

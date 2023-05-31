@@ -264,11 +264,38 @@ body {
     cursor: pointer;
     background-color: rgb(88, 88, 88);
 }
+#create-file-modal-current-folder-node {
+    color: white;
+    margin-top: 180px;
+    -webkit-user-select: none;
+    user-select: none;
+    margin-left: 225px;
+    font-family: 'Inter-Regular';
+    font-size: 20px;
+}
+#create-file-modal-folder-name-input-container-node {
+    user-select: none;
+}
+#create-file-modal-folder-name-input-node {
+    position: fixed;
+    margin-top: -24px;
+    margin-left: 300px;
+    font-family: 'Inter-Regular';
+    font-size: 20px;
+    color: white;
+    background-color: #494747;
+    border: 0px;
+    overflow-x: scroll;
+}
+#create-file-modal-folder-name-input-node:focus {
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
 
 /* 
 * milkdown editor nodes 
 */
-
 .milkdown h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter-Bold';
 }

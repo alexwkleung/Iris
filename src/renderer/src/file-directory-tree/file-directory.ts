@@ -140,6 +140,41 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
     }
 
     /**
+     * Create file modal current folder node
+     * 
+     * @param folderName Name of the current folder to create a file in
+     */
+    protected createFileModalCurrentFolderNode(folderName: string): void {
+        //folder name node
+        const folderNameNode: HTMLDivElement = document.createElement('div');
+        folderNameNode.setAttribute("id", "create-file-modal-current-folder-node");
+        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(folderNameNode);
+
+        //folder text node
+        const folderTextNode: Text = document.createTextNode("Folder: ");
+        folderNameNode.appendChild(folderTextNode);
+
+        //folder name input container node
+        const folderNameInputContainerNode: HTMLDivElement = document.createElement('div');
+        folderNameInputContainerNode.setAttribute("id", "create-file-modal-folder-name-input-container-node");
+        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(folderNameInputContainerNode);
+
+        //folder name input node
+        const folderNameInputNode: HTMLInputElement = document.createElement('input');
+        folderNameInputNode.setAttribute("id", "create-file-modal-folder-name-input-node");
+        folderNameInputNode.setAttribute("type", "text");
+        folderNameInputNode.setAttribute("readonly", "true");
+        folderNameInputContainerNode.appendChild(folderNameInputNode);
+
+        //const folderNameTextNode: Text = document.createTextNode(folderName);
+        (folderNameInputNode as HTMLInputElement).value = folderName;
+    }
+
+    private createFileModalNewFileTextNode(): void {
+        return;
+    }
+
+    /**
      * Create file modal
      * 
      * @protected
@@ -245,15 +280,14 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     /**
      * Create directory tree child nodes
      * 
-     * @async 
      * @param parentTags The parent tag to append to
      * @param parentNameTags The parent name tag
      */
-    public async createDirTreeChildNodes(
+    public createDirTreeChildNodes(
         parentTags: Element, 
         parentNameTags: string,
         base: string
-    ): Promise<void> {
+    ): void {
         //walk directory recursively
         //eslint-disable-next-line @typescript-eslint/no-unused-vars
         const walkRef: string[] = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes/" + parentNameTags).slice(1);

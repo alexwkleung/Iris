@@ -8,9 +8,9 @@ export class App {
      */
     public static appNode: HTMLDivElement;
 
-    public static app(): void {
+    public static async app(): Promise<void> {
         //set window title
-        setWindowTitle("Iris", false, null);
+        await setWindowTitle("Iris", false, null).catch((e) => { throw console.error(e) });
 
         //check if any app nodes exist in document
         if(document.querySelector('#app')) {
