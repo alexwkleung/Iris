@@ -95,6 +95,8 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
      */
     public static createFileModalInnerWindow: HTMLDivElement;
 
+    public static createFileModalInnerWindowTextContainer: HTMLDivElement;
+
     /**
      * Create file modal exit button reference variable
      * 
@@ -148,7 +150,7 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         //folder name node
         const folderNameNode: HTMLDivElement = document.createElement('div');
         folderNameNode.setAttribute("id", "create-file-modal-current-folder-node");
-        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(folderNameNode);
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(folderNameNode);
 
         //folder text node
         const folderTextNode: Text = document.createTextNode("Folder: ");
@@ -157,7 +159,7 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         //folder name input container node
         const folderNameInputContainerNode: HTMLDivElement = document.createElement('div');
         folderNameInputContainerNode.setAttribute("id", "create-file-modal-folder-name-input-container-node");
-        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(folderNameInputContainerNode);
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(folderNameInputContainerNode);
 
         //folder name input node
         const folderNameInputNode: HTMLInputElement = document.createElement('input');
@@ -170,8 +172,53 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         (folderNameInputNode as HTMLInputElement).value = folderName;
     }
 
-    private createFileModalNewFileTextNode(): void {
-        return;
+    protected createFileModalNewFileNameNode(): void {
+        //new file name node
+        const newFileNameNode: HTMLDivElement = document.createElement('div');
+        newFileNameNode.setAttribute("id", "create-file-modal-new-file-name-node");
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(newFileNameNode);
+
+        //new file name text node
+        const newFileNameTextNode: Text = document.createTextNode("File name: ");
+        newFileNameNode.appendChild(newFileNameTextNode);
+
+        //new file name input node container
+        const newFileNameInputNodeContainer: HTMLDivElement = document.createElement('div');
+        newFileNameInputNodeContainer.setAttribute("id", "create-file-modal-new-file-name-input-node-container");
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(newFileNameInputNodeContainer);
+
+        //new file name input node
+        const newFileNameInputNode: HTMLInputElement = document.createElement('input');
+        newFileNameInputNode.setAttribute("id", "create-file-modal-new-file-name-input-node");
+        newFileNameInputNode.setAttribute("type", "text");
+        newFileNameInputNode.setAttribute("placeholder", "Enter a file name...");
+        newFileNameInputNode.setAttribute("spellcheck", "false");
+        newFileNameInputNodeContainer.appendChild(newFileNameInputNode);
+
+        //focus the new file name input node
+        newFileNameInputNode.focus();
+    }
+
+    protected createFileModalNewFileExtNode(): void {
+        const newFileExtNode: HTMLDivElement = document.createElement('div');
+        newFileExtNode.setAttribute("id", "create-file-modal-new-file-ext-node");
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(newFileExtNode);
+
+        const newFileExtTextNode: Text = document.createTextNode("Extension: ");
+        newFileExtNode.appendChild(newFileExtTextNode);
+
+        const newFileExtInputNodeContainer: HTMLDivElement = document.createElement('div');
+        newFileExtInputNodeContainer.setAttribute("id", "create-file-modal-new-file-ext-input-node-container");
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(newFileExtInputNodeContainer);
+
+        const newFileExtInputNode: HTMLInputElement = document.createElement('input');
+        newFileExtInputNode.setAttribute("id", "create-file-modal-new-file-ext-input-node");
+        newFileExtInputNode.setAttribute("type", "text");
+        newFileExtInputNode.setAttribute("placeholder", "Enter an extension...");
+        newFileExtInputNode.setAttribute("spellcheck", "false");
+        newFileExtInputNodeContainer.appendChild(newFileExtInputNode);
+
+        (newFileExtInputNode as HTMLInputElement).value = ".md";
     }
 
     /**
@@ -190,11 +237,18 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         DirectoryTreeUIModals.createFileModalInnerWindow.setAttribute("id", "create-file-modal-inner-window");
         DirectoryTreeUIModals.createFileModalContainer.appendChild(DirectoryTreeUIModals.createFileModalInnerWindow);
 
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer = document.createElement('div');
+        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.setAttribute("id", "create-file-modal-inner-window-text-container");
+        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalInnerWindowTextContainer);
+
         //invoke createFileModalExitNode
         this.createFileModalExitNode();
 
         //invoke createFileModalContinueNode
         this.createFileModalContinueNode();
+
+        //invoke createFileModalNewFileExtNode
+        //this.createFileModalNewFileExtNode();
     }
 }
 
@@ -205,7 +259,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * @protected 
      * @readonly
      */
-    protected readonly folderNames: string[]  = this.getRootNames();
+    protected readonly folderNames: string[] = this.getRootNames();
 
     /**
      * Get root names 

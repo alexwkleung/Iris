@@ -348,7 +348,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                             //invoke the exit listener for the create file modal
                             this.createFileModalExitListener();
-                            
+
                             //map over parent child data props
                             RefsNs.currentParentChildData.map((props) => {
                                 //null check
@@ -356,14 +356,23 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                                     //override current parent folder name ref
                                     props.parentFolderName = this.parentNameTags[i].textContent as string;
 
+                                    //invoke createFileModalCurrentFolderNode
                                     this.createFileModalCurrentFolderNode(props.parentFolderName);
 
                                     //log
                                     //console.log(props.parentFolderName);
                                     //log
                                     //console.log(props.parentFolderNode);
+
+                                    //add event listener for continue....
                                 }
                             });
+
+                            //invoke createFileModalNewFileNameNode 
+                            this.createFileModalNewFileNameNode();
+
+                            //invoke createFileModalNewFileExtNode
+                            this.createFileModalNewFileExtNode();
                         } else if(!createFileNode[i].classList.contains('show-create-file')) {
                             createFileNode[i].classList.remove('show-create-file');        
                         }

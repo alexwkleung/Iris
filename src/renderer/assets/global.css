@@ -78,6 +78,8 @@ body {
 }
 .parent-folder-name:hover {
     cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: rgb(140, 89, 234);
 }
 .parent-of-root-folder:hover {
     cursor: pointer;
@@ -292,6 +294,53 @@ body {
     -webkit-user-select: none;
     user-select: none;
 }
+#create-file-modal-new-file-name-node {
+    position: fixed;
+    color: white;
+    margin-top: 10px;
+    margin-left: 225px;
+    font-family: 'Inter-Regular';
+    font-size: 20px;
+}
+#create-file-modal-new-file-name-input-node {
+    position: fixed;
+    margin-top: 10px;
+    margin-left: 330px;
+    font-family: 'Inter-Regular';
+    font-size: 20px;
+    color: white;
+    background-color: #494747;
+    border: 0px;
+    width: 198px;
+}
+#create-file-modal-new-file-name-input-node:focus {
+    outline: none;
+}
+#create-file-modal-new-file-ext-node {
+    position: fixed;
+    color: white;
+    margin-top: 45px;
+    margin-left: 225px;
+    font-family: 'Inter-Regular';
+    font-size: 20px;
+}
+#create-file-modal-new-file-ext-input-node {
+    position: fixed;
+    margin-top: 45px;
+    margin-left: 330px;
+    font-family: 'Inter-Regular';
+    font-size: 20px;
+    color: white;
+    background-color: #494747;
+    border: 0px;
+    width: 198px;
+}
+#create-file-modal-new-file-ext-input-node:focus {
+    outline: none;
+}
+#create-file-modal-inner-window-text-container {
+    margin-top: -25px;
+}
 
 /* 
 * milkdown editor nodes 
@@ -327,7 +376,7 @@ body {
 }
 
 .milkdown a {
-    color: rgb(103, 103, 167);
+    color: rgb(136, 136, 220);
 }
 
 .milkdown strong {
