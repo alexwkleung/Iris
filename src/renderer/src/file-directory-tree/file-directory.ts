@@ -246,9 +246,6 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
 
         //invoke createFileModalContinueNode
         this.createFileModalContinueNode();
-
-        //invoke createFileModalNewFileExtNode
-        //this.createFileModalNewFileExtNode();
     }
 }
 

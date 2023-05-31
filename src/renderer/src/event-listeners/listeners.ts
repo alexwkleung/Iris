@@ -33,6 +33,8 @@ namespace RefsNs {
     * 
     * References of the current parent folder and child file data can be accessed here.
     * 
+    * Since the references may change, you will have to reassign the values.
+    * 
     */
     export const currentParentChildData: ICurrentParentChildData<string, Element>[] = [
         {
@@ -131,7 +133,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                         
                         //call child node listener when parent is active 
                         this.childNodeListener();
-                        //console.log(this.getParentTags[i].getElementsByClassName('child-file-name').length);
+
+                    //console.log(this.getParentTags[i].getElementsByClassName('child-file-name').length);
                     //if parent tag doesn't contain is-active-parent class
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
                         //remove all child files
@@ -154,21 +157,22 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     }
                     
                     //assign refs
+                    /*
                     if(this.parentNameTagRef !== null && this.parentTagNodeRef !== null) {            
-                        this.parentNameTagRef = this.getParentNameTags[i].textContent as string;                                            
+                        this.parentNameTagRef = this.getParentNameTags[i].textContent as string;
                         this.parentTagNodeRef = this.getParentNameTags[i];
                     }
-                                
+                    
                     RefsNs.currentParentChildData.map((props) => {
                         //null check
                         if(props !== null) {
                             //parent folder name
-                            props.parentFolderName = this.parentNameTagRef;
-                                      
+                            props.parentFolderName = this.parentNameTagRef;                               
                             //parent folder node
                             props.parentFolderNode = this.parentTagNodeRef;
                         }
                     })
+                */
                 });
             }
         } else {
@@ -203,7 +207,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     childFileName[i].classList.add('is-active-child');
 
                     for(let j = 0; j < this.getParentTags.length, j < this.getParentNameTags.length; j++) {
-                        if(this.getParentTags[j].contains(childFileName[i])) {
+                        if(this.getParentTags[j].contains(childFileName[i]) && childFileName[i].classList.contains('is-active-child')) {
                             //log parent folder
                             //console.log(this.getParentNameTags[j].textContent);
                             //log child file that corresponds to parent folder
@@ -250,10 +254,36 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //null check
                             if(this.parentNameTagRef !== null && this.childFileNodeRef !== null) {
                                 //assign refs
-                                this.childFileNameRef =  childFileName[i].textContent as string;
+                                this.childFileNameRef = childFileName[i].textContent as string;
                                 this.childFileNodeRef = childFileName[i];
+
+                                this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
+                                this.parentTagNodeRef = this.getParentNameTags[j];
                             }
-                        } else if(!this.getParentTags[j].contains(childFileName[i])) {
+                            
+                            //assign references to corresponding key properties
+                            RefsNs.currentParentChildData.map((props) => {
+                                //null check
+                                if(props !== null) {
+                                    //child file name
+                                    props.childFileName = this.childFileNameRef;
+
+                                    //child file node
+                                    props.childFileNode = this.childFileNodeRef;
+
+                                    //parent folder name
+                                    props.parentFolderName = this.parentNameTagRef; 
+
+                                    //parent folder node
+                                    props.parentFolderNode = this.parentTagNodeRef;
+
+                                    //log
+                                    //console.log(props.childFileName);
+                                    //log
+                                    //console.log(props.childFileNode);
+                                }
+                            })
+                        } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }
                     }
@@ -262,22 +292,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     //as a visual indicator
                     await setWindowTitle("Iris", true, childFileName[i].textContent).catch((e) => { throw console.error(e) });
 
-                    //assign references to corresponding key properties
-                    RefsNs.currentParentChildData.map((props) => {
-                        //null check
-                        if(props !== null) {
-                            //child file name
-                            props.childFileName = this.childFileNameRef;
-
-                            //child file node
-                            props.childFileNode = this.childFileNodeRef;
-
-                            //log
-                            //console.log(props.childFileName);
-                            //log
-                            //console.log(props.childFileNode);
-                        }
-                    })
                 });
             }
         });
@@ -327,7 +341,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         const createFileNode: NodeListOf<Element> = document.querySelectorAll('.create-new-file');
 
         this.parentTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-of-root-folder');
-        this. parentNameTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-folder-name');
+        this.parentNameTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-folder-name');
 
         for(let i = 0; i < this.parentNameTags.length; i++) {
             //when a parent name tag is clicked 
@@ -401,7 +415,12 @@ export class EditorListeners extends DirectoryTreeListeners implements IEditorLi
                 if(props !== null) {
                     //write to file
                     //const t0: number = performance.now(); //start perf timer
-                    fsMod.fs._writeToFile(props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));
+
+                    //log
+                    //console.log(props.parentFolderName);
+
+                    fsMod.fs._writeToFile(props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
+                    
                     //const t1: number = performance.now(); //end perf timer
                     //log perf timer
                     //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
