@@ -155,24 +155,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             }
                         );
                     }
-                    
-                    //assign refs
-                    /*
-                    if(this.parentNameTagRef !== null && this.parentTagNodeRef !== null) {            
-                        this.parentNameTagRef = this.getParentNameTags[i].textContent as string;
-                        this.parentTagNodeRef = this.getParentNameTags[i];
-                    }
-                    
-                    RefsNs.currentParentChildData.map((props) => {
-                        //null check
-                        if(props !== null) {
-                            //parent folder name
-                            props.parentFolderName = this.parentNameTagRef;                               
-                            //parent folder node
-                            props.parentFolderNode = this.parentTagNodeRef;
-                        }
-                    })
-                */
                 });
             }
         } else {

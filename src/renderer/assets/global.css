@@ -16,8 +16,7 @@
 
 /* body */
 body {
-    /* should be #ffffff but make the background colour the same as the editor until media queries are added */
-    background-color: #1a1a1a;
+    background-color: #000000;
 
     /* fix margin */
     margin: 0 auto;
