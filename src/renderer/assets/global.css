@@ -307,6 +307,9 @@ body {
     font-family: 'Inter-Regular';
     font-size: 20px;
 }
+#create-file-modal-new-file-name-node:hover {
+    cursor: default;
+}
 #create-file-modal-new-file-name-input-node {
     position: fixed;
     margin-top: 10px;
@@ -328,6 +331,9 @@ body {
     margin-left: 225px;
     font-family: 'Inter-Regular';
     font-size: 20px;
+}
+#create-file-modal-new-file-ext-node:hover {
+    cursor: default;
 }
 #create-file-modal-new-file-ext-input-node {
     position: fixed;

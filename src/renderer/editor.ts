@@ -25,12 +25,5 @@ export namespace EditorNs {
 
         //create milkdown editor
         await MilkdownEditor.createEditor();
-
-        //(document.querySelector('.ProseMirror') as Element).addEventListener('click', () => {
-            console.log((document.querySelector(".ProseMirror") as Element).clientWidth);
-            console.log((document.querySelector(".ProseMirror") as Element).clientHeight);
-            //console.log((document.querySelector("#file-directory-tree-container") as Element).clientWidth);
-            //console.log((document.querySelector("#file-directory-tree-container") as Element).clientHeight);
-        //})
     }
 }

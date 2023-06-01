@@ -288,10 +288,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                         }
                     }
                     
-                    //change document title so it corresponds to the opened file
-                    //as a visual indicator
-                    await setWindowTitle("Iris", true, childFileName[i].textContent).catch((e) => { throw console.error(e) });
-
+                    //change document title so it corresponds to the opened file as a visual indicator
+                    await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + childFileName[i].textContent).catch((e) => { throw console.error(e) });
                 });
             }
         });
