@@ -46,20 +46,24 @@ namespace RefsNs {
     ];
 }
 
+/**
+ * @extends DirectoryTree
+ * @implements `IDirectoryTreeListeners`
+ */
 export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryTreeListeners {
     /**
      * Get parent tags
      * 
      * @private
      */
-    private getParentTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
+    private getParentTags: NodeListOf<Element> = {} as NodeListOf<Element>;
 
     /**
      * Get parent name tags
      * 
      * @private
      */
-    private getParentNameTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
+    private getParentNameTags: NodeListOf<Element> = {} as NodeListOf<Element>;
 
     /**
      * Parent name tag reference variable
@@ -113,8 +117,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      * Parent root listener 
      */
     public parentRootListener(): void {
-        this.getParentTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-of-root-folder');
-        this.getParentNameTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-folder-name');
+        this.getParentTags = document.querySelectorAll('.parent-of-root-folder');
+        this.getParentNameTags = document.querySelectorAll('.parent-folder-name');
 
         if(this.getParentTags !== null && this.getParentNameTags !== null) {
             for(let i = 0; i < this.getParentTags.length; i++) {
@@ -134,7 +138,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                         //call child node listener when parent is active 
                         this.childNodeListener();
 
-                    //console.log(this.getParentTags[i].getElementsByClassName('child-file-name').length);
+                    //console.log(this.getParentTags[i].querySelectorAll('.child-file-name').length);
                     //if parent tag doesn't contain is-active-parent class
                     } else if(!this.getParentTags[i].classList.contains('is-active-parent')) {
                         //remove all child files
@@ -167,7 +171,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      */
     public childNodeListener(): void {
         document.querySelectorAll('.is-active-parent').forEach((isActiveParent) => {
-            const childFileName: HTMLCollectionOf<Element> = isActiveParent.getElementsByClassName('child-file-name');
+            const childFileName: NodeListOf<Element> = isActiveParent.querySelectorAll('.child-file-name');
 
             //for all child file names
             for(let i = 0; i < childFileName.length; i++) {
@@ -278,20 +282,24 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
     }
 }
 
+/**
+ * @extends DirectoryTreeUIModals
+ * @implements `IDirectoryTreeUIModalListeners`
+ */
 export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals implements IDirectoryTreeUIModalListeners {
     /**
      * Parent tags
      * 
      * @private
      */
-    private parentTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
+    private parentTags: NodeListOf<Element> = {} as NodeListOf<Element>;
 
     /**
      * Parent name tags
      * 
      * @private
      */
-    private parentNameTags: HTMLCollectionOf<Element> = {} as HTMLCollectionOf<Element>;
+    private parentNameTags: NodeListOf<Element> = {} as NodeListOf<Element>;
 
     /**
      * Create file modal exit listener
@@ -320,8 +328,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     public createFileListener(): void {
         const createFileNode: NodeListOf<Element> = document.querySelectorAll('.create-new-file');
 
-        this.parentTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-of-root-folder');
-        this.parentNameTags = (document.querySelector('#file-directory-tree-container') as HTMLDivElement).getElementsByClassName('parent-folder-name');
+        this.parentTags = document.querySelectorAll('.parent-of-root-folder');
+        this.parentNameTags = document.querySelectorAll('.parent-folder-name');
 
         for(let i = 0; i < this.parentNameTags.length; i++) {
             //when a parent name tag is clicked 
@@ -379,7 +387,10 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     }
 }
 
-export class EditorListeners extends DirectoryTreeListeners implements IEditorListeners {
+/**
+ * @implements `IEditorListeners`
+ */
+export class EditorListeners implements IEditorListeners {
     /**
      * Auto save listener
      * 
@@ -389,23 +400,25 @@ export class EditorListeners extends DirectoryTreeListeners implements IEditorLi
         const editors: HTMLDivElement = document.querySelector('.ProseMirror') as HTMLDivElement;
 
         //when a keyboard press is released
-        editors.addEventListener('keyup', () => {
-            RefsNs.currentParentChildData.map((props) =>  {
-                //null check
-                if(props !== null) {
-                    //write to file
-                    //const t0: number = performance.now(); //start perf timer
+        if(editors !== null) {
+            editors.addEventListener('keyup', () => {
+                RefsNs.currentParentChildData.map((props) =>  {
+                    //null check
+                    if(props !== null) {
+                        //write to file
+                        //const t0: number = performance.now(); //start perf timer
 
-                    //log
-                    //console.log(props.parentFolderName);
+                        //log
+                        //console.log(props.parentFolderName);
 
-                    fsMod.fs._writeToFile(props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
-                    
-                    //const t1: number = performance.now(); //end perf timer
-                    //log perf timer
-                    //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
-                }
+                        fsMod.fs._writeToFile(props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
+                        
+                        //const t1: number = performance.now(); //end perf timer
+                        //log perf timer
+                        //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
+                    }
+                });
             });
-        });
+        }
     }
 }
