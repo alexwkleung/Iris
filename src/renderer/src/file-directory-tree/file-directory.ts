@@ -48,9 +48,13 @@ class DirectoryTreeUIElements {
         createFileNode.setAttribute("class", "create-new-file");
         parentFolder.appendChild(createFileNode);
 
+        const createFileTextNodeContainer: HTMLDivElement = document.createElement('div');
+        createFileTextNodeContainer.setAttribute("class", "create-new-file-text-node-inner-container");
+        createFileNode.appendChild(createFileTextNodeContainer);
+
         //create file text node
         const createFileTextNode: Text = document.createTextNode("+");
-        createFileNode.appendChild(createFileTextNode);
+        createFileTextNodeContainer.appendChild(createFileTextNode);
     }
     
     /**
