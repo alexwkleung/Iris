@@ -43,7 +43,7 @@ body {
     -webkit-user-select: none;
     user-select: none;
     font-family: 'Inter-Regular';
-    border-radius: 25px;
+    /*border-radius: 25px;*/
     margin-top: 0px;
     top: 2px;
     /*margin: 0;*/

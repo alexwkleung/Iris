@@ -10,6 +10,10 @@
 
 v0.2.0 is currently in progress. For v0.1.x source code, [see here](https://github.com/alexwkleung/Iris/tree/main/v0.1.x).
 
+# Installation
+
+TBA.
+
 # Development 
 
 Install [Rust](https://www.rust-lang.org/tools/install)
