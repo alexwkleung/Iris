@@ -405,8 +405,8 @@ body {
     font-family: 'Inter-Bold'
 }
 
-.milkdown img { 
-    width: auto;
+.milkdown img {
+    max-width: calc(100% - 15px);
 }
 
 .milkdown hr {
