@@ -11,6 +11,8 @@ contains modifications by @alexwkleung
 pre { 
 	background-color: #211f29;
 	padding: 10px;
+	width: calc(100% - 40px);
+	caret-color: white;
 }
 
 code[class*="language-"],
@@ -70,6 +72,10 @@ pre[class*="language-"] {
 .token.doctype,
 .token.cdata {
 	color: #6c6783;
+}
+
+code {
+	color: rgb(255, 204, 153);
 }
 
 .token.punctuation {

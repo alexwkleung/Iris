@@ -21,6 +21,8 @@
 }
 
 .ProseMirror {
+  caret-color: black; /* light */
+  /* caret-color: white; */ /* dark */
   word-wrap: break-word;
   white-space: pre-wrap;
   white-space: break-spaces;
@@ -31,17 +33,20 @@
   overflow-y: scroll;
   overflow-x: scroll;
   width: calc(100% - 318px);
-  height: calc(100% - 8px);
+  height: calc(100% - 556px);
   font-size: 18px;
   font-family: 'Inter-Regular';
-  background-color: #202020;
-  color: white;
+  /*background-color: #202020;*/ /* dark */
+  background-color: #e0dfdf; /* light */
+  color: black;
   padding-left: 15px;
   top: 2px;
   bottom: 200px;
   border: 1px solid #2e2e2e;
   /*border-radius: 25px;*/
   margin-top: 0px;
+  padding-bottom: 500px;
+  padding-top: 50px;
   /* 
   https://web.dev/content-visibility/ 
   */

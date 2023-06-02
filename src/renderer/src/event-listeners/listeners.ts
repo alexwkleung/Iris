@@ -238,15 +238,15 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             proseMirrorNode.focus();
 
                             //null check
-                            if(this.parentNameTagRef !== null && this.childFileNodeRef !== null) {
+                            if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {
                                 //assign refs
                                 this.childFileNameRef = childFileName[i].textContent as string;
                                 this.childFileNodeRef = childFileName[i];
 
                                 this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
-                                this.parentTagNodeRef = this.getParentNameTags[j];
+                                this.parentTagNodeRef = this.getParentTags[j];
                             }
-                            
+
                             //assign references to corresponding key properties
                             RefsNs.currentParentChildData.map((props) => {
                                 //null check
