@@ -24,10 +24,12 @@ export namespace ListenerNs {
 }
 
 function invokeListeners(): void {
-    ListenerNs.directoryTreeListeners();
-
-    ListenerNs.editorListeners();
-
-    ListenerNs.directoryTreeUIModalListeners();
+    window.addEventListener('load', async () => {
+        ListenerNs.directoryTreeListeners();
+        
+        ListenerNs.editorListeners();
+        
+        ListenerNs.directoryTreeUIModalListeners();
+    });
 }
 invokeListeners();

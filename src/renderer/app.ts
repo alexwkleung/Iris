@@ -52,7 +52,9 @@ export class App {
 }
 
 function createApp(): void {
-    //call app
-    App.app();
+    document.addEventListener('DOMContentLoaded', () => {
+        //call app
+        App.app();
+    });
 }
 createApp();
