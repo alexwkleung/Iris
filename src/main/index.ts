@@ -14,7 +14,7 @@ function createWindow(): void {
 
   const mainWindow = new BrowserWindow({
       width: 1200,
-      height: 800,
+      height: 750,
       show: false,
       autoHideMenuBar: true,
       titleBarStyle: 'hiddenInset',
@@ -26,7 +26,7 @@ function createWindow(): void {
   });
 
   //set min window size 
-  mainWindow.setMinimumSize(1200, 800);
+  mainWindow.setMinimumSize(800, 600);
 
   mainWindow.on('ready-to-show', () => {
       mainWindow.show();

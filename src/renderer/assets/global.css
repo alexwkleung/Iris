@@ -236,10 +236,9 @@ body {
     transform: translate(-50%, -50%);
     width: 700px;
     height: 400px;
-    background-color: #232222;
+    background-color: #222020;
     z-index: 1;
     border: 1px solid grey;
-    border-radius: 25px;
 }
 #create-file-modal-exit {
     z-index: 1;

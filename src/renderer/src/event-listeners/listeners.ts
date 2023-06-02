@@ -25,6 +25,7 @@ namespace RefsNs {
         parentFolderName: T,
         childFileName: T,
         parentFolderNode: K,
+        parentFolderNameNode: K,
         childFileNode: K
     }
 
@@ -41,6 +42,7 @@ namespace RefsNs {
             parentFolderName: "",
             childFileName: "",
             parentFolderNode: {} as Element,
+            parentFolderNameNode: {} as Element,
             childFileNode: {} as Element
         }
     ];
@@ -71,6 +73,13 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      * @protected
      */
     protected parentNameTagRef: string = "";
+
+    /**
+     * Parent name tag node reference variable
+     * 
+     * @protected
+     */
+    protected parentNameTagNodeRef: Element = {} as Element;
 
     /**
      * Child file name reference variable
@@ -194,6 +203,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                     for(let j = 0; j < this.getParentTags.length, j < this.getParentNameTags.length; j++) {
                         if(this.getParentTags[j].contains(childFileName[i]) && childFileName[i].classList.contains('is-active-child')) {
+                            console.log(this.getParentNameTags[j]);
                             //log parent folder
                             //console.log(this.getParentNameTags[j].textContent);
                             //log child file that corresponds to parent folder
@@ -244,6 +254,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 this.childFileNodeRef = childFileName[i];
 
                                 this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
+                                this.parentNameTagNodeRef = this.getParentNameTags[j];
                                 this.parentTagNodeRef = this.getParentTags[j];
                             }
 
@@ -259,6 +270,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                                     //parent folder name
                                     props.parentFolderName = this.parentNameTagRef; 
+
+                                    //parent folder name node
+                                    props.parentFolderNameNode = this.parentNameTagNodeRef;
 
                                     //parent folder node
                                     props.parentFolderNode = this.parentTagNodeRef;
@@ -410,7 +424,6 @@ export class EditorListeners implements IEditorListeners {
 
                         //log
                         //console.log(props.parentFolderName);
-
                         fsMod.fs._writeToFile(props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
                         
                         //const t1: number = performance.now(); //end perf timer

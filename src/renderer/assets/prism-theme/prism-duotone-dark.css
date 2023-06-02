@@ -74,7 +74,8 @@ pre[class*="language-"] {
 	color: #6c6783;
 }
 
-code {
+/* only in prism */
+pre code {
 	color: rgb(255, 204, 153);
 }
 
