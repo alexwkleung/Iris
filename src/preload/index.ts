@@ -54,14 +54,14 @@ const fsMod = {
     _walkNoExt(dir: string): string[] {
         return walkNoExt(dir);
     },
-    _readFileRoot(file: string): string {
-        return readFile(baseDir("home") + "/Iris/Notes/" + file);
+    _readFileRoot(type: string, file: string): string {
+        return readFile(baseDir("home") + "/Iris/" + type + "/" + file);
     },
-    _readFileFolder(folder: string, file: string): string {
-        return readFile(baseDir("home") + "/Iris/Notes/"+ folder + "/" + file);
+    _readFileFolder(folder: string, file: string, type: string): string {
+        return readFile(baseDir("home") + "/Iris/" + type + "/" + folder + "/" + file);
     },
-    _writeToFile(path: string, content: string): void {
-        return writeToFile(baseDir("home") + "/Iris/Notes/" + path, content);
+    _writeToFile(type: string, path: string, content: string): void {
+        return writeToFile(baseDir("home") + "/Iris/" + type + "/" + path, content);
     }
 }
 

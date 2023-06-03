@@ -9,6 +9,7 @@ import {
     IDirectoryTreeListeners, 
     IEditorListeners 
 } from "../interfaces/listener-interfaces"
+import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 namespace RefsNs {
@@ -203,7 +204,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                     for(let j = 0; j < this.getParentTags.length, j < this.getParentNameTags.length; j++) {
                         if(this.getParentTags[j].contains(childFileName[i]) && childFileName[i].classList.contains('is-active-child')) {
-                            console.log(this.getParentNameTags[j]);
                             //log parent folder
                             //console.log(this.getParentNameTags[j].textContent);
                             //log child file that corresponds to parent folder
@@ -218,7 +218,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //since it resets the contenteditable buffer in memory
 
                             //const t0: number = performance.now(); //start perf timer
-                            MilkdownEditor.editor.action(replaceAll(fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, childFileName[i].textContent as string), true));      
+                            MilkdownEditor.editor.action(replaceAll(fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, childFileName[i].textContent as string, DirectoryRefNs.basicRef), true));      
                             //const t1: number = performance.now(); //end perf timer
                             //log perf timer
                             //console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
@@ -253,9 +253,13 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 this.childFileNameRef = childFileName[i].textContent as string;
                                 this.childFileNodeRef = childFileName[i];
 
-                                this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
-                                this.parentNameTagNodeRef = this.getParentNameTags[j];
-                                this.parentTagNodeRef = this.getParentTags[j];
+                                if(this.getParentTags[j].contains(this.getParentNameTags[j])) {
+                                    this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
+                                    this.parentNameTagNodeRef = this.getParentNameTags[j];
+                                    this.parentTagNodeRef = this.getParentTags[j];
+                                } else if(!this.getParentTags[j].contains(this.getParentNameTags[j])) {
+                                    continue;
+                                }
                             }
 
                             //assign references to corresponding key properties
@@ -424,7 +428,7 @@ export class EditorListeners implements IEditorListeners {
 
                         //log
                         //console.log(props.parentFolderName);
-                        fsMod.fs._writeToFile(props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
+                        fsMod.fs._writeToFile(DirectoryRefNs.basicRef, props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
                         
                         //const t1: number = performance.now(); //end perf timer
                         //log perf timer

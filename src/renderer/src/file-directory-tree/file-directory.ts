@@ -1,6 +1,15 @@
 import { App } from '../../app'
 import { fsMod } from '../utils/alias'
 
+//eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace DirectoryRefNs {
+    //eslint-disable-next-line prefer-const
+    export let basicRef: string = "";
+
+    //eslint-disable-next-line prefer-const
+    export let advancedRef: string = "";
+}
+
 export class FileDirectoryTreeNode {
     /**
      * File directory tree node 
@@ -99,6 +108,11 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
      */
     public static createFileModalInnerWindow: HTMLDivElement;
 
+    /**
+     * Create file modal inner window text container
+     * 
+     * @static
+     */
     public static createFileModalInnerWindowTextContainer: HTMLDivElement;
 
     /**
@@ -255,32 +269,39 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
 
 export class DirectoryTree extends DirectoryTreeUIElements {
     /**
-     * Contains value of `getRootNames` function
+     * Contains value of `getRootNames` function (basic)
      * 
      * @protected 
      * @readonly
      */
-    protected readonly folderNames: string[] = this.getRootNames();
+    protected readonly folderNamesBasic: string[] = this.getRootNames("Basic");
 
     /**
      * Get root names 
      * 
      * @returns Filtered names of folders from root
      */
-    public getRootNames(): string[] {
-        //walk directory recursively
-        //eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const walkRef: string[] = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes").slice(1);
-
+    public getRootNames(type: string): string[] {
+        let walkRef: string[] = [];
+        let filteredRootFolderNamesVec: string[] = [];
         const nameVecTemp: string[] = [];
-    
-        fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/Notes").map((elem) => nameVecTemp.push(elem));
-    
-        const filteredRootFolderNamesVec: string[] = nameVecTemp.filter((filter: string): boolean => {
-            return [".DS_Store"].some((end) => {
-                return !filter.endsWith(end);
+        
+        if(type === "Basic") {
+            //walk directory recursively
+            //eslint-disable-next-line @typescript-eslint/no-unused-vars
+            walkRef = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/" + type).slice(1);
+        
+            fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + type).map((elem) => nameVecTemp.push(elem));
+        
+            filteredRootFolderNamesVec = nameVecTemp.filter((filter: string): boolean => {
+                return [".DS_Store"].some((end) => {
+                    return !filter.endsWith(end);
+                });
             });
-        });
+
+            //assign basic ref 
+            DirectoryRefNs.basicRef = type;
+        }
 
         return filteredRootFolderNamesVec;
     }
@@ -293,8 +314,8 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * Create directory tree parent nodes
      */
     public createDirTreeParentNodes(): void {  
-        this.folderNames.map((elem) => {
-            if(this.isFolderNode("home", "/Iris/Notes/" + elem)) {
+        this.folderNamesBasic.map((elem) => {
+            if(this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                 //create parent folder node
                 const parentFolder: HTMLDivElement = document.createElement('div');
                 parentFolder.setAttribute("class", "parent-of-root-folder");
@@ -318,7 +339,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
                 //temp
                 this.createFileNode(parentFolder);
-            } else if(!this.isFolderNode("home", "/Iris/Notes/" + elem)) {
+            } else if(!this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                   //create parent folder node
                   const childFileRoot: HTMLDivElement = document.createElement('div');
     
@@ -345,7 +366,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     ): void {
         //walk directory recursively
         //eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const walkRef: string[] = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes/" + parentNameTags).slice(1);
+        const walkRef: string[] = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags).slice(1);
 
         const dirNamesArr: string[] = [];
         
