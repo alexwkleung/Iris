@@ -1,18 +1,17 @@
 import { fsMod }  from "../utils/alias"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { MilkdownEditor } from "../milkdown/milkdown-editor"
-import { replaceAll, getMarkdown } from '@milkdown/utils'
+import { replaceAll } from '@milkdown/utils'
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
 import { setWindowTitle } from "../utils/window-title"
 import { 
     IDirectoryTreeUIModalListeners, 
-    IDirectoryTreeListeners, 
-    IEditorListeners 
+    IDirectoryTreeListeners
 } from "../interfaces/listener-interfaces"
 import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
-namespace RefsNs {
+export namespace RefsNs {
     /**
      * Generic interface for current parent child data
      * 
@@ -217,12 +216,19 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //note: by setting flush to true, it (somewhat) helps performance when inserting large note content
                             //since it resets the contenteditable buffer in memory
 
-                            //const t0: number = performance.now(); //start perf timer
-                            MilkdownEditor.editor.action(replaceAll(fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, childFileName[i].textContent as string, DirectoryRefNs.basicRef), true));      
-                            //const t1: number = performance.now(); //end perf timer
+                            const t0: number = performance.now(); //start perf timer
+                            MilkdownEditor.editor.action(
+                                replaceAll(
+                                    fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, 
+                                    childFileName[i].textContent as string, 
+                                    DirectoryRefNs.basicRef
+                                ), true)
+                            );      
+                            const t1: number = performance.now(); //end perf timer
+                            
                             //log perf timer
-                            //console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
-
+                            console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
+                            
                             const proseMirrorNode = (document.querySelector('.ProseMirror') as HTMLDivElement);
                             const getSelection = window.getSelection();
                             const createRange = document.createRange();
@@ -405,37 +411,3 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     }
 }
 
-/**
- * @implements `IEditorListeners`
- */
-export class EditorListeners implements IEditorListeners {
-    /**
-     * Auto save listener
-     * 
-     * @public
-     */
-    public autoSaveListener(): void {
-        const editors: HTMLDivElement = document.querySelector('.ProseMirror') as HTMLDivElement;
-
-        //when a keyboard press is released
-        if(editors !== null) {
-            editors.addEventListener('keyup', () => {
-                RefsNs.currentParentChildData.map((props) =>  {
-                    //null check
-                    if(props !== null) {
-                        //write to file
-                        //const t0: number = performance.now(); //start perf timer
-
-                        //log
-                        //console.log(props.parentFolderName);
-                        fsMod.fs._writeToFile(DirectoryRefNs.basicRef, props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
-                        
-                        //const t1: number = performance.now(); //end perf timer
-                        //log perf timer
-                        //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
-                    }
-                });
-            });
-        }
-    }
-}
