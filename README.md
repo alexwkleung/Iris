@@ -46,6 +46,22 @@ make dev
 npm run dev
 ```
 
+At the moment, you will need to manually create the directory and files yourself:
+
+```bash
+# home directory
+cd ~ 
+
+# create main directory
+mkdir Iris
+
+# create basic notes directory
+mkdir Iris/Basic
+
+# create a note
+touch Iris/Basic/Note.md
+```
+
 # License 
 
 [MIT License.](https://github.com/alexwkleung/Iris/blob/main/LICENSE)
