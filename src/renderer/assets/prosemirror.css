@@ -20,9 +20,15 @@
   src: url('./default-fonts/Inter-Bold.ttf');
 }
 
+:root {
+  --caret-color-light: #000000;
+  --caret-color-dark: #ffffff;
+  --prosemirror-bg-light: #e0dfdf;
+  --prosemirror-bg-dark: #202020;
+}
+
 .ProseMirror {
-  caret-color: black; /* light */
-  /* caret-color: white; */ /* dark */
+  caret-color: var(--caret-color-light); /* light */
   word-wrap: break-word;
   white-space: pre-wrap;
   white-space: break-spaces;
@@ -36,8 +42,7 @@
   height: calc(100% - 556px);
   font-size: 18px;
   font-family: 'Inter-Regular';
-  /*background-color: #202020;*/ /* dark */
-  background-color: #e0dfdf; /* light */
+  background-color: var(--prosemirror-bg-light); 
   color: black;
   padding-left: 15px;
   top: 2px;
