@@ -15,6 +15,7 @@
 }
 
 :root {
+    --default-bg: #000000;
     --caret-color-light: #000000;
     --caret-color-dark: #ffffff;
     --file-directory-bg: #131212;
@@ -30,13 +31,13 @@
 
 /* body */
 body {
-    background-color: var(--caret-color-light);
+    background-color: var(--default-bg);
 
     /* fix margin */
     margin: 0 auto;
     
     /* caret colour */
-    caret-color: white;
+    caret-color: var(--caret-color-light);
 }
 
 #draggable-area-window-top {
