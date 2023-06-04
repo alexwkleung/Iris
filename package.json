@@ -29,17 +29,14 @@
   "dependencies": {
     "@electron-toolkit/preload": "^1.0.3",
     "@electron-toolkit/utils": "^1.0.2",
-    "@milkdown/core": "^7.2.1",
-    "@milkdown/plugin-clipboard": "^7.2.1",
-    "@milkdown/plugin-history": "^7.2.1",
-    "@milkdown/plugin-indent": "^7.2.1",
-    "@milkdown/plugin-prism": "^7.2.1",
-    "@milkdown/plugin-upload": "^7.2.1",
-    "@milkdown/preset-commonmark": "^7.2.1",
-    "@milkdown/preset-gfm": "^7.2.1",
     "@napi-rs/cli": "^2.15.2",
     "electron-updater": "^5.3.0",
-    "fs-mod": "./fs-mod"
+    "fs-mod": "./fs-mod",
+    "prosemirror-example-setup": "^1.2.2",
+    "prosemirror-markdown": "^1.11.0",
+    "prosemirror-model": "^1.19.2",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.31.4"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",

@@ -2,8 +2,8 @@ import { IEditorListeners } from "../interfaces/listener-interfaces"
 import { RefsNs } from "./directory-tree-listeners"
 import { fsMod } from "../utils/alias"
 import { DirectoryRefNs } from "../file-directory-tree/file-directory"
-import { MilkdownEditor } from "../milkdown/milkdown-editor"
-import { getMarkdown } from '@milkdown/utils'
+import { defaultMarkdownSerializer } from "prosemirror-markdown"
+import { PMEditorView } from "../prosemirror/editor-view"
 
 /**
  * @implements `IEditorListeners`
@@ -28,8 +28,8 @@ export class EditorListeners implements IEditorListeners {
 
                         //log
                         //console.log(props.parentFolderName);
-                        fsMod.fs._writeToFile(DirectoryRefNs.basicRef, props.parentFolderName + "/" + props.childFileName, MilkdownEditor.editor.action(getMarkdown()));                            
-                        
+                        fsMod.fs._writeToFile(DirectoryRefNs.basicRef, props.parentFolderName + "/" + props.childFileName, defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString());                            
+
                         //const t1: number = performance.now(); //end perf timer
                         //log perf timer
                         //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");

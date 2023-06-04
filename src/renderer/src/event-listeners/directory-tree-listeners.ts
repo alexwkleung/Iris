@@ -1,7 +1,5 @@
 import { fsMod }  from "../utils/alias"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
-import { MilkdownEditor } from "../milkdown/milkdown-editor"
-import { replaceAll } from '@milkdown/utils'
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
 import { setWindowTitle } from "../utils/window-title"
 import { 
@@ -9,6 +7,10 @@ import {
     IDirectoryTreeListeners
 } from "../interfaces/listener-interfaces"
 import { DirectoryRefNs } from "../file-directory-tree/file-directory"
+import { defaultMarkdownParser } from "prosemirror-markdown"
+import { PMEditorView } from "../prosemirror/editor-view"
+import { PMEditorState } from "../prosemirror/editor-state"
+import { EditorListeners } from "./editor-listeners"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -101,6 +103,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      * @protected
      */
     protected childFileNodeRef: Element = {} as Element;
+
+    private editorListeners = new EditorListeners();
 
     /**
      * Parent name tags array
@@ -208,51 +212,40 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //log child file that corresponds to parent folder
                             //console.log(childFileName[i].textContent);
 
-                            //set milkdown editor readonly to true (disables readonly)
-                            MilkdownEditor.readonly = true;
-
-                            //insert contents of clicked child file into milkdown editor
-                            //use parent folder and child file names as arguments
-                            //note: by setting flush to true, it (somewhat) helps performance when inserting large note content
-                            //since it resets the contenteditable buffer in memory
-
                             const t0: number = performance.now(); //start perf timer
-                            MilkdownEditor.editor.action(
-                                replaceAll(
-                                    fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, 
-                                    childFileName[i].textContent as string, 
-                                    DirectoryRefNs.basicRef
-                                ), true)
-                            );      
+
+                            //destroy current editor view
+                            PMEditorView.editorView.destroy();
+                            
+                            //create new editor view
+                            PMEditorView.createEditorView();
+                            
+                            //update editor view state
+                            PMEditorView.editorView.updateState(
+                                //apply transaction
+                                PMEditorView.editorView.state.apply(
+                                    //since editor gets destroyed and re-created, the 
+                                    //range is 0 to 0 
+                                    PMEditorState.editorState.tr.replaceRangeWith(
+                                        0, 
+                                        0,
+                                        //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                        defaultMarkdownParser.parse(
+                                        fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, 
+                                        childFileName[i].textContent as string, 
+                                        DirectoryRefNs.basicRef
+                                    )
+                                )!
+                            )));
+
                             const t1: number = performance.now(); //end perf timer
                             
                             //log perf timer
-                            console.log("Milkdown replaceAll took " + (t1 - t0) + "ms!");
+                            console.log("Editor destroy, replace, and replace in total took " + (t1 - t0) + "ms!");
+
+                            //invoke auto save listener
+                            this.editorListeners.autoSaveListener();
                             
-                            const proseMirrorNode = (document.querySelector('.ProseMirror') as HTMLDivElement);
-                            const getSelection = window.getSelection();
-                            const createRange = document.createRange();
-
-                            //adopted from: https://stackoverflow.com/questions/2388164/set-focus-on-div-contenteditable-element
-
-                            //set start range to the first node
-                            createRange.setStart(proseMirrorNode, 0);
-
-                            //set end range to the first node
-                            createRange.setEnd(proseMirrorNode, 0);
-
-                            if(getSelection !== null) {
-                                //remove all current ranges
-                                getSelection.removeAllRanges();
-
-                                //add range based on new setStart and setEnd values
-                                //the cursor will be at the beginning of the first node instead of random
-                                getSelection.addRange(createRange);
-                            }
-
-                            //focus editor when file is active 
-                            proseMirrorNode.focus();
-
                             //null check
                             if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {
                                 //assign refs

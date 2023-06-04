@@ -1,5 +1,5 @@
 import { DirectoryTreeListeners } from "./src/event-listeners/directory-tree-listeners.js"
-import { EditorListeners } from "./src/event-listeners/editor-listeners.js"
+//import { EditorListeners } from "./src/event-listeners/editor-listeners.js"
 import { DirectoryTreeUIModalListeners } from "./src/event-listeners/directory-tree-listeners.js"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
@@ -10,11 +10,13 @@ export namespace ListenerNs {
         dirTreeListeners.parentRootListener();
     }
 
+    /*
     export function editorListeners(): void {
         const editorListeners = new EditorListeners();
 
         editorListeners.autoSaveListener();
     }
+    */
 
     export function directoryTreeUIModalListeners(): void {
         const dirTreeUIModalListeners = new DirectoryTreeUIModalListeners();
@@ -27,7 +29,7 @@ function invokeListeners(): void {
     window.addEventListener('load', async () => {
         ListenerNs.directoryTreeListeners();
         
-        ListenerNs.editorListeners();
+        //ListenerNs.editorListeners();
         
         ListenerNs.directoryTreeUIModalListeners();
     });
