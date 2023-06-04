@@ -20,10 +20,12 @@ export class PMEditorView {
     public static setContenteditable(enable: boolean): void {
         let contenteditable: void;
 
+        const proseMirrorNode: HTMLElement = document.querySelector('.ProseMirror') as HTMLElement;
+
         if(enable) {
-            contenteditable = (document.querySelector('.ProseMirror') as HTMLElement).setAttribute("contenteditable", "");
+            contenteditable = proseMirrorNode.setAttribute("contenteditable", "");
         } else if(!enable) {
-            contenteditable = (document.querySelector('.ProseMirror') as HTMLElement).setAttribute("contenteditable", "none");
+            contenteditable = proseMirrorNode.setAttribute("contenteditable", "none");
         }
 
         return contenteditable;
