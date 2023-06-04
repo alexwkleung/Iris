@@ -243,6 +243,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //log perf timer
                             console.log("Editor destroy, replace, and replace in total took " + (t1 - t0) + "ms!");
 
+                            //set contenteditable 
+                            PMEditorView.setContenteditable(true);
+
                             //invoke auto save listener
                             this.editorListeners.autoSaveListener();
                             

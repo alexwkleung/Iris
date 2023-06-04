@@ -10,6 +10,26 @@ export class PMEditorView {
     public static editorView: EditorView;
 
     /**
+     * Set contenteditable 
+     * 
+     * @param enable Option to enable contenteditable property (`true` or `false`)
+     * @returns Enabled or disabled `contenteditable` property
+     * 
+     * @static
+     */
+    public static setContenteditable(enable: boolean): void {
+        let contenteditable: void;
+
+        if(enable) {
+            contenteditable = (document.querySelector('.ProseMirror') as HTMLElement).setAttribute("contenteditable", "");
+        } else if(!enable) {
+            contenteditable = (document.querySelector('.ProseMirror') as HTMLElement).setAttribute("contenteditable", "none");
+        }
+
+        return contenteditable;
+    }
+    
+    /**
      * Create editor view 
      * 
      * @returns New editor view object

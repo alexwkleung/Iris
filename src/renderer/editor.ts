@@ -24,5 +24,8 @@ export namespace EditorNs {
 
         //create prosemirror editorview 
         PMEditorView.createEditorView();
+
+        //set contenteditable
+        PMEditorView.setContenteditable(false);
     }
 }
