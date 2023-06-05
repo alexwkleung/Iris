@@ -1,4 +1,4 @@
-import { setWindowTitle } from "./src/utils/window-title"
+import { setWindowTitle } from "./src/window/window-title"
 
 export class App {
     /**

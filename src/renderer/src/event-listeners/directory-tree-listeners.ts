@@ -1,7 +1,7 @@
 import { fsMod }  from "../utils/alias"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
-import { setWindowTitle } from "../utils/window-title"
+import { setWindowTitle } from "../window/window-title"
 import { 
     IDirectoryTreeUIModalListeners, 
     IDirectoryTreeListeners
