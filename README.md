@@ -12,8 +12,8 @@ v0.2.0 is currently in progress. For v0.1.x source code, [see here](https://gith
 
 # Installation
 
-TBA.
-
+For now, follow the instructions in [Development](#development) to try the current build of Iris.
+ 
 # Development 
 
 Install [Rust](https://www.rust-lang.org/tools/install)
@@ -46,7 +46,7 @@ make dev
 npm run dev
 ```
 
-At the moment, you will need to manually create the directory and files yourself:
+At the moment, you will need to manually create the directory and files:
 
 ```bash
 # home directory
