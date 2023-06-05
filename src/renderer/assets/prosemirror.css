@@ -23,8 +23,10 @@
 :root {
   --caret-color-light: #000000;
   --caret-color-dark: #ffffff;
-  --prosemirror-bg-light: #e0dfdf;
-  --prosemirror-bg-dark: #202020;
+  --prosemirror-bg-light: #ececec;
+  --prosemirror-bg-dark: #151515;
+  --prosemirror-color-light: #000000;
+  --prosemirror-color-dark: #eaeaea;
 }
 
 .ProseMirror {
@@ -43,7 +45,7 @@
   font-size: 18px;
   font-family: 'Inter-Regular';
   background-color: var(--prosemirror-bg-light); 
-  color: black;
+  color: var(--prosemirror-color-light);
   padding-left: 15px;
   top: 2px;
   bottom: 200px;

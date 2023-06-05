@@ -217,28 +217,6 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         newFileNameInputNode.focus();
     }
 
-    protected createFileModalNewFileExtNode(): void {
-        const newFileExtNode: HTMLDivElement = document.createElement('div');
-        newFileExtNode.setAttribute("id", "create-file-modal-new-file-ext-node");
-        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(newFileExtNode);
-
-        const newFileExtTextNode: Text = document.createTextNode("Extension: ");
-        newFileExtNode.appendChild(newFileExtTextNode);
-
-        const newFileExtInputNodeContainer: HTMLDivElement = document.createElement('div');
-        newFileExtInputNodeContainer.setAttribute("id", "create-file-modal-new-file-ext-input-node-container");
-        DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(newFileExtInputNodeContainer);
-
-        const newFileExtInputNode: HTMLInputElement = document.createElement('input');
-        newFileExtInputNode.setAttribute("id", "create-file-modal-new-file-ext-input-node");
-        newFileExtInputNode.setAttribute("type", "text");
-        newFileExtInputNode.setAttribute("placeholder", "Enter an extension...");
-        newFileExtInputNode.setAttribute("spellcheck", "false");
-        newFileExtInputNodeContainer.appendChild(newFileExtInputNode);
-
-        (newFileExtInputNode as HTMLInputElement).value = ".md";
-    }
-
     /**
      * Create file modal
      * 

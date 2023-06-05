@@ -253,7 +253,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                             //invoke auto save listener
                             this.editorListeners.autoSaveListener();
-                            
+
                             //null check
                             if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {
                                 //assign refs
@@ -397,9 +397,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                             //invoke createFileModalNewFileNameNode 
                             this.createFileModalNewFileNameNode();
-
-                            //invoke createFileModalNewFileExtNode
-                            this.createFileModalNewFileExtNode();
                         } else if(!createFileNode[i].classList.contains('show-create-file')) {
                             createFileNode[i].classList.remove('show-create-file');        
                         }
