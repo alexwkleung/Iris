@@ -104,6 +104,11 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      */
     protected childFileNodeRef: Element = {} as Element;
 
+    /**
+     * Editor listeners object
+     * 
+     * @private
+     */
     private editorListeners = new EditorListeners();
 
     /**

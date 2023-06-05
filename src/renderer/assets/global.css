@@ -344,6 +344,7 @@ body {
     background-color: #494747;
     border: 0px;
     width: 198px;
+    caret-color: var(--caret-color-dark);
 }
 #create-file-modal-new-file-name-input-node:focus {
     outline: none;
@@ -369,6 +370,7 @@ body {
     background-color: #494747;
     border: 0px;
     width: 198px;
+    caret-color: var(--caret-color-dark);
 }
 #create-file-modal-new-file-ext-input-node:focus {
     outline: none;

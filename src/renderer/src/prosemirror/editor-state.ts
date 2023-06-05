@@ -1,6 +1,6 @@
 import { EditorState } from "prosemirror-state"
 import { DOMParser } from "prosemirror-model"
-import { exampleSetup } from "prosemirror-example-setup"
+import { pmSetup } from "./prosemirror-setup"
 import { schema } from "prosemirror-markdown"
 
 export class PMEditorState {
@@ -21,7 +21,7 @@ export class PMEditorState {
     public static createEditorState(): EditorState {
         PMEditorState.editorState = EditorState.create({
             doc: DOMParser.fromSchema(schema).parse(document.querySelector("#editor-container") as HTMLElement),
-            plugins: exampleSetup({ schema })
+            plugins: pmSetup({ schema })
         });
 
         return PMEditorState.editorState;
