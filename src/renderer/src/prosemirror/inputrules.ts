@@ -1,4 +1,4 @@
-//base: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/inputrules.ts
+//base taken from: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/inputrules.ts
 
 import { 
     inputRules, 

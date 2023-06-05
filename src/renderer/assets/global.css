@@ -27,6 +27,8 @@
     --child-file-name-hover: rgb(140, 89, 234);
     --child-file-name-active: orange;
     --create-new-file-bg: #232222;
+    --prosemirror-pre-bg: rgb(181, 181, 181);
+    --prosemirror-pre-color: #2e2a43;
 }
 
 /* body */
@@ -429,4 +431,15 @@ body {
     border-color: rgb(46, 46, 46);
     width: calc(100% - 25px);
     margin-left: -5px;
+}
+
+.ProseMirror pre {
+    background-color: var(--prosemirror-pre-bg);
+    caret-color: var(--caret-color-light);
+    color: var(--prosemirror-pre-color);
+    width: calc(100% - 40px);
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 25px;
 }

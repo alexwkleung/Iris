@@ -1,4 +1,4 @@
-//base: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/index.ts
+//base taken from: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/index.ts
 
 import { keymap } from "prosemirror-keymap"
 import { history } from "prosemirror-history"

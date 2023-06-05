@@ -1,4 +1,4 @@
-//base: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/keymap.ts
+//base taken from: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/keymap.ts
 
 import {
     wrapIn, 
