@@ -95,7 +95,7 @@ body {
 .parent-folder-name {
     color: var(--parent-folder-name);
     font-size: 20px;
-    margin-left: 20px;
+    margin-left: 25px;
     padding-top: 15px;
     font-family: 'Inter-Bold';
     white-space: nowrap; /* don't wrap name and set overflow-x to handle the nowrap */
@@ -107,7 +107,7 @@ body {
 }
 .parent-folder-name:hover {
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
     text-decoration-color: var(--parent-folder-name-hover);
 }
 .parent-of-root-folder:hover {
@@ -117,7 +117,7 @@ body {
     position: absolute;
     margin-top: -25px;
     margin-right: 100px;
-    margin-left: 3px;
+    margin-left: 7px;
     color: var(--parent-folder-caret);
     font-size: 20px;
     transform: rotate(90deg);
@@ -126,7 +126,7 @@ body {
     position: absolute;
     margin-top: -28px;
     margin-right: 100px;
-    margin-left: 5px;
+    margin-left: 9px;
     color: var(--parent-folder-caret-active);
     font-size: 20px;
     transform: rotate(180deg);
@@ -137,7 +137,7 @@ body {
 */
 .child-file-name {
     color: var(--child-file-name);
-    font-size: 18px;
+    font-size: 16px;
     padding-top: 10px;
     padding-bottom: 2px;
     margin-left: 35px;
@@ -150,7 +150,7 @@ body {
 }
 .child-file-name:hover {
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
     text-decoration-color: var(--child-file-name-hover);
     width: 200px;
     border-radius: 5px;
@@ -159,6 +159,7 @@ body {
     color: var(--child-file-name-active);
     width: 200px;
     border-radius: 5px;
+    /*background-color: rgb(67, 65, 65);*/ /* experimental only */
 }
 
 /* 
