@@ -41,7 +41,7 @@ export class PMEditorView {
     public static createEditorView(): EditorView {
         PMEditorView.editorView = new EditorView(document.querySelector('#editor-container'), {
             state: PMEditorState.createEditorState()
-        }) 
+        }); 
 
         return PMEditorView.editorView;
     }

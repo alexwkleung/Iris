@@ -82,7 +82,9 @@ body {
 */
 #file-directory-tree-container-inner {
     position: relative;
-    margin-top: 70px;
+    margin-top: 80px;
+    /*border: 1px solid white;*/
+    height: calc(100% - 100px)
 }
 
 /*
