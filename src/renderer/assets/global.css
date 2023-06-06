@@ -15,11 +15,11 @@
 }
 
 :root {
-    --default-bg: #000000;
+    --default-bg: #ffffff;
     --caret-color-light: #000000;
     --caret-color-dark: #ffffff;
     --file-directory-bg: #131212;
-    --parent-folder-name: rgb(250, 248, 248);
+    --parent-folder-name: rgb(237, 235, 235);
     --parent-folder-name-hover: rgb(140, 89, 234);
     --parent-folder-caret: rgb(223, 222, 222);
     --parent-folder-caret-active: rgb(223, 222, 222);
@@ -29,11 +29,13 @@
     --create-new-file-bg: #232222;
     --prosemirror-pre-bg: rgb(181, 181, 181);
     --prosemirror-pre-color: #2e2a43;
+    --prosemirror-bg-light: #ececec; /* should match current editor bg */
+    --prosemirror-bg-dark: #151515; /* should match current editor bg */
 }
 
 /* body */
 body {
-    background-color: var(--default-bg);
+    background-color: var(--prosemirror-bg-light);
 
     /* fix margin */
     margin: 0 auto;
@@ -61,7 +63,7 @@ body {
     border: 1px solid #2e2e2e;
     background-color: var(--file-directory-bg);
     width: 292px;
-    height: calc(100% - 6px);
+    height: calc(100% - 1px);
     overflow-y: scroll;
     overflow-x: hidden;
     /* ux purposes */
@@ -70,9 +72,9 @@ body {
     font-family: 'Inter-Regular';
     /*border-radius: 25px;*/
     margin-top: 0px;
-    top: 2px;
+    top: -1px;
     /*margin: 0;*/
-    left: 3px;
+    left: -2px;
     content-visibility: auto; /* helps with scroll performance and load performance */
     contain-intrinsic-size: auto 300px; /* relates to content-visibility */
 }

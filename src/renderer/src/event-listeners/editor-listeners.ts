@@ -29,7 +29,7 @@ export class EditorListeners implements IEditorListeners {
 
                         //log
                         //console.log(props.parentFolderName);
-                        fsMod.fs._writeToFile(DirectoryRefNs.basicRef, props.parentFolderName + "/" + props.childFileName, defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString())                         
+                        fsMod.fs._writeToFile(DirectoryRefNs.basicRef, props.parentFolderName + "/" + props.childFileName, defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString());                         
 
                         //const t1: number = performance.now(); //end perf timer
                         //log perf timer
