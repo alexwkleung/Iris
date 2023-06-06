@@ -202,7 +202,7 @@ body {
 /* create folder */
 #create-folder {
     position: fixed;
-    top: 40px;
+    top: 45px;
     color: white;
     border: 1px solid;
     border-radius: 5px;
@@ -220,7 +220,7 @@ body {
 /* settings node */
 #settings-node {
     position: fixed;
-    top: 40px;
+    top: 45px;
     color: white;
     border: 1px solid;
     border-radius: 5px;

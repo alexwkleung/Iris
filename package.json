@@ -22,7 +22,8 @@
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
     "taze": "npx taze",
-    "taze:write": "npx taze -w"
+    "taze:write": "npx taze -w",
+    "test": "vitest"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^1.0.3",
@@ -55,6 +56,7 @@
     "electron-vite": "^1.0.21",
     "eslint": "^8.40.0",
     "typescript": "^4.9.5",
-    "vite": "^4.2.1"
+    "vite": "^4.2.1",
+    "vitest": "^0.31.4"
   }
 }

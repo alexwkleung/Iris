@@ -17,4 +17,4 @@ export function initRenderer(): void {
 initRenderer();
 
 //log test
-//console.log(window.fsMod._baseDir("home"));
+console.log(window.fsMod._getDirectoryName("/Users/alex/Iris"));
