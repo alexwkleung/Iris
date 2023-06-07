@@ -180,8 +180,6 @@ describe('walk', () => {
         '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test/foo.md',
         '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test/Test.md'
     ];
-
-    console.log(walk(dir));
     
     it('should return an array with elements containing the files/folder paths of the directory being recursively walked on', () => {
         expect(walk(dir)).toStrictEqual(eq);
@@ -205,7 +203,7 @@ describe('walk no extension', () => {
 //write to file 
 describe('write to file', () => {
     const dir: string = path.join(__dirname + "/fixtures/Iris/Test/foo.md");
-    
+
     const content: string = "# Heading 1\n\nA paragraph.";
 
     it("should write the content to the specified path and create it if it doesn't exist", () => {
