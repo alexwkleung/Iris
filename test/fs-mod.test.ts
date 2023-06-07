@@ -16,12 +16,14 @@ import {
     writeToFile
 } from 'fs-mod'
 
+import path from 'path';
+
 /**
  * NOTE: 
  * 
- * currently, test data is based on my own hard coded values
+ * currently, majority of the test data is based on my own hard coded values
  * 
- * others won't be able to run these test cases properly without modifying the values based on their own file system
+ * others won't be able to run these test cases properly without modifying the values
  * 
  * I plan on replacing the hard coded values at a later time
  */
@@ -52,43 +54,43 @@ describe('base directory', () => {
 //get name
 describe('get name', () => {
     it("should return the root directory name of the path only", () => {
-        const path: string = "/Users/alex/Iris";
+        const dir: string = "/Users/alex/Iris";
 
         const eq: string = "Iris";
 
-        expect(getName(path)).toStrictEqual(eq);
+        expect(getName(dir)).toStrictEqual(eq);
     })
 })
 
 //get directory name
 describe('get directory name', () => {
     it('should return the directory name of the path', () => {
-        const path: string = "/Users/alex/Iris";
+        const dir: string = "/Users/alex/Iris";
 
         const eq: string = "/Users/alex";
         
-        expect(getDirectoryName(path)).toStrictEqual(eq);
+        expect(getDirectoryName(dir)).toStrictEqual(eq);
     })
 })
 
 //get name vector
 describe('get name vector', () => {
     it('should return an array containing all directory names of the path', () => {
-        const path: string = "/Users/alex/Iris/Basic";
+        const dir: string = "/Users/alex/Iris/Basic";
         const eq: string[] = [".DS_Store", "Test", "Very long long long long integer", "Sample Notes"];
 
-        expect(getNameVec(path)).toStrictEqual(eq);
+        expect(getNameVec(dir)).toStrictEqual(eq);
     })
 })
 
 //get canonical path
 describe('get canonical path', () => {
-    const path: string = "/Users/alex/Iris";
+    const dir: string = "/Users/alex/Iris";
 
     const eq: string = "/Users/alex/Iris";
 
     it('should return the canonical path', () => {
-        expect(getCanonicalPath(path)).toStrictEqual(eq);
+        expect(getCanonicalPath(dir)).toStrictEqual(eq);
     })
 })
 
@@ -111,11 +113,11 @@ describe('is file', () => {
 
 //is directory
 describe('is directory', () => {
-    const path: string = "/Iris/Basic/Test";
+    const dir: string = "/Iris/Basic/Test";
 
     //truthy
     it('should return true if the path is a directory', () => {
-        expect(isDirectory(baseHome, path)).toStrictEqual(eqTruthy);
+        expect(isDirectory(baseHome, dir)).toStrictEqual(eqTruthy);
     })
 
     //falsy
@@ -126,12 +128,11 @@ describe('is directory', () => {
 
 //is file canonical
 describe('is file canonical', () => {
-    const pathTruthy: string = "/Users/alex/Iris/Basic/Very long long long long integer/Some Random Long Note.md";
+    const pathTruthy: string = baseDir("home") + "/Iris/Basic/Very long long long long integer/Some Random Long Note.md";
     
     const pathFalsy: string = "/Foo/bar/baz.md";
 
     it('should return true if the file path is canonical', () => {
-
         expect(isFileCanonical(pathTruthy)).toStrictEqual(eqTruthy);
     })
 
@@ -142,7 +143,7 @@ describe('is file canonical', () => {
 
 //is directory canonical
 describe('is directory canonical', () => {
-    const pathTruthy: string = "/Users/alex/Iris/Basic/Sample Notes";
+    const pathTruthy: string = baseDir("home") + "/Iris/Basic/Sample Notes";
 
     const pathFalsy: string = "/Foo/foo2/bar/bar3/baz/baz4";
 
@@ -157,14 +158,57 @@ describe('is directory canonical', () => {
 
 //read file
 describe('read file', () => {
-    const path: string = "/Users/alex/Iris/Basic/Sample Notes/Note.md";
+    const dir: string = path.join(__dirname + "/fixtures/Iris/Test/Test.md");
  
     //the string that is read may contain leading spaces or new lines
     //so it can cause the test to fail
     const eq: string = `# Note\n\nThis is a note!`;
 
     it('should return a string value of the read file', () => {
-        expect(readFile(path)).toStrictEqual(eq);
-        expect(readFile(path)).toBeTypeOf("string");
+        expect(readFile(dir)).toStrictEqual(eq);
+        expect(readFile(dir)).toBeTypeOf("string");
+    })
+})
+
+//walk
+describe('walk', () => {
+    const dir: string = path.join(__dirname + "/fixtures/Iris");
+    
+    const eq: string[] = [
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test/foo.md',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test/Test.md'
+    ];
+
+    console.log(walk(dir));
+    
+    it('should return an array with elements containing the files/folder paths of the directory being recursively walked on', () => {
+        expect(walk(dir)).toStrictEqual(eq);
+    })
+})
+
+//walk no extension
+describe('walk no extension', () => {
+    const dir: string = path.join(__dirname + "/fixtures/Iris");
+    
+    const eq: string[] = [
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test'
+    ]
+
+    it('should return an array with elements containing the folder paths of the directory being recursively walked on (including dotfiles)', () => {
+        expect(walkNoExt(dir)).toStrictEqual(eq);
+    })
+})
+
+//write to file 
+describe('write to file', () => {
+    const dir: string = path.join(__dirname + "/fixtures/Iris/Test/foo.md");
+    
+    const content: string = "# Heading 1\n\nA paragraph.";
+
+    it("should write the content to the specified path and create it if it doesn't exist", () => {
+        expect(writeToFile(dir, content));
     })
 })
