@@ -165,5 +165,6 @@ describe('read file', () => {
 
     it('should return a string value of the read file', () => {
         expect(readFile(path)).toStrictEqual(eq);
+        expect(readFile(path)).toBeTypeOf("string");
     })
 })
