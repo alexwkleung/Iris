@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
@@ -27,6 +28,11 @@ function createWindow(): void {
 
   //set min window size 
   mainWindow.setMinimumSize(800, 600);
+
+  //for now, use electron-context-menu and extend it if necessary.
+  //later on, I will implement my own custom context menu so it can be
+  //fine-tuned based on the needs of Iris
+  contextMenu();
 
   mainWindow.on('ready-to-show', () => {
       mainWindow.show();
