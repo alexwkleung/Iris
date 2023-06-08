@@ -296,7 +296,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
             if(this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                 //create parent folder node
                 const parentFolder: HTMLDivElement = document.createElement('div');
-                parentFolder.setAttribute("class", "parent-of-root-folder");
+                parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
                 FileDirectoryTreeNode.fileDirectoryNodeInner.appendChild(parentFolder);
 
                 const parentFolderName: HTMLDivElement = document.createElement('div');

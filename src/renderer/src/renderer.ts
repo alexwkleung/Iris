@@ -1,5 +1,5 @@
-import { directoryNs } from '../directory'
-import { EditorNs } from '../editor'
+import { directoryNs } from '../directory-main'
+import { EditorNs } from '../editor-main'
 import { windowNs } from './window/draggable-area'
 
 export function initRenderer(): void {

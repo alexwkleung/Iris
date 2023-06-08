@@ -11,6 +11,7 @@ import { defaultMarkdownParser } from "prosemirror-markdown"
 import { PMEditorView } from "../prosemirror/editor-view"
 import { PMEditorState } from "../prosemirror/editor-state"
 import { EditorListeners } from "./editor-listeners"
+import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -111,6 +112,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      */
     private editorListeners = new EditorListeners();
 
+    private dirTreeStateListeners = new DirectoryTreeStateListeners();
+    
     /**
      * Parent name tags array
      * 
@@ -152,7 +155,10 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                         this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
 
                         document.querySelectorAll('.parent-folder-caret')[i].classList.toggle('is-active-parent-folder');
-                        
+
+                        //remove is-not-active-parent class 
+                        this.getParentTags[i].classList.remove('is-not-active-parent');
+
                         //call child node listener when parent is active 
                         this.childNodeListener();
 
@@ -176,6 +182,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 }
                             }
                         );
+
+                        //add is-not-active-parent
+                        this.getParentTags[i].classList.add('is-not-active-parent');
                     }
                 });
             }
@@ -293,13 +302,16 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                     //log
                                     //console.log(props.childFileNode);
                                 }
+
+                                //apply active state listener 
+                                this.dirTreeStateListeners.activeChildFileStateListener();
                             })
                         } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }
                     }
                     
-                    //change document title so it corresponds to the opened file as a visual indicator
+                    //change document title so it corresponds to the opened file
                     await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + childFileName[i].textContent).catch((e) => { throw console.error(e) });
                 });
             }
