@@ -2,7 +2,7 @@ import { RefsNs } from "./directory-tree-listeners"
 
 export class DirectoryTreeStateListeners {
     /**
-     * Apply active child file listener
+     * Active child file state listener
      */
     public activeChildFileStateListener(): void {
         document.querySelectorAll('.parent-folder-name').forEach((el) => {
