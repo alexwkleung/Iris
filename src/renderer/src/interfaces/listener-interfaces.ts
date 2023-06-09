@@ -10,7 +10,7 @@ export interface IDirectoryTreeUIModalListeners {
  * Directory tree listeners interface
  */
 export interface IDirectoryTreeListeners {
-    parentRootListener(): void;
+    parentRootListener(type: string): void;
     childNodeListener(): void;
 }
 
@@ -18,5 +18,5 @@ export interface IDirectoryTreeListeners {
  * Editor listeners interface
  */
 export interface IEditorListeners {
-    autoSaveListener(): void;
+    autoSaveListener(type: string): void;
 }

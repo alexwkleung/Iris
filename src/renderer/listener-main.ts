@@ -6,8 +6,9 @@ import { DirectoryTreeUIModalListeners } from "./src/event-listeners/directory-t
 export namespace ListenerNs {
     export function directoryTreeListeners(): void {
         const dirTreeListeners = new DirectoryTreeListeners();
-        
-        dirTreeListeners.parentRootListener();
+
+        //needs to be in sync with mode switch when implemented?
+        dirTreeListeners.parentRootListener("Basic");
     }
 
     export function directoryTreeUIModalListeners(): void {

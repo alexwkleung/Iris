@@ -13,9 +13,10 @@ export class EditorListeners implements IEditorListeners {
     /**
      * Auto save listener
      * 
+     * @param type The mode type
      * @public
      */
-    public autoSaveListener(): void {
+    public autoSaveListener(type: string): void {
         const editors: HTMLDivElement = document.querySelector('.ProseMirror') as HTMLDivElement;
 
         //when a keyboard press is released
@@ -24,20 +25,23 @@ export class EditorListeners implements IEditorListeners {
                 RefsNs.currentParentChildData.map((props) => {
                     //null check
                     if(props !== null) {
-                        //write to file
-                        //const t0: number = performance.now(); //start perf timer
-
-                        //log
-                        //console.log(props.parentFolderName);
-                        fsMod.fs._writeToFile(
-                            DirectoryRefNs.basicRef, 
-                            props.parentFolderName + "/" + props.childFileName, 
-                            defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString()
-                        );                         
-
-                        //const t1: number = performance.now(); //end perf timer
-                        //log perf timer
-                        //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
+                        //if type is basic
+                        if(type === "Basic") {
+                            //write to file
+                            //const t0: number = performance.now(); //start perf timer
+    
+                            //log
+                            //console.log(props.parentFolderName);
+                            fsMod.fs._writeToFile(
+                                DirectoryRefNs.basicRef, 
+                                props.parentFolderName + "/" + props.childFileName, 
+                                defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString()
+                            );                         
+    
+                            //const t1: number = performance.now(); //end perf timer
+                            //log perf timer
+                            //console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
+                        }
                     }
                 })
             }, 1200)); //1.2ms default

@@ -152,8 +152,10 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
     /**
      * Parent root listener 
+     * 
+     * @param type The mode type
      */
-    public parentRootListener(): void {
+    public parentRootListener(type: string): void {
         this.getParentTags = document.querySelectorAll('.parent-of-root-folder');
         this.getParentNameTags = document.querySelectorAll('.parent-folder-name');
 
@@ -168,7 +170,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                     //check if parent tag contains is-active-parent class
                     if(this.getParentTags[i].classList.contains('is-active-parent')) {
-                        this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
+                        //
+                        this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home", type);
 
                         document.querySelectorAll('.parent-folder-caret')[i].classList.toggle('is-active-parent-folder');
 
@@ -276,8 +279,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //set contenteditable 
                             PMEditorView.setContenteditable(true);
 
-                            //invoke auto save listener
-                            this.editorListeners.autoSaveListener();
+                            //invoke auto save listener (Basic)
+                            this.editorListeners.autoSaveListener("Basic");
 
                             //null check
                             if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {

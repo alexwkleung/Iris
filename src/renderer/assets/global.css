@@ -35,6 +35,8 @@
     --modal-hover-bg: rgb(88, 88, 88);
     --prosemirror-a-light: rgb(80, 80, 133);
     --prosemirror-a-dark: rgb(136, 136, 220);
+    --top-bar-directory-info-color-light: #000000;
+    --top-bar-directory-info-color-dark: #ffffff;
 }
 
 /* body */
@@ -50,13 +52,15 @@ body {
 
 #draggable-area-window-top {
     position: absolute;
-    /*border: 1px solid white;*/
-    height: 30px;
+    /*border: 1px solid black;*/
+    height: 42px;
     width: 100%;
     -webkit-app-region: drag;
     -webkit-user-select: none;
     user-select: none;
+    margin-top: -10px;
 }
+
 /* 
 * file directory tree 
 */
@@ -201,6 +205,7 @@ body {
     margin-left: 110px;
     margin-top: 10px;
     text-decoration: underline;
+    color: var(--top-bar-directory-info-color-light);
 }
 
 /* new file */

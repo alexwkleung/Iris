@@ -257,6 +257,8 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     /**
      * Get root names 
      * 
+     * @param type The mode type
+     * 
      * @returns Filtered names of folders from root
      */
     public getRootNames(type: string): string[] {
@@ -290,45 +292,49 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
     /**
      * Create directory tree parent nodes
+     * 
+     * @param type The mode type
      */
-    public createDirTreeParentNodes(): void {  
-        this.folderNamesBasic.map((elem) => {
-            if(this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
-                //create parent folder node
-                const parentFolder: HTMLDivElement = document.createElement('div');
-                parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
-                FileDirectoryTreeNode.fileDirectoryNodeInner.appendChild(parentFolder);
-
-                const parentFolderName: HTMLDivElement = document.createElement('div');
-                parentFolderName.setAttribute("class", "parent-folder-name");
-                parentFolder.appendChild(parentFolderName);
-
-                //create text node based on directory name
-                const pfTextNode: Text = document.createTextNode(elem);
-                parentFolderName.appendChild(pfTextNode);
-
-                const parentFolderCaret: HTMLDivElement = document.createElement('div');
-                parentFolderCaret.setAttribute("class", "parent-folder-caret");
-
-                //create text node with caret (use ascii value)
-                const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
-                parentFolderCaret.appendChild(parentFolderCaretTextNode);
-                parentFolder.appendChild(parentFolderCaret);
-
-                //temp
-                this.createFileNode(parentFolder);
-            } else if(!this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
-                  //create parent folder node
-                  const childFileRoot: HTMLDivElement = document.createElement('div');
+    public createDirTreeParentNodes(type: string): void {  
+        if(type === "Basic") {
+            this.folderNamesBasic.map((elem) => {
+                if(this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
+                    //create parent folder node
+                    const parentFolder: HTMLDivElement = document.createElement('div');
+                    parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
+                    FileDirectoryTreeNode.fileDirectoryNodeInner.appendChild(parentFolder);
     
-                  childFileRoot.setAttribute("class", "child-file-name");
-                  FileDirectoryTreeNode.fileDirectoryNode.appendChild(childFileRoot);
-
-                  //create text node based on directory name
-                  const pfTextNode: Text = document.createTextNode(elem);
-                  childFileRoot.appendChild(pfTextNode);
-            }
-        });
+                    const parentFolderName: HTMLDivElement = document.createElement('div');
+                    parentFolderName.setAttribute("class", "parent-folder-name");
+                    parentFolder.appendChild(parentFolderName);
+    
+                    //create text node based on directory name
+                    const pfTextNode: Text = document.createTextNode(elem);
+                    parentFolderName.appendChild(pfTextNode);
+    
+                    const parentFolderCaret: HTMLDivElement = document.createElement('div');
+                    parentFolderCaret.setAttribute("class", "parent-folder-caret");
+    
+                    //create text node with caret (use ascii value)
+                    const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
+                    parentFolderCaret.appendChild(parentFolderCaretTextNode);
+                    parentFolder.appendChild(parentFolderCaret);
+    
+                    //temp
+                    this.createFileNode(parentFolder);
+                } else if(!this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
+                      //create parent folder node
+                      const childFileRoot: HTMLDivElement = document.createElement('div');
+        
+                      childFileRoot.setAttribute("class", "child-file-name");
+                      FileDirectoryTreeNode.fileDirectoryNode.appendChild(childFileRoot);
+    
+                      //create text node based on directory name
+                      const pfTextNode: Text = document.createTextNode(elem);
+                      childFileRoot.appendChild(pfTextNode);
+                }
+            });
+        }
     }
 
     /**
@@ -336,15 +342,21 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * 
      * @param parentTags The parent tag to append to
      * @param parentNameTags The parent name tag
+     * @param type The mode type
      */
     public createDirTreeChildNodes(
         parentTags: Element, 
         parentNameTags: string,
-        base: string
+        base: string,
+        type: string
     ): void {
-        //walk directory recursively
-        //eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const walkRef: string[] = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags).slice(1);
+        let walkRef: string[] = [];
+
+        if(type === "Basic") {
+            //walk directory recursively
+            //eslint-disable-next-line @typescript-eslint/no-unused-vars
+            walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags).slice(1);
+        }
 
         const dirNamesArr: string[] = [];
         
