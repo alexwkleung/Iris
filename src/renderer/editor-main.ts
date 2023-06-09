@@ -45,7 +45,7 @@ export namespace EditorNs {
             topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
 
             //check if top-bar-directory-info node exists in dom
-            if(document.getElementById('top-bar-directory-info')) {
+            if(document.getElementById('top-bar-directory-info') && document.getElementById('top-bar-directory-info') !== null) {
                 //remove node from dom
                 (document.getElementById('top-bar-directory-info') as HTMLDivElement).remove();
 
@@ -57,7 +57,7 @@ export namespace EditorNs {
         }
     }
 
-    export async function editor(): Promise<void> {
+    export function editor(): void {
         //create editor container
         EditorContainerNode.createEditorContainer();
 

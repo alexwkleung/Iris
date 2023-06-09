@@ -281,47 +281,48 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                             //null check
                             if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {
-                                //assign refs
+                                //assign child refs
                                 this.childFileNameRef = childFileName[i].textContent as string;
                                 this.childFileNodeRef = childFileName[i];
 
                                 if(this.getParentTags[j].contains(this.getParentNameTags[j])) {
+                                    //assign parent refs
                                     this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
                                     this.parentNameTagNodeRef = this.getParentNameTags[j];
                                     this.parentTagNodeRef = this.getParentTags[j];
                                 } else if(!this.getParentTags[j].contains(this.getParentNameTags[j])) {
                                     continue;
                                 }
+
+                                //assign references to corresponding key properties
+                                RefsNs.currentParentChildData.map((props) => {
+                                    //null check
+                                    if(props !== null) {
+                                        //child file name
+                                        props.childFileName = this.childFileNameRef;
+
+                                        //child file node
+                                        props.childFileNode = this.childFileNodeRef;
+
+                                        //parent folder name
+                                        props.parentFolderName = this.parentNameTagRef; 
+
+                                        //parent folder name node
+                                        props.parentFolderNameNode = this.parentNameTagNodeRef;
+
+                                        //parent folder node
+                                        props.parentFolderNode = this.parentTagNodeRef;
+
+                                        //log
+                                        //console.log(props.childFileName);
+                                        //log
+                                        //console.log(props.childFileNode);
+                                    }
+                                })
                             }
-
-                            //assign references to corresponding key properties
-                            RefsNs.currentParentChildData.map((props) => {
-                                //null check
-                                if(props !== null) {
-                                    //child file name
-                                    props.childFileName = this.childFileNameRef;
-
-                                    //child file node
-                                    props.childFileNode = this.childFileNodeRef;
-
-                                    //parent folder name
-                                    props.parentFolderName = this.parentNameTagRef; 
-
-                                    //parent folder name node
-                                    props.parentFolderNameNode = this.parentNameTagNodeRef;
-
-                                    //parent folder node
-                                    props.parentFolderNode = this.parentTagNodeRef;
-
-                                    //log
-                                    //console.log(props.childFileName);
-                                    //log
-                                    //console.log(props.childFileNode);
-                                }
-
-                                //apply active state listener 
-                                this.dirTreeStateListeners.activeChildFileStateListener();
-                            })
+                            
+                            //apply active state listener 
+                            this.dirTreeStateListeners.activeChildFileStateListener();
                         } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }
