@@ -73,7 +73,7 @@ class DirectoryTreeUIElements {
         //create folder node
         const createFolderNode: HTMLDivElement = document.createElement('div');
         createFolderNode.setAttribute("id", "create-folder");
-        (document.querySelector('#file-directory-tree-container') as HTMLDivElement).appendChild(createFolderNode);
+        (document.getElementById('file-directory-tree-container') as HTMLDivElement).appendChild(createFolderNode);
 
         //create folder text node
         const createFolderTextNode: Text = document.createTextNode("Create Folder");
@@ -86,7 +86,7 @@ class DirectoryTreeUIElements {
     public settingsNode(): void {
         const settingsNode: HTMLDivElement = document.createElement('div');
         settingsNode.setAttribute("id", "settings-node");
-        (document.querySelector('#file-directory-tree-container') as HTMLDivElement).appendChild(settingsNode);
+        (document.getElementById('file-directory-tree-container') as HTMLDivElement).appendChild(settingsNode);
 
         const settingsTextNode: Text = document.createTextNode("Settings");
         settingsNode.appendChild(settingsTextNode);

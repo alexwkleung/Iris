@@ -16,16 +16,58 @@ export namespace EditorNs {
         }
     }
 
+    export class EditorTopBarContainer {
+        public static editorTopBarContainer: HTMLDivElement;
+
+        public static createEditorTopBarContainer(): void {
+            EditorTopBarContainer.editorTopBarContainer = document.createElement('div');
+            EditorTopBarContainer.editorTopBarContainer.setAttribute("id", "editor-top-bar-container");
+
+            App.appNode.insertBefore(EditorTopBarContainer.editorTopBarContainer, App.appNode.firstChild);
+        }
+
+        /**
+         * Directory info
+         */
+        public directoryInfo(): void {
+            //top bar directory info
+            const topBarDirectoryInfo: HTMLDivElement = document.createElement('div');
+            topBarDirectoryInfo.setAttribute("id", "top-bar-directory-info");
+
+            //doc title folder
+            const docTitleFolder: string = document.title.split('-')[1].trim();
+
+            //doc title file
+            const docTitleFile: string = document.title.split('-')[2].trim();
+
+            //top bar directory info text node
+            const topBarDirectoryInfoTextNode: Text = document.createTextNode(docTitleFolder + " - " + docTitleFile);
+            topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
+
+            //check if top-bar-directory-info node exists in dom
+            if(document.getElementById('top-bar-directory-info')) {
+                //remove node from dom
+                (document.getElementById('top-bar-directory-info') as HTMLDivElement).remove();
+
+                //append top bar directory info node
+                (document.getElementById('editor-top-bar-container') as HTMLDivElement).appendChild(topBarDirectoryInfo);
+            } else {
+                (document.getElementById('editor-top-bar-container') as HTMLDivElement).appendChild(topBarDirectoryInfo);
+            }
+        }
+    }
+
     export async function editor(): Promise<void> {
         //create editor container
         EditorContainerNode.createEditorContainer();
 
-        //all editor node containers will be created in the dom regardless if they're used or not (for now)
-
         //create prosemirror editorview 
         PMEditorView.createEditorView();
 
-        //set contenteditable
+        //set prosemirror contenteditable
         PMEditorView.setContenteditable(false);
+
+        //create editor top bar container
+        EditorTopBarContainer.createEditorTopBarContainer();
     }
 }

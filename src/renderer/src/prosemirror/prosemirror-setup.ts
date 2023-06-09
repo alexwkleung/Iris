@@ -13,10 +13,8 @@ import pasteLinkPlugin from 'prosemirror-paste-link'
 
 //eslint-disable-next-line
 export function pmSetup(options: {
-  schema: Schema
-
-  mapKeys?: {[key: string]: string | false}
-
+  schema: Schema,
+  mapKeys?: { [key: string]: string | false },
   history?: boolean
 }) {
   const plugins = [

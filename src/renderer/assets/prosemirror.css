@@ -30,7 +30,7 @@
 }
 
 .ProseMirror {
-  caret-color: var(--caret-color-light); /* light */
+  caret-color: var(--caret-color-light);
   word-wrap: break-word;
   white-space: pre-wrap;
   white-space: break-spaces;
@@ -47,13 +47,13 @@
   background-color: var(--prosemirror-bg-light); 
   color: var(--prosemirror-color-light);
   padding-left: 15px;
-  top: 2px;
+  top: 55px;
   bottom: 200px;
-  /*border: 1px solid #black*/
+  /*border: 1px solid black;*/
   /*border-radius: 25px;*/
   margin-top: 0px;
   padding-bottom: 500px;
-  padding-top: 60px;
+  padding-top: 5px;
   /* 
   https://web.dev/content-visibility/ 
   */

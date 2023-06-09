@@ -24,13 +24,15 @@
     --parent-folder-caret: rgb(223, 222, 222);
     --parent-folder-caret-active: rgb(223, 222, 222);
     --child-file-name: rgb(237, 235, 235);
-    --child-file-name-hover: rgb(140, 89, 234);
     --child-file-name-active: orange;
     --create-new-file-bg: #232222;
     --prosemirror-pre-bg: rgb(181, 181, 181);
     --prosemirror-pre-color: #2e2a43;
     --prosemirror-bg-light: #ececec; /* should match current editor bg */
     --prosemirror-bg-dark: #151515; /* should match current editor bg */
+    --continue-modal: rgb(158, 121, 227);
+    --cancel-modal: rgb(212, 114, 114);
+    --modal-hover-bg: rgb(88, 88, 88);
 }
 
 /* body */
@@ -174,6 +176,31 @@ body {
     height: calc(100% - 8px);
 }
 
+/**
+* Editor top bar nodes
+*/
+#editor-top-bar-container {
+    width: calc(100% - 304px);
+    height: 35px;
+    /*border: 1px solid black;*/
+    margin-left: 298px;
+    margin-top: 10px;
+    font-family: 'Inter-Regular';
+    font-size: 14px;
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+#top-bar-directory-info {
+    display: flex;
+    /*border: 1px solid black;*/
+    width: calc(100% - 304px);
+    justify-content: center;
+    align-items: center;
+    margin-left: 110px;
+    margin-top: 10px;
+    text-decoration: underline;
+}
+
 /* new file */
 .create-new-file {
     position: absolute;
@@ -190,7 +217,7 @@ body {
 }
 .create-new-file:hover {
     cursor: pointer;
-    background-color: rgb(88, 88, 88);
+    background-color: var(--modal-hover-bg);
 }
 .create-new-file.show-create-file {
     display: block;
@@ -215,7 +242,7 @@ body {
 }
 #create-folder:hover {
     cursor: pointer;
-    background-color: rgb(88, 88, 88);
+    background-color: var(--modal-hover-bg);
 }
 
 /* settings node */
@@ -233,7 +260,7 @@ body {
 }
 #settings-node:hover {
     cursor: pointer;
-    background-color: rgb(88, 88, 88);
+    background-color: var(--modal-hover-bg);
 }
 
 /* 
@@ -258,7 +285,7 @@ body {
     transform: translate(-50%, -50%);
     width: 700px;
     height: 400px;
-    background-color: #222020;
+    background-color: #2a2828;
     z-index: 1;
     border: 1px solid grey;
 }
@@ -280,7 +307,7 @@ body {
 }
 #create-file-modal-exit:hover {
     cursor: pointer;
-    background-color: rgb(88, 88, 88);
+    background-color: var(--modal-hover-bg);
 }
 #create-file-modal-continue {
     z-index: 1;
@@ -301,6 +328,7 @@ body {
 #create-file-modal-continue:hover {
     cursor: pointer;
     background-color: rgb(88, 88, 88);
+    color: var(--continue-modal);
 }
 #create-file-modal-current-folder-node {
     color: white;

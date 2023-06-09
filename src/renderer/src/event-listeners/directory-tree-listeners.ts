@@ -12,6 +12,7 @@ import { PMEditorView } from "../prosemirror/editor-view"
 import { PMEditorState } from "../prosemirror/editor-state"
 import { EditorListeners } from "./editor-listeners"
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
+import { EditorNs } from "../../editor-main"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -112,8 +113,20 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      */
     private editorListeners = new EditorListeners();
 
+    /**
+     * Directory tree state listeners object
+     * 
+     * @private
+     */
     private dirTreeStateListeners = new DirectoryTreeStateListeners();
-    
+
+    /**
+     * Editor top bar container object
+     * 
+     * @private
+     */
+    private editorTopBarContainer = new EditorNs.EditorTopBarContainer();
+
     /**
      * Parent name tags array
      * 
@@ -313,6 +326,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     
                     //change document title so it corresponds to the opened file
                     await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + childFileName[i].textContent).catch((e) => { throw console.error(e) });
+
+                    this.editorTopBarContainer.directoryInfo();
                 });
             }
         });
