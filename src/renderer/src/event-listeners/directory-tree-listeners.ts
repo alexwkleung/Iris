@@ -110,22 +110,25 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      * Editor listeners object
      * 
      * @private
+     * @readonly
      */
-    private editorListeners = new EditorListeners();
+    private readonly editorListeners = new EditorListeners();
 
     /**
      * Directory tree state listeners object
      * 
      * @private
+     * @readonly
      */
-    private dirTreeStateListeners = new DirectoryTreeStateListeners();
+    private readonly dirTreeStateListeners = new DirectoryTreeStateListeners();
 
     /**
      * Editor top bar container object
      * 
      * @private
+     * @readonly
      */
-    private editorTopBarContainer = new EditorNs.EditorTopBarContainer();
+    private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
 
     /**
      * Parent name tags array
@@ -327,6 +330,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     //change document title so it corresponds to the opened file
                     await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + childFileName[i].textContent).catch((e) => { throw console.error(e) });
 
+                    //add directory info to editor top bar
                     this.editorTopBarContainer.directoryInfo();
                 });
             }

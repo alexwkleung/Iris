@@ -33,6 +33,8 @@
     --continue-modal: rgb(158, 121, 227);
     --cancel-modal: rgb(212, 114, 114);
     --modal-hover-bg: rgb(88, 88, 88);
+    --prosemirror-a-light: rgb(80, 80, 133);
+    --prosemirror-a-dark: rgb(136, 136, 220);
 }
 
 /* body */
@@ -394,19 +396,12 @@ body {
 .ProseMirror h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter-Bold';
 }
-.ProseMirror table, th, td {
-    border: 1px solid;
-    border-collapse: collapse;
-    font-size: 22px;
-    color: rgb(0, 0, 0);
-    padding: 0px 10px;
-}
 
 .ProseMirror blockquote  {
     border-left: 3px solid grey;
-    margin: 1.5em 10px;
+    margin: 1.5em 0px;
     padding: 0.5em 10px;
-    font-size: 22px;
+    font-size: 18px;
 }
 .ProseMirror blockquote:before {
     color: grey;
@@ -417,13 +412,12 @@ body {
 }
 .ProseMirror blockquote p {
     display: inline;
-    font-size: 22px;
+    font-size: 18px;
     color: rgb(83, 82, 82);
 }
 
 .ProseMirror a {
-    /* color: rgb(136, 136, 220); */ /* dark */
-    color: rgb(80, 80, 133); /* light */
+    color: var(--prosemirror-a-light);
 }
 
 .ProseMirror strong {
