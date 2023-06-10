@@ -2,7 +2,7 @@ import { debounce } from "lodash-es"
 import { WordCountContainerNode } from "../../misc-ui/word-count"
 
 export function wordCountListener(editor: string): number {
-    let words: number = 0;
+    let words: number = 0; //default value
     let textArr: string[] = [];
 
     if(editor === "prosemirror") {
@@ -14,17 +14,28 @@ export function wordCountListener(editor: string): number {
         WordCountContainerNode.wordCountContainer.style.display = "";
 
         //reset value to 0 so re-calculating is accurate (internally and visually)
-        WordCountContainerNode.wordCountContainer.textContent = words.toString();
+        WordCountContainerNode.wordCountContainer.textContent = words.toString() + " words";
 
-        //default value
-        WordCountContainerNode.wordCountContainer.textContent = ((pm.textContent as string).split(/\s+/).length + 1) + " words"; 
+        //initial check when initially opening a note
+        if(!(pm.textContent as string).trim().split(/\s+/)[0]) {
+            words = 0; //re-initialize 
+            WordCountContainerNode.wordCountContainer.textContent = words.toString() +  " words"; 
+        } else {
+            WordCountContainerNode.wordCountContainer.textContent = ((pm.textContent as string).trim().split(/\s+/).length + 1) + " words"; 
+        }
 
+        //listener for during note writing
         pm.addEventListener('keyup', debounce(() => {
-            textArr = (pm.textContent as string).split(/\s+/);
+            textArr = (pm.textContent as string).trim().split(/\s+/);
 
-            words = textArr.length + 1; //add 1 to compensate for extra leading characters (need to check this) 
-            
-            WordCountContainerNode.wordCountContainer.textContent = words.toString() + " words";
+            //if there are no words
+            if(!textArr[0]) {
+                words = 0; //re-initialize
+                WordCountContainerNode.wordCountContainer.textContent = words.toString() +  " words"; 
+            } else {
+                words = textArr.length; //the initial check adds 1 so you don't need to add it again
+                WordCountContainerNode.wordCountContainer.textContent = words.toString() + " words";
+            }
 
             console.log(words);
         }, 250)) //250ms default
