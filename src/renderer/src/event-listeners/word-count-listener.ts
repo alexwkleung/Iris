@@ -2,8 +2,12 @@ import { debounce } from "lodash-es"
 import { WordCountContainerNode } from "../../misc-ui/word-count"
 
 export function wordCountListener(editor: string): number {
-    let words: number = 0; //default value
+    //default value
+    let words: number = 0;
     let textArr: string[] = [];
+    
+    //regex pattern
+    const regexPattern: RegExp = /[\s+\n\r]/;
 
     if(editor === "prosemirror") {
         const pm: HTMLElement = document.querySelector('.ProseMirror') as HTMLElement;
@@ -17,23 +21,23 @@ export function wordCountListener(editor: string): number {
         WordCountContainerNode.wordCountContainer.textContent = words.toString() + " words";
 
         //initial check when initially opening a note
-        if(!(pm.textContent as string).trim().split(/\s+/)[0]) {
+        if(!(pm.textContent as string).trim().split(regexPattern)[0]) {
             words = 0; //re-initialize 
             WordCountContainerNode.wordCountContainer.textContent = words.toString() +  " words"; 
         } else {
-            WordCountContainerNode.wordCountContainer.textContent = ((pm.textContent as string).trim().split(/\s+/).length + 1) + " words"; 
+            WordCountContainerNode.wordCountContainer.textContent = ((pm.textContent as string).trim().split(regexPattern).length) + " words"; 
         }
 
         //listener for during note writing
         pm.addEventListener('keyup', debounce(() => {
-            textArr = (pm.textContent as string).trim().split(/\s+/);
+            textArr = (pm.textContent as string).trim().split(regexPattern);
 
             //if there are no words
             if(!textArr[0]) {
                 words = 0; //re-initialize
                 WordCountContainerNode.wordCountContainer.textContent = words.toString() +  " words"; 
             } else {
-                words = textArr.length; //the initial check adds 1 so you don't need to add it again
+                words = textArr.length;
                 WordCountContainerNode.wordCountContainer.textContent = words.toString() + " words";
             }
 
