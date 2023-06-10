@@ -70,7 +70,7 @@ touch Iris/Basic/Note.md
 
 # v0.1.x
 
-If you want to take a look at the v0.1.x prototype source code, you can download it from the [v0.1.1 release](https://github.com/alexwkleung/Iris/tree/main/v0.1.x). 
+If you want to take a look at the v0.1.x prototype source code, you can download it from the [v0.1.1 release](https://github.com/alexwkleung/Iris/releases/tag/v0.1.1). 
 
 # License 
 
