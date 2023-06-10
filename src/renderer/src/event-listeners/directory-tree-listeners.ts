@@ -13,6 +13,7 @@ import { PMEditorState } from "../prosemirror/editor/editor-state"
 import { EditorListeners } from "./editor-listeners"
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
 import { EditorNs } from "../../editor-main"
+import { wordCountListener } from "./word-count-listener"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -333,6 +334,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             
                             //apply active state listener 
                             this.dirTreeStateListeners.activeChildFileStateListener();
+
+                            wordCountListener("prosemirror");
                         } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }

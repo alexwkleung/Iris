@@ -1,5 +1,6 @@
 import { App } from "./app"
 import { PMEditorView } from "./src/prosemirror/editor/editor-view"
+import { WordCountContainerNode } from "./misc-ui/word-count";
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
@@ -72,5 +73,8 @@ export namespace EditorNs {
 
         //create editor top bar container
         EditorTopBarContainer.createEditorTopBarContainer();
+
+        //create word count container
+        WordCountContainerNode.createWordCountContainer();
     }
 }
