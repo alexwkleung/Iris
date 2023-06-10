@@ -17,17 +17,17 @@ export function wordCountListener(editor: string): number {
         WordCountContainerNode.wordCountContainer.textContent = words.toString();
 
         //default value
-        WordCountContainerNode.wordCountContainer.textContent = (pm.textContent as string).split(/\s+/).length + " words";
+        WordCountContainerNode.wordCountContainer.textContent = ((pm.textContent as string).split(/\s+/).length + 1) + " words"; 
 
         pm.addEventListener('keyup', debounce(() => {
             textArr = (pm.textContent as string).split(/\s+/);
 
-            words = textArr.length + 1; //add 1 to compensate for extra leading characters (need to check this)
+            words = textArr.length + 1; //add 1 to compensate for extra leading characters (need to check this) 
             
             WordCountContainerNode.wordCountContainer.textContent = words.toString() + " words";
 
             console.log(words);
-        }, 500)) //0.5ms default
+        }, 250)) //250ms default
     }
 
     return words;
