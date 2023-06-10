@@ -14,7 +14,7 @@ This release will mark the first official build for Iris, so I don't want to rus
 
 Iris is a long-term project on my free time, therefore development will take longer than expected. 
 
-The product website and a Discord community chat will likely be added closer to the release date. For now, you can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication.
+The product website will be added closer to the release date. For now, you can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication.
 
 # Installation
 
