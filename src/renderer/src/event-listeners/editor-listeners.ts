@@ -3,7 +3,7 @@ import { RefsNs } from "./directory-tree-listeners"
 import { fsMod } from "../utils/alias"
 import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 import { defaultMarkdownSerializer } from "prosemirror-markdown"
-import { PMEditorView } from "../prosemirror/editor-view"
+import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { debounce } from "lodash-es"
 
 /**

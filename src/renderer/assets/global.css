@@ -50,6 +50,10 @@ body {
     
     /* caret colour */
     caret-color: var(--caret-color-light);
+
+    /* hide overflow so body cannot be scrolled */
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 #draggable-area-window-top {

@@ -7,11 +7,11 @@ import { Plugin } from "prosemirror-state"
 import { dropCursor } from "prosemirror-dropcursor"
 import { gapCursor } from "prosemirror-gapcursor"
 import { Schema } from "prosemirror-model"
-import { buildKeymap } from "./keymap"
-import { buildInputRules } from "./inputrules"
+import { buildKeymap } from "../input/keymap"
+import { buildInputRules } from "../input/inputrules"
 import pasteLinkPlugin from 'prosemirror-paste-link'
 import { menuBar, MenuItem } from "prosemirror-menu"
-import { buildMenuItems } from "./menu"
+import { buildMenuItems } from "../menu/menu"
 
 //eslint-disable-next-line
 export function pmSetup(options: {

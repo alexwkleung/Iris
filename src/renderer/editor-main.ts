@@ -1,5 +1,5 @@
 import { App } from "./app"
-import { PMEditorView } from "./src/prosemirror/editor-view"
+import { PMEditorView } from "./src/prosemirror/editor/editor-view"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
