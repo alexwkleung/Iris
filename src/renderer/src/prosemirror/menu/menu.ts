@@ -1,6 +1,21 @@
 //base taken from: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/menu.ts
+//disabling eslint is a temp workaround
+//the code will properly adhere to eslint rules at a later time
 
-import { wrapItem, blockTypeItem, Dropdown, DropdownSubmenu, joinUpItem, liftItem, undoItem, redoItem, icons, MenuItem, MenuElement, MenuItemSpec } from "prosemirror-menu"
+import { 
+  wrapItem, 
+  blockTypeItem, 
+  Dropdown, 
+  DropdownSubmenu, 
+  joinUpItem, 
+  liftItem, 
+  undoItem, 
+  redoItem, 
+  icons, 
+  MenuItem,
+  MenuElement, 
+  MenuItemSpec 
+} from "prosemirror-menu"
 import { EditorState, Command } from "prosemirror-state"
 import { Schema, NodeType, MarkType } from "prosemirror-model"
 import { toggleMark } from "prosemirror-commands"
@@ -53,6 +68,7 @@ return cmdItem(toggleMark(markType), passedOptions)
 
 //eslint-disable-next-line
 function wrapListItem(nodeType: NodeType, options: Partial<MenuItemSpec>) {
+//eslint-disable-next-line
 return cmdItem(wrapInList(nodeType, (options as any).attrs), options)
 }
 
@@ -65,9 +81,6 @@ toggleEm?: MenuItem
 
 /// A menu item to toggle the [code font mark](#schema-basic.CodeMark).
 toggleCode?: MenuItem
-
-/// A menu item to insert an [image](#schema-basic.Image).
-insertImage?: MenuItem
 
 /// A menu item to wrap the selection in a [bullet list](#schema-list.BulletList).
 wrapBulletList?: MenuItem
@@ -125,59 +138,60 @@ const r: MenuItemResult = {} as any
 let mark: MarkType | undefined
 //eslint-disable-next-line
 if (mark = schema.marks.strong)
- r.toggleStrong = markItem(mark, {title: "Toggle strong style", icon: icons.strong})
+ r.toggleStrong = markItem(mark, {title: "Bold", icon: icons.strong})
  //eslint-disable-next-line
 if (mark = schema.marks.em)
- r.toggleEm = markItem(mark, {title: "Toggle emphasis", icon: icons.em})
+ r.toggleEm = markItem(mark, {title: "Italic", icon: icons.em})
  //eslint-disable-next-line
 if (mark = schema.marks.code)
- r.toggleCode = markItem(mark, {title: "Toggle code font", icon: icons.code})
+ r.toggleCode = markItem(mark, {title: "Inline code", icon: icons.code})
 
 let node: NodeType | undefined
  //eslint-disable-next-line
 if (node = schema.nodes.bullet_list)
  r.wrapBulletList = wrapListItem(node, {
-   title: "Wrap in bullet list",
+   title: "Bullet list",
    icon: icons.bulletList
  })
  //eslint-disable-next-line
 if (node = schema.nodes.ordered_list)
  r.wrapOrderedList = wrapListItem(node, {
-   title: "Wrap in ordered list",
+   title: "Ordered list",
    icon: icons.orderedList
  })
  //eslint-disable-next-line
 if (node = schema.nodes.blockquote)
  r.wrapBlockQuote = wrapItem(node, {
-   title: "Wrap in block quote",
+   title: "Blockquote",
    icon: icons.blockquote
  })
  //eslint-disable-next-line
 if (node = schema.nodes.paragraph)
  r.makeParagraph = blockTypeItem(node, {
-   title: "Change to paragraph",
-   label: "Plain"
+   title: "Paragraph",
+   label: "Paragraph"
  })
  //eslint-disable-next-line
 if (node = schema.nodes.code_block)
  r.makeCodeBlock = blockTypeItem(node, {
-   title: "Change to code block",
-   label: "Code"
+   title: "Code block",
+   label: "Code block"
  })
  //eslint-disable-next-line
 if (node = schema.nodes.heading)
  for (let i = 1; i <= 10; i++)
+    //eslint-disable-next-line
    (r as any)["makeHead" + i] = blockTypeItem(node, {
      title: "Change to heading " + i,
-     label: "Level " + i,
+     label: i.toString(), //display number only
      attrs: {level: i}
    })
    //eslint-disable-next-line
 if (node = schema.nodes.horizontal_rule) {
  const hr = node
  r.insertHorizontalRule = new MenuItem({
-   title: "Insert horizontal rule",
-   label: "Horizontal rule",
+   title: "Horizontal line",
+   label: "Horizontal line",
    //eslint-disable-next-line
    enable(state: any) { return canInsert(state, hr) },
    //eslint-disable-next-line
@@ -186,10 +200,10 @@ if (node = schema.nodes.horizontal_rule) {
 }
 //eslint-disable-next-line
 const cut = <T>(arr: T[]) => arr.filter(x => x) as NonNullable<T>[]
-r.insertMenu = new Dropdown(cut([r.insertImage, r.insertHorizontalRule]), {label: "Insert"})
+r.insertMenu = new Dropdown(cut([r.insertHorizontalRule]), {label: "Insert"})
 r.typeMenu = new Dropdown(cut([r.makeParagraph, r.makeCodeBlock, r.makeHead1 && new DropdownSubmenu(cut([
  r.makeHead1, r.makeHead2, r.makeHead3, r.makeHead4, r.makeHead5, r.makeHead6
-]), {label: "Heading"})]), {label: "Type..."})
+]), {label: "Heading"})]), {label: "Add"})
 
 r.inlineMenu = [cut([r.toggleStrong, r.toggleEm, r.toggleCode])]
 r.blockMenu = [cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote, joinUpItem, liftItem])]

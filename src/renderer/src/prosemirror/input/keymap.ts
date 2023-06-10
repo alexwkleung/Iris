@@ -1,4 +1,6 @@
 //base taken from: https://github.com/ProseMirror/prosemirror-example-setup/blob/master/src/keymap.ts
+//disabling eslint is a temp workaround
+//the code will properly adhere to eslint rules at a later time
 
 import {
     wrapIn, 
