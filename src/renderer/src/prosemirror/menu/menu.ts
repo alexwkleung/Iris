@@ -207,7 +207,7 @@ r.typeMenu = new Dropdown(cut([r.makeParagraph, r.makeCodeBlock, r.makeHead1 && 
 
 r.inlineMenu = [cut([r.toggleStrong, r.toggleEm, r.toggleCode])]
 r.blockMenu = [cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote, joinUpItem, liftItem])]
-r.fullMenu = r.inlineMenu.concat([[r.insertMenu, r.typeMenu]], [[undoItem, redoItem]], r.blockMenu)
+r.fullMenu = r.inlineMenu.concat([[r.typeMenu, r.insertMenu]], [[undoItem, redoItem]], r.blockMenu)
 
 return r
 }

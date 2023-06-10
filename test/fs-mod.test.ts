@@ -158,7 +158,7 @@ describe('is directory canonical', () => {
 
 //read file
 describe('read file', () => {
-    const dir: string = path.join(__dirname + "/fixtures/Iris/Test/Test.md");
+    const dir: string = path.join(__dirname + "/fixtures/fs-mod/Iris/Test/Test.md");
  
     //the string that is read may contain leading spaces or new lines
     //so it can cause the test to fail
@@ -172,13 +172,13 @@ describe('read file', () => {
 
 //walk
 describe('walk', () => {
-    const dir: string = path.join(__dirname + "/fixtures/Iris");
+    const dir: string = path.join(__dirname + "/fixtures/fs-mod/Iris");
     
     const eq: string[] = [
-        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris',
-        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test',
-        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test/foo.md',
-        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test/Test.md'
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/fs-mod/Iris',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/fs-mod/Iris/Test',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/fs-mod/Iris/Test/foo.md',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/fs-mod/Iris/Test/Test.md'
     ];
     
     it('should return an array with elements containing the files/folder paths of the directory being recursively walked on', () => {
@@ -188,11 +188,11 @@ describe('walk', () => {
 
 //walk no extension
 describe('walk no extension', () => {
-    const dir: string = path.join(__dirname + "/fixtures/Iris");
+    const dir: string = path.join(__dirname + "/fixtures/fs-mod/Iris");
     
     const eq: string[] = [
-        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris',
-        '/Users/alex/Desktop/Git/Iris/test/fixtures/Iris/Test'
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/fs-mod/Iris',
+        '/Users/alex/Desktop/Git/Iris/test/fixtures/fs-mod/Iris/Test'
     ]
 
     it('should return an array with elements containing the folder paths of the directory being recursively walked on (including dotfiles)', () => {
@@ -202,7 +202,7 @@ describe('walk no extension', () => {
 
 //write to file 
 describe('write to file', () => {
-    const dir: string = path.join(__dirname + "/fixtures/Iris/Test/foo.md");
+    const dir: string = path.join(__dirname + "/fixtures/fs-mod/Iris/Test/foo.md");
 
     const content: string = "# Heading 1\n\nA paragraph.";
 

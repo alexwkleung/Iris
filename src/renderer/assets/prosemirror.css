@@ -31,6 +31,7 @@
   --prosemirror-menu-bar-color-dark: white; /* temp */
   --prosemirror-menu-bar-dropdown-item-bg-light: rgb(214, 213, 213);
   --prosemirror-menu-bar-dropdown-item-bg-dark: black; /* temp */
+  --prosemirror-menu-bar-icon-active-bg-light: rgb(214, 213, 213);
 }
 
 .ProseMirror {
@@ -223,7 +224,7 @@ img.ProseMirror-separator {
 }
 
 .ProseMirror-menu-active {
-  background: #eee;
+  background: var(--prosemirror-menu-bar-icon-active-bg-light);
   border-radius: 4px;
 }
 
