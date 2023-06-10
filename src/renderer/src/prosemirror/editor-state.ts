@@ -21,7 +21,10 @@ export class PMEditorState {
     public static createEditorState(): EditorState {
         PMEditorState.editorState = EditorState.create({
             doc: DOMParser.fromSchema(schema).parse(document.querySelector("#editor-container") as HTMLElement),
-            plugins: pmSetup({ schema })
+            plugins: pmSetup({
+                schema,
+                floatingMenu: false
+            })
         });
 
         return PMEditorState.editorState;

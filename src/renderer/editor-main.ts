@@ -67,6 +67,9 @@ export namespace EditorNs {
         //set prosemirror contenteditable
         PMEditorView.setContenteditable(false);
 
+        //hide prosemirror menubar
+        (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+
         //create editor top bar container
         EditorTopBarContainer.createEditorTopBarContainer();
     }

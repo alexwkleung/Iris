@@ -42,6 +42,7 @@
     "prosemirror-inputrules": "^1.2.1",
     "prosemirror-keymap": "^1.2.2",
     "prosemirror-markdown": "^1.11.0",
+    "prosemirror-menu": "^1.2.2",
     "prosemirror-model": "^1.19.2",
     "prosemirror-paste-link": "^1.0.2",
     "prosemirror-schema-list": "^1.3.0",

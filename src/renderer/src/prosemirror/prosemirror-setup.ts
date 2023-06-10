@@ -10,12 +10,17 @@ import { Schema } from "prosemirror-model"
 import { buildKeymap } from "./keymap"
 import { buildInputRules } from "./inputrules"
 import pasteLinkPlugin from 'prosemirror-paste-link'
+import { menuBar, MenuItem } from "prosemirror-menu"
+import { buildMenuItems } from "./menu"
 
 //eslint-disable-next-line
 export function pmSetup(options: {
   schema: Schema,
   mapKeys?: { [key: string]: string | false },
-  history?: boolean
+  history?: boolean,
+  menuBar?: boolean,
+  floatingMenu: boolean
+  menuContent?: MenuItem[][]
 }) {
   const plugins = [
     buildInputRules(options.schema),
@@ -24,14 +29,19 @@ export function pmSetup(options: {
     dropCursor(),
     gapCursor(),
     pasteLinkPlugin
-  ]
+  ];
 
-  if(options.history !== false)
-    plugins.push(history())
+  if(options.menuBar !== false) {
+    plugins.push(menuBar({floating: options.floatingMenu !== false, content: options.menuContent || buildMenuItems(options.schema).fullMenu}))
+  }
+
+  if(options.history !== false) {
+    plugins.push(history());
+  }
 
   return plugins.concat(new Plugin({
     props: {
       attributes: {class: "ProseMirror-Setup"}
     }
-  }))
+  }));
 }

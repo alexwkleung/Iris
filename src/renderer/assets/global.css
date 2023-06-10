@@ -27,7 +27,9 @@
     --child-file-name-active: orange;
     --create-new-file-bg: #232222;
     --prosemirror-pre-bg: rgb(181, 181, 181);
+    --prosemirror-code-bg: rgb(181, 181, 181);
     --prosemirror-pre-color: #2e2a43;
+    --prosemirror-code-color: #2e2a43;
     --prosemirror-bg-light: #ececec; /* should match current editor bg */
     --prosemirror-bg-dark: #151515; /* should match current editor bg */
     --continue-modal: rgb(158, 121, 227);
@@ -452,4 +454,16 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     border-radius: 25px;
+}
+
+.ProseMirror code {
+    background-color: var(--prosemirror-code-bg);
+    caret-color: var(--caret-color-light);
+    color: var(--prosemirror-code-color);
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 1.5px;
 }
