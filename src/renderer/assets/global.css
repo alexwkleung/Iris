@@ -92,9 +92,9 @@ body {
 */
 #file-directory-tree-container-inner {
     position: relative;
-    margin-top: 80px;
+    margin-top: 95px;
     /*border: 1px solid white;*/
-    height: calc(100% - 100px)
+    height: calc(100% - 130px);
 }
 
 /*
@@ -203,7 +203,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-left: 110px;
-    margin-top: 10px;
+    margin-top: 15px;
     text-decoration: underline;
     color: var(--top-bar-directory-info-color-light);
 }
@@ -237,12 +237,13 @@ body {
 /* create folder */
 #create-folder {
     position: fixed;
-    top: 45px;
+    top: 55px;
     color: white;
     border: 1px solid;
+    border-color: grey;
     border-radius: 5px;
     width: 120px;
-    margin-left: 25px;
+    margin-left: 15px;
     background-color: #232222;
     font-size: 18px;
     text-align: center;
@@ -255,9 +256,10 @@ body {
 /* settings node */
 #settings-node {
     position: fixed;
-    top: 45px;
+    top: 55px;
     color: white;
     border: 1px solid;
+    border-color: grey;
     border-radius: 5px;
     width: 76px;
     margin-left: 200px;
@@ -303,6 +305,7 @@ body {
     height: 25px;
     color: white;
     border: 1px solid;
+    border-color: grey;
     border-radius: 5px;
     right: 20px;
     bottom: 10px;
@@ -323,6 +326,7 @@ body {
     height: 25px;
     color: white;
     border: 1px solid;
+    border-color: grey;
     border-radius: 5px;
     right: 105px;
     bottom: 10px;

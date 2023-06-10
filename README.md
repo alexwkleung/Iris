@@ -6,9 +6,15 @@
 
 <p align="center">Current dev screenshot (subject to change; frequently updated)</p>
 
-# v0.2.0
+# Release date 
 
-v0.2.0 is currently in progress. For v0.1.x source code, [see here](https://github.com/alexwkleung/Iris/tree/main/v0.1.x).
+There is no set release date for v0.2.0 at the moment.  
+
+This release will mark the first official build for Iris, so I don't want to rush anything. There will be a few dev builds that users can install to get a feel of the application before release.
+
+Iris is a long-term project on my free time, therefore development will take longer than expected. 
+
+The product website and a Discord community chat will likely be added closer to the release date. For now, you can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication.
 
 # Installation
 
@@ -61,6 +67,10 @@ mkdir Iris/Basic
 # create a note
 touch Iris/Basic/Note.md
 ```
+
+# v0.1.x
+
+If you want to take a look at the v0.1.x prototype source code, you can download it from the [v0.1.1 release](https://github.com/alexwkleung/Iris/tree/main/v0.1.x). 
 
 # License 
 

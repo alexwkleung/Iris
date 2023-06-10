@@ -13,18 +13,58 @@ function createWindow(): void {
   //isomorphic version of __dirname for both cjs/esm compatibility (https://antfu.me/posts/isomorphic-dirname)
   //const _dirname: string = typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
 
-  const mainWindow = new BrowserWindow({
-      width: 1200,
-      height: 750,
-      show: false,
-      autoHideMenuBar: true,
-      titleBarStyle: 'hiddenInset',
-      //...(process.platform === 'linux' ? { icon } : {}),
-      webPreferences: {
+  let mainWindow: BrowserWindow = {} as BrowserWindow;
+
+  //check if platform is darwin
+  if(process.platform === 'darwin') {
+      //log
+      console.log("Platform is darwin (macOS)");
+
+      mainWindow = new BrowserWindow({
+          width: 1200,
+          height: 750,
+          show: false,
+          autoHideMenuBar: true,
+          titleBarStyle: 'hiddenInset',
+          webPreferences: {
+          preload: join(_dirname, '../preload/index.js'),
+          sandbox: false
+        }
+    });
+    //check if platform is linux
+  } else if(process.platform === 'linux') {
+      //log
+      console.log("Platform is Linux");
+
+      mainWindow = new BrowserWindow({
+        width: 1200,
+        height: 750,
+        show: false,
+        autoHideMenuBar: true,
+        titleBarStyle: 'default',
+        //...(process.platform === 'linux' ? { icon } : {}),
+        webPreferences: {
         preload: join(_dirname, '../preload/index.js'),
         sandbox: false
       }
-  });
+    });
+    //check if platform is windows
+  } else if(process.platform === 'win32') {
+      //log
+      console.log("Platform is Windows");
+
+      mainWindow = new BrowserWindow({
+          width: 1200,
+          height: 750,
+          show: false,
+          autoHideMenuBar: true,
+          titleBarStyle: 'default',
+          webPreferences: {
+          preload: join(_dirname, '../preload/index.js'),
+          sandbox: false
+        }
+    });
+  }
 
   //set min window size 
   mainWindow.setMinimumSize(800, 600);
