@@ -413,14 +413,16 @@ body {
 #word-count-container {
     position: fixed;
     width: 225px;
-    height: 21px;
+    height: 19px;
     right: 200px;
     top: 60px;
+    padding-top: 2px;
     /*border: 1px solid black;*/
     z-index: 1;
     display: inline-block;
     color: var(--word-count-color-light);
     font-family: 'Inter-Regular';
+    font-size: 14px;
     user-select: none;
 }
 

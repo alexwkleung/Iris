@@ -47,7 +47,7 @@
   overflow-x: scroll;
   width: calc(100% - 318px);
   height: calc(100% - 556px);
-  font-size: 18px;
+  font-size: 17px;
   font-family: 'Inter-Regular';
   background-color: var(--prosemirror-bg-light); 
   color: var(--prosemirror-color-light);
