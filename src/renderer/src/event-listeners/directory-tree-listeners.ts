@@ -266,7 +266,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                         //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                         defaultMarkdownParser.parse(
                                         fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, 
-                                        childFileName[i].textContent as string, 
+                                        (childFileName[i].textContent as string) + ".md", 
                                         DirectoryRefNs.basicRef
                                     )
                                 )!
@@ -275,7 +275,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             const t1: number = performance.now(); //end perf timer
                             
                             //log perf timer
-                            console.log("Editor destroy, replace, and replace in total took " + (t1 - t0) + "ms!");
+                            console.log("Editor destroy, create, and replace in total took " + (t1 - t0) + "ms!");
 
                             //set contenteditable 
                             PMEditorView.setContenteditable(true);
@@ -341,7 +341,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     }
                     
                     //change document title so it corresponds to the opened file
-                    await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + childFileName[i].textContent).catch((e) => { throw console.error(e) });
+                    await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + (childFileName[i].textContent)).catch((e) => { throw console.error(e) });
 
                     //add directory info to editor top bar
                     this.editorTopBarContainer.directoryInfo();

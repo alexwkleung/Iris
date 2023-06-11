@@ -479,6 +479,7 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     border-radius: 25px;
+    overflow-x: scroll;
 }
 
 .ProseMirror code {
@@ -491,4 +492,5 @@ body {
     padding-top: 0px;
     padding-bottom: 0px;
     border-radius: 1.5px;
+    overflow-x: scroll;
 }

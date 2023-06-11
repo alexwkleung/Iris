@@ -375,9 +375,10 @@ export class DirectoryTree extends DirectoryTreeUIElements {
             if(namesArr[i] !== parentNameTags) {
                 const childFile: HTMLDivElement = document.createElement('div');
                 childFile.setAttribute("class", "child-file-name");
-    
-                const ctTextNode: Text = document.createTextNode(namesArr[i]);
-                childFile.appendChild(ctTextNode);
+                
+                //create text node with only file names 
+                const childFileTextNode: Text = document.createTextNode(namesArr[i].split('.md')[0]);
+                childFile.appendChild(childFileTextNode);
                 
                 //append to passed parent node
                 parentTags.appendChild(childFile);

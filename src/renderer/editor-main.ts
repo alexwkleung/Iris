@@ -1,6 +1,6 @@
 import { App } from "./app"
 import { PMEditorView } from "./src/prosemirror/editor/editor-view"
-import { WordCountContainerNode } from "./misc-ui/word-count";
+import { WordCountContainerNode } from "./src/misc-ui/word-count";
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {

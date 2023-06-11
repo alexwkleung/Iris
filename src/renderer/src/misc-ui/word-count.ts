@@ -1,5 +1,4 @@
-import { App } from "../app"
-import { EditorNs } from "../editor-main"
+import { App } from "../../app"
 
 export class WordCountContainerNode {
     public static wordCountContainer: HTMLElement;
