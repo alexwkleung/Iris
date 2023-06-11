@@ -39,6 +39,7 @@
     --prosemirror-a-dark: rgb(136, 136, 220);
     --top-bar-directory-info-color-light: #000000;
     --top-bar-directory-info-color-dark: #ffffff;
+    --word-count-color-light: rgb(99, 99, 99);
 }
 
 /* body */
@@ -418,7 +419,7 @@ body {
     /*border: 1px solid black;*/
     z-index: 1;
     display: inline-block;
-    color: rgb(99, 99, 99);
+    color: var(--word-count-color-light);
     font-family: 'Inter-Regular';
     user-select: none;
 }

@@ -12,8 +12,9 @@ import { Schema } from "prosemirror-model"
 import { buildKeymap } from "../input/keymap"
 import { buildInputRules } from "../input/inputrules"
 import pasteLinkPlugin from 'prosemirror-paste-link'
-import { menuBar, MenuItem } from "prosemirror-menu"
-import { buildMenuItems } from "../menu/menu"
+import { MenuItem } from "../menu/menu"
+import { menuBar } from "../menu/menubar"
+import { buildMenuItems } from "../menu/build-menu"
 
 //eslint-disable-next-line
 export function pmSetup(options: {
