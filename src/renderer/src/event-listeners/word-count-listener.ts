@@ -1,4 +1,4 @@
-import { debounce } from "lodash-es"
+import { debounce } from "../utils/debounce"
 import { WordCountContainerNode } from "../misc-ui/word-count"
 
 export function wordCountListener(editor: string): number {
