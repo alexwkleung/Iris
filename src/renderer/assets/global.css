@@ -32,7 +32,7 @@
     --prosemirror-code-color: #2e2a43;
     --prosemirror-bg-light: #ececec; /* should match current editor bg */
     --prosemirror-bg-dark: #151515; /* should match current editor bg */
-    --continue-modal: rgb(158, 121, 227);
+    --continue-modal: rgb(176, 136, 250);
     --cancel-modal: rgb(212, 114, 114);
     --modal-hover-bg: rgb(88, 88, 88);
     --prosemirror-a-light: rgb(80, 80, 133);
@@ -201,6 +201,7 @@ body {
     font-size: 14px;
     white-space: nowrap;
     overflow-x: scroll;
+    user-select: none;
 }
 #top-bar-directory-info {
     display: flex;
@@ -210,7 +211,6 @@ body {
     align-items: center;
     margin-left: 110px;
     margin-top: 15px;
-    text-decoration: underline;
     color: var(--top-bar-directory-info-color-light);
 }
 
@@ -298,11 +298,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 700px;
+    width: 650px;
     height: 400px;
     background-color: #2a2828;
     z-index: 1;
     border: 1px solid grey;
+    border-radius: 15px;
 }
 #create-file-modal-exit {
     z-index: 1;
@@ -313,8 +314,8 @@ body {
     border: 1px solid;
     border-color: grey;
     border-radius: 5px;
-    right: 20px;
-    bottom: 10px;
+    right: 25px;
+    bottom: 20px;
     -webkit-user-select: none;
     user-select: none;
     font-size: 20px;
@@ -334,8 +335,8 @@ body {
     border: 1px solid;
     border-color: grey;
     border-radius: 5px;
-    right: 105px;
-    bottom: 10px;
+    right: 110px;
+    bottom: 20px;
     -webkit-user-select: none;
     user-select: none;
     font-size: 20px;
@@ -352,7 +353,7 @@ body {
     margin-top: 180px;
     -webkit-user-select: none;
     user-select: none;
-    margin-left: 225px;
+    margin-left: 200px;
     font-family: 'Inter-Regular';
     font-size: 20px;
 }
@@ -362,7 +363,7 @@ body {
 #create-file-modal-folder-name-input-node {
     position: fixed;
     margin-top: -24px;
-    margin-left: 300px;
+    margin-left: 270px;
     font-family: 'Inter-Regular';
     font-size: 20px;
     color: white;
@@ -379,7 +380,7 @@ body {
     position: fixed;
     color: white;
     margin-top: 10px;
-    margin-left: 225px;
+    margin-left: 200px;
     font-family: 'Inter-Regular';
     font-size: 20px;
 }
@@ -389,7 +390,7 @@ body {
 #create-file-modal-new-file-name-input-node {
     position: fixed;
     margin-top: 10px;
-    margin-left: 330px;
+    margin-left: 302px;
     font-family: 'Inter-Regular';
     font-size: 20px;
     color: white;
@@ -419,6 +420,7 @@ body {
     display: inline-block;
     color: black;
     font-family: 'Inter-Regular';
+    user-select: none;
 }
 
 /**

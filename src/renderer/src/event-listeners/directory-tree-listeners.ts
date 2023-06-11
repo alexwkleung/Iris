@@ -279,8 +279,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                             //set contenteditable 
                             PMEditorView.setContenteditable(true);
-
-
+                            
                             //if contenteditable attribute is set to true 
                             if((document.querySelector('.ProseMirror') as HTMLElement).getAttribute('contenteditable') === 'true') {
                                 //show the menubar

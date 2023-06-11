@@ -159,6 +159,7 @@ img.ProseMirror-separator {
   cursor: pointer;
   position: relative;
   padding-right: 15px;
+  user-select: none;
 }
 
 .ProseMirror-menu-dropdown-wrap {
