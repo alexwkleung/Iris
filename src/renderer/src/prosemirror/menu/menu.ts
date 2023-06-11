@@ -3,7 +3,7 @@
 //the code will properly adhere to eslint rules at a later time
 
 import crel from "crelt"
-import { lift, joinUp, selectParentNode, wrapIn, setBlockType } from "prosemirror-commands"
+import { selectParentNode, wrapIn, setBlockType } from "prosemirror-commands"
 import { undo, redo } from "prosemirror-history"
 import { EditorView } from "prosemirror-view"
 import { EditorState, Transaction, NodeSelection } from "prosemirror-state"
@@ -61,7 +61,7 @@ export class MenuItem implements MenuElement {
     function update(state: EditorState) {
       if (spec.select) {
         const selected = spec.select(state)
-        dom!.style.display = selected ? "" : "none"
+        dom!.style.display = selected ? "" : ""
         if (!selected) return false
       }
       let enabled = true
@@ -212,7 +212,7 @@ export class Dropdown implements MenuElement {
     //eslint-disable-next-line
     function update(state: EditorState) {
       const inner = content.update(state)
-      wrap.style.display = inner ? "" : "none"
+      wrap.style.display = inner ? "" : ""
       return inner
     }
 
@@ -256,7 +256,7 @@ function combineUpdates(
     let something = false
     for (let i = 0; i < updates.length; i++) {
       const up = updates[i](state)
-      nodes[i].style.display = up ? "" : "none"
+      nodes[i].style.display = up ? "" : ""
       if (up) something = true
     }
     return something
@@ -309,7 +309,7 @@ export class DropdownSubmenu implements MenuElement {
     //eslint-disable-next-line
     function update(state: EditorState) {
       const inner = items.update(state)
-      wrap.style.display = inner ? "" : "none"
+      wrap.style.display = inner ? "" : ""
       return inner
     }
     return {dom: wrap, update}
@@ -346,7 +346,7 @@ export function renderGrouped(view: EditorView, content: readonly (readonly Menu
     let something = false, needSep = false
     for (let i = 0; i < updates.length; i++) {
       const hasContent = updates[i](state)
-      if (i) separators[i - 1].style.display = needSep && hasContent ? "" : "none"
+      if (i) separators[i - 1].style.display = needSep && hasContent ? "" : ""
       needSep = hasContent
       if (hasContent) something = true
     }
@@ -369,10 +369,6 @@ export const icons: {[name: string]: IconSpec} = {
   join: {
     width: 800, height: 900,
     path: "M0 75h800v125h-800z M0 825h800v-125h-800z M250 400h100v-100h100v100h100v100h-100v100h-100v-100h-100z"
-  },
-  lift: {
-    width: 1024, height: 1024,
-    path: "M219 310v329q0 7-5 12t-12 5q-8 0-13-5l-164-164q-5-5-5-13t5-13l164-164q5-5 13-5 7 0 12 5t5 12zM1024 749v109q0 7-5 12t-12 5h-987q-7 0-12-5t-5-12v-109q0-7 5-12t12-5h987q7 0 12 5t5 12zM1024 530v109q0 7-5 12t-12 5h-621q-7 0-12-5t-5-12v-109q0-7 5-12t12-5h621q7 0 12 5t5 12zM1024 310v109q0 7-5 12t-12 5h-621q-7 0-12-5t-5-12v-109q0-7 5-12t12-5h621q7 0 12 5t5 12zM1024 91v109q0 7-5 12t-12 5h-987q-7 0-12-5t-5-12v-109q0-7 5-12t12-5h987q7 0 12 5t5 12z"
   },
   selectParentNode: {text: "\u2b1a", css: "font-weight: bold"},
   undo: {
@@ -412,24 +408,6 @@ export const icons: {[name: string]: IconSpec} = {
     path: "M0 448v256h256v-256h-128c0 0 0-128 128-128v-128c0 0-256 0-256 256zM640 320v-128c0 0-256 0-256 256v256h256v-256h-128c0 0 0-128 128-128z"
   }
 }
-
-/// Menu item for the `joinUp` command.
-export const joinUpItem = new MenuItem({
-  title: "Join with above block",
-  run: joinUp,
-  //eslint-disable-next-line
-  select: state => joinUp(state),
-  icon: icons.join
-})
-
-/// Menu item for the `lift` command.
-export const liftItem = new MenuItem({
-  title: "Lift out of enclosing block",
-  run: lift,
-  //eslint-disable-next-line
-  select: state => lift(state),
-  icon: icons.lift
-})
 
 /// Menu item for the `selectParentNode` command.
 export const selectParentNodeItem = new MenuItem({

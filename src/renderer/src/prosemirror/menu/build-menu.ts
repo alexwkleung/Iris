@@ -6,9 +6,7 @@ import {
   wrapItem, 
   blockTypeItem, 
   Dropdown, 
-  DropdownSubmenu, 
-  joinUpItem, 
-  liftItem, 
+  DropdownSubmenu,
   undoItem, 
   redoItem, 
   icons, 
@@ -206,7 +204,7 @@ r.typeMenu = new Dropdown(cut([r.makeParagraph, r.makeCodeBlock, r.makeHead1 && 
 ]), {label: "Heading"})]), {label: "Add"})
 
 r.inlineMenu = [cut([r.toggleStrong, r.toggleEm, r.toggleCode])]
-r.blockMenu = [cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote, joinUpItem, liftItem])]
+r.blockMenu = [cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote])]
 r.fullMenu = r.inlineMenu.concat([[r.typeMenu, r.insertMenu]], [[undoItem, redoItem]], r.blockMenu)
 
 return r
