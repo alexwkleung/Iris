@@ -418,7 +418,7 @@ body {
     /*border: 1px solid black;*/
     z-index: 1;
     display: inline-block;
-    color: black;
+    color: rgb(99, 99, 99);
     font-family: 'Inter-Regular';
     user-select: none;
 }
