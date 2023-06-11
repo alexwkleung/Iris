@@ -33,9 +33,11 @@ export class EditorListeners implements IEditorListeners {
                             //log
                             console.log(props.parentFolderName);
 
+                            console.log(props.childFileName);
+                            
                             fsMod.fs._writeToFile(
                                 DirectoryRefNs.basicRef, 
-                                props.parentFolderName + "/" + props.childFileName, 
+                                props.parentFolderName + "/" + props.childFileName + ".md", 
                                 defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString()
                             );                         
     
