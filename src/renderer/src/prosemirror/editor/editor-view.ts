@@ -1,5 +1,6 @@
 import { EditorView } from "prosemirror-view"
 import { PMEditorState } from "./editor-state"
+import { defaultMarkdownSerializer } from "prosemirror-markdown"
 
 export class PMEditorView {
     /**
@@ -40,7 +41,11 @@ export class PMEditorView {
      */
     public static createEditorView(): EditorView {
         PMEditorView.editorView = new EditorView(document.querySelector('#editor-container'), {
-            state: PMEditorState.createEditorState()
+            state: PMEditorState.createEditorState(),
+            //serialize clipboard content to markdown
+            clipboardTextSerializer: (slice): any => { 
+                return defaultMarkdownSerializer.serialize(slice.content as any)
+            }
         }); 
 
         return PMEditorView.editorView;
