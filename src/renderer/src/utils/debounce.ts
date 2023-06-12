@@ -12,7 +12,7 @@
  * 
  * document.body.addEventListener('click', debounce(() => {
  *  console.log("Executed!");
- * }))
+ * }, 1000))
  */
 export function debounce(fn: () => any, wait: number | undefined, immediate?: boolean): () => any {
     let timeout: string | number | NodeJS.Timeout | undefined;
