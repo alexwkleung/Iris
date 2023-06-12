@@ -252,7 +252,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * @protected 
      * @readonly
      */
-    protected readonly folderNamesBasic: string[] = this.getRootNames("Basic");
+    protected readonly folderNamesBasic: string[] | null = this.getRootNames("Basic");
 
     /**
      * Get root names 
@@ -261,29 +261,23 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * 
      * @returns Filtered names of folders from root
      */
-    public getRootNames(type: string): string[] {
-        let walkRef: string[] = [];
-        let filteredRootFolderNamesVec: string[] = [];
-        const nameVecTemp: string[] = [];
+    public getRootNames(type: string): string[] | null {
+        const nameVec: string[] = [];
         
         if(type === "Basic") {
-            //walk directory recursively
-            //eslint-disable-next-line @typescript-eslint/no-unused-vars
-            walkRef = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/" + type).slice(1);
-        
-            fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + type).map((elem) => nameVecTemp.push(elem));
-        
-            filteredRootFolderNamesVec = nameVecTemp.filter((filter: string): boolean => {
-                return [".DS_Store"].some((end) => {
-                    return !filter.endsWith(end);
-                });
-            });
+            //get folder names from root
+            fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + type).map((elem) => nameVec.push(elem));
 
             //assign basic ref 
             DirectoryRefNs.basicRef = type;
         }
 
-        return filteredRootFolderNamesVec;
+        //check platform before returning nameVec
+        return window.electron.process.platform === 'darwin' 
+            ? nameVec.slice(1) 
+            : window.electron.process.platform === 'linux' || window.electron.process.platform === 'win32' 
+            ? nameVec 
+            : null
     }
 
     public isFolderNode(baseDir: string, dirPropName: string): boolean {
@@ -297,7 +291,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      */
     public createDirTreeParentNodes(type: string): void {  
         if(type === "Basic") {
-            this.folderNamesBasic.map((elem) => {
+            (this.folderNamesBasic as string[]).map((elem) => {
                 if(this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                     //create parent folder node
                     const parentFolder: HTMLDivElement = document.createElement('div');
@@ -309,8 +303,8 @@ export class DirectoryTree extends DirectoryTreeUIElements {
                     parentFolder.appendChild(parentFolderName);
     
                     //create text node based on directory name
-                    const pfTextNode: Text = document.createTextNode(elem);
-                    parentFolderName.appendChild(pfTextNode);
+                    const parentFolderTextNode: Text = document.createTextNode(elem);
+                    parentFolderName.appendChild(parentFolderTextNode);
     
                     const parentFolderCaret: HTMLDivElement = document.createElement('div');
                     parentFolderCaret.setAttribute("class", "parent-folder-caret");
@@ -330,8 +324,8 @@ export class DirectoryTree extends DirectoryTreeUIElements {
                       FileDirectoryTreeNode.fileDirectoryNode.appendChild(childFileRoot);
     
                       //create text node based on directory name
-                      const pfTextNode: Text = document.createTextNode(elem);
-                      childFileRoot.appendChild(pfTextNode);
+                      const parentFolderTextNode: Text = document.createTextNode(elem);
+                      childFileRoot.appendChild(parentFolderTextNode);
                 }
             });
         }
@@ -353,9 +347,18 @@ export class DirectoryTree extends DirectoryTreeUIElements {
         let walkRef: string[] = [];
 
         if(type === "Basic") {
-            //walk directory recursively
-            //eslint-disable-next-line @typescript-eslint/no-unused-vars
-            walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags).slice(1);
+            //platform check 
+            if(window.electron.process.platform === 'darwin') {
+                //walk directory recursively
+                walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags);
+
+                //temp check length 
+                //console.log(walkRef.slice(1).length);
+            } else if(window.electron.process.platform === 'linux' || window.electron.process.platform === 'win32') {
+                walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags);
+            } else {
+                throw console.error("Cannot walk directory files on unsupported platform");
+            }
         }
 
         const dirNamesArr: string[] = [];

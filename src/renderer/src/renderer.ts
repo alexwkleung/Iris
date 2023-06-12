@@ -3,7 +3,7 @@ import { EditorNs } from '../editor-main'
 import { windowNs } from './window/draggable-area'
 
 export function initRenderer(): void {
-    window.addEventListener('DOMContentLoaded', async () => {
+    window.addEventListener('DOMContentLoaded', () => {
         //draggable area
         windowNs.draggableArea();
 
@@ -11,7 +11,7 @@ export function initRenderer(): void {
         directoryNs.directory();
 
         //editor
-        await EditorNs.editor();
+        EditorNs.editor();
   });
 }
 initRenderer();
