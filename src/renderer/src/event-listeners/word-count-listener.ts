@@ -7,7 +7,11 @@ export function wordCountListener(editor: string): number {
     let textArr: string[] = [];
     
     //regex pattern
-    const regexPattern: RegExp = /[\s+\n\r]/;
+    //s+: one or more whitespace characters
+    //n+: one or more new line characters
+    //r+: one or more carriage return characters
+    //g: match all
+    const regexPattern: RegExp = /[\s+\n+\r+]/g;
 
     if(editor === "prosemirror") {
         const pm: HTMLElement = document.querySelector('.ProseMirror') as HTMLElement;
