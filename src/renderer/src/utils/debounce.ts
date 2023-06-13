@@ -24,12 +24,12 @@ export function debounce(fn: () => any, wait: number | undefined, immediate?: bo
             timeout = undefined;
 
             if(!immediate) {
-                fn.apply(this, args as any);
+                fn.apply(this, args);
             }
         }, (wait as number) >= 0 && (wait as number) <= Infinity ? wait : undefined);
 
         if(immediate && !timeout) {
-            fn.apply(this, args as any);
+            fn.apply(this, args);
         }
     };
 }
