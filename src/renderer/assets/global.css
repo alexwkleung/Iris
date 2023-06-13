@@ -115,7 +115,7 @@ body {
 */
 .parent-folder-name {
     color: var(--parent-folder-name);
-    font-size: 20px;
+    font-size: 18px;
     margin-left: 25px;
     padding-top: 15px;
     font-family: 'Inter-Bold';
@@ -250,7 +250,7 @@ body {
 /* create folder */
 #create-folder {
     position: fixed;
-    top: 55px;
+    top: 58px;
     color: white;
     border: 1px solid;
     border-color: grey;
@@ -269,7 +269,7 @@ body {
 /* settings node */
 #settings-node {
     position: fixed;
-    top: 55px;
+    top: 58px;
     color: white;
     border: 1px solid;
     border-color: grey;

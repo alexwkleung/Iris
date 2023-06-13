@@ -1,6 +1,12 @@
 import { debounce } from "../utils/debounce"
 import { WordCountContainerNode } from "../misc-ui/word-count"
 
+/**
+ * Word count listener
+ * 
+ * @param editor Editor type (options: `"prosemirror"`, `"codemirror"`)
+ * @returns Word count 
+ */
 export function wordCountListener(editor: string): number {
     //default value
     let wordCount: number = 0;
