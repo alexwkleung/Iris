@@ -15,6 +15,7 @@ import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
 import { EditorNs } from "../../editor-main"
 import { wordCountListener } from "./word-count-listener"
 import { isModeBasic } from "../utils/is"
+import { Node } from "prosemirror-model"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -272,7 +273,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                         (childFileName[i].textContent as string) + ".md", 
                                         DirectoryRefNs.basicRef
                                     )
-                                )!
+                                ) as Node
                             )));
 
                             const t1: number = performance.now(); //end perf timer
@@ -410,7 +411,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     public createFileModalContinueListener(el: HTMLElement, type: string): void {
         let fileName: string = "";
 
-        el.addEventListener('keyup',(e) => {
+        el.addEventListener('keyup', (e) => {
             //assign current value of input element on keyup + extension
             fileName = (e.target as HTMLInputElement).value + ".md";
         })
@@ -428,7 +429,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                     + "/Iris/Basic/" 
                     + (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent 
                     +  "/" + fileName
-                )
+                );
 
                 const createFileModalFolderNameRef: string = (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent as string;
 

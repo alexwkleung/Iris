@@ -40,6 +40,12 @@
     --top-bar-directory-info-color-light: #000000;
     --top-bar-directory-info-color-dark: #ffffff;
     --word-count-color-light: rgb(99, 99, 99);
+    /* 
+    * transparent background without messing with opacity property in CSS
+    * set rgb values to 0 
+    * set alpha value to a float or integer to control opacity
+    */
+    --create-file-modal-container-bg: rgba(0, 0, 0, 0.5);
 }
 
 /* body */
@@ -283,16 +289,12 @@ body {
 * create file modal nodes 
 */
 #create-file-modal-container {
-    position: relative;
+    position: fixed;
     z-index: 1;
-    /* 
-    * transparent background without messing with opacity property in CSS
-    * set rgb values to 0 
-    * set alpha value to a float or integer to control opacity
-    */
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100vw;
-    height: 100vh;
+    background-color: var(--create-file-modal-container-bg);
+    width: 100%;
+    height: calc(100% + 20px);
+    margin-top: -10px;
 }
 #create-file-modal-inner-window {
     position: fixed;
