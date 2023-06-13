@@ -23,12 +23,12 @@ export function debounce(fn: () => any, wait: number | undefined, immediate?: bo
         timeout = setTimeout(() => {
             timeout = undefined;
 
-            if(!immediate) {
+            if(!immediate && typeof this === 'object') {
                 fn.apply(this, args);
             }
         }, (wait as number) >= 0 && (wait as number) <= Infinity ? wait : undefined);
 
-        if(immediate && !timeout) {
+        if(immediate && !timeout && typeof this === 'object') {
             fn.apply(this, args);
         }
     };
