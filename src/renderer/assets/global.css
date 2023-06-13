@@ -224,10 +224,10 @@ body {
 /* new file */
 .create-new-file {
     position: absolute;
-    margin-top: -26px;
+    margin-top: -22px;
     margin-left: 260px;
     width: 18px;
-    height: 24px;
+    height: 20px;
     color: rgb(224, 224, 224);
     border-radius: 100px;
     border: 1px solid;
@@ -244,7 +244,7 @@ body {
 }
 .create-new-file-text-node-inner-container {
     margin-left: 2.5px;
-    margin-top: -1.5px;
+    margin-top: -2.8px;
 }
 
 /* create folder */
