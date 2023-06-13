@@ -23,6 +23,7 @@ declare global {
             _readFileRoot(type: string, file: string): string,
             _readFileFolder(folder: string, file: string, type: string): string
             _writeToFile(path: string, content: string, type: string): void;
+            _createFile(path: string): void;
         }
     }
 }

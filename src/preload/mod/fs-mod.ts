@@ -11,7 +11,8 @@ import {
     readFile, 
     walk, 
     walkNoExt, 
-    writeToFile
+    writeToFile,
+    createFile
 } from 'fs-mod'
 
 //fsMod API
@@ -60,5 +61,8 @@ export const fsMod = {
     },
     _writeToFile(type: string, path: string, content: string): void {
         return writeToFile(baseDir("home") + "/Iris/" + type + "/" + path, content);
+    },
+    _createFile(path: string): void {
+        return createFile(path);
     }
 }

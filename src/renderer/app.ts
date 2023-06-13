@@ -34,7 +34,10 @@ export class App {
         } else {
             App.appNode = document.createElement('div') as HTMLDivElement;
             App.appNode.setAttribute("id", "app");
-    
+            
+            //default mode
+            App.appNode.classList.add('basic-mode-is-active');
+            
             //use insertBefore instead of prepend
             document.body.insertBefore(App.appNode, document.body.firstChild);
     

@@ -1,5 +1,6 @@
 import { App } from '../../app'
 import { fsMod } from '../utils/alias'
+import { isModeBasic } from '../utils/is'
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DirectoryRefNs {
@@ -186,8 +187,8 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         folderNameInputNode.setAttribute("readonly", "true");
         folderNameInputContainerNode.appendChild(folderNameInputNode);
 
-        //const folderNameTextNode: Text = document.createTextNode(folderName);
         (folderNameInputNode as HTMLInputElement).value = folderName;
+        (folderNameInputNode as HTMLInputElement).textContent = folderName;
     }
 
     protected createFileModalNewFileNameNode(): void {
@@ -264,7 +265,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     public getRootNames(type: string): string[] | null {
         const nameVec: string[] = [];
         
-        if(type === "Basic") {
+        if(type === "Basic" && isModeBasic()) {
             //get folder names from root
             fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + type).map((elem) => nameVec.push(elem));
 
@@ -290,7 +291,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * @param type The mode type
      */
     public createDirTreeParentNodes(type: string): void {  
-        if(type === "Basic") {
+        if(type === "Basic" && isModeBasic()) {
             (this.folderNamesBasic as string[]).map((elem) => {
                 if(this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                     //create parent folder node
@@ -346,7 +347,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     ): void {
         let walkRef: string[] = [];
 
-        if(type === "Basic") {
+        if(type === "Basic" && isModeBasic()) {
             //platform check 
             if(window.electron.process.platform === 'darwin') {
                 //walk directory recursively

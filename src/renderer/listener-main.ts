@@ -14,6 +14,7 @@ export namespace ListenerNs {
     export function directoryTreeUIModalListeners(): void {
         const dirTreeUIModalListeners = new DirectoryTreeUIModalListeners();
 
+        //needs to be in sync with mode switch when implemented?
         dirTreeUIModalListeners.createFileListener();
     }
 }

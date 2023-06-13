@@ -14,6 +14,7 @@ import { EditorListeners } from "./editor-listeners"
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
 import { EditorNs } from "../../editor-main"
 import { wordCountListener } from "./word-count-listener"
+import { isModeBasic } from "../utils/is"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -172,7 +173,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     //check if parent tag contains is-active-parent class
                     if(this.getParentTags[i].classList.contains('is-active-parent')) {
                         //
-                        this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home", type);
+                        if(type === "Basic" && isModeBasic()) {
+                            this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home", type);
+                        }
 
                         document.querySelectorAll('.parent-folder-caret')[i].classList.toggle('is-active-parent-folder');
 
@@ -371,6 +374,14 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     private parentNameTags: NodeListOf<Element> = {} as NodeListOf<Element>;
 
     /**
+     * Directory tree listeners object
+     *  
+     * @private
+     * @readonly
+     */
+    private readonly directoryTreeListeners = new DirectoryTreeListeners();
+
+    /**
      * Create file modal exit listener
      */
     public createFileModalExitListener(): void {
@@ -391,6 +402,81 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         })
     }
 
+    /**
+     * Create file modal continue listener 
+     * 
+     * @param el Element to attach `keyup` event listener to
+     */
+    public createFileModalContinueListener(el: HTMLElement, type: string): void {
+        let fileName: string = "";
+
+        el.addEventListener('keyup',(e) => {
+            //assign current value of input element on keyup + extension
+            fileName = (e.target as HTMLInputElement).value + ".md";
+        })
+
+        //console.log(fileName);
+
+        DirectoryTreeUIModals.createFileModalContinueButton.addEventListener('click', () => {
+            //basic mode check
+            if(type === "Basic" && isModeBasic()) {
+                //log
+                console.log((document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent)
+                
+                fsMod.fs._createFile(
+                    fsMod.fs._baseDir("home") 
+                    + "/Iris/Basic/" 
+                    + (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent 
+                    +  "/" + fileName
+                )
+
+                const createFileModalFolderNameRef: string = (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent as string;
+
+                const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+
+                createFileNode.forEach((elem) => {
+                    //null check
+                    if(elem !== null) {
+                        elem.classList.remove('is-active-create-new-file-modal');
+                    }
+                });
+
+                //null check
+                if(DirectoryTreeUIModals.createFileModalContainer !== null) {
+                    DirectoryTreeUIModals.createFileModalContainer.remove();
+                }
+
+                //log
+                console.log(fileName);
+
+                const childFile: HTMLDivElement = document.createElement('div');
+                childFile.setAttribute("class", "child-file-name");
+
+                const childFileTextNode: Text = document.createTextNode(fileName.split('.md')[0]);
+
+                document.querySelectorAll('.parent-folder-name').forEach((el) => {
+                    //this doesn't cover duplicate folder names, so it might cause bugs
+                    if(el.textContent === createFileModalFolderNameRef) {
+                        childFile.appendChild(childFileTextNode);
+
+                        (el.parentNode as ParentNode).appendChild(childFile);
+                    }
+                })
+            
+                //execute parent root listener so it understands the new file
+                this.directoryTreeListeners.parentRootListener("Basic");
+
+                //execute child node listener to allow new file to be clicked
+                this.directoryTreeListeners.childNodeListener();
+
+                //execute parent root listener again so everything will be in sync 
+                this.directoryTreeListeners.parentRootListener("Basic");
+
+                //to-do: sort files...
+            }
+        })
+    }
+    
     /**
      * Create file listener
      */
@@ -441,6 +527,12 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                             //invoke createFileModalNewFileNameNode 
                             this.createFileModalNewFileNameNode();
+
+                            //invoke createFileModalContinueListener
+                            this.createFileModalContinueListener(
+                                (document.querySelector('#create-file-modal-new-file-name-input-node') as HTMLElement),
+                                "Basic"
+                            );
                         } else if(!createFileNode[i].classList.contains('show-create-file')) {
                             createFileNode[i].classList.remove('show-create-file');        
                         }

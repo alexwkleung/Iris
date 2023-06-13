@@ -303,7 +303,7 @@ body {
     height: 400px;
     background-color: #2a2828;
     z-index: 1;
-    border: 1px solid grey;
+    /*border: 1px solid grey;*/
     border-radius: 15px;
 }
 #create-file-modal-exit {
@@ -384,6 +384,7 @@ body {
     margin-left: 200px;
     font-family: 'Inter-Regular';
     font-size: 20px;
+    user-select: none;
 }
 #create-file-modal-new-file-name-node:hover {
     cursor: default;
