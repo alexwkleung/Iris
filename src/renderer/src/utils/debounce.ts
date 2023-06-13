@@ -17,7 +17,7 @@
 export function debounce(fn: () => any, wait: number | undefined, immediate?: boolean): () => any {
     let timeout: string | number | NodeJS.Timeout | undefined;
 
-    return function(this: any, ...args: []) {
+    return function(this: unknown, ...args: []) {
         clearTimeout(timeout as string | number | NodeJS.Timeout | undefined);
 
         timeout = setTimeout(() => {

@@ -267,7 +267,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                     PMEditorState.editorState.tr.replaceRangeWith(
                                         0, 
                                         0,
-                                        //eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                         defaultMarkdownParser.parse(
                                         fsMod.fs._readFileFolder(this.getParentNameTags[j].textContent as string, 
                                         (childFileName[i].textContent as string) + ".md", 
