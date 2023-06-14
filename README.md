@@ -52,7 +52,7 @@ make dev
 npm run dev
 ```
 
-At the moment, you will need to manually create the directory and files:
+At the moment, you will need to manually create the directory:
 
 ```bash
 # home directory
@@ -63,9 +63,6 @@ mkdir Iris
 
 # create basic notes directory
 mkdir Iris/Basic
-
-# create a note
-touch Iris/Basic/Note.md
 ```
 
 # v0.1.x

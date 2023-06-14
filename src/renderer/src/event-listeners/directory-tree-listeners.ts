@@ -419,7 +419,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         DirectoryTreeUIModals.createFileModalContinueButton.addEventListener('click', () => {
             //basic mode check
-            if(type === "Basic" && isModeBasic()) {
+            if(type === "Basic" && isModeBasic() && fileName !== "") {
                 //log
                 console.log((document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent)
                 
