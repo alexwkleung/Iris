@@ -198,7 +198,7 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.appendChild(newFileNameNode);
 
         //new file name text node
-        const newFileNameTextNode: Text = document.createTextNode("File name: ");
+        const newFileNameTextNode: Text = document.createTextNode("Name: ");
         newFileNameNode.appendChild(newFileNameTextNode);
 
         //new file name input node container
@@ -210,7 +210,7 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
         const newFileNameInputNode: HTMLInputElement = document.createElement('input');
         newFileNameInputNode.setAttribute("id", "create-file-modal-new-file-name-input-node");
         newFileNameInputNode.setAttribute("type", "text");
-        newFileNameInputNode.setAttribute("placeholder", "Enter a file name");
+        newFileNameInputNode.setAttribute("placeholder", "Enter a note name");
         newFileNameInputNode.setAttribute("spellcheck", "false");
         newFileNameInputNodeContainer.appendChild(newFileNameInputNode);
 

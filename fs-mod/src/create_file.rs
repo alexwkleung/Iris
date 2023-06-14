@@ -1,8 +1,8 @@
 use std::fs;
 
 #[napi]
-pub fn create_file(path: String) {
-    let write_file = fs::write(&path, "");
+pub fn create_file(path: String, content: String) {
+    let write_file = fs::write(&path, content);
 
     //error handling
     match write_file {

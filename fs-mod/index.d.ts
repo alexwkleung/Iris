@@ -16,4 +16,4 @@ export function readFile(dir: string): string
 export function walk(dir: string): Array<string>
 export function walkNoExt(dir: string): Array<string>
 export function writeToFile(path: string, content: string): void
-export function createFile(path: string): void
+export function createFile(path: string, content: string): void

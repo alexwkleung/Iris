@@ -85,7 +85,7 @@ body {
     background-color: var(--file-directory-bg);
     width: 292px;
     height: calc(100% - 1px);
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     /* ux purposes */
     -webkit-user-select: none;
@@ -105,9 +105,10 @@ body {
 */
 #file-directory-tree-container-inner {
     position: relative;
-    margin-top: 95px;
+    margin-top: 100px;
     /*border: 1px solid white;*/
-    height: calc(100% - 130px);
+    height: calc(100% - 150px);
+    overflow-y: scroll;
 }
 
 /*
@@ -121,7 +122,8 @@ body {
     font-family: 'Inter-Bold';
     white-space: nowrap; /* don't wrap name and set overflow-x to handle the nowrap */
     overflow-x: scroll;
-    width: 220px;
+    width: 200px;
+    /*border: 1px solid white;*/
 }
 .parent-folder-name::-webkit-scrollbar {
     display: none;
@@ -162,7 +164,7 @@ body {
     padding-top: 10px;
     padding-bottom: 2px;
     margin-left: 35px;
-    width: 200px;
+    width: 190px;
     white-space: nowrap;
     overflow-x: scroll;
 }
@@ -173,12 +175,11 @@ body {
     cursor: pointer;
     text-decoration: none;
     text-decoration-color: var(--child-file-name-hover);
-    width: 200px;
     border-radius: 5px;
 }
 .child-file-name.is-active-child {
     color: var(--child-file-name-active);
-    width: 200px;
+    width: 190px;
     border-radius: 5px;
     /*background-color: rgb(67, 65, 65);*/ /* experimental only */
 }
@@ -365,7 +366,7 @@ body {
 }
 #create-file-modal-folder-name-input-node {
     position: fixed;
-    margin-top: -24px;
+    margin-top: -25px;
     margin-left: 270px;
     font-family: 'Inter-Regular';
     font-size: 20px;
@@ -373,6 +374,7 @@ body {
     background-color: #494747;
     border: 0px;
     overflow-x: scroll;
+    width: 195px;
 }
 #create-file-modal-folder-name-input-node:focus {
     outline: none;
@@ -394,7 +396,7 @@ body {
 #create-file-modal-new-file-name-input-node {
     position: fixed;
     margin-top: 10px;
-    margin-left: 302px;
+    margin-left: 267px;
     font-family: 'Inter-Regular';
     font-size: 20px;
     color: white;
@@ -434,6 +436,11 @@ body {
 */
 .ProseMirror h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter-Bold';
+    margin-left: 3px;
+}
+
+.ProseMirror p {
+    margin-left: 3px;
 }
 
 .ProseMirror blockquote  {

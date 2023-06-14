@@ -62,7 +62,7 @@ export const fsMod = {
     _writeToFile(type: string, path: string, content: string): void {
         return writeToFile(baseDir("home") + "/Iris/" + type + "/" + path, content);
     },
-    _createFile(path: string): void {
-        return createFile(path);
+    _createFile(path: string, content: string): void {
+        return createFile(path, content);
     }
 }
