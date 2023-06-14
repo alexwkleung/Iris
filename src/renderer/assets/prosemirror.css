@@ -51,7 +51,7 @@
   font-family: 'Inter-Regular';
   background-color: var(--prosemirror-bg-light); 
   color: var(--prosemirror-color-light);
-  padding-left: 15px;
+  padding-left: 12px;
   top: 86px;
   bottom: 200px;
   /*border: 1px solid black;*/

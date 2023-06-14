@@ -51,4 +51,47 @@ export class EditorListeners implements IEditorListeners {
             }, 1100)); //1100ms default
         }
     }
+
+    /**
+     * Insert tab listener
+     * 
+     * Tabs are based on spaces and not actual tab characters
+     */
+    public insertTabListener(numberOfSpaces?: number): void {
+        let spaces: string = "";
+        
+        //ref: https://stackoverflow.com/questions/2237497/make-the-tab-key-insert-a-tab-character-in-a-contenteditable-div-and-not-blur
+        (document.querySelector('.ProseMirror') as HTMLElement).addEventListener('keydown', (e) => {
+            if((e as KeyboardEvent).key === 'Tab') {
+                //prevent default tab behaviour
+                e.preventDefault();
+
+                const getSelection: Selection = document.getSelection() as Selection;
+                const getRange: Range = getSelection.getRangeAt(0);
+
+                //check number of spaces passed from argument
+                if(numberOfSpaces === 2) {
+                    spaces = "  "; //2 spaces
+                } else if(numberOfSpaces === 4) {
+                    spaces = "    "; //4 spaces
+                } else if((numberOfSpaces as number <= 0)) {
+                    throw console.error("Number of spaces cannot be zero or negative");
+                } else if(numberOfSpaces === null || numberOfSpaces === undefined) {
+                    spaces = "    "; //default 4 spaces if numberOfSpaces argument is not provided
+                }
+
+                //spaces text node
+                const spacesTextNode: Text = document.createTextNode(spaces); 
+
+                //insert node at start of range
+                getRange.insertNode(spacesTextNode);
+
+                //set start position after a node
+                getRange.setStartAfter(spacesTextNode);
+
+                //set end position after a node
+                getRange.setEndAfter(spacesTextNode);
+            }
+        })
+    }
 }
