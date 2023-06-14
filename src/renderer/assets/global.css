@@ -441,6 +441,11 @@ body {
 
 .ProseMirror p {
     margin-left: 3px;
+    white-space: pre-wrap;
+}
+
+.ProseMirror pre {
+    white-space: normal;
 }
 
 .ProseMirror blockquote  {
@@ -480,6 +485,7 @@ body {
     margin-left: -5px;
 }
 
+/*
 .ProseMirror pre {
     background-color: var(--prosemirror-pre-bg);
     caret-color: var(--caret-color-light);
@@ -491,16 +497,19 @@ body {
     border-radius: 25px;
     overflow-x: scroll;
 }
+*/
 
 .ProseMirror code {
     background-color: var(--prosemirror-code-bg);
     caret-color: var(--caret-color-light);
     color: var(--prosemirror-code-color);
-    width: 100%;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border-radius: 1.5px;
+    width: calc(100% - 40px);
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 25px;
     overflow-x: scroll;
+    white-space: pre-wrap;
+    display: inline-block; 
+    unicode-bidi: embed;
 }

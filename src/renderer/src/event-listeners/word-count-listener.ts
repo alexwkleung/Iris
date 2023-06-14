@@ -33,7 +33,11 @@ export function wordCountListener(editor: string): number {
             wordCount = 0; //re-initialize 
             WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words"; 
         } else {
-            wordCount = (pm.textContent as string).trim().split(regexPattern).length;
+            wordCount = (pm.textContent as string).trim().split(regexPattern).filter(str => str !== "").length;
+
+            //log
+            console.log((pm.textContent as string).trim().split(regexPattern).filter(str => str !== ""));
+
             WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words"; 
         }
 
@@ -48,7 +52,11 @@ export function wordCountListener(editor: string): number {
                 wordCount = 0; //re-initialize
                 WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words"; 
             } else {
-                wordCount = textArr.length;
+                wordCount = textArr.filter(str => str !== "").length;
+
+                //log
+                console.log(textArr.filter(str => str !== ""));
+
                 WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words";
             }
 

@@ -293,7 +293,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             this.editorListeners.autoSaveListener("Basic");
 
                             //invoke insert tab listener
-                            this.editorListeners.insertTabListener(4);
+                            this.editorListeners.insertTabListener(2);
 
                             //null check
                             if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {

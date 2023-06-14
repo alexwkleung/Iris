@@ -77,7 +77,7 @@ export class EditorListeners implements IEditorListeners {
                 } else if((numberOfSpaces as number <= 0)) {
                     throw console.error("Number of spaces cannot be zero or negative");
                 } else if(numberOfSpaces === null || numberOfSpaces === undefined) {
-                    spaces = "    "; //default 4 spaces if numberOfSpaces argument is not provided
+                    spaces = "  "; //default 2 spaces if numberOfSpaces argument is not provided
                 }
 
                 //spaces text node
