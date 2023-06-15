@@ -1,4 +1,5 @@
 import { App } from "../../app"
+import { fsMod } from "./alias"
 
 export function isModeBasic(): boolean {
     let isActive: boolean = false;
@@ -22,4 +23,8 @@ export function isModeAdvanced(): boolean {
     }
 
     return isActive;
+}
+
+export function isFolderNode(baseDir: string, dirPropName: string): boolean {
+    return fsMod.fs._isDirectory(baseDir, dirPropName);
 }

@@ -63,9 +63,6 @@ mkdir Iris
 
 # create basic notes directory
 mkdir Iris/Basic
-
-# create folder 
-mkdir Iris/Basic/Foo
 ```
 
 # v0.1.x

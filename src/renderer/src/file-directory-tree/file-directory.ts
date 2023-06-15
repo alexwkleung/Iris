@@ -1,6 +1,7 @@
 import { App } from '../../app'
 import { fsMod } from '../utils/alias'
 import { isModeBasic } from '../utils/is'
+import { isFolderNode } from '../utils/is'
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DirectoryRefNs {
@@ -324,19 +325,15 @@ export class DirectoryTree extends DirectoryTreeUIElements {
             : null
     }
 
-    public isFolderNode(baseDir: string, dirPropName: string): boolean {
-        return fsMod.fs._isDirectory(baseDir, dirPropName);
-    }
-
     /**
      * Create directory tree parent nodes
      * 
      * @param type The mode type
      */
-    public createDirTreeParentNodes(type: string): void {  
+    protected createDirTreeParentNodes(type: string): void {  
         if(type === "Basic" && isModeBasic()) {
             (this.folderNamesBasic as string[]).map((elem) => {
-                if(this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
+                if(isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                     //create parent folder node
                     const parentFolder: HTMLDivElement = document.createElement('div');
                     parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
@@ -360,7 +357,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     
                     //temp
                     this.createFileNode(parentFolder);
-                } else if(!this.isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
+                } else if(!isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                       //create parent folder node
                       const childFileRoot: HTMLDivElement = document.createElement('div');
         
@@ -382,7 +379,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * @param parentNameTags The parent name tag
      * @param type The mode type
      */
-    public createDirTreeChildNodes(
+    protected createDirTreeChildNodes(
         parentTags: Element, 
         parentNameTags: string,
         base: string,

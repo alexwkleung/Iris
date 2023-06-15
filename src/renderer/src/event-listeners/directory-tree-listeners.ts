@@ -387,7 +387,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     /**
      * Create file modal exit listener
      */
-    public createModalExitListener(): void {
+    public createFileModalExitListener(): void {
         DirectoryTreeUIModals.createModalExitButton.addEventListener('click', () => {
             const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
 
@@ -508,7 +508,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             this.createFileModal();
 
                             //invoke the exit listener for the create file modal
-                            this.createModalExitListener();
+                            this.createFileModalExitListener();
 
                             //map over parent child data props
                             RefsNs.currentParentChildData.map((props) => {
@@ -546,6 +546,12 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         }
     }
 
+    /**
+     * Create folder continue listener
+     * 
+     * @param el Element to attach the `keyup` event listener to
+     * @param type Mode type
+     */
     public createFolderContinueListener(el: HTMLElement, type: string): void {
         let folderName: string = "";
 
@@ -606,6 +612,23 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         }
     }
 
+    /**
+     * Create folder modal exit listener
+     */
+    public createFolderModalExitListener(): void {
+        DirectoryTreeUIModals.createModalExitButton.addEventListener('click', () => {
+            //log 
+            console.log("Clicked on exit button");
+
+            if((document.getElementById('create-modal-container') as HTMLElement) !== null) {
+                (document.getElementById('create-modal-container') as HTMLElement).remove();
+            }
+        })
+    }
+
+    /**
+     * Create folder listener
+     */
     public createFolderListener(): void {
         (document.getElementById('create-folder') as HTMLElement).addEventListener('click', (e) => {
             e.stopImmediatePropagation();
@@ -616,9 +639,11 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //invoke create folder modal
             this.createFolderModal();
 
-            //invoke create
-            this.createModalExitListener();
+            //invoke create modal exit listener
+            //fix this
+            this.createFolderModalExitListener();
 
+            //invoke create folder continue listener
             this.createFolderContinueListener(
                 (document.getElementById('create-folder-input-node') as HTMLElement),
                 "Basic"
