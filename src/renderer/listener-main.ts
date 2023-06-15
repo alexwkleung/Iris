@@ -16,6 +16,8 @@ export namespace ListenerNs {
 
         //needs to be in sync with mode switch when implemented?
         dirTreeUIModalListeners.createFileListener();
+
+        dirTreeUIModalListeners.createFolderListener();
     }
 }
 

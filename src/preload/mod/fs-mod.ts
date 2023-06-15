@@ -12,7 +12,8 @@ import {
     walk, 
     walkNoExt, 
     writeToFile,
-    createFile
+    createFile,
+    createDir
 } from 'fs-mod'
 
 //fsMod API
@@ -64,5 +65,8 @@ export const fsMod = {
     },
     _createFile(path: string, content: string): void {
         return createFile(path, content);
+    },
+    _createDir(path: string): void {
+        return createDir(path);
     }
 }

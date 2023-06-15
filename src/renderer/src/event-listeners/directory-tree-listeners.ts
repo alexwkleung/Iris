@@ -387,8 +387,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     /**
      * Create file modal exit listener
      */
-    public createFileModalExitListener(): void {
-        DirectoryTreeUIModals.createFileModalExitButton.addEventListener('click', () => {
+    public createModalExitListener(): void {
+        DirectoryTreeUIModals.createModalExitButton.addEventListener('click', () => {
             const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
 
             createFileNode.forEach((elem) => {
@@ -399,8 +399,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             });
 
             //null check
-            if(DirectoryTreeUIModals.createFileModalContainer !== null) {
-                DirectoryTreeUIModals.createFileModalContainer.remove();
+            if(DirectoryTreeUIModals.createModalContainer !== null) {
+                DirectoryTreeUIModals.createModalContainer.remove();
             }
         })
     }
@@ -420,9 +420,9 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         //console.log(fileName);
 
-        DirectoryTreeUIModals.createFileModalContinueButton.addEventListener('click', () => {
+        DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', () => {
             //basic mode check
-            if(type === "Basic" && isModeBasic() && fileName !== "") {
+            if(type === "Basic" && isModeBasic() && fileName !== " ") {
                 //log
                 console.log((document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent)
                 
@@ -446,8 +446,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 });
 
                 //null check
-                if(DirectoryTreeUIModals.createFileModalContainer !== null) {
-                    DirectoryTreeUIModals.createFileModalContainer.remove();
+                if(DirectoryTreeUIModals.createModalContainer !== null) {
+                    DirectoryTreeUIModals.createModalContainer.remove();
                 }
 
                 //log
@@ -508,7 +508,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             this.createFileModal();
 
                             //invoke the exit listener for the create file modal
-                            this.createFileModalExitListener();
+                            this.createModalExitListener();
 
                             //map over parent child data props
                             RefsNs.currentParentChildData.map((props) => {
@@ -524,8 +524,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                                     //console.log(props.parentFolderName);
                                     //log
                                     //console.log(props.parentFolderNode);
-
-                                    //add event listener for continue....
                                 }
                             });
 
@@ -547,5 +545,84 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             });
         }
     }
-}
 
+    public createFolderContinueListener(el: HTMLElement, type: string): void {
+        let folderName: string = "";
+
+        el.addEventListener('keyup', (e) => {
+            folderName = (e.target as HTMLInputElement).value;
+            console.log(folderName);
+        });
+
+        //console.log(folderName);
+
+        if(type === "Basic" && isModeBasic() && folderName !== " ") {
+            DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', () => {
+                //log
+                console.log(folderName);
+
+                //create directory
+                fsMod.fs._createDir(
+                    fsMod.fs._baseDir("home")
+                    + "/Iris/Basic/"
+                    + folderName
+                );
+
+                const parentFolder: HTMLDivElement = document.createElement('div');
+                parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
+                (document.getElementById('file-directory-tree-container-inner') as HTMLElement).appendChild(parentFolder);
+                    
+                const parentFolderName: HTMLDivElement = document.createElement('div');
+                parentFolderName.setAttribute("class", "parent-folder-name");
+                parentFolder.appendChild(parentFolderName);
+                    
+                const parentFolderTextNode: Text = document.createTextNode(folderName);
+                parentFolderName.appendChild(parentFolderTextNode);
+                    
+                const parentFolderCaret: HTMLDivElement = document.createElement('div');
+                parentFolderCaret.setAttribute("class", "parent-folder-caret");
+                
+                const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
+                parentFolderCaret.appendChild(parentFolderCaretTextNode);
+                parentFolder.appendChild(parentFolderCaret);
+
+                //invoke parent root listener (created directory only)
+                this.directoryTreeListeners.parentRootListener("Basic");
+
+                //invoke create file node
+                this.createFileNode(parentFolder);
+
+                //invoke create file listener
+                this.createFileListener();
+
+                //null check
+                if(DirectoryTreeUIModals.createModalContainer !== null) {
+                    DirectoryTreeUIModals.createModalContainer.remove();
+                }
+            })
+
+            //invoke parent root listener again so entire directory tree will function normally and be in sync
+            this.directoryTreeListeners.parentRootListener("Basic");
+        }
+    }
+
+    public createFolderListener(): void {
+        (document.getElementById('create-folder') as HTMLElement).addEventListener('click', (e) => {
+            e.stopImmediatePropagation();
+
+            //log
+            console.log("clicked create folder");
+
+            //invoke create folder modal
+            this.createFolderModal();
+
+            //invoke create
+            this.createModalExitListener();
+
+            this.createFolderContinueListener(
+                (document.getElementById('create-folder-input-node') as HTMLElement),
+                "Basic"
+            );
+        })
+    }
+}

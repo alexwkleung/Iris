@@ -289,7 +289,7 @@ body {
 /* 
 * create file modal nodes 
 */
-#create-file-modal-container {
+#create-modal-container {
     position: fixed;
     z-index: 1;
     background-color: var(--create-file-modal-container-bg);
@@ -297,7 +297,7 @@ body {
     height: calc(100% + 20px);
     margin-top: -10px;
 }
-#create-file-modal-inner-window {
+#create-modal-inner-window {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -309,7 +309,7 @@ body {
     /*border: 1px solid grey;*/
     border-radius: 15px;
 }
-#create-file-modal-exit {
+#create-modal-exit {
     z-index: 1;
     position: fixed;
     width: 68px;
@@ -326,11 +326,11 @@ body {
     text-align: center;
     font-family: 'Inter-Regular';
 }
-#create-file-modal-exit:hover {
+#create-modal-exit:hover {
     cursor: pointer;
     background-color: var(--modal-hover-bg);
 }
-#create-file-modal-continue {
+#create-modal-continue {
     z-index: 1;
     position: fixed;
     width: 90px;
@@ -347,7 +347,7 @@ body {
     text-align: center;
     font-family: 'Inter-Regular';
 }
-#create-file-modal-continue:hover {
+#create-modal-continue:hover {
     cursor: pointer;
     background-color: rgb(88, 88, 88);
     color: var(--continue-modal);
@@ -410,6 +410,32 @@ body {
 }
 #create-file-modal-inner-window-text-container {
     margin-top: -25px;
+}
+
+#create-folder-modal-inner-window-text-container {
+    position: fixed;
+    color: white;
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    margin-top: 180px;
+    margin-left: 200px;
+    user-select: none;
+}
+#create-folder-input-node {
+    position: fixed;
+    background-color: #494747;
+    color: white;
+    font-size: 20px;
+    font-family: 'Inter-Regular';
+    border: 0px;
+    overflow-x: scroll;
+    width: 195px;
+    margin-top: 180px;
+    margin-left: 270px;
+    caret-color: var(--caret-color-dark);
+}
+#create-folder-input-node:focus {
+    outline: none;
 }
 
 /**

@@ -122,7 +122,8 @@ img.ProseMirror-separator {
   z-index: 1;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: 'Inter-Regular'
+  font-family: 'Inter-Regular';
+  font-size: 14px;
 }
 .ProseMirror-textblock-dropdown {
   min-width: 3em;
@@ -150,8 +151,9 @@ img.ProseMirror-separator {
 }
 
 .ProseMirror-menu-dropdown, .ProseMirror-menu-dropdown-menu {
-  font-size: 90%;
+  font-size: 14px;
   white-space: nowrap;
+  border-radius: 10px;
 }
 
 .ProseMirror-menu-dropdown {
@@ -185,6 +187,8 @@ img.ProseMirror-separator {
   color: grey;
   border: 1px solid #aaa;
   padding: 2px;
+  border-radius: 10px;
+  font-size: 14px;
 }
 
 .ProseMirror-menu-dropdown-menu {

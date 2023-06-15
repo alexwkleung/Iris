@@ -100,14 +100,14 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
      * 
      * @static
      */
-    public static createFileModalContainer: HTMLDivElement;
+    public static createModalContainer: HTMLDivElement;
 
     /**
      * Create file modal inner window reference variable 
      * 
      * @static
      */
-    public static createFileModalInnerWindow: HTMLDivElement;
+    public static createModalInnerWindow: HTMLDivElement;
 
     /**
      * Create file modal inner window text container
@@ -121,29 +121,29 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
      * 
      * @static 
      */
-    public static createFileModalExitButton: HTMLDivElement;
+    public static createModalExitButton: HTMLDivElement;
 
     /**
      * Create file modal continue button 
      * 
      * @static
      */
-    public static createFileModalContinueButton: HTMLDivElement;
+    public static createModalContinueButton: HTMLDivElement;
 
     /**
      * Create file modal exit node 
      * 
      * @private
      */
-    private createFileModalExitNode(): void {
+    private createModalExitNode(): void {
         //create file modal exit node
-        DirectoryTreeUIModals.createFileModalExitButton = document.createElement('div');
-        DirectoryTreeUIModals.createFileModalExitButton.setAttribute("id", "create-file-modal-exit");
-        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalExitButton);
+        DirectoryTreeUIModals.createModalExitButton = document.createElement('div');
+        DirectoryTreeUIModals.createModalExitButton.setAttribute("id", "create-modal-exit");
+        DirectoryTreeUIModals.createModalInnerWindow.appendChild(DirectoryTreeUIModals.createModalExitButton);
        
         //create file modal exit text node
         const createFileModalExitTextNode: Text = document.createTextNode("Cancel");
-        DirectoryTreeUIModals.createFileModalExitButton.appendChild(createFileModalExitTextNode);
+        DirectoryTreeUIModals.createModalExitButton.appendChild(createFileModalExitTextNode);
     }
 
     /**
@@ -151,13 +151,13 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
      * 
      * @private
      */
-    private createFileModalContinueNode(): void {
-        DirectoryTreeUIModals.createFileModalContinueButton = document.createElement('div');
-        DirectoryTreeUIModals.createFileModalContinueButton.setAttribute("id", "create-file-modal-continue");
-        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalContinueButton);
+    private createModalContinueNode(): void {
+        DirectoryTreeUIModals.createModalContinueButton = document.createElement('div');
+        DirectoryTreeUIModals.createModalContinueButton.setAttribute("id", "create-modal-continue");
+        DirectoryTreeUIModals.createModalInnerWindow.appendChild(DirectoryTreeUIModals.createModalContinueButton);
 
         const createFileModalContinueTextNode: Text = document.createTextNode("Continue");
-        DirectoryTreeUIModals.createFileModalContinueButton.appendChild(createFileModalContinueTextNode);
+        DirectoryTreeUIModals.createModalContinueButton.appendChild(createFileModalContinueTextNode);
     }
 
     /**
@@ -225,24 +225,67 @@ export class DirectoryTreeUIModals extends DirectoryTreeUIElements {
      */
     protected createFileModal(): void {
         //create file modal container node
-        DirectoryTreeUIModals.createFileModalContainer = document.createElement('div');
-        DirectoryTreeUIModals.createFileModalContainer.setAttribute("id", "create-file-modal-container");
-        App.appNode.insertBefore(DirectoryTreeUIModals.createFileModalContainer, App.appNode.firstChild);
+        DirectoryTreeUIModals.createModalContainer = document.createElement('div');
+        DirectoryTreeUIModals.createModalContainer.setAttribute("id", "create-modal-container");
+        App.appNode.insertBefore(DirectoryTreeUIModals.createModalContainer, App.appNode.firstChild);
 
         //create file modal inner window node
-        DirectoryTreeUIModals.createFileModalInnerWindow = document.createElement('div');
-        DirectoryTreeUIModals.createFileModalInnerWindow.setAttribute("id", "create-file-modal-inner-window");
-        DirectoryTreeUIModals.createFileModalContainer.appendChild(DirectoryTreeUIModals.createFileModalInnerWindow);
+        DirectoryTreeUIModals.createModalInnerWindow = document.createElement('div');
+        DirectoryTreeUIModals.createModalInnerWindow.setAttribute("id", "create-modal-inner-window");
+        DirectoryTreeUIModals.createModalContainer.appendChild(DirectoryTreeUIModals.createModalInnerWindow);
 
         DirectoryTreeUIModals.createFileModalInnerWindowTextContainer = document.createElement('div');
         DirectoryTreeUIModals.createFileModalInnerWindowTextContainer.setAttribute("id", "create-file-modal-inner-window-text-container");
-        DirectoryTreeUIModals.createFileModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalInnerWindowTextContainer);
+        DirectoryTreeUIModals.createModalInnerWindow.appendChild(DirectoryTreeUIModals.createFileModalInnerWindowTextContainer);
 
         //invoke createFileModalExitNode
-        this.createFileModalExitNode();
+        this.createModalExitNode();
 
         //invoke createFileModalContinueNode
-        this.createFileModalContinueNode();
+        this.createModalContinueNode();
+    }
+
+    protected createFolderModal(): void {
+        //create modal container
+        DirectoryTreeUIModals.createModalContainer = document.createElement('div');
+        DirectoryTreeUIModals.createModalContainer.setAttribute("id", "create-modal-container");
+        App.appNode.insertBefore(DirectoryTreeUIModals.createModalContainer, App.appNode.firstChild);
+
+        //create modal inner window
+        DirectoryTreeUIModals.createModalInnerWindow = document.createElement('div');
+        DirectoryTreeUIModals.createModalInnerWindow.setAttribute("id", "create-modal-inner-window");
+        DirectoryTreeUIModals.createModalContainer.appendChild(DirectoryTreeUIModals.createModalInnerWindow);
+
+        //create folder modal inner window text container
+        const createFolderModalInnerWindowTextContainer: HTMLDivElement = document.createElement('div');
+        createFolderModalInnerWindowTextContainer.setAttribute("id", "create-folder-modal-inner-window-text-container");
+        DirectoryTreeUIModals.createModalInnerWindow.appendChild(createFolderModalInnerWindowTextContainer);
+
+        //create folder modal inner window text node
+        const createFolderModalInnerWindowTextNode: Text = document.createTextNode("Name: ");
+        createFolderModalInnerWindowTextContainer.appendChild(createFolderModalInnerWindowTextNode);
+
+        //create folder input node container
+        const createFolderInputNodeContainer: HTMLDivElement = document.createElement('div');
+        createFolderInputNodeContainer.setAttribute("id", "create-folder-input-node-container");
+        DirectoryTreeUIModals.createModalInnerWindow.appendChild(createFolderInputNodeContainer);
+
+        //create folder input node
+        const createFolderInputNode: HTMLInputElement = document.createElement('input');
+        createFolderInputNode.setAttribute("id", "create-folder-input-node");
+        createFolderInputNode.setAttribute("type", "text");
+        createFolderInputNode.setAttribute("placeholder", "Enter a folder name");
+        createFolderInputNode.setAttribute("spellcheck", "false");
+        createFolderInputNodeContainer.appendChild(createFolderInputNode);
+
+        //focus create folder input node
+        createFolderInputNode.focus();
+
+        //create modal exit node
+        this.createModalExitNode();
+
+        //create modal continue node
+        this.createModalContinueNode();
     }
 }
 

@@ -2,8 +2,10 @@
  * Directory tree ui modal listeners interface
  */
 export interface IDirectoryTreeUIModalListeners {
-    createFileModalExitListener(): void;
+    createModalExitListener(): void;
+    createFileModalContinueListener(el: HTMLElement, type: string): void;
     createFileListener(): void;
+    createFolderListener(): void;
 }
 
 /**
@@ -19,4 +21,5 @@ export interface IDirectoryTreeListeners {
  */
 export interface IEditorListeners {
     autoSaveListener(type: string): void;
+    insertTabListener(numberOfSpaces: number): void;
 }
