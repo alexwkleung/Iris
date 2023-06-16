@@ -462,7 +462,7 @@ body {
 * folder file count container
 */
 .folder-file-count-container {
-    position: fixed;
+    position: absolute;
     color: var(--folder-file-count-container-color);
     margin-left: 205px;
     margin-top: 16px;
