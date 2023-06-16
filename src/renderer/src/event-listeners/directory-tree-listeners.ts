@@ -623,6 +623,9 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             if((document.getElementById('create-modal-container') as HTMLElement) !== null) {
                 (document.getElementById('create-modal-container') as HTMLElement).remove();
             }
+            
+            //invoke parent root listener 
+            this.directoryTreeListeners.parentRootListener("Basic");
         })
     }
 
