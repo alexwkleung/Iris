@@ -18,3 +18,5 @@ export function walkNoExt(dir: string): Array<string>
 export function writeToFile(path: string, content: string): void
 export function createFile(path: string, content: string): void
 export function createDir(path: string): void
+export function isPathDir(path: string): boolean
+export function isPathFile(path: string): boolean

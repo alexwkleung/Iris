@@ -13,7 +13,9 @@ import {
     walkNoExt, 
     writeToFile,
     createFile,
-    createDir
+    createDir,
+    isPathDir,
+    isPathFile
 } from 'fs-mod'
 
 //fsMod API
@@ -68,5 +70,11 @@ export const fsMod = {
     },
     _createDir(path: string): void {
         return createDir(path);
+    },
+    _isPathDir(path: string): boolean {
+        return isPathDir(path);
+    },
+    _isPathFile(path: string): boolean {
+        return isPathFile(path);
     }
 }

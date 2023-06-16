@@ -661,7 +661,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             this.createFolderModal();
 
             //invoke create modal exit listener
-            //fix this
             this.createFolderModalExitListener();
 
             //invoke create folder continue listener

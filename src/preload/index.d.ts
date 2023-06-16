@@ -25,6 +25,8 @@ declare global {
             _writeToFile(path: string, content: string, type: string): void;
             _createFile(path: string, content: string): void;
             _createDir(path: string): void;
+            _isPathDir(path: string): boolean;
+            _isPathFile(path: string): boolean;
         }
     }
 }

@@ -1,8 +1,8 @@
 <h1 align="center">✨ Iris</h1>
 
-<p align="center">Iris is a comfortable Markdown note-taking app. Created with TypeScript and Rust.</p>
+<p align="center">Iris is a comfortable Markdown note-taking app. Written in TypeScript and Rust.</p>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-13.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-14.png"></img>
 
 <p align="center">Current dev screenshot (subject to change; frequently updated)</p>
 
@@ -18,7 +18,7 @@ The product website will be added closer to the release date. For now, you can u
 
 # Installation
 
-For now, follow the instructions in [Development](#development) to try the current build of Iris.
+If you want to build the app directly from source, follow the instructions in [Development](#development).
  
 # Development 
 
@@ -51,20 +51,6 @@ make dev
 # via npm
 npm run dev
 ```
-
-At the moment, you will need to manually create the directories:
-
-```bash
-# home directory
-cd ~ 
-
-# create main directory
-mkdir Iris
-
-# create basic notes directory
-mkdir Iris/Basic
-```
-
 # v0.1.x
 
 If you want to take a look at the v0.1.x prototype source code, you can go to the [v0.1.1 release](https://github.com/alexwkleung/Iris/releases/tag/v0.1.1). 

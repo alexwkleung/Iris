@@ -12,3 +12,4 @@ pub mod walkdir;
 pub mod write_to_file;
 pub mod create_file;
 pub mod create_dir;
+pub mod fs_metadata;
