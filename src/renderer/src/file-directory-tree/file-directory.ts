@@ -429,4 +429,24 @@ export class DirectoryTree extends DirectoryTreeUIElements {
             }
         }
     }
+
+    /**
+     * Parent name tags array
+     * 
+     * @protected
+     * @returns An array of strings with parent name tag nodes
+     */
+        public  parentNameTagsArr(): string[] {    
+            const parentNameTagsArr: string[] = [];
+    
+            document.querySelectorAll('.parent-folder-name').forEach(
+                (elem) => {
+                    if(elem !== null) {
+                        parentNameTagsArr.push(elem.textContent as string);
+                    }
+                }
+            );
+    
+            return parentNameTagsArr;
+        }
 }

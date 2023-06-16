@@ -16,6 +16,7 @@ import { EditorNs } from "../../editor-main"
 import { wordCountListener } from "./word-count-listener"
 import { isModeBasic } from "../utils/is"
 import { Node } from "prosemirror-model"
+import { FolderFileCount } from "../misc-ui/folder-file-count"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -133,25 +134,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      */
     private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
 
-    /**
-     * Parent name tags array
-     * 
-     * @private
-     * @returns An array of strings with parent name tag nodes
-     */
-    private parentNameTagsArr(): string[] {    
-        const parentNameTagsArr: string[] = [];
-
-        Array.from(this.getParentNameTags).forEach(
-            (elem) => {
-                if(elem !== null) {
-                    parentNameTagsArr.push(elem.textContent as string);
-                }
-            }
-        );
-
-        return parentNameTagsArr;
-    }
+    private readonly folderFileCountObject = new FolderFileCount();
 
     /**
      * Parent root listener 
@@ -164,6 +147,10 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
         if(this.getParentTags !== null && this.getParentNameTags !== null) {
             for(let i = 0; i < this.getParentTags.length; i++) {
+                //insert folder file count here...
+                
+                this.folderFileCountObject.folderFileCount(this.getParentTags[i], this.parentNameTagsArr()[i], false);
+
                 this.getParentNameTags[i].addEventListener('click', () => {          
                     //toggle is-active-parent class on parent tag               
                     this.getParentTags[i].classList.toggle('is-active-parent');
@@ -384,6 +371,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      */
     private readonly directoryTreeListeners = new DirectoryTreeListeners();
 
+    private readonly folderFileCountObject = new FolderFileCount();
+
     /**
      * Create file modal exit listener
      */
@@ -402,6 +391,15 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             if(DirectoryTreeUIModals.createModalContainer !== null) {
                 DirectoryTreeUIModals.createModalContainer.remove();
             }
+             
+            //invoke parent root listener
+            this.directoryTreeListeners.parentRootListener("Basic");
+
+            //invoke child node listener
+            this.directoryTreeListeners.childNodeListener();
+
+            //invoke parent root listener again so the directory tree will be in sync
+            this.directoryTreeListeners.parentRootListener("Basic");
         })
     }
 
@@ -535,6 +533,12 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                                 (document.querySelector('#create-file-modal-new-file-name-input-node') as HTMLElement),
                                 "Basic"
                             );
+
+                            const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+
+                            //invoke folder file count
+                            this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
+
                         } else if(!createFileNode[i].classList.contains('show-create-file')) {
                             createFileNode[i].classList.remove('show-create-file');        
                         }
@@ -562,6 +566,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         //console.log(folderName);
 
+        let parentFolder: HTMLDivElement = {} as HTMLDivElement;
+        
         if(type === "Basic" && isModeBasic() && folderName !== " ") {
             DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', () => {
                 //log
@@ -574,7 +580,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                     + folderName
                 );
 
-                const parentFolder: HTMLDivElement = document.createElement('div');
+                parentFolder = document.createElement('div');
                 parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
                 (document.getElementById('file-directory-tree-container-inner') as HTMLElement).appendChild(parentFolder);
                     
@@ -592,6 +598,12 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 parentFolderCaret.appendChild(parentFolderCaretTextNode);
                 parentFolder.appendChild(parentFolderCaret);
 
+                const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+
+                for(let i = 0; i < parentRoot.length; i++) {
+                    //invoke folder file count
+                    this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
+                }
                 //invoke parent root listener (created directory only)
                 this.directoryTreeListeners.parentRootListener("Basic");
 
@@ -606,6 +618,9 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                     DirectoryTreeUIModals.createModalContainer.remove();
                 }
             })
+
+            //invoke create file listener again
+            this.createFileListener();
 
             //invoke parent root listener again so entire directory tree will function normally and be in sync
             this.directoryTreeListeners.parentRootListener("Basic");
@@ -623,9 +638,12 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             if((document.getElementById('create-modal-container') as HTMLElement) !== null) {
                 (document.getElementById('create-modal-container') as HTMLElement).remove();
             }
-            
+
             //invoke parent root listener 
             this.directoryTreeListeners.parentRootListener("Basic");
+
+            //invoke create file listener
+            this.createFileListener();
         })
     }
 
