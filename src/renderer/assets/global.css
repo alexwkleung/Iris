@@ -180,7 +180,7 @@ body {
 }
 .child-file-name.is-active-child {
     color: var(--child-file-name-active);
-    width: 190px;
+    width: 155px;
     border-radius: 5px;
     /*background-color: rgb(67, 65, 65);*/ /* experimental only */
 }
@@ -482,7 +482,9 @@ body {
 
 .ProseMirror p {
     margin-left: 3px;
+    padding-right: 20px;
     white-space: pre-wrap;
+    text-align: justify;
 }
 
 .ProseMirror pre {
