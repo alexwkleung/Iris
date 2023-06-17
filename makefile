@@ -6,3 +6,6 @@ dev:
 test:
 	npm run test
 
+.PHONY: build-mac
+build-mac:
+	npm run build:mac

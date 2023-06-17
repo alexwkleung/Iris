@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.iris.app
 productName: Iris
 directories:
   buildResources: build
@@ -9,6 +9,14 @@ files:
   - '!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!fs-mod/target/**'
+  - '!fs-mod/target/**/**'
+  - '!fs-mod/src/**'
+  - '!fs-mod/npm/**'
+  - '!fs-mod/npm/**/**'
+  - '!fs-mod/__test__/*'
+  - '!node_modules/*'
+  - '!dist/*'
 asarUnpack:
   - resources/**
 afterSign: build/notarize.js
@@ -22,10 +30,7 @@ nsis:
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
-    - NSCameraUsageDescription: Application requests access to the device's camera.
-    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
-    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
@@ -33,7 +38,7 @@ linux:
     - AppImage
     - snap
     - deb
-  maintainer: electronjs.org
+  maintainer: alexwkleung
   category: Utility
 appImage:
   artifactName: ${name}-${version}.${ext}
