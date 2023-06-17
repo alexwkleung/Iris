@@ -44,6 +44,19 @@ Install npm dependencies
 npm install 
 ```
 
+Build native modules
+
+```bash
+# change directory to native module
+cd fs-mod
+
+# build native module for your platform
+npm run build
+
+# go back to previous directory (assuming Iris root)
+cd -
+```
+
 Run development build
 
 ```bash
