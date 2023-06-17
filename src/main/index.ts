@@ -109,7 +109,9 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if(process.platform === 'linux' || process.platform === 'win32') {
     app.quit();
+  } else if(process.platform === 'darwin') {
+    return;
   }
 });

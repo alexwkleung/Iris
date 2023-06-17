@@ -18,6 +18,8 @@ The product website will be added closer to the release date. For now, you can u
 
 # Installation
 
+You can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
+
 If you want to build the app directly from source, follow the instructions in [Development](#development).
  
 # Development 

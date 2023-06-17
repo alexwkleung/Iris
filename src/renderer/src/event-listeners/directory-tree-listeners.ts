@@ -429,7 +429,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                     + "/Iris/Basic/" 
                     + (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent 
                     +  "/" + fileName,
-                    "# " + fileName.split('.md')[0] + '\n'
+                    "# " + fileName.split('.md')[0] + " " + '\n'
                 );
 
                 const createFileModalFolderNameRef: string = (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent as string;
