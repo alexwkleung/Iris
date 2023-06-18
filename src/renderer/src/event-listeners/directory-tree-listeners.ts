@@ -337,6 +337,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //apply active state listener 
                             this.dirTreeStateListeners.activeChildFileStateListener();
 
+                            //word count listener
                             wordCountListener("prosemirror");
                         } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
@@ -381,7 +382,37 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      */
     private readonly directoryTreeListeners = new DirectoryTreeListeners();
 
+    /**
+     * Folder file count object
+     * 
+     * @private 
+     * @readonly
+     */
     private readonly folderFileCountObject = new FolderFileCount();
+
+    /**
+     * Editor listeners object 
+     * 
+     * @private 
+     * @readonly
+     */
+    private readonly editorListeners = new EditorListeners();
+
+    /**
+     * Editor top bar container object
+     * 
+     * @private
+     * @readonly
+     */
+    private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
+
+    /**
+     * Directory tree state listeners object
+     * 
+     * @private
+     * @readonly
+     */
+    private readonly dirTreeStateListeners = new DirectoryTreeStateListeners();
 
     /**
      * Create file modal exit listener
@@ -428,7 +459,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         //console.log(fileName);
 
-        DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', () => {
+        DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', async () => {
             //basic mode check
             if(type === "Basic" && isModeBasic() && fileName !== " ") {
                 //log
@@ -461,8 +492,21 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 //log
                 console.log(fileName);
 
+                //if document contains at least one active child
+                if(document.querySelector('.is-active-child')) {
+                    //select all active children and remove them from the dom (active status)
+                    //this removes any existing active children files
+                    document.querySelectorAll('.is-active-child').forEach(
+                        (isActiveChild) => {
+                            if(isActiveChild !== null) {
+                                isActiveChild.classList.remove('is-active-child')
+                            }
+                        }
+                    );
+                }
+
                 const childFile: HTMLDivElement = document.createElement('div');
-                childFile.setAttribute("class", "child-file-name");
+                childFile.setAttribute("class", "child-file-name is-active-child");
 
                 const childFileTextNode: Text = document.createTextNode(fileName.split('.md')[0]);
 
@@ -483,6 +527,77 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                 //execute parent root listener again so everything will be in sync 
                 this.directoryTreeListeners.parentRootListener("Basic");
+
+                //destroy current editor view
+                PMEditorView.editorView.destroy();
+                            
+                //create new editor view
+                PMEditorView.createEditorView();
+
+                //log
+                console.log(createFileModalFolderNameRef);
+
+                //log
+                console.log(fileName);
+    
+                //update editor view state
+                PMEditorView.editorView.updateState(             
+                    //apply transaction
+                    PMEditorView.editorView.state.apply(     
+                        //since editor gets destroyed and re-created, the 
+                        //range is 0 to 0 
+                        PMEditorState.editorState.tr.replaceRangeWith(
+                            0, 
+                            0,
+                            defaultMarkdownParser.parse(
+                            fsMod.fs._readFileFolder(createFileModalFolderNameRef, 
+                            fileName, 
+                            DirectoryRefNs.basicRef
+                        )
+                    ) as Node
+                )));
+
+                //set contenteditable 
+                PMEditorView.setContenteditable(true);
+                
+                //if contenteditable attribute is set to true 
+                if((document.querySelector('.ProseMirror') as HTMLElement).getAttribute('contenteditable') === 'true') {
+                    //show the menubar
+                    (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
+                }
+
+                //invoke auto save listener (Basic)
+                this.editorListeners.autoSaveListener("Basic");
+
+                //invoke insert tab listener
+                this.editorListeners.insertTabListener(2);
+
+                //assign references to corresponding key properties
+                RefsNs.currentParentChildData.map((props) => {
+                    //log
+                    console.log(fileName);
+                    //log
+                    console.log(document.querySelector('.child-file-name.is-active-child') as HTMLElement);
+                    
+                    //null check
+                    if(props !== null) {
+                        //child file name
+                        props.childFileName = fileName.split('.md')[0];
+                        props.childFileNode = document.querySelector('.child-file-name.is-active-child') as HTMLElement
+                    }
+                });
+
+                //apply active state listener 
+                this.dirTreeStateListeners.activeChildFileStateListener();
+
+                //word count listener
+                wordCountListener("prosemirror");
+
+                //change document title so it corresponds to the opened file
+                await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + fileName.split('.md')[0]).catch((e) => { throw console.error(e) });
+
+                //add directory info to editor top bar
+                this.editorTopBarContainer.directoryInfo();
 
                 //to-do: sort files...
             }

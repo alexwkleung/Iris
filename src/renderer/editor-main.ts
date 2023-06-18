@@ -38,12 +38,14 @@ export namespace EditorNs {
             //doc title folder
             const docTitleFolder: string = document.title.split('-')[1].trim();
 
-            //doc title file
-            const docTitleFile: string = document.title.split('-')[2].trim();
+            document.querySelectorAll('.child-file-name.is-active-child').forEach((el) => {
+                //log
+                console.log(el.textContent);
 
-            //top bar directory info text node
-            const topBarDirectoryInfoTextNode: Text = document.createTextNode(docTitleFolder + " - " + docTitleFile);
-            topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
+                //top bar directory info text node
+                const topBarDirectoryInfoTextNode: Text = document.createTextNode(docTitleFolder + " - " + el.textContent);
+                topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
+            });
 
             //check if top-bar-directory-info node exists in dom
             if(document.getElementById('top-bar-directory-info') && document.getElementById('top-bar-directory-info') !== null) {
