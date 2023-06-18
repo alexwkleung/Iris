@@ -445,8 +445,8 @@ body {
 #word-count-container {
     position: fixed;
     width: 225px;
-    height: 19px;
-    right: 200px;
+    height: 17px;
+    right: 32px;
     top: 60px;
     padding-top: 2px;
     /*border: 1px solid black;*/
@@ -456,6 +456,8 @@ body {
     font-family: 'Inter-Regular';
     font-size: 14px;
     user-select: none;
+    text-align: right;
+    overflow-x: scroll;
 }
 
 /**

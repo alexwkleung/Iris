@@ -15,6 +15,8 @@ files:
   - '!fs-mod/npm/**'
   - '!fs-mod/npm/**/**'
   - '!fs-mod/__test__/*'
+  - '!**/fs-mod/target/*'
+  - '!**/fs-mod/src/*'
   - '!node_modules/*'
   - '!dist/*'
 asarUnpack:

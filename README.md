@@ -2,7 +2,7 @@
 
 <p align="center">Iris is a comfortable Markdown note-taking app. Written in TypeScript and Rust.</p>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-14.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-15.png"></img>
 
 <p align="center">Current dev screenshot (subject to change; frequently updated)</p>
 
