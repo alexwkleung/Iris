@@ -39,12 +39,15 @@ export namespace EditorNs {
             const docTitleFolder: string = document.title.split('-')[1].trim();
 
             document.querySelectorAll('.child-file-name.is-active-child').forEach((el) => {
-                //log
-                console.log(el.textContent);
-
-                //top bar directory info text node
-                const topBarDirectoryInfoTextNode: Text = document.createTextNode(docTitleFolder + " - " + el.textContent);
-                topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
+                //null check
+                if(el !== null) {
+                    //log
+                    console.log(el.textContent);
+    
+                    //top bar directory info text node
+                    const topBarDirectoryInfoTextNode: Text = document.createTextNode(docTitleFolder + " - " + el.textContent);
+                    topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
+                }
             });
 
             //check if top-bar-directory-info node exists in dom

@@ -330,7 +330,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * 
      * @param type The mode type
      */
-    protected createDirTreeParentNodes(type: string): void {  
+    public createDirTreeParentNodes(type: string): void {  
         if(type === "Basic" && isModeBasic()) {
             (this.folderNamesBasic as string[]).map((elem) => {
                 if(isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
@@ -375,6 +375,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     /**
      * Create directory tree child nodes
      * 
+     * @protected
      * @param parentTags The parent tag to append to
      * @param parentNameTags The parent name tag
      * @param type The mode type
@@ -433,10 +434,9 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     /**
      * Parent name tags array
      * 
-     * @protected
      * @returns An array of strings with parent name tag nodes
      */
-        public  parentNameTagsArr(): string[] {    
+        public parentNameTagsArr(): string[] {    
             const parentNameTagsArr: string[] = [];
     
             document.querySelectorAll('.parent-folder-name').forEach(
