@@ -8,21 +8,22 @@ export class FolderFileCount {
      * You must pass the elements of `parentNameTagsArr` from the `DirectoryTree` class, 
      * which needs to be inherited in order to access 
      * 
+     * @param parentNameTags Parent name tag nodes
      * @param parentNameTagsArr Elements of `parentNameTagsArr()`
+     * @param reset Option to reset file count
      */
     public folderFileCount(parentNameTags: Element, parentNameTagsArr: string, reset: boolean): void {
         let fileCount: number = 0;
 
-        //need to properly handle duplication inside DOM
-        //even though visually it works fine, the duplication in the DOM tree can cause issues
         if(reset) {
-            document.querySelectorAll('.folder-file-count-container').forEach((el) => {
-                el.remove();
-            });
+            console.log("reset");
 
             //reset count to 0
             fileCount = 0;  
+
         } else if(!reset) {
+            console.log("not reset");
+
             //folder file count container
             const folderFileCountContainer: HTMLDivElement = document.createElement('div');
             folderFileCountContainer.setAttribute("class", "folder-file-count-container");

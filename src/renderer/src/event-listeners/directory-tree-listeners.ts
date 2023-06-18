@@ -2,10 +2,7 @@ import { fsMod }  from "../utils/alias"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
 import { setWindowTitle } from "../window/window-title"
-import { 
-    IDirectoryTreeUIModalListeners, 
-    IDirectoryTreeListeners
-} from "../interfaces/listener-interfaces"
+import { IDirectoryTreeUIModalListeners, IDirectoryTreeListeners } from "../interfaces/listener-interfaces"
 import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 import { defaultMarkdownParser } from "prosemirror-markdown"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
@@ -134,6 +131,12 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      */
     private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
 
+    /**
+     * Folder file count object 
+     *  
+     * @private
+     * @readonly
+     */
     private readonly folderFileCountObject = new FolderFileCount();
 
     /**
@@ -145,10 +148,17 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
         this.getParentTags = document.querySelectorAll('.parent-of-root-folder');
         this.getParentNameTags = document.querySelectorAll('.parent-folder-name');
 
+        let count: number = 0;
+        //remove duplicate folder file count nodes
+        while(count <= 2) {
+            document.querySelectorAll('.folder-file-count-container').forEach((el) => {
+                el.remove();
+            });
+            count++;
+        }
+
         if(this.getParentTags !== null && this.getParentNameTags !== null) {
-            for(let i = 0; i < this.getParentTags.length; i++) {
-                //insert folder file count here...
-                
+            for(let i = 0; i < this.getParentTags.length; i++) {       
                 this.folderFileCountObject.folderFileCount(this.getParentTags[i], this.parentNameTagsArr()[i], false);
 
                 this.getParentNameTags[i].addEventListener('click', () => {          
