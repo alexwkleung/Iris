@@ -1,6 +1,7 @@
 import { App } from "./app"
 import { PMEditorView } from "./src/prosemirror/editor/editor-view"
-import { WordCountContainerNode } from "./src/misc-ui/word-count";
+import { WordCountContainerNode } from "./src/misc-ui/word-count"
+import { KebabDropdownMenu } from "./src/misc-ui/kebab-dropdown-menu"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
@@ -62,7 +63,7 @@ export namespace EditorNs {
             }
         }
     }
-
+    
     export function editor(): void {
         //create editor container
         EditorContainerNode.createEditorContainer();
@@ -81,5 +82,8 @@ export namespace EditorNs {
 
         //create word count container
         WordCountContainerNode.createWordCountContainer();
+
+        //create kebab dropdown menu container
+        KebabDropdownMenu.createKebabDropdownMenuContainer();
     }
 }

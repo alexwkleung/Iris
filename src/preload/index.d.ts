@@ -27,6 +27,7 @@ declare global {
             _createDir(path: string): void;
             _isPathDir(path: string): boolean;
             _isPathFile(path: string): boolean;
+            _deletePath(path: string): void;
         }
     }
 }

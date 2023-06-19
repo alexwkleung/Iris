@@ -8,6 +8,6 @@ export class WordCountContainerNode {
         WordCountContainerNode.wordCountContainer.setAttribute("id", "word-count-container");
         WordCountContainerNode.wordCountContainer.style.display = "none";
 
-        App.appNode.insertBefore(WordCountContainerNode.wordCountContainer, App.appNode.firstChild);
+        App.appNode.insertBefore(WordCountContainerNode.wordCountContainer, document.querySelector('#editor-container'));
     }
 }

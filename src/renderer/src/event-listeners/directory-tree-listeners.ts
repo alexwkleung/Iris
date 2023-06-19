@@ -14,6 +14,7 @@ import { wordCountListener } from "./word-count-listener"
 import { isModeBasic } from "../utils/is"
 import { Node } from "prosemirror-model"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
+import { kebabDropdownMenuListener } from "./kebab-dropdown-menu-listener"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -285,6 +286,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 //show the menubar
                                 (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
                             }
+                            
+                            //show kebab dropdown menu 
+                            (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
                             //invoke auto save listener (Basic)
                             this.editorListeners.autoSaveListener("Basic");
@@ -339,6 +343,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                             //word count listener
                             wordCountListener("prosemirror");
+
+                            //kebab dropdown menu listener
+                            kebabDropdownMenuListener();
                         } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }
@@ -566,6 +573,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                     (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
                 }
 
+                (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+
                 //invoke auto save listener (Basic)
                 this.editorListeners.autoSaveListener("Basic");
 
@@ -592,6 +601,9 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                 //word count listener
                 wordCountListener("prosemirror");
+
+                //kebab dropdown menu listener
+                kebabDropdownMenuListener();
 
                 //change document title so it corresponds to the opened file
                 await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + fileName.split('.md')[0]).catch((e) => { throw console.error(e) });

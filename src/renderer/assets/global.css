@@ -47,6 +47,7 @@
     */
     --create-file-modal-container-bg: rgba(0, 0, 0, 0.5);
     --folder-file-count-container-color: rgb(99, 99, 99);
+    --kebab-dropdown-menu-shape-bg: rgb(163, 162, 162);
 }
 
 /* body */
@@ -446,7 +447,7 @@ body {
     position: fixed;
     width: 225px;
     height: 17px;
-    right: 32px;
+    right: 55px;
     top: 60px;
     padding-top: 2px;
     /*border: 1px solid black;*/
@@ -472,6 +473,101 @@ body {
     text-align: right;
     /*border: 1px solid white;*/
     overflow-x: scroll;
+}
+
+/*
+* kebab downdrop menu
+*/
+#kebab-dropdown-menu-container {
+    position: fixed;
+    margin-top: 5px;
+    margin-left: 5px;
+    right: 20px;
+    width: 20px;
+    height: 34px;
+    /*border: 1px solid black;*/
+    z-index: 1;
+    user-select: none;
+}
+.kebab-dropdown-shape-node.num-0 {
+    position: fixed;
+    border: 1px solid grey;
+    border-radius: 5px;
+    z-index: 1;
+    width: 5px;
+    height: 5px;
+    margin-top: 10px;
+    margin-left: 5px;
+    right: 28px;
+    background-color: var(--kebab-dropdown-menu-shape-bg);
+}
+#kebab-dropdown-menu-container:not(#kebab-after-click-menu-container):hover .kebab-dropdown-shape-node.num-0 {
+    background-color: rgb(88, 88, 88);
+}
+.kebab-dropdown-shape-node.num-1 {
+    position: fixed;
+    border: 1px solid grey;
+    border-radius: 5px;
+    z-index: 1;
+    margin-top: 17px;
+    width: 5px;
+    height: 5px;
+    margin-left: 5px;
+    right: 28px;
+    background-color: var(--kebab-dropdown-menu-shape-bg);
+}
+#kebab-dropdown-menu-container:not(#kebab-after-click-menu-container):hover .kebab-dropdown-shape-node.num-1 {
+    background-color: rgb(88, 88, 88);
+}
+.kebab-dropdown-shape-node.num-2 {
+    position: fixed;
+    border: 1px solid grey;
+    border-radius: 5px;
+    z-index: 1;
+    margin-top: 24px;
+    width: 5px;
+    height: 5px;
+    margin-left: 5px;
+    right: 28px;
+    background-color: var(--kebab-dropdown-menu-shape-bg);
+}
+#kebab-dropdown-menu-container:not(#kebab-after-click-menu-container):hover .kebab-dropdown-shape-node.num-2 {
+    background-color: rgb(88, 88, 88);
+}
+#kebab-after-click-menu-container {
+    position: fixed;
+    /*border: 1px solid grey;*/
+    border-radius: 15px;
+    background-color: #2a2828;
+    width: 200px;
+    height: 200px;
+    right: 25px;
+    top: 85px;
+    cursor: default;
+}
+#kebab-after-click-menu-container.is-active {
+    z-index: 1;
+}
+
+/*
+* kebab dropdown buttons
+*/
+#kebab-delete-file-button-node {
+    position: fixed;
+    font-family: 'Inter-Regular';
+    font-size: 18px;
+    text-align: center;
+    color: white;
+    border: 1px solid;
+    border-color: grey;
+    border-radius: 5px;
+    width: 90px;
+    top: 120px;
+    margin-left: 50px;
+    user-select: none;
+}
+#kebab-delete-file-button-node:hover {
+    background-color: rgb(88, 88, 88);
 }
 
 /**

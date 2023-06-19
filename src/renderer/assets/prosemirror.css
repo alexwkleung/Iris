@@ -112,18 +112,20 @@ img.ProseMirror-separator {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
   position: fixed;
-  width: calc(100% - 301px);
+  width: calc(100% - 350px);
   color: var(--prosemirror-menu-bar-color-light);
   padding: 0px 0px;
   top: 60px; 
-  padding-left: 9px;
-  /*border: 1px solid black;*/
+  padding-left: 0px;
+  /*border: 1px solid grey;*/
+  /*border-radius: 5px;*/
   background: #ececec;
   z-index: 1;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   font-family: 'Inter-Regular';
   font-size: 14px;
+  margin-left: 7.5px;
 }
 .ProseMirror-textblock-dropdown {
   min-width: 3em;

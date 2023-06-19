@@ -15,7 +15,8 @@ import {
     createFile,
     createDir,
     isPathDir,
-    isPathFile
+    isPathFile,
+    deletePath
 } from 'fs-mod'
 
 //fsMod API
@@ -76,5 +77,8 @@ export const fsMod = {
     },
     _isPathFile(path: string): boolean {
         return isPathFile(path);
+    },
+    _deletePath(path: string): void {
+        return deletePath(path);
     }
 }
