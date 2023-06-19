@@ -1,6 +1,5 @@
 import { DirectoryTreeListeners } from "./src/event-listeners/directory-tree-listeners.js"
-//import { EditorListeners } from "./src/event-listeners/editor-listeners.js"
-import { DirectoryTreeUIModalListeners } from "./src/event-listeners/directory-tree-listeners.js"
+import { DirectoryTreeUIModalListeners } from "./src/event-listeners/directory-tree-ui-modal-listeners"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ListenerNs {
