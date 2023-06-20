@@ -1,5 +1,9 @@
 import { SettingsModal } from "../settings/settings-modal"
 
+//?inline: to prevent auto injection
+//?url: get url of named import
+import editorDark from '../../assets/editor-dark.css?inline?url'
+
 export class SettingsModalListeners extends SettingsModal {
     /**
      * Settings modal exit listener
@@ -56,11 +60,11 @@ export class SettingsModalListeners extends SettingsModal {
                         (document.querySelector('.pm-light-option') as HTMLElement).removeAttribute("selected");
     
                         (document.querySelector('.pm-dark-option') as HTMLElement).setAttribute("selected", "");
-                        
+
                         //link node
                         const linkNode: HTMLLinkElement = document.createElement('link');
                         linkNode.setAttribute("rel", "stylesheet");
-                        linkNode.setAttribute("href", "./assets/editor-dark.css");
+                        linkNode.setAttribute("href", editorDark);
                         linkNode.setAttribute("class", "pm-editor-dark-theme");
                         document.body.appendChild(linkNode);
                     }
