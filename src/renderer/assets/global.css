@@ -642,6 +642,7 @@ body {
     font-family: 'Inter-Regular';
     /*border: 1px solid;*/
     width: 400px;
+    user-select: none;
 }
 
 /*
@@ -670,7 +671,7 @@ body {
 #settings-modal-exit {
     z-index: 1;
     position: fixed;
-    width: 68px;
+    width: 42px;
     height: 25px;
     color: white;
     border: 1px solid;
@@ -689,7 +690,7 @@ body {
     background-color: rgb(88, 88, 88);
 }
 #settings-modal-options-container {
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     width: 600px;
     height: 500px;   
     position: fixed;
@@ -698,6 +699,22 @@ body {
     transform: translate(-50%, -50%);
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.pm-editor-theme-label {
+    color: white;
+    font-family: 'Inter-Regular';
+    margin-left: 135px;
+}
+
+#pm-theme-select {
+    margin-left: 10px;
+    font-family: 'Inter-Regular';
+    margin-top: 20px;
+    background-color: rgb(227, 226, 226);
+}
+#pm-theme-select:focus {
+    outline: none;
 }
 
 /**
