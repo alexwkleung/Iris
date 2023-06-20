@@ -635,13 +635,69 @@ body {
     color: rgb(212, 114, 114);
 }
 
-#kebab-modal-text-node-containner {
+#kebab-modal-text-node-container {
     color: white;
     margin-left: 150px;
     margin-top: 150px;
     font-family: 'Inter-Regular';
     /*border: 1px solid;*/
     width: 400px;
+}
+
+/*
+* settings modal 
+*/
+#settings-modal-container-node {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: calc(100% + 20px);
+    margin-top: -10px;
+}
+#settings-modal-inner-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    height: 600px;
+    background-color: #2a2828;
+    z-index: 1;
+    /*border: 1px solid grey;*/
+    border-radius: 15px;
+}
+#settings-modal-exit {
+    z-index: 1;
+    position: fixed;
+    width: 68px;
+    height: 25px;
+    color: white;
+    border: 1px solid;
+    border-color: grey;
+    border-radius: 5px;
+    right: 25px;
+    top: 20px;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Inter-Regular';
+}
+#settings-modal-exit:hover {
+    cursor: pointer;
+    background-color: rgb(88, 88, 88);
+}
+#settings-modal-options-container {
+    border: 1px solid white;
+    width: 600px;
+    height: 500px;   
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 /**

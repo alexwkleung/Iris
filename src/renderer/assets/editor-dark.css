@@ -1,0 +1,37 @@
+/*
+* global
+*/
+body { 
+    background-color: #151515;
+    caret-color: white;
+}
+#top-bar-directory-info {
+    color: white;
+}
+
+/*
+* prosemirror 
+*/
+.ProseMirror {
+    background-color: #151515;
+    color: #eaeaea;
+    caret-color: white;
+}
+.ProseMirror-menubar {
+    background-color: #151515;
+}
+.ProseMirror-menu-dropdown-item {
+    background: black;
+}
+.ProseMirror-menu-dropdown-item:hover {
+    background: rgb(48, 48, 48);
+    border-radius: 10px;
+}
+.ProseMirror-menu-dropdown-menu, .ProseMirror-menu-submenu {
+    background: black;
+    border-color: black;
+}
+
+/*
+* codemirror
+*/ 

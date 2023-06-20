@@ -51,7 +51,7 @@ export class KebabDropdownModals {
         KebabDropdownModals.kebabModalContainerNode.appendChild(KebabDropdownModals.kebabModalInnerWindow);
 
         const kebabModalTextNodeContainer: HTMLDivElement = document.createElement('div');
-        kebabModalTextNodeContainer.setAttribute("id", "kebab-modal-text-node-containner");
+        kebabModalTextNodeContainer.setAttribute("id", "kebab-modal-text-node-container");
         KebabDropdownModals.kebabModalInnerWindow.appendChild(kebabModalTextNodeContainer);
 
         document.querySelectorAll('.child-file-name.is-active-child').forEach((el) => {
