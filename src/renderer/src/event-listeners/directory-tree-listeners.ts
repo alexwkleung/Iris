@@ -13,7 +13,7 @@ import { wordCountListener } from "./word-count-listener"
 import { isModeBasic } from "../utils/is"
 import { Node } from "prosemirror-model"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
-import { kebabDropdownMenuListener } from "./kebab-dropdown-menu-listener"
+import { KebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -138,6 +138,14 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      * @readonly
      */
     private readonly folderFileCountObject = new FolderFileCount();
+
+    /**
+     * Kebab dropdown menu listeners
+     * 
+     * @private
+     * @readonly
+     */
+    private readonly kebabDropdownMenuListeners = new KebabDropdownMenuListeners();
 
     /**
      * Parent root listener 
@@ -344,7 +352,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             wordCountListener("prosemirror");
 
                             //kebab dropdown menu listener
-                            kebabDropdownMenuListener();
+                            this.kebabDropdownMenuListeners.kebabDropdownMenuListener();
                         } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }

@@ -1,5 +1,5 @@
 import { EditorNs } from "../../editor-main"
-import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory"
+import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory-tree-modals"
 import { IDirectoryTreeUIModalListeners } from "../interfaces/listener-interfaces"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { DirectoryTreeListeners } from "./directory-tree-listeners"
@@ -15,7 +15,7 @@ import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 import { RefsNs } from "./directory-tree-listeners"
 import { wordCountListener } from "./word-count-listener"
 import { setWindowTitle } from "../window/window-title"
-import { kebabDropdownMenuListener } from "./kebab-dropdown-menu-listener"
+import { KebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
 
 /**
  * @extends DirectoryTreeUIModals
@@ -67,6 +67,14 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @readonly
      */
     private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
+
+    /**
+     * Kebab dropdown menu listeners
+     * 
+     * @private
+     * @readonly
+     */
+    private readonly kebabDropdownMenuListeners = new KebabDropdownMenuListeners();
 
     /**
      * Directory tree state listeners object
@@ -258,7 +266,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 wordCountListener("prosemirror");
 
                 //kebab dropdown menu listener
-                kebabDropdownMenuListener();
+                this.kebabDropdownMenuListeners.kebabDropdownMenuListener();
 
                 //change document title so it corresponds to the opened file
                 await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + fileName.split('.md')[0]).catch((e) => { throw console.error(e) });

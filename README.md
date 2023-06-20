@@ -12,8 +12,6 @@ There is no set release date for v0.2.0 at the moment.
 
 This release will mark the first official build for Iris, so I don't want to rush anything. There will be a few dev builds that users can install to get a feel of the application before release.
 
-Iris is a long-term project on my free time, therefore development will take longer than expected. 
-
 The product website will be added closer to the release date. For now, you can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication.
 
 # Installation

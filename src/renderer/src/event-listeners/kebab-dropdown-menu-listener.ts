@@ -1,17 +1,130 @@
 import { KebabDropdownMenu } from "../misc-ui/kebab-dropdown-menu"
+import { KebabDropdownModals } from "../misc-ui/kebab-dropdown-modals"
+import { fsMod } from "../utils/alias"
+import { isModeBasic } from "../utils/is"
+import { PMEditorView } from "../prosemirror/editor/editor-view"
+import { setWindowTitle } from "../window/window-title"
 
-export function kebabDropdownMenuListener(): void {
-    KebabDropdownMenu.kebabDropdownMenuContainerNode.addEventListener('click', (e) => {
-        e.stopImmediatePropagation();
+export class KebabDropdownMenuListeners extends KebabDropdownModals {
+    /**
+     * Kebab delete file exit modal listener
+     */
+    public kebabDeleteFileExitModalListener(): void {
+        KebabDropdownModals.kebabModalExitButtonNode.addEventListener('click', () => {
+            KebabDropdownModals.kebabModalContainerNode.remove();
+        })
+    }
 
-        console.log("clicked kebab");
+    /**
+     * Kebab delete file continue modal listener
+     * 
+     * @param type Mode type
+     */
+    public kebabDeleteFileContinueModalListener(type: string): void {
+        KebabDropdownModals.kebabModalContinueButtonNode.addEventListener('click', () => {
+            document.querySelectorAll('.child-file-name.is-active-child').forEach(async (el) => {
+                //mode check
+                if(type === "Basic" && isModeBasic()) {
+                    //log
+                    console.log(
+                        fsMod.fs._baseDir("home")
+                        + "/Iris/Basic/"
+                        + document.title.split('-')[1].trim()
+                        + "/"
+                        + el.textContent + ".md"
+                    );
 
-        (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.toggle('is-active');
+                    fsMod.fs._deletePath(
+                        fsMod.fs._baseDir("home")
+                        + "/Iris/Basic/"
+                        + document.title.split('-')[1].trim()
+                        + "/"
+                        + el.textContent + ".md"
+                    );
 
-        if((document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.contains('is-active')) {
-            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "";
-        } else {
-            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
-        }
-    })
+                    //remove kebab modal container node
+                    KebabDropdownModals.kebabModalContainerNode.remove();
+
+                    //remove active file from tree
+                    el.remove();
+
+                    //destroy editor and respawn 
+                    PMEditorView.editorView.destroy();
+                    PMEditorView.createEditorView();
+                    PMEditorView.setContenteditable(false);
+
+                    //hide prosemirror menubar
+                    (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+
+                    //hide kebab dropdown menu container
+                    (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
+
+                    //kebab after click menu container reset
+                    (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+                    (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+
+                    //word counter reset
+                    (document.getElementById('word-count-container') as HTMLElement).style.display = "none";
+                    (document.getElementById('word-count-container') as HTMLElement).textContent = "";
+                    
+                    //set window title to default
+                    await setWindowTitle("Iris", false, null);
+
+                    //remove top bar directory info node
+                    (document.getElementById('top-bar-directory-info') as HTMLElement).remove();
+                }
+            })
+        })
+    }
+
+    /**
+     * Kebab dropdown delete file listener
+     */
+    public kebabDropdownDeleteFileListener(): void {
+        (document.getElementById('kebab-delete-file-button-node') as HTMLElement).addEventListener('click', () => {
+            console.log("clicked kebab delete");
+
+            //(document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+            //(document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+
+            document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
+                //null check
+                if(el !== null) {
+                    //remove any remaining kebab modal container nodes
+                    el.remove();
+                }
+            })
+
+            //create kebab modal container
+            this.kebabModalContainer();
+
+            //invoke kebab delete file exit modal listener
+            this.kebabDeleteFileExitModalListener();
+
+            //invoke kebab delete file continue modal listener
+            this.kebabDeleteFileContinueModalListener("Basic");
+        })
+    }
+
+    /**
+     * Kebab dropdown menu listener
+     */
+    public kebabDropdownMenuListener(): void {
+        KebabDropdownMenu.kebabDropdownMenuContainerNode.addEventListener('click', (e) => {
+            e.stopImmediatePropagation();
+    
+            console.log("clicked kebab");
+    
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.toggle('is-active');
+    
+            if((document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.contains('is-active')) {
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "";
+            } else {
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+            }
+
+            //invoke kebab dropdown delete file listener
+            this.kebabDropdownDeleteFileListener();
+        })
+    }
 }

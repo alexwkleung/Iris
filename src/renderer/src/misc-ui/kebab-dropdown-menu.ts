@@ -3,6 +3,11 @@ import { App } from "../../app"
 export class KebabDropdownMenu {
     static kebabDropdownMenuContainerNode: HTMLDivElement;
 
+    /**
+     * Create kebab dropdown menu container
+     * 
+     * @static
+     */
     static createKebabDropdownMenuContainer(): void {
         //kebab dropdown menu container node
         KebabDropdownMenu.kebabDropdownMenuContainerNode = document.createElement('div');
@@ -40,7 +45,6 @@ export class KebabDropdownMenu {
         const kebabDeleteFileButtonTextNode: Text = document.createTextNode("Delete File");
         kebabDeleteFileButtonNode.appendChild(kebabDeleteFileButtonTextNode);
 
-        
-
+        //add more button nodes...
     }
 }

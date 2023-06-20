@@ -33,7 +33,6 @@
     --prosemirror-bg-light: #ececec; /* should match current editor bg */
     --prosemirror-bg-dark: #151515; /* should match current editor bg */
     --continue-modal: rgb(176, 136, 250);
-    --cancel-modal: rgb(212, 114, 114);
     --modal-hover-bg: rgb(88, 88, 88);
     --prosemirror-a-light: rgb(80, 80, 133);
     --prosemirror-a-dark: rgb(136, 136, 220);
@@ -293,7 +292,7 @@ body {
 */
 #create-modal-container {
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     background-color: var(--create-file-modal-container-bg);
     width: 100%;
     height: calc(100% + 20px);
@@ -447,7 +446,7 @@ body {
     position: fixed;
     width: 225px;
     height: 17px;
-    right: 55px;
+    right: 50px;
     top: 60px;
     padding-top: 2px;
     /*border: 1px solid black;*/
@@ -539,7 +538,7 @@ body {
     /*border: 1px solid grey;*/
     border-radius: 15px;
     background-color: #2a2828;
-    width: 200px;
+    width: 150px;
     height: 200px;
     right: 25px;
     top: 85px;
@@ -563,11 +562,86 @@ body {
     border-radius: 5px;
     width: 90px;
     top: 120px;
-    margin-left: 50px;
+    margin-left: 30px;
     user-select: none;
 }
 #kebab-delete-file-button-node:hover {
     background-color: rgb(88, 88, 88);
+}
+
+/*
+* kebab modal window
+*/
+#kebab-modal-container-node {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: calc(100% + 20px);
+    margin-top: -10px;
+}
+#kebab-modal-inner-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    height: 400px;
+    background-color: #2a2828;
+    z-index: 1;
+    /*border: 1px solid grey;*/
+    border-radius: 15px;
+}
+#kebab-modal-exit-button {
+    z-index: 1;
+    position: fixed;
+    width: 68px;
+    height: 25px;
+    color: white;
+    border: 1px solid;
+    border-color: grey;
+    border-radius: 5px;
+    right: 25px;
+    bottom: 20px;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Inter-Regular';
+}
+#kebab-modal-exit-button:hover {
+    cursor: pointer;
+    background-color: rgb(88, 88, 88);
+}
+#kebab-modal-continue-button {
+    z-index: 1;
+    position: fixed;
+    width: 90px;
+    height: 25px;
+    color: white;
+    border: 1px solid;
+    border-color: grey;
+    border-radius: 5px;
+    right: 110px;
+    bottom: 20px;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Inter-Regular';
+}
+#kebab-modal-continue-button:hover {
+    background-color: rgb(88, 88, 88);
+    color: rgb(212, 114, 114);
+}
+
+#kebab-modal-text-node-containner {
+    color: white;
+    margin-left: 150px;
+    margin-top: 150px;
+    font-family: 'Inter-Regular';
+    /*border: 1px solid;*/
+    width: 400px;
 }
 
 /**
