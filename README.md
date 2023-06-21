@@ -2,9 +2,9 @@
 
 <p align="center">Iris is a comfortable Markdown note-taking app. Written in TypeScript and Rust.</p>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-18.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-20.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-19.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-21.png"></img>
 
 <p align="center">Current dev screenshots (subject to change; frequently updated)</p>
 
@@ -66,6 +66,21 @@ make dev
 # via npm
 npm run dev
 ```
+
+Build the installer 
+
+```bash
+# via make
+make build-mac
+
+# via npm
+npm run build:mac
+
+# windows and linux not tested
+npm run build:win
+npm run build:linux
+```
+
 # v0.1.x
 
 If you want to take a look at the v0.1.x prototype source code, you can go to the [v0.1.1 release](https://github.com/alexwkleung/Iris/releases/tag/v0.1.1). 
