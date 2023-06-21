@@ -15,7 +15,7 @@ import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 import { RefsNs } from "./directory-tree-listeners"
 import { wordCountListener } from "./word-count-listener"
 import { setWindowTitle } from "../window/window-title"
-import { KebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
+import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
 
 /**
  * @extends DirectoryTreeUIModals
@@ -74,7 +74,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @private
      * @readonly
      */
-    private readonly kebabDropdownMenuListeners = new KebabDropdownMenuListeners();
+    private readonly editorkebabDropdownMenuListeners = new EditorKebabDropdownMenuListeners();
 
     /**
      * Directory tree state listeners object
@@ -266,7 +266,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 wordCountListener("prosemirror");
 
                 //kebab dropdown menu listener
-                this.kebabDropdownMenuListeners.kebabDropdownMenuListener();
+                this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
 
                 //change document title so it corresponds to the opened file
                 await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + fileName.split('.md')[0]).catch((e) => { throw console.error(e) });

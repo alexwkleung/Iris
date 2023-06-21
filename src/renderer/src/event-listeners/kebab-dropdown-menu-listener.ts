@@ -1,17 +1,17 @@
-import { KebabDropdownMenu } from "../misc-ui/kebab-dropdown-menu"
-import { KebabDropdownModals } from "../misc-ui/kebab-dropdown-modals"
+import { EditorKebabDropdownMenu } from "../misc-ui/editor-kebab-dropdown-menu"
+import { EditorKebabDropdownModals } from "../misc-ui/editor-kebab-dropdown-modals"
 import { fsMod } from "../utils/alias"
 import { isModeBasic } from "../utils/is"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { setWindowTitle } from "../window/window-title"
 
-export class KebabDropdownMenuListeners extends KebabDropdownModals {
+export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals {
     /**
      * Kebab delete file exit modal listener
      */
     public kebabDeleteFileExitModalListener(): void {
-        KebabDropdownModals.kebabModalExitButtonNode.addEventListener('click', () => {
-            KebabDropdownModals.kebabModalContainerNode.remove();
+        EditorKebabDropdownModals.kebabModalExitButtonNode.addEventListener('click', () => {
+            EditorKebabDropdownModals.kebabModalContainerNode.remove();
         })
     }
 
@@ -21,7 +21,7 @@ export class KebabDropdownMenuListeners extends KebabDropdownModals {
      * @param type Mode type
      */
     public kebabDeleteFileContinueModalListener(type: string): void {
-        KebabDropdownModals.kebabModalContinueButtonNode.addEventListener('click', () => {
+        EditorKebabDropdownModals.kebabModalContinueButtonNode.addEventListener('click', () => {
             document.querySelectorAll('.child-file-name.is-active-child').forEach(async (el) => {
                 //mode check
                 if(type === "Basic" && isModeBasic()) {
@@ -43,7 +43,7 @@ export class KebabDropdownMenuListeners extends KebabDropdownModals {
                     );
 
                     //remove kebab modal container node
-                    KebabDropdownModals.kebabModalContainerNode.remove();
+                    EditorKebabDropdownModals.kebabModalContainerNode.remove();
 
                     //remove active file from tree
                     el.remove();
@@ -84,9 +84,6 @@ export class KebabDropdownMenuListeners extends KebabDropdownModals {
         (document.getElementById('kebab-delete-file-button-node') as HTMLElement).addEventListener('click', () => {
             console.log("clicked kebab delete");
 
-            //(document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
-            //(document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
-
             document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
                 //null check
                 if(el !== null) {
@@ -110,7 +107,7 @@ export class KebabDropdownMenuListeners extends KebabDropdownModals {
      * Kebab dropdown menu listener
      */
     public kebabDropdownMenuListener(): void {
-        KebabDropdownMenu.kebabDropdownMenuContainerNode.addEventListener('click', (e) => {
+        EditorKebabDropdownMenu.kebabDropdownMenuContainerNode.addEventListener('click', (e) => {
             e.stopImmediatePropagation();
     
             console.log("clicked kebab");
@@ -134,15 +131,9 @@ export class KebabDropdownMenuListeners extends KebabDropdownModals {
         });
 
         //hide kebab after click menu container when file directory is clicked
-        (document.querySelector('#file-directory-tree-container') as HTMLElement).addEventListener('click', () => {
+        (document.getElementById('file-directory-tree-container') as HTMLElement).addEventListener('click', () => {
             (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
             (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
-        })
-
-        //hide kebab after click menu container when any exposed document body region is clicked
-        document.body.addEventListener('click', () => {
-            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
-            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
-        })
+        });
     }
 }

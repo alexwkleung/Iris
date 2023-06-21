@@ -1,6 +1,6 @@
 import { App } from "../../app"
 
-export class KebabDropdownMenu {
+export class EditorKebabDropdownMenu {
     static kebabDropdownMenuContainerNode: HTMLDivElement;
 
     /**
@@ -10,14 +10,14 @@ export class KebabDropdownMenu {
      */
     static createKebabDropdownMenuContainer(): void {
         //kebab dropdown menu container node
-        KebabDropdownMenu.kebabDropdownMenuContainerNode = document.createElement('div');
-        KebabDropdownMenu.kebabDropdownMenuContainerNode.setAttribute("id", "kebab-dropdown-menu-container");
-        App.appNode.insertBefore(KebabDropdownMenu.kebabDropdownMenuContainerNode, document.querySelector('#editor-container'));
+        EditorKebabDropdownMenu.kebabDropdownMenuContainerNode = document.createElement('div');
+        EditorKebabDropdownMenu.kebabDropdownMenuContainerNode.setAttribute("id", "kebab-dropdown-menu-container");
+        App.appNode.insertBefore(EditorKebabDropdownMenu.kebabDropdownMenuContainerNode, document.querySelector('#editor-container'));
 
         for(let i = 0; i < 3; i++) {
             const kebabDropdownMenuShapeContainerNode: HTMLDivElement = document.createElement('div');
             kebabDropdownMenuShapeContainerNode.setAttribute("id", "kebab-dropdown-shape-container");
-            KebabDropdownMenu.kebabDropdownMenuContainerNode.appendChild(kebabDropdownMenuShapeContainerNode);
+            EditorKebabDropdownMenu.kebabDropdownMenuContainerNode.appendChild(kebabDropdownMenuShapeContainerNode);
 
             //kebab dropdown menu shape node
             const kebabDropdownMenuShapeNode: HTMLDivElement = document.createElement('div');
@@ -25,7 +25,7 @@ export class KebabDropdownMenu {
             kebabDropdownMenuShapeContainerNode.appendChild(kebabDropdownMenuShapeNode);    
 
             //hide kebab dropdown menu container node
-            KebabDropdownMenu.kebabDropdownMenuContainerNode.style.display = "none";
+            EditorKebabDropdownMenu.kebabDropdownMenuContainerNode.style.display = "none";
         }
 
         //kebab after click menu container

@@ -1,6 +1,6 @@
 import { App } from "../../app"
 
-export class KebabDropdownModals {
+export class EditorKebabDropdownModals {
     static kebabModalInnerWindow: HTMLDivElement;
     static kebabModalContinueButtonNode: HTMLDivElement;
     static kebabModalExitButtonNode: HTMLDivElement;
@@ -12,12 +12,12 @@ export class KebabDropdownModals {
      * @protected
      */
     protected kebabModalContinueButton(): void {
-        KebabDropdownModals.kebabModalContinueButtonNode = document.createElement('div');
-        KebabDropdownModals.kebabModalContinueButtonNode.setAttribute("id", "kebab-modal-continue-button");
-        KebabDropdownModals.kebabModalInnerWindow.appendChild(KebabDropdownModals.kebabModalContinueButtonNode);
+        EditorKebabDropdownModals.kebabModalContinueButtonNode = document.createElement('div');
+        EditorKebabDropdownModals.kebabModalContinueButtonNode.setAttribute("id", "kebab-modal-continue-button");
+        EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(EditorKebabDropdownModals.kebabModalContinueButtonNode);
 
         const kebabModalContinueButtonTextNode: Text = document.createTextNode("Continue");
-        KebabDropdownModals.kebabModalContinueButtonNode.appendChild(kebabModalContinueButtonTextNode);
+        EditorKebabDropdownModals.kebabModalContinueButtonNode.appendChild(kebabModalContinueButtonTextNode);
     }
 
     /**
@@ -26,12 +26,14 @@ export class KebabDropdownModals {
      * @protected
      */
     protected kebabModalExitButton(): void {
-        KebabDropdownModals.kebabModalExitButtonNode = document.createElement('div');
-        KebabDropdownModals.kebabModalExitButtonNode.setAttribute("id", "kebab-modal-exit-button");
-        KebabDropdownModals.kebabModalInnerWindow.appendChild(KebabDropdownModals.kebabModalExitButtonNode);
+        //kebab modal exit button node
+        EditorKebabDropdownModals.kebabModalExitButtonNode = document.createElement('div');
+        EditorKebabDropdownModals.kebabModalExitButtonNode.setAttribute("id", "kebab-modal-exit-button");
+        EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(EditorKebabDropdownModals.kebabModalExitButtonNode);
 
+        //kebab modal exit button text node
         const kebabModalExitButtonTextNode: Text = document.createTextNode("Cancel");
-        KebabDropdownModals.kebabModalExitButtonNode.appendChild(kebabModalExitButtonTextNode);
+        EditorKebabDropdownModals.kebabModalExitButtonNode.appendChild(kebabModalExitButtonTextNode);
     }
 
     /**
@@ -42,17 +44,20 @@ export class KebabDropdownModals {
     protected kebabModalContainer(): void {
         console.log("kebab modal container");
 
-        KebabDropdownModals.kebabModalContainerNode = document.createElement('div');
-        KebabDropdownModals.kebabModalContainerNode.setAttribute("id", "kebab-modal-container-node");
-        App.appNode.insertBefore(KebabDropdownModals.kebabModalContainerNode, App.appNode.firstChild);
+        //kebab modal container node
+        EditorKebabDropdownModals.kebabModalContainerNode = document.createElement('div');
+        EditorKebabDropdownModals.kebabModalContainerNode.setAttribute("id", "kebab-modal-container-node");
+        App.appNode.insertBefore(EditorKebabDropdownModals.kebabModalContainerNode, App.appNode.firstChild);
 
-        KebabDropdownModals.kebabModalInnerWindow = document.createElement('div');
-        KebabDropdownModals.kebabModalInnerWindow.setAttribute("id", "kebab-modal-inner-window");
-        KebabDropdownModals.kebabModalContainerNode.appendChild(KebabDropdownModals.kebabModalInnerWindow);
+        //kebab modal inner window
+        EditorKebabDropdownModals.kebabModalInnerWindow = document.createElement('div');
+        EditorKebabDropdownModals.kebabModalInnerWindow.setAttribute("id", "kebab-modal-inner-window");
+        EditorKebabDropdownModals.kebabModalContainerNode.appendChild(EditorKebabDropdownModals.kebabModalInnerWindow);
 
+        //kebab modal text node container
         const kebabModalTextNodeContainer: HTMLDivElement = document.createElement('div');
         kebabModalTextNodeContainer.setAttribute("id", "kebab-modal-text-node-container");
-        KebabDropdownModals.kebabModalInnerWindow.appendChild(kebabModalTextNodeContainer);
+        EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(kebabModalTextNodeContainer);
 
         document.querySelectorAll('.child-file-name.is-active-child').forEach((el) => {
             const kebabModalTextNode1: Text = document.createTextNode(

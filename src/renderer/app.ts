@@ -1,4 +1,5 @@
 import { setWindowTitle } from "./src/window/window-title"
+import prosemirror from '../renderer/assets/prosemirror.css?inline?url'
 
 export class App {
     /**
@@ -52,12 +53,24 @@ export class App {
             }
         }
     }
+
+    static pmStylesheet(): void {
+        const pmStylesheet: HTMLLinkElement = document.createElement('link');
+        pmStylesheet.setAttribute("rel", "stylesheet");
+        pmStylesheet.setAttribute("href", prosemirror);
+        pmStylesheet.setAttribute("class", "pm-stylesheet");
+        
+        document.body.appendChild(pmStylesheet);
+    }
 }
 
 function createApp(): void {
     document.addEventListener('DOMContentLoaded', () => {
         //call app
         App.app();
+
+        //prosemirror stylesheet
+        App.pmStylesheet();
     });
 }
 createApp();
