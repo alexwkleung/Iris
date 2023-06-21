@@ -25,7 +25,7 @@ export class SettingsModal {
         const themeLabel: HTMLLabelElement = document.createElement('label');
         themeLabel.setAttribute("for", "editor-themes");
         themeLabel.setAttribute("class", "editor-theme-label");
-        themeLabel.textContent = "Editor Theme:"
+        themeLabel.textContent = "Editor Theme"
         SettingsModal.settingsModalOptionsContainer.appendChild(themeLabel);
 
         //theme select

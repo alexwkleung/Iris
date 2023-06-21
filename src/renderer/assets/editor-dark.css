@@ -1,35 +1,56 @@
+:root {
+    --default-bg: #151515;
+    --prosemirror-bg-dark: #151515;
+    --prosemirror-color-dark: #eaeaea;
+    --caret-color-dark: #ffffff;
+    --prosemirror-a-dark: rgb(136, 136, 220);
+    --prosemirror-menu-bar-dropdown-item-bg-dark: black; 
+    --top-bar-directory-info-color-dark: #ffffff;
+    --word-count-color-dark: rgb(109, 109, 109);
+}
+
 /*
 * global
 */
 body { 
-    background-color: #151515;
-    caret-color: white;
+    background-color: var(--default-bg);
+    caret-color: var(--caret-color-dark);
 }
 #top-bar-directory-info {
-    color: white;
+    color: var(--top-bar-directory-info-color-dark);
+}
+
+/*
+* word count
+*/
+#word-count-container {
+    color: var(--word-count-color-dark);
 }
 
 /*
 * prosemirror 
 */
 .ProseMirror {
-    background-color: #151515;
-    color: #eaeaea;
-    caret-color: white;
+    background-color: var(--prosemirror-bg-dark);
+    color: var(--prosemirror-color-dark);
+    caret-color: var(--caret-color-dark);
 }
 .ProseMirror-menubar {
-    background-color: #151515;
+    background-color: var(--prosemirror-bg-dark);
 }
 .ProseMirror-menu-dropdown-item {
-    background: black;
+    background: var(--prosemirror-menu-bar-dropdown-item-bg-dark);
 }
 .ProseMirror-menu-dropdown-item:hover {
     background: rgb(48, 48, 48);
     border-radius: 10px;
 }
 .ProseMirror-menu-dropdown-menu, .ProseMirror-menu-submenu {
-    background: black;
+    background: var(--prosemirror-menu-bar-dropdown-item-bg-dark);
     border-color: black;
+}
+.ProseMirror a {
+    color: var(--prosemirror-a-dark);
 }
 
 /*

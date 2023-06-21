@@ -14,10 +14,12 @@
     src: url('./default-fonts/Inter-Bold.ttf');
 }
 
+/*
+* root vars
+*/
 :root {
     --default-bg: #ffffff;
     --caret-color-light: #000000;
-    --caret-color-dark: #ffffff;
     --file-directory-bg: #131212;
     --parent-folder-name: rgb(237, 235, 235);
     --parent-folder-name-hover: rgb(140, 89, 234);
@@ -30,14 +32,11 @@
     --prosemirror-code-bg: rgb(181, 181, 181);
     --prosemirror-pre-color: #2e2a43;
     --prosemirror-code-color: #2e2a43;
-    --prosemirror-bg-light: #ececec; /* should match current editor bg */
-    --prosemirror-bg-dark: #151515; /* should match current editor bg */
+    --prosemirror-bg-light: #ececec;
     --continue-modal: rgb(176, 136, 250);
     --modal-hover-bg: rgb(88, 88, 88);
     --prosemirror-a-light: rgb(80, 80, 133);
-    --prosemirror-a-dark: rgb(136, 136, 220);
     --top-bar-directory-info-color-light: #000000;
-    --top-bar-directory-info-color-dark: #ffffff;
     --word-count-color-light: rgb(99, 99, 99);
     /* 
     * transparent background without messing with opacity property in CSS
@@ -716,12 +715,16 @@ body {
     color: white;
     font-family: 'Inter-Regular';
     margin-left: 180px;
+    font-size: 18px;
 }
 #theme-select {
     margin-left: 10px;
     font-family: 'Inter-Regular';
-    margin-top: 20px;
-    background-color: rgb(227, 226, 226);
+    margin-top: 60px;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
 }
 #theme-select:focus {
     outline: none;

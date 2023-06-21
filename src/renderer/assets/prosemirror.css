@@ -7,6 +7,9 @@
 *
 */
 
+/*
+* fonts
+*/
 @font-face {
   font-family: 'Inter-Regular';
   src: url('./default-fonts/Inter-Regular.ttf');
@@ -20,17 +23,15 @@
   src: url('./default-fonts/Inter-Bold.ttf');
 }
 
+/*
+* root vars
+*/
 :root {
   --caret-color-light: #000000;
-  --caret-color-dark: #ffffff;
   --prosemirror-bg-light: #ececec;
-  --prosemirror-bg-dark: #151515;
   --prosemirror-color-light: #000000;
-  --prosemirror-color-dark: #eaeaea;
   --prosemirror-menu-bar-color-light: grey;
-  --prosemirror-menu-bar-color-dark: white; /* temp */
   --prosemirror-menu-bar-dropdown-item-bg-light: rgb(214, 213, 213);
-  --prosemirror-menu-bar-dropdown-item-bg-dark: black; /* temp */
   --prosemirror-menu-bar-icon-active-bg-light: rgb(214, 213, 213);
 }
 
@@ -41,7 +42,7 @@
   white-space: break-spaces;
   -webkit-font-variant-ligatures: none;
   font-variant-ligatures: none;
-  font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
+  font-feature-settings: "liga" 0;
   position: fixed;
   overflow-y: scroll;
   overflow-x: scroll;
@@ -81,8 +82,6 @@
   outline: 2px solid #8cf;
 }
 
-/* Make sure li selections wrap around markers */
-
 li.ProseMirror-selectednode {
   outline: none;
 }
@@ -95,8 +94,6 @@ li.ProseMirror-selectednode:after {
   border: 2px solid #8cf;
   pointer-events: none;
 }
-
-/* Protect against generic img rules */
 
 img.ProseMirror-separator {
   display: inline !important;
@@ -247,7 +244,7 @@ img.ProseMirror-separator {
 .ProseMirror-icon {
   display: inline-block;
   line-height: .8;
-  vertical-align: -2px; /* Compensate for padding */
+  vertical-align: -2px;
   padding: 2px 8px;
   cursor: pointer;
 }
