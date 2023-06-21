@@ -41,29 +41,29 @@ export class SettingsModal {
 
         //theme label
         const themeLabel: HTMLLabelElement = document.createElement('label');
-        themeLabel.setAttribute("for", "pm-editor-themes");
-        themeLabel.setAttribute("class", "pm-editor-theme-label");
-        themeLabel.textContent = "ProseMirror Editor Theme:"
+        themeLabel.setAttribute("for", "editor-themes");
+        themeLabel.setAttribute("class", "editor-theme-label");
+        themeLabel.textContent = "Editor Theme:"
         settingsModalOptionsContainer.appendChild(themeLabel);
 
         //theme select
         const themeSelect: HTMLSelectElement = document.createElement('select');
-        themeSelect.setAttribute("name", "pm-editor-themes");
-        themeSelect.setAttribute("id", "pm-theme-select");
+        themeSelect.setAttribute("name", "editor-themes");
+        themeSelect.setAttribute("id", "theme-select");
         settingsModalOptionsContainer.appendChild(themeSelect);
 
         //theme option light
         const themeOptionLight: HTMLOptionElement = document.createElement('option');
-        themeOptionLight.setAttribute("value", "pm-light");
+        themeOptionLight.setAttribute("value", "editor-light");
         themeOptionLight.setAttribute("selected", "");
-        themeOptionLight.setAttribute("class", "pm-light-option");
+        themeOptionLight.setAttribute("class", "light-option");
         themeOptionLight.textContent = "Light Theme";
         themeSelect.appendChild(themeOptionLight);
 
         //theme option dark
         const themeOptionDark: HTMLOptionElement = document.createElement('option');
-        themeOptionDark.setAttribute("value", "pm-dark");
-        themeOptionDark.setAttribute("class", "pm-dark-option");
+        themeOptionDark.setAttribute("value", "editor-dark");
+        themeOptionDark.setAttribute("class", "dark-option");
         themeOptionDark.textContent = "Dark Theme";
         themeSelect.appendChild(themeOptionDark);
     }

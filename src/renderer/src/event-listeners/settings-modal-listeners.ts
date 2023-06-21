@@ -1,5 +1,7 @@
 import { SettingsModal } from "../settings/settings-modal"
 
+//https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
+//https://vitejs.dev/guide/assets.html#importing-asset-as-url
 //?inline: to prevent auto injection
 //?url: get url of named import
 import editorDark from '../../assets/editor-dark.css?inline?url'
@@ -27,45 +29,42 @@ export class SettingsModalListeners extends SettingsModal {
             //invoke settings modal exit listener
             this.settingsModalExitListener();
 
-            if(
-                (document.querySelector('.pm-light-option') as HTMLElement).hasAttribute("selected") 
-                && (document.querySelector('.pm-editor-dark-theme') as HTMLElement) !== null
-            ) {
+            if((document.querySelector('.light-option') as HTMLElement).hasAttribute("selected") && (document.querySelector('.editor-dark-theme') as HTMLElement) !== null) {
                 //remove dark stylesheet node
-                document.querySelectorAll('.pm-editor-dark-theme').forEach((el) => {
+                document.querySelectorAll('.editor-dark-theme').forEach((el) => {
                     el.remove();
                 });
 
                 return;
             } else {
-                //pm theme selection (no persistence at the moment)
-                (document.getElementById("pm-theme-select") as HTMLElement).addEventListener('change', (e) => {
-                    const currVal = (e.currentTarget as HTMLSelectElement);
+                //theme selection (no persistence at the moment)
+                (document.getElementById("theme-select") as HTMLElement).addEventListener('change', (e) => {
+                    const currentSelection = (e.currentTarget as HTMLSelectElement);
     
                     //if dark theme exists in dom
-                    if((document.querySelector('.pm-editor-dark-theme') as HTMLElement) !== null) {
+                    if((document.querySelector('.editor-dark-theme') as HTMLElement) !== null) {
                         //remove stylesheet node
-                        document.querySelectorAll('.pm-editor-dark-theme').forEach((el) => {
+                        document.querySelectorAll('.editor-dark-theme').forEach((el) => {
                             el.remove();
                         })
                     }
                     
                     //if selection is light theme
-                    if(currVal.value === 'pm-light') {
-                        (document.querySelector('.pm-dark-option') as HTMLElement).removeAttribute("selected");
+                    if(currentSelection.value === 'editor-light') {
+                        (document.querySelector('.dark-option') as HTMLElement).removeAttribute("selected");
     
-                        (document.querySelector('.pm-light-option') as HTMLElement).setAttribute("selected", "");
+                        (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
                     //if selection is dark theme
-                    } else if(currVal.value === 'pm-dark') {
-                        (document.querySelector('.pm-light-option') as HTMLElement).removeAttribute("selected");
+                    } else if(currentSelection.value === 'editor-dark') {
+                        (document.querySelector('.light-option') as HTMLElement).removeAttribute("selected");
     
-                        (document.querySelector('.pm-dark-option') as HTMLElement).setAttribute("selected", "");
+                        (document.querySelector('.dark-option') as HTMLElement).setAttribute("selected", "");
 
                         //link node
                         const linkNode: HTMLLinkElement = document.createElement('link');
                         linkNode.setAttribute("rel", "stylesheet");
                         linkNode.setAttribute("href", editorDark);
-                        linkNode.setAttribute("class", "pm-editor-dark-theme");
+                        linkNode.setAttribute("class", "editor-dark-theme");
                         document.body.appendChild(linkNode);
                     }
                 })

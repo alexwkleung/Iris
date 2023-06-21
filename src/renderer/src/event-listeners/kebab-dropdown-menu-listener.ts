@@ -125,6 +125,24 @@ export class KebabDropdownMenuListeners extends KebabDropdownModals {
 
             //invoke kebab dropdown delete file listener
             this.kebabDropdownDeleteFileListener();
+        });
+
+        //hide kebab after click menu container when editor is clicked 
+        (document.querySelector('.ProseMirror') as HTMLElement).addEventListener('click', () => {
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+        });
+
+        //hide kebab after click menu container when file directory is clicked
+        (document.querySelector('#file-directory-tree-container') as HTMLElement).addEventListener('click', () => {
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+        })
+
+        //hide kebab after click menu container when any exposed document body region is clicked
+        document.body.addEventListener('click', () => {
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
         })
     }
 }
