@@ -112,7 +112,7 @@ img.ProseMirror-separator {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
   position: fixed;
-  width: calc(100% - 350px);
+  width: calc(100% - 750px);
   color: var(--prosemirror-menu-bar-color-light);
   padding: 0px 0px;
   top: 60px; 

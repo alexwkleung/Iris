@@ -124,7 +124,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         el.addEventListener('keyup', (e) => {
             //assign current value of input element on keyup + extension
-            fileName = (e.target as HTMLInputElement).value + ".md";
+            fileName = ((e.target as HTMLInputElement).value).trim() + ".md";
         })
 
         //console.log(fileName);
@@ -360,7 +360,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         let folderName: string = "";
 
         el.addEventListener('keyup', (e) => {
-            folderName = (e.target as HTMLInputElement).value;
+            folderName = ((e.target as HTMLInputElement).value).trim();
             console.log(folderName);
         });
 

@@ -55,11 +55,17 @@ export class App {
     }
 
     static pmStylesheet(): void {
+        //remove any duplicate pm stylesheets in dom
+        document.querySelectorAll('.pm-stylesheet').forEach((el) => {
+            if(el !== null) {
+                el.remove();
+            }
+        })
+
         const pmStylesheet: HTMLLinkElement = document.createElement('link');
         pmStylesheet.setAttribute("rel", "stylesheet");
         pmStylesheet.setAttribute("href", prosemirror);
         pmStylesheet.setAttribute("class", "pm-stylesheet");
-        
         document.body.appendChild(pmStylesheet);
     }
 }
