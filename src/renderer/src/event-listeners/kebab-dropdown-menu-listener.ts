@@ -5,6 +5,9 @@ import { isModeBasic } from "../utils/is"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { setWindowTitle } from "../window/window-title"
 
+/**
+ * @extends EditorKebabDropdownModals
+ */
 export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals {
     /**
      * Kebab delete file exit modal listener

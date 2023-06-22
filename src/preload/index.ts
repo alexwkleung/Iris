@@ -18,11 +18,11 @@ function appStartDirectoryCheck(): void {
       fsMod._createDir(fsMod._baseDir("home") + "/Iris/Basic");
 
       //create advanced directory
+
+      createDefaultSettings();
     }
 }
 appStartDirectoryCheck();
-
-createDefaultSettings();
 
 if(process.contextIsolated) {
   try {

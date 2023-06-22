@@ -8,6 +8,9 @@ import { fsMod } from "../utils/alias"
 //?url: get url of named import
 //import editorDark from '../../assets/editor-dark.css?inline?url'
 
+/**
+ * @extends SettingsModal
+ */
 export class SettingsModalListeners extends SettingsModal {
     /**
      * Settings modal exit listener
@@ -39,7 +42,6 @@ export class SettingsModalListeners extends SettingsModal {
 
                 return;
             } else {
-                //theme selection (no persistence at the moment)
                 (document.getElementById("theme-select") as HTMLElement).addEventListener('change', (e) => {
                     const currentSelection = (e.currentTarget as HTMLSelectElement);
     
@@ -50,16 +52,19 @@ export class SettingsModalListeners extends SettingsModal {
                             el.remove();
                         })
                     }
-                    
+
                     //if selection is light theme
                     if(currentSelection.value === 'editor-light') {
+                        //log
+                        console.log(Settings.parseThemeSettings().lightTheme);
+
                         (document.querySelector('.dark-option') as HTMLElement).removeAttribute("selected");
     
                         (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
 
-                        const updatedSettings: string = '{ "lightTheme": true, "darkTheme": false }';
+                        const updatedSettings: string = '{"lightTheme":true,"darkTheme":false}';
 
-                        if(!Settings.themeSettings().lightTheme) {
+                        if(!Settings.parseThemeSettings().lightTheme) {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
                         } else {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
@@ -67,16 +72,19 @@ export class SettingsModalListeners extends SettingsModal {
 
                     //if selection is dark theme
                     } else if(currentSelection.value === 'editor-dark') {
+                        //log
+                        console.log(Settings.parseThemeSettings().darkTheme);
+
                         (document.querySelector('.light-option') as HTMLElement).removeAttribute("selected");
     
                         (document.querySelector('.dark-option') as HTMLElement).setAttribute("selected", "");
 
-                        //dark theme
+                        //apply dark theme
                         EditorThemes.darkTheme();
 
-                        const updatedSettings: string = '{ "lightTheme": false, "darkTheme": true }';
+                        const updatedSettings: string = '{"lightTheme":false,"darkTheme":true}';
 
-                        if(!Settings.themeSettings().darkTheme) {
+                        if(!Settings.parseThemeSettings().darkTheme) {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
                         } else {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);

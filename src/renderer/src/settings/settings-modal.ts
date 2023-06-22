@@ -1,5 +1,7 @@
 import { App } from "../../app"
 import { horizontalLineSettings } from "../misc-ui/horizontal-line"
+import { Settings } from "./settings"
+
 export class SettingsModal {
     static settingsModalContainerNode: HTMLDivElement;
     static settingsModalInnerWindow: HTMLDivElement;
@@ -18,9 +20,10 @@ export class SettingsModal {
         SettingsModal.settingsModalExitButton.appendChild(settingsModalExitTextNode);
     }
 
+    /**
+     * Editor theme options
+     */
     public editorThemeOptions(): void {
-        //load json key values and create options respectively
-        
         //theme options container
         const themeOptionsContainer: HTMLDivElement = document.createElement('div');
         themeOptionsContainer.setAttribute("id", "theme-options-container");
@@ -54,7 +57,6 @@ export class SettingsModal {
         //theme option light
         const themeOptionLight: HTMLOptionElement = document.createElement('option');
         themeOptionLight.setAttribute("value", "editor-light");
-        themeOptionLight.setAttribute("selected", "");
         themeOptionLight.setAttribute("class", "light-option");
         themeOptionLight.textContent = "Light Theme";
         themeSelect.appendChild(themeOptionLight);
@@ -65,6 +67,16 @@ export class SettingsModal {
         themeOptionDark.setAttribute("class", "dark-option");
         themeOptionDark.textContent = "Dark Theme";
         themeSelect.appendChild(themeOptionDark);
+
+        //if light theme is true
+        if(Settings.parseThemeSettings().lightTheme) {
+            //set option selection to light theme
+            themeOptionLight.setAttribute("selected", "");
+        //if dark theme is true
+        } else if(Settings.parseThemeSettings().darkTheme) {
+            //set option selection to dark theme
+            themeOptionDark.setAttribute("selected", "");
+        }
     }
 
     /**
@@ -89,6 +101,7 @@ export class SettingsModal {
         //settings modal exit
         this.settingsModalExit();
         
+        //editor theme options
         this.editorThemeOptions();
     }
 }
