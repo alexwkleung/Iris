@@ -1,10 +1,12 @@
 import { SettingsModal } from "../settings/settings-modal"
+import { Settings, EditorThemes } from "../settings/settings"
+import { fsMod } from "../utils/alias"
 
 //https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
 //https://vitejs.dev/guide/assets.html#importing-asset-as-url
 //?inline: to prevent auto injection
 //?url: get url of named import
-import editorDark from '../../assets/editor-dark.css?inline?url'
+//import editorDark from '../../assets/editor-dark.css?inline?url'
 
 export class SettingsModalListeners extends SettingsModal {
     /**
@@ -54,18 +56,31 @@ export class SettingsModalListeners extends SettingsModal {
                         (document.querySelector('.dark-option') as HTMLElement).removeAttribute("selected");
     
                         (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
+
+                        const updatedSettings: string = '{ "lightTheme": true, "darkTheme": false }';
+
+                        if(!Settings.themeSettings().lightTheme) {
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                        } else {
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                        }
+
                     //if selection is dark theme
                     } else if(currentSelection.value === 'editor-dark') {
                         (document.querySelector('.light-option') as HTMLElement).removeAttribute("selected");
     
                         (document.querySelector('.dark-option') as HTMLElement).setAttribute("selected", "");
 
-                        //link node
-                        const linkNode: HTMLLinkElement = document.createElement('link');
-                        linkNode.setAttribute("rel", "stylesheet");
-                        linkNode.setAttribute("href", editorDark);
-                        linkNode.setAttribute("class", "editor-dark-theme");
-                        document.body.appendChild(linkNode);
+                        //dark theme
+                        EditorThemes.darkTheme();
+
+                        const updatedSettings: string = '{ "lightTheme": false, "darkTheme": true }';
+
+                        if(!Settings.themeSettings().darkTheme) {
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                        } else {
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                        }
                     }
                 })
             }

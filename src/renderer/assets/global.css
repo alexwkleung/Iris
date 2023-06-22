@@ -669,7 +669,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 650px;
-    height: 600px;
+    height: 450px;
     background-color: #2a2828;
     z-index: 1;
     /*border: 1px solid grey;*/
@@ -699,32 +699,45 @@ body {
 #settings-modal-options-container {
     /*border: 1px solid white;*/
     width: 600px;
-    height: 500px;   
+    height: 380px;   
     position: fixed;
-    top: 50%;
+    top: 54%;
     left: 50%;
     transform: translate(-50%, -50%);
     overflow-y: scroll;
     overflow-x: hidden;
+    user-select: none;
 }
 
 /**
 * editor theme selection
 */
+#theme-options-container {
+    /*border: 1px solid white;*/
+    width: 600px;
+    height: 150px;
+}
+#theme-options-container-title {
+    color: #ffffff;
+    font-family: 'Inter-Bold';
+    font-size: 20px;
+    margin-left: 0px;
+    margin-top: 10px;
+}
 .editor-theme-label {
     color: white;
     font-family: 'Inter-Regular';
-    margin-left: 180px;
-    font-size: 18px;
+    margin-left: 0px;
+    font-size: 17px;
 }
 #theme-select {
-    margin-left: 10px;
+    margin-left: 368px;
     font-family: 'Inter-Regular';
-    margin-top: 60px;
+    margin-top: 20px;
     background-color: rgb(56, 56, 56);
     color: white;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 17px;
 }
 #theme-select:focus {
     outline: none;

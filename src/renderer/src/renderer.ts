@@ -12,6 +12,8 @@ export function initRenderer(): void {
 
         //editor
         EditorNs.editor();
+
+        //load theme here?
   });
 }
 initRenderer();

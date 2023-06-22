@@ -1,5 +1,5 @@
 import { App } from "../../app"
-
+import { horizontalLineSettings } from "../misc-ui/horizontal-line"
 export class SettingsModal {
     static settingsModalContainerNode: HTMLDivElement;
     static settingsModalInnerWindow: HTMLDivElement;
@@ -20,19 +20,36 @@ export class SettingsModal {
 
     public editorThemeOptions(): void {
         //load json key values and create options respectively
+        
+        //theme options container
+        const themeOptionsContainer: HTMLDivElement = document.createElement('div');
+        themeOptionsContainer.setAttribute("id", "theme-options-container");
+        SettingsModal.settingsModalOptionsContainer.appendChild(themeOptionsContainer);
+
+        //theme options container title 
+        const themeOptionsContainerTitle: HTMLDivElement = document.createElement('div');
+        themeOptionsContainerTitle.setAttribute("id", "theme-options-container-title");
+        themeOptionsContainer.appendChild(themeOptionsContainerTitle);
+
+        //theme options container title text node
+        const themeOptionsContainerTitleTextNode: Text = document.createTextNode("Themes");
+        themeOptionsContainerTitle.appendChild(themeOptionsContainerTitleTextNode);
+    
+        //horizontal line
+        themeOptionsContainer.appendChild(horizontalLineSettings);
 
         //theme label
         const themeLabel: HTMLLabelElement = document.createElement('label');
         themeLabel.setAttribute("for", "editor-themes");
         themeLabel.setAttribute("class", "editor-theme-label");
         themeLabel.textContent = "Editor Theme"
-        SettingsModal.settingsModalOptionsContainer.appendChild(themeLabel);
+        themeOptionsContainer.appendChild(themeLabel);
 
         //theme select
         const themeSelect: HTMLSelectElement = document.createElement('select');
         themeSelect.setAttribute("name", "editor-themes");
         themeSelect.setAttribute("id", "theme-select");
-        SettingsModal.settingsModalOptionsContainer.appendChild(themeSelect);
+        themeOptionsContainer.appendChild(themeSelect);
 
         //theme option light
         const themeOptionLight: HTMLOptionElement = document.createElement('option');

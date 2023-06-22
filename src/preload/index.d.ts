@@ -22,7 +22,8 @@ declare global {
             _walkNoExt(dir: string): string[],
             _readFileRoot(type: string, file: string): string,
             _readFileFolder(folder: string, file: string, type: string): string
-            _writeToFile(path: string, content: string, type: string): void;
+            _writeToFile(type: string, path: string, content: string): void;
+            _writeToFileAlt(path: string, content: string): void
             _createFile(path: string, content: string): void;
             _createDir(path: string): void;
             _isPathDir(path: string): boolean;
