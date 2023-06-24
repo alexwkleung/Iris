@@ -83,7 +83,7 @@ export namespace EditorNs {
         //create word count container
         WordCountContainerNode.createWordCountContainer();
 
-        //create kebab dropdown menu container
-        EditorKebabDropdownMenu.createKebabDropdownMenuContainer();
+        //create editor kebab dropdown menu container
+        EditorKebabDropdownMenu.createEditorKebabDropdownMenuContainer();
     }
 }

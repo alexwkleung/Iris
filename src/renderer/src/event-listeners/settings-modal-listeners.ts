@@ -65,7 +65,7 @@ export class SettingsModalListeners extends SettingsModal {
     
                         (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
 
-                        themeJSONRef.updatedSettings = '{"lightTheme":true,"darkTheme":false,"basicMode":true,"advancedMode":false}';
+                        themeJSONRef.updatedSettings = '{"lightTheme":true,"darkTheme":false}';
 
                         if(!Settings.parseThemeSettings().lightTheme) {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
@@ -85,7 +85,7 @@ export class SettingsModalListeners extends SettingsModal {
                         //apply dark theme
                         EditorThemes.darkTheme();
 
-                        themeJSONRef.updatedSettings = '{"lightTheme":false,"darkTheme":true,"basicMode":true,"advancedMode":false}';
+                        themeJSONRef.updatedSettings = '{"lightTheme":false,"darkTheme":true}';
 
                         if(!Settings.parseThemeSettings().darkTheme) {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);

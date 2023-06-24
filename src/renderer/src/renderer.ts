@@ -14,6 +14,9 @@ export function initRenderer(): void {
         //editor
         EditorNs.editor();
 
+        //log
+        console.log(Settings.parseThemeSettings());
+
         //load themes
         if(Settings.parseThemeSettings().lightTheme) {
           //if dark theme exists in dom
@@ -27,6 +30,10 @@ export function initRenderer(): void {
         } else if(Settings.parseThemeSettings().darkTheme) {
           EditorThemes.darkTheme();
         }
+        
+        
+        //log
+        console.log(Settings.parseDotSettings());
 
         //load mode
   });

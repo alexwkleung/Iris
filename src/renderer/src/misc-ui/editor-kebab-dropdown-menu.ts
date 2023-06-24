@@ -8,7 +8,7 @@ export class EditorKebabDropdownMenu {
      * 
      * @static
      */
-    static createKebabDropdownMenuContainer(): void {
+    static createEditorKebabDropdownMenuContainer(): void {
         //kebab dropdown menu container node
         EditorKebabDropdownMenu.kebabDropdownMenuContainerNode = document.createElement('div');
         EditorKebabDropdownMenu.kebabDropdownMenuContainerNode.setAttribute("id", "kebab-dropdown-menu-container");

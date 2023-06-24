@@ -99,6 +99,32 @@ export class DirectoryTreeUIElements {
 
         //settingsNode.appendChild(rangeContextFragement);
     }
+
+    public fileDirectoryKebab(): void {
+        //kebab dropdown menu container node
+        const kebabDropdownMenuContainerNode: HTMLDivElement = document.createElement('div');
+        kebabDropdownMenuContainerNode.setAttribute("id", "file-directory-kebab-dropdown-menu-container");
+        (document.getElementById('file-directory-tree-container') as HTMLElement).appendChild(kebabDropdownMenuContainerNode);
+        
+        for(let i = 0; i < 3; i++) {
+            const kebabDropdownMenuShapeContainerNode: HTMLDivElement = document.createElement('div');
+            kebabDropdownMenuShapeContainerNode.setAttribute("id", "file-directory-kebab-dropdown-shape-container");
+            kebabDropdownMenuContainerNode.appendChild(kebabDropdownMenuShapeContainerNode);
+        
+            //kebab dropdown menu shape node
+            const kebabDropdownMenuShapeNode: HTMLDivElement = document.createElement('div');
+            kebabDropdownMenuShapeNode.setAttribute("class", "file-directory-kebab-dropdown-shape-node num-" + i.toString());
+            kebabDropdownMenuShapeContainerNode.appendChild(kebabDropdownMenuShapeNode);    
+        }
+        
+        //kebab after click menu container
+        const kebabAfterClickMenuContainer: HTMLDivElement = document.createElement('div');
+        kebabAfterClickMenuContainer.setAttribute("id", "file-directory-kebab-after-click-menu-container");
+        (document.getElementById('file-directory-tree-container') as HTMLElement).appendChild(kebabAfterClickMenuContainer);
+        
+        //hide kebab after click menu container
+        kebabAfterClickMenuContainer.style.display = "none";
+    }
 }
 
 export class DirectoryTree extends DirectoryTreeUIElements {

@@ -13,6 +13,14 @@ interface IThemeInterface<T extends boolean> {
     darkTheme: T
 }
 
+/**
+ * Mode interface
+ */
+interface IModeInterface<T extends boolean> {
+    basicMode: T,
+    advancedMode: T
+}
+
 export class Settings {    
     /**
      * Parse theme settings
@@ -29,6 +37,24 @@ export class Settings {
         console.log(typeof parseIrisSettings);
 
         return parseIrisSettings;
+    }
+
+    /**
+     * Parse dot settings 
+     * 
+     * @returns JSON object of Iris dot settings
+     */
+    static parseDotSettings(): IModeInterface<boolean> {
+        const modeSettings: string = fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json");
+        const parseDotSettings: IModeInterface<boolean> = JSON.parse(modeSettings);
+
+        //log
+        console.log(parseDotSettings);
+
+        //log
+        console.log(typeof parseDotSettings);
+
+        return parseDotSettings;
     }
 }
 

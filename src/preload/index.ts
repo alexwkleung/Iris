@@ -1,7 +1,7 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { fsMod } from './mod/fs-mod'
-import { createDefaultSettings } from '../renderer/src/settings/create-default-settings'
+import { createDefaultSettings, createDefaultDotSettings } from '../renderer/src/settings/create-default-settings'
 
 function appStartDirectoryCheck(): void {
   if(
@@ -19,7 +19,11 @@ function appStartDirectoryCheck(): void {
 
       //create advanced directory
 
+      //create default settings
       createDefaultSettings();
+
+      //create default dot settings 
+      createDefaultDotSettings();
     }
 }
 appStartDirectoryCheck();

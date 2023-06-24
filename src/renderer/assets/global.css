@@ -258,7 +258,7 @@ body {
     border-color: grey;
     border-radius: 5px;
     width: 120px;
-    margin-left: 15px;
+    margin-left: 10px;
     background-color: #232222;
     font-size: 18px;
     text-align: center;
@@ -277,7 +277,7 @@ body {
     border-color: grey;
     border-radius: 5px;
     width: 76px;
-    margin-left: 200px;
+    margin-left: 170px;
     background-color: #232222;
     font-size: 18px;
     text-align: center;
@@ -475,7 +475,7 @@ body {
 }
 
 /*
-* kebab downdrop menu
+* kebab dropdown menu
 */
 #kebab-dropdown-menu-container {
     position: fixed;
@@ -773,6 +773,85 @@ body {
 }
 #rename-file-input-node:focus {
     outline: none;
+}
+
+/*
+* file directory kebab dropdown 
+*/
+#file-directory-kebab-dropdown-menu-container {
+    position: fixed;
+    margin-top: 50px;
+    margin-left: 5px;
+    right: 10px;
+    width: 20px;
+    height: 34px;
+    /*border: 1px solid black;*/
+    z-index: 1;
+    user-select: none;
+}
+#file-directory-kebab-dropdown-menu-container {
+    cursor: pointer;
+}
+.file-directory-kebab-dropdown-shape-node.num-0 {
+    position: fixed;
+    border: 1px solid grey;
+    border-radius: 5px;
+    z-index: 1;
+    width: 5px;
+    height: 5px;
+    margin-top: 10px;
+    margin-left: 5px;
+    right: 18px;
+    background-color: var(--kebab-dropdown-menu-shape-bg);
+}
+#file-directory-kebab-dropdown-menu-container:not(#file-directory-kebab-after-click-menu-container):hover .file-directory-kebab-dropdown-shape-node.num-0 {
+    background-color: rgb(88, 88, 88);
+}
+.file-directory-kebab-dropdown-shape-node.num-1 {
+    position: fixed;
+    border: 1px solid grey;
+    border-radius: 5px;
+    z-index: 1;
+    margin-top: 17px;
+    width: 5px;
+    height: 5px;
+    margin-left: 5px;
+    right: 18px;
+    background-color: var(--kebab-dropdown-menu-shape-bg);
+}
+#file-directory-kebab-dropdown-menu-container:not(#file-directory-kebab-after-click-menu-container):hover .file-directory-kebab-dropdown-shape-node.num-1 {
+    background-color: rgb(88, 88, 88);
+    cursor: pointer;
+}
+.file-directory-kebab-dropdown-shape-node.num-2 {
+    position: fixed;
+    border: 1px solid grey;
+    border-radius: 5px;
+    z-index: 1;
+    margin-top: 24px;
+    width: 5px;
+    height: 5px;
+    margin-left: 5px;
+    right: 18px;
+    background-color: var(--kebab-dropdown-menu-shape-bg);
+}
+#file-directory-kebab-dropdown-menu-container:not(#file-directory-kebab-after-click-menu-container):hover .file-directory-kebab-dropdown-shape-node.num-2 {
+    background-color: rgb(88, 88, 88);
+    cursor: pointer;
+}
+#file-directory-kebab-after-click-menu-container {
+    position: fixed;
+    /*border: 1px solid grey;*/
+    border-radius: 15px;
+    background-color: #2a2828;
+    width: 150px;
+    height: 200px;
+    right: 25px;
+    top: 85px;
+    cursor: default;
+}
+#file-directory-kebab-after-click-menu-container.is-active {
+    z-index: 1;
 }
 
 /**
