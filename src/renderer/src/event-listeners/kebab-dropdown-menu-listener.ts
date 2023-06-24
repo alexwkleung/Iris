@@ -4,15 +4,16 @@ import { fsMod } from "../utils/alias"
 import { isModeBasic } from "../utils/is"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { setWindowTitle } from "../window/window-title"
+import { RefsNs } from "./directory-tree-listeners"
 
 /**
  * @extends EditorKebabDropdownModals
  */
 export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals {
     /**
-     * Kebab delete file exit modal listener
+     * Kebab exit modal listener
      */
-    public kebabDeleteFileExitModalListener(): void {
+    public kebabExitModalListener(): void {
         EditorKebabDropdownModals.kebabModalExitButtonNode.addEventListener('click', () => {
             EditorKebabDropdownModals.kebabModalContainerNode.remove();
         })
@@ -23,11 +24,11 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
      * 
      * @param type Mode type
      */
-    public kebabDeleteFileContinueModalListener(type: string): void {
+    public kebabDeleteFileContinueModalListener(): void {
         EditorKebabDropdownModals.kebabModalContinueButtonNode.addEventListener('click', () => {
             document.querySelectorAll('.child-file-name.is-active-child').forEach(async (el) => {
                 //mode check
-                if(type === "Basic" && isModeBasic()) {
+                if(isModeBasic()) {
                     //log
                     console.log(
                         fsMod.fs._baseDir("home")
@@ -44,7 +45,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                         + "/"
                         + el.textContent + ".md"
                     );
-
+                }
                     //remove kebab modal container node
                     EditorKebabDropdownModals.kebabModalContainerNode.remove();
 
@@ -75,7 +76,6 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
                     //remove top bar directory info node
                     (document.getElementById('top-bar-directory-info') as HTMLElement).remove();
-                }
             })
         })
     }
@@ -85,6 +85,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
      */
     public kebabDropdownDeleteFileListener(): void {
         (document.getElementById('kebab-delete-file-button-node') as HTMLElement).addEventListener('click', () => {
+            //log
             console.log("clicked kebab delete");
 
             document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
@@ -96,13 +97,90 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
             })
 
             //create kebab modal container
-            this.kebabModalContainer();
+            this.kebabModalDeleteFileContainer();
 
             //invoke kebab delete file exit modal listener
-            this.kebabDeleteFileExitModalListener();
+            this.kebabExitModalListener();
 
             //invoke kebab delete file continue modal listener
-            this.kebabDeleteFileContinueModalListener("Basic");
+            this.kebabDeleteFileContinueModalListener();
+        })
+    }
+
+    public kebabRenameFileContinueModalListener(): void {
+        let renameFile: string = "";
+
+        (document.getElementById('rename-file-input-node') as HTMLElement).addEventListener('keyup', (e) => {
+            renameFile = ((e.target as HTMLInputElement).value).trim();
+
+            (document.getElementById('rename-file-input-node') as HTMLElement).textContent = renameFile;
+
+            //log
+            console.log(renameFile);
+        });
+
+        (document.getElementById('kebab-modal-continue-button') as HTMLElement).addEventListener('click', () => {
+            console.log(((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0]);
+            console.log(fsMod.fs._baseDir("home") + "/Iris/Basic" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent);
+            console.log(fsMod.fs._baseDir("home") + "/Iris/Basic" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile);
+            if(renameFile === " " || renameFile === "" || renameFile === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent || (document.getElementById('rename-file-input-node') as HTMLElement).textContent === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent) {
+                //log
+                console.log("name is equal or empty");
+                
+                return;
+            } else {
+                //log
+                console.log("name is not equal or empty");
+
+                if(isModeBasic()) {
+                    //rename file
+                    fsMod.fs._renameFile(
+                        fsMod.fs._baseDir("home") + "/Iris/Basic/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent + ".md",
+                        fsMod.fs._baseDir("home") + "/Iris/Basic/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile + ".md"
+                    )
+    
+                    //remove kebab modal container node
+                    EditorKebabDropdownModals.kebabModalContainerNode.remove();
+    
+                    //create top bar info
+                    const topBarInfo: string = ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + " - " + renameFile;
+                    
+                    //update top bar directory info 
+                    (document.getElementById('top-bar-directory-info') as HTMLElement).textContent = topBarInfo;
+                    
+                    //update child file name in directory tree
+                    (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent = renameFile;
+    
+                    //update child file name reference
+                    RefsNs.currentParentChildData.map((props) => {
+                        props.childFileName = renameFile
+                    });
+                }
+            }
+        })
+    }
+
+    /**
+     * Kebab dropdown rename file listener
+     */
+    public kebabDropdownRenameFileListener(): void {
+        (document.getElementById('kebab-rename-file-button') as HTMLElement).addEventListener('click', () => {
+            //log 
+            console.log("clicked kebab rename");
+
+            document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
+                //null check
+                if(el !== null) {
+                    //remove any remaining kebab modal container nodes
+                    el.remove();
+                }
+            })
+            
+            this.kebabDropdownRenameFileContainer();
+
+            this.kebabExitModalListener();
+
+            this.kebabRenameFileContinueModalListener();
         })
     }
 
@@ -125,6 +203,8 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
             //invoke kebab dropdown delete file listener
             this.kebabDropdownDeleteFileListener();
+
+            this.kebabDropdownRenameFileListener();
         });
 
         //hide kebab after click menu container when editor is clicked 
@@ -133,8 +213,8 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
             (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
         });
 
-        //hide kebab after click menu container when file directory is clicked
-        (document.getElementById('file-directory-tree-container') as HTMLElement).addEventListener('click', () => {
+        //hide kebab after click menu container when file directory inner is clicked
+        (document.getElementById('file-directory-tree-container-inner') as HTMLElement).addEventListener('click', () => {
             (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
             (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
         });

@@ -42,9 +42,16 @@ export class EditorKebabDropdownMenu {
         kebabAfterClickMenuContainer.appendChild(kebabDeleteFileButtonNode);
 
         //kebab delete file button text node
-        const kebabDeleteFileButtonTextNode: Text = document.createTextNode("Delete File");
+        const kebabDeleteFileButtonTextNode: Text = document.createTextNode("Delete");
         kebabDeleteFileButtonNode.appendChild(kebabDeleteFileButtonTextNode);
 
-        //add more button nodes...
+        //kebab rename file button node
+        const kebabRenameFileButtonNode: HTMLDivElement = document.createElement('div');
+        kebabRenameFileButtonNode.setAttribute("id", "kebab-rename-file-button");
+        kebabAfterClickMenuContainer.appendChild(kebabRenameFileButtonNode);
+
+        //kebab rename file button text node
+        const kebabRenameFileButtonTextNode: Text = document.createTextNode("Rename");
+        kebabRenameFileButtonNode.appendChild(kebabRenameFileButtonTextNode);
     }
 }

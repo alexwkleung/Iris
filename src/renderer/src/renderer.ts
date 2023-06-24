@@ -27,6 +27,8 @@ export function initRenderer(): void {
         } else if(Settings.parseThemeSettings().darkTheme) {
           EditorThemes.darkTheme();
         }
+
+        //load mode
   });
 }
 initRenderer();

@@ -1,6 +1,13 @@
 import { App } from "../../app"
 import { fsMod } from "./alias"
 
+/**
+ * Is mode basic 
+ * 
+ * Check if the mode is basic 
+ * 
+ * @returns `true` or `false`
+ */
 export function isModeBasic(): boolean {
     let isActive: boolean = false;
 
@@ -13,6 +20,13 @@ export function isModeBasic(): boolean {
     return isActive;
 }
 
+/**
+ * Is mode advanced 
+ * 
+ * check if the mode is advanced 
+ * 
+ * @returns `true` or `false`
+ */
 export function isModeAdvanced(): boolean {
     let isActive: boolean = false;
 

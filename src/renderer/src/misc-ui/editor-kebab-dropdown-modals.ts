@@ -11,9 +11,10 @@ export class EditorKebabDropdownModals {
      * 
      * @protected
      */
-    protected kebabModalContinueButton(): void {
+    protected kebabModalContinueButton(cl: string): void {
         EditorKebabDropdownModals.kebabModalContinueButtonNode = document.createElement('div');
         EditorKebabDropdownModals.kebabModalContinueButtonNode.setAttribute("id", "kebab-modal-continue-button");
+        EditorKebabDropdownModals.kebabModalContinueButtonNode.setAttribute("class", cl);
         EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(EditorKebabDropdownModals.kebabModalContinueButtonNode);
 
         const kebabModalContinueButtonTextNode: Text = document.createTextNode("Continue");
@@ -41,7 +42,7 @@ export class EditorKebabDropdownModals {
      * 
      * @protected
      */
-    protected kebabModalContainer(): void {
+    protected kebabModalContainer(cl: string): void {
         console.log("kebab modal container");
 
         //kebab modal container node
@@ -54,30 +55,66 @@ export class EditorKebabDropdownModals {
         EditorKebabDropdownModals.kebabModalInnerWindow.setAttribute("id", "kebab-modal-inner-window");
         EditorKebabDropdownModals.kebabModalContainerNode.appendChild(EditorKebabDropdownModals.kebabModalInnerWindow);
 
+        this.kebabModalContinueButton(cl);
+        this.kebabModalExitButton();
+    }
+
+    /**
+     * Kebab modal delete file container
+     * 
+     * @protected
+     */
+    protected kebabModalDeleteFileContainer(): void {
+        this.kebabModalContainer("delete-file");
+
         //kebab modal text node container
         const kebabModalTextNodeContainer: HTMLDivElement = document.createElement('div');
         kebabModalTextNodeContainer.setAttribute("id", "kebab-modal-text-node-container");
         EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(kebabModalTextNodeContainer);
-
+        
         document.querySelectorAll('.child-file-name.is-active-child').forEach((el) => {
             const kebabModalTextNode1: Text = document.createTextNode(
                 "Are you sure you want to delete "
                 + el.textContent + ".md?"
             );            
-            
+                    
             kebabModalTextNodeContainer.appendChild(kebabModalTextNode1);
-
+        
             for(let i = 0; i < 2; i++) {
                 const kebabModalTextNodeBreak: HTMLElement = document.createElement('br');
                 kebabModalTextNodeContainer.appendChild(kebabModalTextNodeBreak);
             }
-
+        
             const kebabModalTextNode2: Text = document.createTextNode("You can retrieve it from your system trash to restore the file.");
-
+        
             kebabModalTextNodeContainer.appendChild(kebabModalTextNode2);
         })
+    }
+
+    /**
+     * Kebab dropdown rename file container
+     * 
+     * @protected
+     */
+    protected kebabDropdownRenameFileContainer(): void {
+        this.kebabModalContainer("rename-file");
+
+        //rename file text node container
+        const renameFileTextNodeContainer: HTMLDivElement = document.createElement('div');
+        renameFileTextNodeContainer.setAttribute("id", "rename-file-text-node");
+        EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(renameFileTextNodeContainer);
+
+        //rename file text node
+        const renameFileTextNode: Text = document.createTextNode("Name:");
+        renameFileTextNodeContainer.appendChild(renameFileTextNode);
+
+        const renameFileInputNode: HTMLInputElement = document.createElement('input');
+        renameFileInputNode.setAttribute("id", "rename-file-input-node");
+        renameFileInputNode.setAttribute("spellcheck", "false");
+        renameFileInputNode.value = (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent as string;
+        renameFileInputNode.textContent = (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent;
+        EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(renameFileInputNode);
         
-        this.kebabModalContinueButton();
-        this.kebabModalExitButton();
+        renameFileInputNode.focus();
     }
 }

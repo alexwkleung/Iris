@@ -2,11 +2,14 @@ import { SettingsModal } from "../settings/settings-modal"
 import { Settings, EditorThemes } from "../settings/settings"
 import { fsMod } from "../utils/alias"
 
-//https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
-//https://vitejs.dev/guide/assets.html#importing-asset-as-url
-//?inline: to prevent auto injection
-//?url: get url of named import
-//import editorDark from '../../assets/editor-dark.css?inline?url'
+interface IThemeJSONRef<T extends string> {
+    updatedSettings: T;
+}
+
+export const themeJSONRef: IThemeJSONRef<string> = {
+    //initially parse theme settings so it can be referenced later
+    updatedSettings: JSON.stringify(Settings.parseThemeSettings())
+}
 
 /**
  * @extends SettingsModal
@@ -62,12 +65,12 @@ export class SettingsModalListeners extends SettingsModal {
     
                         (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
 
-                        const updatedSettings: string = '{"lightTheme":true,"darkTheme":false}';
+                        themeJSONRef.updatedSettings = '{"lightTheme":true,"darkTheme":false,"basicMode":true,"advancedMode":false}';
 
                         if(!Settings.parseThemeSettings().lightTheme) {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
                         } else {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
                         }
 
                     //if selection is dark theme
@@ -82,12 +85,12 @@ export class SettingsModalListeners extends SettingsModal {
                         //apply dark theme
                         EditorThemes.darkTheme();
 
-                        const updatedSettings: string = '{"lightTheme":false,"darkTheme":true}';
+                        themeJSONRef.updatedSettings = '{"lightTheme":false,"darkTheme":true,"basicMode":true,"advancedMode":false}';
 
                         if(!Settings.parseThemeSettings().darkTheme) {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
                         } else {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", updatedSettings);
+                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
                         }
                     }
                 })

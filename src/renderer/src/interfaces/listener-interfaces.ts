@@ -3,9 +3,9 @@
  */
 export interface IDirectoryTreeUIModalListeners {
     createFileModalExitListener(): void;
-    createFileModalContinueListener(el: HTMLElement, type: string): void;
+    createFileModalContinueListener(el: HTMLElement): void;
     createFileListener(): void;
-    createFolderContinueListener(el: HTMLElement, type: string): void
+    createFolderContinueListener(el: HTMLElement): void
     createFolderListener(): void;
 }
 
@@ -13,7 +13,7 @@ export interface IDirectoryTreeUIModalListeners {
  * Directory tree listeners interface
  */
 export interface IDirectoryTreeListeners {
-    parentRootListener(type: string): void;
+    parentRootListener(): void;
     childNodeListener(): void;
 }
 
@@ -21,6 +21,6 @@ export interface IDirectoryTreeListeners {
  * Editor listeners interface
  */
 export interface IEditorListeners {
-    autoSaveListener(type: string): void;
+    autoSaveListener(): void;
     insertTabListener(numberOfSpaces: number): void;
 }

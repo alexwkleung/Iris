@@ -5,6 +5,7 @@ import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 import { defaultMarkdownSerializer } from "prosemirror-markdown"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { debounce } from "../utils/debounce"
+import { isModeBasic } from "../utils/is"
 
 /**
  * @implements `IEditorListeners`
@@ -16,7 +17,7 @@ export class EditorListeners implements IEditorListeners {
      * @param type The mode type
      * @public
      */
-    public autoSaveListener(type: string): void {
+    public autoSaveListener(): void {
         const editors: HTMLDivElement = document.querySelector('.ProseMirror') as HTMLDivElement;
 
         //when a keyboard press is released
@@ -25,8 +26,8 @@ export class EditorListeners implements IEditorListeners {
                 RefsNs.currentParentChildData.map((props) => {
                     //null check
                     if(props !== null) {
-                        //if type is basic
-                        if(type === "Basic") {
+                        //mode check
+                        if(isModeBasic()) {
                             //write to file
                             const t0: number = performance.now(); //start perf timer
     

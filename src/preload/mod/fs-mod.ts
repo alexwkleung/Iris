@@ -16,7 +16,8 @@ import {
     createDir,
     isPathDir,
     isPathFile,
-    deletePath
+    deletePath,
+    renameFile
 } from 'fs-mod'
 
 //fsMod API
@@ -83,5 +84,8 @@ export const fsMod = {
     },
     _deletePath(path: string): void {
         return deletePath(path);
+    },
+    _renameFile(oldPath: string, newPath: string): void {
+        return renameFile(oldPath, newPath);
     }
 }

@@ -102,15 +102,18 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             if(DirectoryTreeUIModals.createModalContainer !== null) {
                 DirectoryTreeUIModals.createModalContainer.remove();
             }
-             
-            //invoke parent root listener
-            this.directoryTreeListeners.parentRootListener("Basic");
 
-            //invoke child node listener
-            this.directoryTreeListeners.childNodeListener();
-
-            //invoke parent root listener again so the directory tree will be in sync
-            this.directoryTreeListeners.parentRootListener("Basic");
+            //mode check
+            if(isModeBasic()) {
+                //invoke parent root listener
+                this.directoryTreeListeners.parentRootListener();
+    
+                //invoke child node listener
+                this.directoryTreeListeners.childNodeListener();
+    
+                //invoke parent root listener again so the directory tree will be in sync
+                this.directoryTreeListeners.parentRootListener();
+            }
         })
     }
 
@@ -119,19 +122,21 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * 
      * @param el Element to attach `keyup` event listener to
      */
-    public createFileModalContinueListener(el: HTMLElement, type: string): void {
+    public createFileModalContinueListener(el: HTMLElement): void {
         let fileName: string = "";
 
         el.addEventListener('keyup', (e) => {
             //assign current value of input element on keyup + extension
             fileName = ((e.target as HTMLInputElement).value).trim() + ".md";
+
+            //log
+            console.log(fileName);
         })
 
-        //console.log(fileName);
 
         DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', async () => {
-            //basic mode check
-            if(type === "Basic" && isModeBasic() && fileName !== " ") {
+            //mode check
+            if(isModeBasic() && fileName !== " ") {
                 //log
                 console.log((document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent)
                 
@@ -190,13 +195,13 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 })
             
                 //execute parent root listener so it understands the new file
-                this.directoryTreeListeners.parentRootListener("Basic");
+                this.directoryTreeListeners.parentRootListener();
 
                 //execute child node listener to allow new file to be clicked
                 this.directoryTreeListeners.childNodeListener();
 
                 //execute parent root listener again so everything will be in sync 
-                this.directoryTreeListeners.parentRootListener("Basic");
+                this.directoryTreeListeners.parentRootListener();
 
                 //destroy current editor view
                 PMEditorView.editorView.destroy();
@@ -239,7 +244,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
                 //invoke auto save listener (Basic)
-                this.editorListeners.autoSaveListener("Basic");
+                this.editorListeners.autoSaveListener();
 
                 //invoke insert tab listener
                 this.editorListeners.insertTabListener(2);
@@ -329,10 +334,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             this.createFileModalNewFileNameNode();
 
                             //invoke createFileModalContinueListener
-                            this.createFileModalContinueListener(
-                                (document.querySelector('#create-file-modal-new-file-name-input-node') as HTMLElement),
-                                "Basic"
-                            );
+                            this.createFileModalContinueListener((document.querySelector('#create-file-modal-new-file-name-input-node') as HTMLElement));
 
                             const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
 
@@ -354,9 +356,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * Create folder continue listener
      * 
      * @param el Element to attach the `keyup` event listener to
-     * @param type Mode type
      */
-    public createFolderContinueListener(el: HTMLElement, type: string): void {
+    public createFolderContinueListener(el: HTMLElement): void {
         let folderName: string = "";
 
         el.addEventListener('keyup', (e) => {
@@ -368,63 +369,68 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         let parentFolder: HTMLDivElement = {} as HTMLDivElement;
         
-        if(type === "Basic" && isModeBasic() && folderName !== " ") {
-            DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', () => {
-                //log
-                console.log(folderName);
-
+        DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', () => {
+            //log
+            console.log(folderName);
+            
+            //mode check
+            if(isModeBasic() && folderName !== " ") {
                 //create directory
                 fsMod.fs._createDir(
                     fsMod.fs._baseDir("home")
                     + "/Iris/Basic/"
                     + folderName
                 );
+            }
 
-                parentFolder = document.createElement('div');
-                parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
-                (document.getElementById('file-directory-tree-container-inner') as HTMLElement).appendChild(parentFolder);
+            parentFolder = document.createElement('div');
+            parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
+            (document.getElementById('file-directory-tree-container-inner') as HTMLElement).appendChild(parentFolder);
                     
-                const parentFolderName: HTMLDivElement = document.createElement('div');
-                parentFolderName.setAttribute("class", "parent-folder-name");
-                parentFolder.appendChild(parentFolderName);
+            const parentFolderName: HTMLDivElement = document.createElement('div');
+            parentFolderName.setAttribute("class", "parent-folder-name");
+            parentFolder.appendChild(parentFolderName);
                     
-                const parentFolderTextNode: Text = document.createTextNode(folderName);
-                parentFolderName.appendChild(parentFolderTextNode);
+            const parentFolderTextNode: Text = document.createTextNode(folderName);
+            parentFolderName.appendChild(parentFolderTextNode);
                     
-                const parentFolderCaret: HTMLDivElement = document.createElement('div');
-                parentFolderCaret.setAttribute("class", "parent-folder-caret");
+            const parentFolderCaret: HTMLDivElement = document.createElement('div');
+            parentFolderCaret.setAttribute("class", "parent-folder-caret");
                 
-                const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
-                parentFolderCaret.appendChild(parentFolderCaretTextNode);
-                parentFolder.appendChild(parentFolderCaret);
+            const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
+            parentFolderCaret.appendChild(parentFolderCaretTextNode);
+            parentFolder.appendChild(parentFolderCaret);
 
-                const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+            const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
 
-                for(let i = 0; i < parentRoot.length; i++) {
-                    //invoke folder file count
-                    this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
-                }
+            for(let i = 0; i < parentRoot.length; i++) {
+                //invoke folder file count
+                this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
+            }
+
+            //mode check again
+            if(isModeBasic()) {
                 //invoke parent root listener (created directory only)
-                this.directoryTreeListeners.parentRootListener("Basic");
-
+                this.directoryTreeListeners.parentRootListener();
+    
                 //invoke create file node
                 this.createFileNode(parentFolder);
-
+    
                 //invoke create file listener
                 this.createFileListener();
+            }
 
-                //null check
-                if(DirectoryTreeUIModals.createModalContainer !== null) {
-                    DirectoryTreeUIModals.createModalContainer.remove();
-                }
-            })
-
+            //null check
+            if(DirectoryTreeUIModals.createModalContainer !== null) {
+                DirectoryTreeUIModals.createModalContainer.remove();
+            }
+                
             //invoke create file listener again
             this.createFileListener();
-
+                
             //invoke parent root listener again so entire directory tree will function normally and be in sync
-            this.directoryTreeListeners.parentRootListener("Basic");
-        }
+            this.directoryTreeListeners.parentRootListener();
+        })
     }
 
     /**
@@ -439,11 +445,14 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 (document.getElementById('create-modal-container') as HTMLElement).remove();
             }
 
-            //invoke parent root listener 
-            this.directoryTreeListeners.parentRootListener("Basic");
-
-            //invoke create file listener
-            this.createFileListener();
+            //mode check
+            if(isModeBasic()) {
+                //invoke parent root listener 
+                this.directoryTreeListeners.parentRootListener();
+    
+                //invoke create file listener
+                this.createFileListener();
+            }
         })
     }
 
@@ -463,11 +472,11 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //invoke create modal exit listener
             this.createFolderModalExitListener();
 
-            //invoke create folder continue listener
-            this.createFolderContinueListener(
-                (document.getElementById('create-folder-input-node') as HTMLElement),
-                "Basic"
-            );
+            //mode check
+            if(isModeBasic()) {
+                //invoke create folder continue listener
+                this.createFolderContinueListener((document.getElementById('create-folder-input-node') as HTMLElement));
+            }
         })
     }
 }

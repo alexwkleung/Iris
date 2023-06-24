@@ -8,7 +8,7 @@ export namespace directoryNs {
         const dirTree = new DirectoryTree();
 
         //needs to be in sync with mode switch when implemented?
-        dirTree.createDirTreeParentNodes("Basic");
+        dirTree.createDirTreeParentNodes();
 
         dirTree.createFolderNode();
 

@@ -14,3 +14,4 @@ pub mod create_file;
 pub mod create_dir;
 pub mod fs_metadata;
 pub mod fs_delete;
+pub mod fs_rename;

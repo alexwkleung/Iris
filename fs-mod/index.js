@@ -252,7 +252,7 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { baseDir, getName, getDirectoryName, getNameVec, getCanonicalPath, isFile, isDirectory, isFileCanonical, isDirectoryCanonical, readFile, walk, walkNoExt, writeToFile, createFile, createDir, isPathDir, isPathFile, deletePath } = nativeBinding
+const { baseDir, getName, getDirectoryName, getNameVec, getCanonicalPath, isFile, isDirectory, isFileCanonical, isDirectoryCanonical, readFile, walk, walkNoExt, writeToFile, createFile, createDir, isPathDir, isPathFile, deletePath, renameFile } = nativeBinding
 
 module.exports.baseDir = baseDir
 module.exports.getName = getName
@@ -272,3 +272,4 @@ module.exports.createDir = createDir
 module.exports.isPathDir = isPathDir
 module.exports.isPathFile = isPathFile
 module.exports.deletePath = deletePath
+module.exports.renameFile = renameFile

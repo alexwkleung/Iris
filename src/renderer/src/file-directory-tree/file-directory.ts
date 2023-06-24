@@ -92,6 +92,12 @@ export class DirectoryTreeUIElements {
 
         const settingsTextNode: Text = document.createTextNode("Settings");
         settingsNode.appendChild(settingsTextNode);
+
+        //const svg: string = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></g></svg>';
+
+        //const rangeContextFragement = new Range().createContextualFragment(svg);
+
+        //settingsNode.appendChild(rangeContextFragement);
     }
 }
 
@@ -102,24 +108,23 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * @protected 
      * @readonly
      */
-    protected readonly folderNamesBasic: string[] | null = this.getRootNames("Basic");
+    protected readonly folderNamesBasic: string[] | null = this.getRootNames();
 
     /**
      * Get root names 
      * 
-     * @param type The mode type
-     * 
      * @returns Filtered names of folders from root
      */
-    public getRootNames(type: string): string[] | null {
+    public getRootNames(): string[] | null {
         const nameVec: string[] = [];
         
-        if(type === "Basic" && isModeBasic()) {
+        //mode check
+        if(isModeBasic()) {
             //get folder names from root
-            fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + type).map((elem) => nameVec.push(elem));
+            fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + "Basic").map((elem) => nameVec.push(elem));
 
             //assign basic ref 
-            DirectoryRefNs.basicRef = type;
+            DirectoryRefNs.basicRef = "Basic";
         }
 
         //check platform before returning nameVec
@@ -132,11 +137,9 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
     /**
      * Create directory tree parent nodes
-     * 
-     * @param type The mode type
      */
-    public createDirTreeParentNodes(type: string): void {  
-        if(type === "Basic" && isModeBasic()) {
+    public createDirTreeParentNodes(): void {  
+        if(isModeBasic()) {
             (this.folderNamesBasic as string[]).map((elem) => {
                 if(isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
                     //create parent folder node
@@ -183,17 +186,16 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * @protected
      * @param parentTags The parent tag to append to
      * @param parentNameTags The parent name tag
-     * @param type The mode type
      */
     protected createDirTreeChildNodes(
         parentTags: Element, 
         parentNameTags: string,
-        base: string,
-        type: string
+        base: string
     ): void {
         let walkRef: string[] = [];
 
-        if(type === "Basic" && isModeBasic()) {
+        //mode check
+        if(isModeBasic()) {
             //platform check 
             if(window.electron.process.platform === 'darwin') {
                 //walk directory recursively

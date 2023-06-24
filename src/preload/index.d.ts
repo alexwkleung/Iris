@@ -29,6 +29,7 @@ declare global {
             _isPathDir(path: string): boolean;
             _isPathFile(path: string): boolean;
             _deletePath(path: string): void;
+            _renameFile(oldPath: string, newPath: string): void;
         }
     }
 }

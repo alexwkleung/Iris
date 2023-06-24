@@ -152,7 +152,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
      * 
      * @param type The mode type
      */
-    public parentRootListener(type: string): void {
+    public parentRootListener(): void {
         this.getParentTags = document.querySelectorAll('.parent-of-root-folder');
         this.getParentNameTags = document.querySelectorAll('.parent-folder-name');
 
@@ -179,8 +179,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                     //check if parent tag contains is-active-parent class
                     if(this.getParentTags[i].classList.contains('is-active-parent')) {
                         //
-                        if(type === "Basic" && isModeBasic()) {
-                            this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home", type);
+                        if(isModeBasic()) {
+                            this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
                         }
 
                         document.querySelectorAll('.parent-folder-caret')[i].classList.toggle('is-active-parent-folder');
@@ -293,12 +293,12 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 //show the menubar
                                 (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
                             }
-                            
+
                             //show kebab dropdown menu 
                             (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
-                            //invoke auto save listener (Basic)
-                            this.editorListeners.autoSaveListener("Basic");
+                            //invoke auto save listener
+                            this.editorListeners.autoSaveListener();
 
                             //invoke insert tab listener
                             this.editorListeners.insertTabListener(2);
