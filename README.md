@@ -6,6 +6,10 @@
 
 <img align="center" src="./screenshots/current-dev-v0.2.0-23.png"></img>
 
+<img align="center" src="./screenshots/current-dev-v0.2.0-24.png"></img>
+
+<img align="center" src="./screenshots/current-dev-v0.2.0-25.png"></img>
+
 <p align="center">Current dev screenshots (subject to change; frequently updated)</p>
 
 # Release date 

@@ -47,12 +47,20 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
                     //hide prosemirror menubar
                     (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
-                    
+
                     //destroy editor and respawn 
                     PMEditorView.editorView.destroy();
                     PMEditorView.createEditorView();
                     PMEditorView.setContenteditable(false);
                 } else if(isModeAdvanced()) {
+                    fsMod.fs._deletePath(
+                        fsMod.fs._baseDir("home")
+                        + "/Iris/Notes/"
+                        + document.title.split('-')[1].trim()
+                        + "/"
+                        + el.textContent + ".md"
+                    );
+                    
                     CMEditorView.editorView.destroy();
                     CMEditorView.createEditorView();
                     CMEditorView.setContenteditable(false);
