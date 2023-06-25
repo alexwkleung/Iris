@@ -1,5 +1,4 @@
 import { fsMod } from "../utils/alias"
-import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 
 export class FolderFileCount {
     /**
@@ -30,7 +29,7 @@ export class FolderFileCount {
             parentNameTags.insertBefore(folderFileCountContainer, parentNameTags.firstChild);
     
             //assign length of walked folder (excluding itself) to fileCount
-            fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTagsArr).slice(1).length;
+            fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).slice(1).length;
     
             //folder file count text node
             const folderFileCountTextNode: Text = document.createTextNode(fileCount.toString()); 

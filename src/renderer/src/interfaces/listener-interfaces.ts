@@ -21,6 +21,6 @@ export interface IDirectoryTreeListeners {
  * Editor listeners interface
  */
 export interface IEditorListeners {
-    autoSaveListener(): void;
-    insertTabListener(numberOfSpaces: number): void;
+    autoSaveListener(editor: string): void;
+    insertTabListener(el: HTMLElement, numberOfSpaces: number): void;
 }

@@ -58,14 +58,16 @@ export const fsMod = {
     _walkNoExt(dir: string): string[] {
         return walkNoExt(dir);
     },
-    _readFileRoot(type: string, file: string): string {
-        return readFile(baseDir("home") + "/Iris/" + type + "/" + file);
+    _readFileRoot(file: string): string {
+        return readFile(baseDir("home") + "/Iris/Notes/" + file);
     },
-    _readFileFolder(folder: string, file: string, type: string): string {
-        return readFile(baseDir("home") + "/Iris/" + type + "/" + folder + "/" + file);
+    _readFileFolder(folder: string, file: string): string {
+        console.log(baseDir("home") + "/Iris/Notes/" + folder + "/" + file);
+        
+        return readFile(baseDir("home") + "/Iris/Notes/" + folder + "/" + file);
     },
-    _writeToFile(type: string, path: string, content: string): void {
-        return writeToFile(baseDir("home") + "/Iris/" + type + "/" + path, content);
+    _writeToFile(path: string, content: string): void {
+        return writeToFile(baseDir("home") + "/Iris/Notes/" + path, content);
     },
     _writeToFileAlt(path: string, content: string): void {
         return writeToFile(path, content);

@@ -6,18 +6,15 @@ import { createDefaultSettings, createDefaultDotSettings } from '../renderer/src
 function appStartDirectoryCheck(): void {
   if(
     !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris") 
-    && !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris/Basic") 
-    /* && !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris/Advanced") */ 
+    && !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris/Notes") 
     ) {
       console.log("directories don't exist");
 
       //create iris directory
       fsMod._createDir(fsMod._baseDir("home") + "/Iris");
 
-      //create basic directory
-      fsMod._createDir(fsMod._baseDir("home") + "/Iris/Basic");
-
-      //create advanced directory
+      //create notes directory
+      fsMod._createDir(fsMod._baseDir("home") + "/Iris/Notes");
 
       //create default settings
       createDefaultSettings();

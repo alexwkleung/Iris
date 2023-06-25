@@ -1,7 +1,8 @@
 import { App } from '../../app'
 import { fsMod } from '../utils/alias'
-import { isModeBasic } from '../utils/is'
+import { isModeBasic, isModeAdvanced } from '../utils/is'
 import { isFolderNode } from '../utils/is'
+import { Settings } from '../settings/settings'
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DirectoryRefNs {
@@ -100,7 +101,48 @@ export class DirectoryTreeUIElements {
         //settingsNode.appendChild(rangeContextFragement);
     }
 
-    public fileDirectoryKebab(): void {
+    /**
+     * File directory kebab options
+     */
+    public fileDirectoryKebabOptionsNode(): void {
+        const fileDirectoryKebabOptionLabel: HTMLLabelElement = document.createElement('label');
+        fileDirectoryKebabOptionLabel.setAttribute("for", "editor-mode-select");
+        fileDirectoryKebabOptionLabel.setAttribute("class", "editor-mode-label");
+        fileDirectoryKebabOptionLabel.textContent = "Mode";
+        (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).appendChild(fileDirectoryKebabOptionLabel);
+        
+        const fileDirectoryKebabOptionSelect: HTMLSelectElement = document.createElement('select');
+        fileDirectoryKebabOptionSelect.setAttribute("name", "editor-mode");
+        fileDirectoryKebabOptionSelect.setAttribute("id", "editor-mode-select");
+        (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).appendChild(fileDirectoryKebabOptionSelect);
+
+        //basic mode option
+        const basicModeOption: HTMLOptionElement = document.createElement('option');
+        basicModeOption.setAttribute("value", "basic-mode");
+        basicModeOption.setAttribute("class", "basic-mode-option");
+        basicModeOption.textContent = "Basic";
+        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(basicModeOption);
+
+        //advanced mode option
+        const advancedModeOption: HTMLOptionElement = document.createElement('option');
+        advancedModeOption.setAttribute("value", "advanced-mode");
+        advancedModeOption.setAttribute("class", "advanced-mode-option");
+        advancedModeOption.textContent = "Advanced";
+        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(advancedModeOption);
+
+        //if basic mode is true
+        if(Settings.parseDotSettings().basicMode) {
+            basicModeOption.setAttribute("selected", "");
+        //if advanced mode is true
+        } else if(Settings.parseDotSettings().advancedMode)  {
+            advancedModeOption.setAttribute("selected", "");
+        }
+    }
+
+    /**
+     * File directory kebab
+     */
+    public fileDirectoryKebabNode(): void {
         //kebab dropdown menu container node
         const kebabDropdownMenuContainerNode: HTMLDivElement = document.createElement('div');
         kebabDropdownMenuContainerNode.setAttribute("id", "file-directory-kebab-dropdown-menu-container");
@@ -124,18 +166,13 @@ export class DirectoryTreeUIElements {
         
         //hide kebab after click menu container
         kebabAfterClickMenuContainer.style.display = "none";
+
+        //create file directory kebab options node
+        this.fileDirectoryKebabOptionsNode();
     }
 }
 
 export class DirectoryTree extends DirectoryTreeUIElements {
-    /**
-     * Contains value of `getRootNames` function (basic)
-     * 
-     * @protected 
-     * @readonly
-     */
-    protected readonly folderNamesBasic: string[] | null = this.getRootNames();
-
     /**
      * Get root names 
      * 
@@ -144,15 +181,14 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     public getRootNames(): string[] | null {
         const nameVec: string[] = [];
         
-        //mode check
-        if(isModeBasic()) {
-            //get folder names from root
-            fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + "Basic").map((elem) => nameVec.push(elem));
+        //get folder names from root
+        fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + "Notes").map((elem) => nameVec.push(elem));
 
-            //assign basic ref 
-            DirectoryRefNs.basicRef = "Basic";
-        }
+        //assign basic ref 
+        DirectoryRefNs.basicRef = "Basic";
 
+        console.log(nameVec);
+        
         //check platform before returning nameVec
         return window.electron.process.platform === 'darwin' 
             ? nameVec.slice(1) 
@@ -165,9 +201,8 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * Create directory tree parent nodes
      */
     public createDirTreeParentNodes(): void {  
-        if(isModeBasic()) {
-            (this.folderNamesBasic as string[]).map((elem) => {
-                if(isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
+            (this.getRootNames() as string[]).map((elem) => {
+                if(isFolderNode("home", "/Iris/Notes" + "/" + elem)) {
                     //create parent folder node
                     const parentFolder: HTMLDivElement = document.createElement('div');
                     parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
@@ -191,7 +226,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
     
                     //temp
                     this.createFileNode(parentFolder);
-                } else if(!isFolderNode("home", "/Iris/" + DirectoryRefNs.basicRef + "/" + elem)) {
+                } else if(!isFolderNode("home", "/Iris/Notes" + "/" + elem)) {
                       //create parent folder node
                       const childFileRoot: HTMLDivElement = document.createElement('div');
         
@@ -203,7 +238,6 @@ export class DirectoryTree extends DirectoryTreeUIElements {
                       childFileRoot.appendChild(parentFolderTextNode);
                 }
             });
-        }
     }
 
     /**
@@ -221,19 +255,14 @@ export class DirectoryTree extends DirectoryTreeUIElements {
         let walkRef: string[] = [];
 
         //mode check
-        if(isModeBasic()) {
-            //platform check 
-            if(window.electron.process.platform === 'darwin') {
+        //platform check 
+        if(window.electron.process.platform === 'darwin') {
                 //walk directory recursively
-                walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags);
-
-                //temp check length 
-                //console.log(walkRef.slice(1).length);
-            } else if(window.electron.process.platform === 'linux' || window.electron.process.platform === 'win32') {
-                walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/" + DirectoryRefNs.basicRef + "/" + parentNameTags);
-            } else {
-                throw console.error("Cannot walk directory files on unsupported platform");
-            }
+                walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes" + "/" + parentNameTags);
+        } else if(window.electron.process.platform === 'linux' || window.electron.process.platform === 'win32') {
+            walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes" + "/" + parentNameTags);
+        } else {
+            throw console.error("Cannot walk directory files on unsupported platform");
         }
 
         const dirNamesArr: string[] = [];

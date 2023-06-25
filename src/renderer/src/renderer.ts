@@ -36,6 +36,20 @@ export function initRenderer(): void {
         console.log(Settings.parseDotSettings());
 
         //load mode
+        if(Settings.parseDotSettings().basicMode) {
+          if((document.getElementById('app') as HTMLElement).classList.contains('advanced-mode-is-active')) {
+            (document.getElementById('app') as HTMLElement).classList.remove('advanced-mode-is-active');
+          } 
+
+          (document.getElementById('app') as HTMLElement).classList.add('basic-mode-is-active');
+        //advanced mode
+        } else if(Settings.parseDotSettings().advancedMode) {
+          if((document.getElementById('app') as HTMLElement).classList.contains('basic-mode-is-active')) {
+            (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');
+          } 
+
+          (document.getElementById('app') as HTMLElement).classList.add('advanced-mode-is-active');
+        }
   });
 }
 initRenderer();

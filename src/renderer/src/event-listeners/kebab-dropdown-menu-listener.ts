@@ -1,10 +1,11 @@
 import { EditorKebabDropdownMenu } from "../misc-ui/editor-kebab-dropdown-menu"
 import { EditorKebabDropdownModals } from "../misc-ui/editor-kebab-dropdown-modals"
 import { fsMod } from "../utils/alias"
-import { isModeBasic } from "../utils/is"
+import { isModeAdvanced, isModeBasic } from "../utils/is"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { setWindowTitle } from "../window/window-title"
 import { RefsNs } from "./directory-tree-listeners"
+import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 
 /**
  * @extends EditorKebabDropdownModals
@@ -21,8 +22,6 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
     /**
      * Kebab delete file continue modal listener
-     * 
-     * @param type Mode type
      */
     public kebabDeleteFileContinueModalListener(): void {
         EditorKebabDropdownModals.kebabModalContinueButtonNode.addEventListener('click', () => {
@@ -32,7 +31,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                     //log
                     console.log(
                         fsMod.fs._baseDir("home")
-                        + "/Iris/Basic/"
+                        + "/Iris/Notes/"
                         + document.title.split('-')[1].trim()
                         + "/"
                         + el.textContent + ".md"
@@ -40,25 +39,29 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
                     fsMod.fs._deletePath(
                         fsMod.fs._baseDir("home")
-                        + "/Iris/Basic/"
+                        + "/Iris/Notes/"
                         + document.title.split('-')[1].trim()
                         + "/"
                         + el.textContent + ".md"
                     );
+
+                    //hide prosemirror menubar
+                    (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+                    
+                    //destroy editor and respawn 
+                    PMEditorView.editorView.destroy();
+                    PMEditorView.createEditorView();
+                    PMEditorView.setContenteditable(false);
+                } else if(isModeAdvanced()) {
+                    CMEditorView.editorView.destroy();
+                    CMEditorView.createEditorView();
+                    CMEditorView.setContenteditable(false);
                 }
                     //remove kebab modal container node
                     EditorKebabDropdownModals.kebabModalContainerNode.remove();
 
                     //remove active file from tree
                     el.remove();
-
-                    //destroy editor and respawn 
-                    PMEditorView.editorView.destroy();
-                    PMEditorView.createEditorView();
-                    PMEditorView.setContenteditable(false);
-
-                    //hide prosemirror menubar
-                    (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
 
                     //hide kebab dropdown menu container
                     (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
@@ -121,8 +124,8 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
         (document.getElementById('kebab-modal-continue-button') as HTMLElement).addEventListener('click', () => {
             console.log(((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0]);
-            console.log(fsMod.fs._baseDir("home") + "/Iris/Basic" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent);
-            console.log(fsMod.fs._baseDir("home") + "/Iris/Basic" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile);
+            console.log(fsMod.fs._baseDir("home") + "/Iris/Notes" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent);
+            console.log(fsMod.fs._baseDir("home") + "/Iris/Notes" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile);
             if(renameFile === " " || renameFile === "" || renameFile === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent || (document.getElementById('rename-file-input-node') as HTMLElement).textContent === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent) {
                 //log
                 console.log("name is equal or empty");
@@ -132,30 +135,28 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                 //log
                 console.log("name is not equal or empty");
 
-                if(isModeBasic()) {
-                    //rename file
-                    fsMod.fs._renameFile(
-                        fsMod.fs._baseDir("home") + "/Iris/Basic/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent + ".md",
-                        fsMod.fs._baseDir("home") + "/Iris/Basic/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile + ".md"
-                    )
+                //rename file
+                fsMod.fs._renameFile(
+                    fsMod.fs._baseDir("home") + "/Iris/Notes/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent + ".md",
+                    fsMod.fs._baseDir("home") + "/Iris/Notes/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile + ".md"
+                )
     
-                    //remove kebab modal container node
-                    EditorKebabDropdownModals.kebabModalContainerNode.remove();
+                //remove kebab modal container node
+                EditorKebabDropdownModals.kebabModalContainerNode.remove();
     
-                    //create top bar info
-                    const topBarInfo: string = ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + " - " + renameFile;
+                //create top bar info
+                const topBarInfo: string = ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + " - " + renameFile;
                     
-                    //update top bar directory info 
-                    (document.getElementById('top-bar-directory-info') as HTMLElement).textContent = topBarInfo;
+                //update top bar directory info 
+                (document.getElementById('top-bar-directory-info') as HTMLElement).textContent = topBarInfo;
                     
-                    //update child file name in directory tree
-                    (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent = renameFile;
+                //update child file name in directory tree
+                (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent = renameFile;
     
-                    //update child file name reference
-                    RefsNs.currentParentChildData.map((props) => {
-                        props.childFileName = renameFile
-                    });
-                }
+                //update child file name reference
+                RefsNs.currentParentChildData.map((props) => {
+                    props.childFileName = renameFile
+                });
             }
         })
     }
@@ -207,11 +208,19 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
             this.kebabDropdownRenameFileListener();
         });
 
-        //hide kebab after click menu container when editor is clicked 
-        (document.querySelector('.ProseMirror') as HTMLElement).addEventListener('click', () => {
-            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
-            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
-        });
+        if((document.querySelector('.ProseMirror') as HTMLElement)) {
+            //hide kebab after click menu container when editor is clicked 
+            (document.querySelector('.ProseMirror') as HTMLElement).addEventListener('click', () => {
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+            });
+        } else if((document.querySelector('.cm-editor') as HTMLElement)) {
+            //hide kebab after click menu container when editor is clicked 
+            (document.querySelector('.cm-editor') as HTMLElement).addEventListener('click', () => {
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+            });
+        }
 
         //hide kebab after click menu container when file directory inner is clicked
         (document.getElementById('file-directory-tree-container-inner') as HTMLElement).addEventListener('click', () => {

@@ -56,3 +56,11 @@ body {
 /*
 * codemirror
 */ 
+.cm-editor {
+    background-color: var(--prosemirror-bg-dark); 
+    color: var(--prosemirror-color-dark);
+}
+
+.ͼ2 .cm-content {
+    caret-color: var(--caret-color-dark);
+}

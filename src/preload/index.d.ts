@@ -20,9 +20,9 @@ declare global {
             _readFile(dir: string): string,
             _walk(dir: string): string[],
             _walkNoExt(dir: string): string[],
-            _readFileRoot(type: string, file: string): string,
-            _readFileFolder(folder: string, file: string, type: string): string
-            _writeToFile(type: string, path: string, content: string): void;
+            _readFileRoot(file: string): string,
+            _readFileFolder(folder: string, file: string): string
+            _writeToFile(path: string, content: string): void;
             _writeToFileAlt(path: string, content: string): void
             _createFile(path: string, content: string): void;
             _createDir(path: string): void;

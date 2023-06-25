@@ -191,8 +191,10 @@ body {
 #editor-container {
     margin-left: 298px;
     position: fixed;
+    /*
     overflow-y: scroll;
     overflow-x: scroll;
+    */
     width: calc(100% - 318px);
     height: calc(100% - 8px);
 }
@@ -770,6 +772,7 @@ body {
     border: 0px;
     overflow-x: scroll;
     width: 195px;
+    caret-color: white;
 }
 #rename-file-input-node:focus {
     outline: none;
@@ -844,14 +847,32 @@ body {
     /*border: 1px solid grey;*/
     border-radius: 15px;
     background-color: #2a2828;
-    width: 150px;
-    height: 200px;
-    right: 25px;
-    top: 85px;
+    width: 175px;
+    height: 80px;
+    right: 15px;
+    top: 88px;
     cursor: default;
 }
 #file-directory-kebab-after-click-menu-container.is-active {
     z-index: 1;
+}
+.editor-mode-label {
+    position: fixed;
+    color: rgb(224, 224, 224);
+    margin-left: 8px;
+    margin-top: 18px;
+}
+#editor-mode-select {
+    font-family: 'Inter-Regular';
+    background-color: rgb(56, 56, 56);
+    color: rgb(224, 224, 224);
+    border-radius: 5px;
+    font-size: 17px;
+    margin-top: 16px;
+    margin-left: 63px;
+}
+#editor-mode-select:focus {
+    outline: none;
 }
 
 /**
@@ -971,4 +992,49 @@ body {
     white-space: pre-wrap;
     display: inline-block; 
     unicode-bidi: embed;
+}
+
+.cm-editor {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    font-size: 17px;
+    font-family: 'Inter-Bold';
+    background-color: var(--prosemirror-bg-light); 
+    color: var(--prosemirror-color-light);
+    /*border: 1px solid black;*/
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px; 
+    padding-bottom: 150px;
+    padding-top: 13px;
+    padding-left: 12px;
+    padding-right: 12px;
+    top: 40px;
+}
+
+.cm-editor:focus {
+    outline: none;
+}
+
+.ͼ2 .cm-content {
+    caret-color: var(--caret-color-light);
+}
+
+.ͼ1.cm-focused {
+    outline: none;
+}
+
+.ͼ1.cm-line {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+}
+
+.cm-content {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    width: calc(100% - 10px);
+}
+
+.ͼ1 .cm-scroller {
+    font-family: 'Inter-Regular';
 }

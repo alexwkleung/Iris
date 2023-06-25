@@ -5,18 +5,17 @@ import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { DirectoryTreeListeners } from "./directory-tree-listeners"
 import { EditorListeners } from "./editor-listeners"
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
-import { isModeBasic } from "../utils/is"
+import { isModeAdvanced, isModeBasic } from "../utils/is"
 import { fsMod } from "../utils/alias"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { PMEditorState } from "../prosemirror/editor/editor-state"
 import { Node } from "prosemirror-model"
 import { defaultMarkdownParser } from "prosemirror-markdown"
-import { DirectoryRefNs } from "../file-directory-tree/file-directory"
 import { RefsNs } from "./directory-tree-listeners"
 import { wordCountListener } from "./word-count-listener"
 import { setWindowTitle } from "../window/window-title"
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
-
+import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 /**
  * @extends DirectoryTreeUIModals
  * @implements `IDirectoryTreeUIModalListeners`
@@ -102,9 +101,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             if(DirectoryTreeUIModals.createModalContainer !== null) {
                 DirectoryTreeUIModals.createModalContainer.remove();
             }
-
-            //mode check
-            if(isModeBasic()) {
                 //invoke parent root listener
                 this.directoryTreeListeners.parentRootListener();
     
@@ -113,7 +109,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     
                 //invoke parent root listener again so the directory tree will be in sync
                 this.directoryTreeListeners.parentRootListener();
-            }
         })
     }
 
@@ -142,7 +137,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 
                 fsMod.fs._createFile(
                     fsMod.fs._baseDir("home") 
-                    + "/Iris/Basic/" 
+                    + "/Iris/Notes/" 
                     + (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent 
                     +  "/" + fileName,
                     "# " + fileName.split('.md')[0] + " " + '\n'
@@ -226,8 +221,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             0,
                             defaultMarkdownParser.parse(
                             fsMod.fs._readFileFolder(createFileModalFolderNameRef, 
-                            fileName, 
-                            DirectoryRefNs.basicRef
+                            fileName
                         )
                     ) as Node
                 )));
@@ -243,11 +237,11 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                 (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
-                //invoke auto save listener (Basic)
-                this.editorListeners.autoSaveListener();
+                //invoke auto save listener
+                this.editorListeners.autoSaveListener("prosemirror");
 
                 //invoke insert tab listener
-                this.editorListeners.insertTabListener(2);
+                this.editorListeners.insertTabListener((document.querySelector('.ProseMirror') as HTMLElement), 2);
 
                 //assign references to corresponding key properties
                 RefsNs.currentParentChildData.map((props) => {
@@ -269,6 +263,142 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                 //word count listener
                 wordCountListener("prosemirror");
+
+                //kebab dropdown menu listener
+                this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
+
+                //change document title so it corresponds to the opened file
+                await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + fileName.split('.md')[0]).catch((e) => { throw console.error(e) });
+
+                //add directory info to editor top bar
+                this.editorTopBarContainer.directoryInfo();
+
+                //to-do: sort files...
+            } else if(isModeAdvanced()) {
+                //log
+                console.log((document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent)
+                
+                fsMod.fs._createFile(
+                    fsMod.fs._baseDir("home") 
+                    + "/Iris/Notes/" 
+                    + (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent 
+                    +  "/" + fileName,
+                    "# " + fileName.split('.md')[0] + " " + '\n'
+                );
+
+                const createFileModalFolderNameRef: string = (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent as string;
+
+                const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+
+                createFileNode.forEach((elem) => {
+                    //null check
+                    if(elem !== null) {
+                        elem.classList.remove('is-active-create-new-file-modal');
+                    }
+                });
+
+                //null check
+                if(DirectoryTreeUIModals.createModalContainer !== null) {
+                    DirectoryTreeUIModals.createModalContainer.remove();
+                }
+
+                //log
+                console.log(fileName);
+
+                //if document contains at least one active child
+                if(document.querySelector('.is-active-child')) {
+                    //select all active children and remove them from the dom (active status)
+                    //this removes any existing active children files
+                    document.querySelectorAll('.is-active-child').forEach(
+                        (isActiveChild) => {
+                            if(isActiveChild !== null) {
+                                isActiveChild.classList.remove('is-active-child')
+                            }
+                        }
+                    );
+                }
+
+                const childFile: HTMLDivElement = document.createElement('div');
+                childFile.setAttribute("class", "child-file-name is-active-child");
+
+                const childFileTextNode: Text = document.createTextNode(fileName.split('.md')[0]);
+
+                document.querySelectorAll('.parent-folder-name').forEach((el) => {
+                    //this doesn't cover duplicate folder names, so it might cause bugs
+                    if(el.textContent === createFileModalFolderNameRef) {
+                        childFile.appendChild(childFileTextNode);
+
+                        (el.parentNode as ParentNode).appendChild(childFile);
+                    }
+                })
+            
+                //execute parent root listener so it understands the new file
+                this.directoryTreeListeners.parentRootListener();
+
+                //execute child node listener to allow new file to be clicked
+                this.directoryTreeListeners.childNodeListener();
+
+                //execute parent root listener again so everything will be in sync 
+                this.directoryTreeListeners.parentRootListener();
+
+                //destroy current editor view
+                CMEditorView.editorView.destroy();
+                            
+                //create new editor view
+                CMEditorView.createEditorView();
+
+                //log
+                console.log(createFileModalFolderNameRef);
+
+                //log
+                console.log(fileName);
+    
+                //dispatch text insertion tr
+                CMEditorView.editorView.dispatch({
+                    changes: {
+                        from: 0,
+                        to: 0,
+                        insert: fsMod.fs._readFileFolder(createFileModalFolderNameRef, fileName)
+                    }
+                })
+
+                //set contenteditable 
+                CMEditorView.setContenteditable(true);
+                
+                //if contenteditable attribute is set to true 
+                //if((document.querySelector('.cm-editor') as HTMLElement).getAttribute('contenteditable') === 'true') {
+                    //show the menubar
+                    //(document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
+                //}
+
+                (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+
+                //invoke auto save listener
+                this.editorListeners.autoSaveListener("codemirror");
+
+                //invoke insert tab listener
+                //this.editorListeners.insertTabListener((document.querySelector('.ProseMirror') as HTMLElement), 2);
+
+                //assign references to corresponding key properties
+                RefsNs.currentParentChildData.map((props) => {
+                    //log
+                    console.log(fileName);
+                    //log
+                    console.log(document.querySelector('.child-file-name.is-active-child') as HTMLElement);
+                    
+                    //null check
+                    if(props !== null) {
+                        //child file name
+                        props.childFileName = fileName.split('.md')[0];
+                        props.childFileNode = document.querySelector('.child-file-name.is-active-child') as HTMLElement
+                    }
+                });
+
+                //apply active state listener 
+                this.dirTreeStateListeners.activeChildFileStateListener();
+
+                //word count listener
+                wordCountListener("codemirror");
 
                 //kebab dropdown menu listener
                 this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
@@ -373,12 +503,11 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //log
             console.log(folderName);
             
-            //mode check
-            if(isModeBasic() && folderName !== " ") {
+            if(folderName !== " ") {
                 //create directory
                 fsMod.fs._createDir(
                     fsMod.fs._baseDir("home")
-                    + "/Iris/Basic/"
+                    + "/Iris/Notes/"
                     + folderName
                 );
             }
@@ -408,27 +537,28 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
             }
 
-            //mode check again
-            if(isModeBasic()) {
-                //invoke parent root listener (created directory only)
-                this.directoryTreeListeners.parentRootListener();
+            //invoke parent root listener (created directory only)
+            this.directoryTreeListeners.parentRootListener();
     
-                //invoke create file node
-                this.createFileNode(parentFolder);
+            //invoke create file node
+            this.createFileNode(parentFolder);
     
-                //invoke create file listener
-                this.createFileListener();
-            }
+            //invoke create file listener
+            this.createFileListener();
 
             //null check
             if(DirectoryTreeUIModals.createModalContainer !== null) {
                 DirectoryTreeUIModals.createModalContainer.remove();
             }
                 
-            //invoke create file listener again
+            //invoke create file listener 
+            //bug
+            this.createFileListener();
             this.createFileListener();
                 
-            //invoke parent root listener again so entire directory tree will function normally and be in sync
+            //invoke parent root listener again so entire directory tree will function normally and be in sync 
+            //bug
+            this.directoryTreeListeners.parentRootListener();
             this.directoryTreeListeners.parentRootListener();
         })
     }

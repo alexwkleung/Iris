@@ -2,6 +2,8 @@ import { App } from "./app"
 import { PMEditorView } from "./src/prosemirror/editor/editor-view"
 import { WordCountContainerNode } from "./src/misc-ui/word-count"
 import { EditorKebabDropdownMenu } from "./src/misc-ui/editor-kebab-dropdown-menu"
+import { CMEditorView } from "./src/codemirror/editor/cm-editor-view"
+import { Settings } from "./src/settings/settings"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
@@ -68,14 +70,20 @@ export namespace EditorNs {
         //create editor container
         EditorContainerNode.createEditorContainer();
 
-        //create prosemirror editorview 
-        PMEditorView.createEditorView();
+        if(Settings.parseDotSettings().basicMode) {
+            //create prosemirror editorview 
+            PMEditorView.createEditorView();
+    
+            //set prosemirror contenteditable
+            PMEditorView.setContenteditable(false);
+    
+            //hide prosemirror menubar
+            (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+        } else if(Settings.parseDotSettings().advancedMode) {
+            CMEditorView.createEditorView();
 
-        //set prosemirror contenteditable
-        PMEditorView.setContenteditable(false);
-
-        //hide prosemirror menubar
-        (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+            CMEditorView.setContenteditable(false);
+        }
 
         //create editor top bar container
         EditorTopBarContainer.createEditorTopBarContainer();

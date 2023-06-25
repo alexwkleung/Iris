@@ -6,6 +6,7 @@ import { defaultMarkdownSerializer } from "prosemirror-markdown"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { debounce } from "../utils/debounce"
 import { isModeBasic } from "../utils/is"
+import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 
 /**
  * @implements `IEditorListeners`
@@ -14,42 +15,63 @@ export class EditorListeners implements IEditorListeners {
     /**
      * Auto save listener
      * 
-     * @param type The mode type
      * @public
      */
-    public autoSaveListener(): void {
-        const editors: HTMLDivElement = document.querySelector('.ProseMirror') as HTMLDivElement;
+    public autoSaveListener(editor: string): void {
+        const pm: HTMLDivElement = document.querySelector('.ProseMirror') as HTMLDivElement;
+        const cm: HTMLElement = document.querySelector('.cm-editor') as HTMLElement;
 
-        //when a keyboard press is released
-        if(editors !== null) {
-            editors.addEventListener('keyup', debounce(() => {
-                RefsNs.currentParentChildData.map((props) => {
-                    //null check
-                    if(props !== null) {
-                        //mode check
-                        if(isModeBasic()) {
-                            //write to file
+        if(editor === "prosemirror") {
+            //when a keyboard press is released
+            if(pm !== null) {
+                pm.addEventListener('keyup', debounce(() => {
+                    RefsNs.currentParentChildData.map((props) => {
+                        //null check
+                        if(props !== null) {
+                                //write to file
+                                const t0: number = performance.now(); //start perf timer
+        
+                                //log
+                                console.log(props.parentFolderName);
+    
+                                console.log(props.childFileName);
+                                
+                                fsMod.fs._writeToFile(
+                                    props.parentFolderName + "/" + props.childFileName + ".md", 
+                                    defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString()
+                                );                         
+        
+                                const t1: number = performance.now(); //end perf timer
+                                
+                                //log perf timer
+                                console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
+                        }
+                    })
+                }, 1100)); //1100ms default
+            } 
+        } else if(editor === "codemirror") {
+            //when a keyboard press is released
+            if(cm !== null) {
+                cm.addEventListener('keyup', debounce(() => {
+                    RefsNs.currentParentChildData.map((props) => {
+                        //null check
+                        if(props !== null) {
                             const t0: number = performance.now(); //start perf timer
-    
-                            //log
-                            console.log(props.parentFolderName);
-
-                            console.log(props.childFileName);
                             
+                            //write to file
                             fsMod.fs._writeToFile(
-                                DirectoryRefNs.basicRef, 
                                 props.parentFolderName + "/" + props.childFileName + ".md", 
-                                defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString()
-                            );                         
-    
+                                CMEditorView.editorView.state.doc.toString()
+                            );                        
+
                             const t1: number = performance.now(); //end perf timer
-                            
+                                
                             //log perf timer
                             console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
                         }
-                    }
-                })
-            }, 1100)); //1100ms default
+                    })
+                }, 1100)); 
+            } 
         }
     }
 
@@ -58,11 +80,11 @@ export class EditorListeners implements IEditorListeners {
      * 
      * Tabs are based on spaces and not actual tab characters
      */
-    public insertTabListener(numberOfSpaces?: number): void {
+    public insertTabListener(el: HTMLElement, numberOfSpaces?: number): void {
         let spaces: string = "";
         
         //ref: https://stackoverflow.com/questions/2237497/make-the-tab-key-insert-a-tab-character-in-a-contenteditable-div-and-not-blur
-        (document.querySelector('.ProseMirror') as HTMLElement).addEventListener('keydown', (e) => {
+        el.addEventListener('keydown', (e) => {
             if((e as KeyboardEvent).key === 'Tab') {
                 //prevent default tab behaviour
                 e.preventDefault();
