@@ -34,6 +34,7 @@ body {
     background-color: var(--prosemirror-bg-dark);
     color: var(--prosemirror-color-dark);
     caret-color: var(--caret-color-dark);
+    color-scheme: dark;
 }
 .ProseMirror-menubar {
     background-color: var(--prosemirror-bg-dark);
@@ -59,6 +60,7 @@ body {
 .cm-editor {
     background-color: var(--prosemirror-bg-dark); 
     color: var(--prosemirror-color-dark);
+    color-scheme: dark;
 }
 
 .cm-content {
