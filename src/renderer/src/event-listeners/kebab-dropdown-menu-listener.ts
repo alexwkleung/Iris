@@ -6,11 +6,17 @@ import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { setWindowTitle } from "../window/window-title"
 import { RefsNs } from "./directory-tree-listeners"
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
+import { FolderFileCount } from "../misc-ui/folder-file-count"
+import { DirectoryTree } from "../file-directory-tree/file-directory"
 
 /**
  * @extends EditorKebabDropdownModals
  */
 export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals {
+    private readonly folderFileCount = new FolderFileCount();
+    private readonly directoryTree = new DirectoryTree();
+
+
     /**
      * Kebab exit modal listener
      */
@@ -45,13 +51,30 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                         + el.textContent + ".md"
                     );
 
-                    //hide prosemirror menubar
-                    (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
-
                     //destroy editor and respawn 
                     PMEditorView.editorView.destroy();
                     PMEditorView.createEditorView();
                     PMEditorView.setContenteditable(false);
+
+                    //hide prosemirror menubar
+                    (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+                    
+                    const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+                    const parentNameTags: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
+                        
+                    let count: number = 0;
+                    //remove duplicate folder file count nodes
+                    while(count <= 2) {
+                        document.querySelectorAll('.folder-file-count-container').forEach((el) => {
+                            el.remove();
+                        });
+                        count++;
+                    }
+
+                    for(let i = 0; i < parentNameTags.length; i++) {
+                        //invoke folder file count
+                        this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i], true);
+                    }
                 } else if(isModeAdvanced()) {
                     fsMod.fs._deletePath(
                         fsMod.fs._baseDir("home")
@@ -64,29 +87,46 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                     CMEditorView.editorView.destroy();
                     CMEditorView.createEditorView();
                     CMEditorView.setContenteditable(false);
+
+                    const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+                    const parentNameTags: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
+                        
+                    let count: number = 0;
+                    //remove duplicate folder file count nodes
+                    while(count <= 2) {
+                        document.querySelectorAll('.folder-file-count-container').forEach((el) => {
+                            el.remove();
+                        });
+                        count++;
+                    }
+
+                    for(let i = 0; i < parentNameTags.length; i++) {
+                        //invoke folder file count
+                        this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i], true);
+                    }
                 }
-                    //remove kebab modal container node
-                    EditorKebabDropdownModals.kebabModalContainerNode.remove();
+                
+                //remove kebab modal container node
+                EditorKebabDropdownModals.kebabModalContainerNode.remove();
 
-                    //remove active file from tree
-                    el.remove();
+                //remove active file from tree
+                el.remove();
 
-                    //hide kebab dropdown menu container
-                    (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
+                //hide kebab dropdown menu container
+                (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
 
-                    //kebab after click menu container reset
-                    (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
-                    (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+                //kebab after click menu container
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
 
-                    //word counter reset
-                    (document.getElementById('word-count-container') as HTMLElement).style.display = "none";
-                    (document.getElementById('word-count-container') as HTMLElement).textContent = "";
+                //word counter
+                (document.getElementById('word-count-container') as HTMLElement).style.display = "none";
                     
-                    //set window title to default
-                    await setWindowTitle("Iris", false, null);
+                //set window title to default
+                await setWindowTitle("Iris", false, null);
 
-                    //remove top bar directory info node
-                    (document.getElementById('top-bar-directory-info') as HTMLElement).remove();
+                //remove top bar directory info node
+                (document.getElementById('top-bar-directory-info') as HTMLElement).remove();
             })
         })
     }

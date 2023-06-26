@@ -18,8 +18,19 @@ export class FolderFileCount {
             console.log("reset");
 
             //reset count to 0
-            fileCount = 0;  
+            fileCount = 0;
 
+            //folder file count container
+            const folderFileCountContainer: HTMLDivElement = document.createElement('div');
+            folderFileCountContainer.setAttribute("class", "folder-file-count-container");
+            parentNameTags.insertBefore(folderFileCountContainer, parentNameTags.firstChild);
+    
+            //assign length of walked folder (excluding itself) to fileCount
+            fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).slice(1).length;
+    
+            //folder file count text node
+            const folderFileCountTextNode: Text = document.createTextNode(fileCount.toString()); 
+            folderFileCountContainer.appendChild(folderFileCountTextNode);
         } else if(!reset) {
             console.log("not reset");
 

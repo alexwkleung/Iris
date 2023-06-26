@@ -1,7 +1,17 @@
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
+import { PMEditorState } from "../prosemirror/editor/editor-state"
 import { fsMod } from "../utils/alias"
 import { Settings } from "../settings/settings"
+import { RefsNs } from "./directory-tree-listeners"
+import { defaultMarkdownParser } from "prosemirror-markdown"
+import { Node } from "prosemirror-model"
+import { EditorListeners } from "./editor-listeners"
+import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
+import { CMEditorState } from "../codemirror/editor/cm-editor-state"
+import { cursors } from "../codemirror/extensions/cursors"
+import { wordCountListener } from "./word-count-listener"
+
 interface IEditorModeJSONRef<T extends string> {
     updatedSettings: T
 }
@@ -10,7 +20,7 @@ const editorModeJSONRef: IEditorModeJSONRef<string> = {
     updatedSettings: JSON.stringify(Settings.parseDotSettings())
 }
 
-export class DirectoryTreeKebabDropdownListeners {
+export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
     public kebabDropdownButtonListener(): void {
         (document.getElementById("file-directory-kebab-dropdown-menu-container") as HTMLElement).addEventListener('click', () => {
             //toggle is-active class
@@ -55,10 +65,10 @@ export class DirectoryTreeKebabDropdownListeners {
 
                 PMEditorView.createEditorView();
 
-                PMEditorView.setContenteditable(false);
+                PMEditorView.setContenteditable(true);
 
                 //hide prosemirror menubar
-                (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+                (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
 
                 editorModeJSONRef.updatedSettings = '{"basicMode":true,"advancedMode":false}';
 
@@ -67,6 +77,33 @@ export class DirectoryTreeKebabDropdownListeners {
                 //log
                 console.log("basic selected");
 
+                //if(document.querySelector('.child-file-name is-active-child') as HTMLElement !== null) {
+                    RefsNs.currentParentChildData.map((props) => {
+                        //update editor view state
+                        PMEditorView.editorView.updateState(
+                            //apply transaction
+                            PMEditorView.editorView.state.apply(
+                                PMEditorState.editorState.tr.replaceRangeWith(
+                                    0, 
+                                    0,
+                                    defaultMarkdownParser.parse(
+                                    fsMod.fs._readFileFolder(props.parentFolderName,
+                                        props.childFileName + ".md"
+                                    )
+                                ) as Node
+                            )));
+        
+                        //invoke auto save listener
+                        this.autoSaveListener("prosemirror");
+        
+                        //invoke insert tab listener
+                        this.insertTabListener((document.querySelector(".ProseMirror") as HTMLElement), 2);
+
+                        wordCountListener("prosemirror");
+                    })
+                //} else {
+                    //return;
+                //}
             } else if(currentSelection.value === 'advanced-mode') {
                 //log
                 console.log("advanced selected");
@@ -81,7 +118,6 @@ export class DirectoryTreeKebabDropdownListeners {
 
                 if((document.querySelector('.ProseMirror') as HTMLElement) !== null) {
                     PMEditorView.editorView.destroy();
-                    //(document.querySelector('.ProseMirror') as HTMLElement).remove();
                 }
 
                 editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":true}';
@@ -89,10 +125,34 @@ export class DirectoryTreeKebabDropdownListeners {
                 fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
 
                 CMEditorView.createEditorView();
+                CMEditorView.setContenteditable(true);
 
-                CMEditorView.setContenteditable(false);
-                
-                //check if child file is open 
+               //if(document.querySelector('.child-file-name is-active-child') as HTMLElement !== null) {
+                    //insert active file content into editor
+                    
+                    RefsNs.currentParentChildData.map((props) => {
+                        //dispatch text insertion tr
+                        CMEditorView.editorView.dispatch({
+                            changes: {
+                                from: 0,
+                                to: 0,
+                                insert: fsMod.fs._readFileFolder(props.parentFolderName, 
+                                props.childFileName + ".md")
+                            }
+                        });
+                    })
+                    
+                    if(Settings.parseThemeSettings().lightTheme) {
+                        CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+                    } else if(Settings.parseThemeSettings().darkTheme) {
+                        CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                    }
+
+                    wordCountListener("codemirror");
+
+                //} else {
+                    //return;
+                //}
             }
         })
     }

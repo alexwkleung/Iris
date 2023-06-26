@@ -449,7 +449,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                                 if(props !== null) {
                                     //override current parent folder name ref
                                     props.parentFolderName = this.parentNameTags[i].textContent as string;
-
+                                    props.parentFolderNode = this.parentTags[i]
+                                    
                                     //invoke createFileModalCurrentFolderNode
                                     this.createFileModalCurrentFolderNode(props.parentFolderName);
 

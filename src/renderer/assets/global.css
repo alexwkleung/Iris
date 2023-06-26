@@ -1001,7 +1001,7 @@ body {
     position: fixed;
     width: 100%;
     height: calc(100% - 5px);
-    font-size: 18px;
+    font-size: 17px;
     font-family: 'Inter-Bold';
     background-color: var(--prosemirror-bg-light); 
     color: var(--prosemirror-color-light);
