@@ -370,12 +370,17 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 });
 
                                 //set contenteditable 
-                                //CMEditorView.setContenteditable(true);
+                                CMEditorView.setContenteditable(true);
+
                                 //show kebab dropdown menu 
                                 (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
+                                //invoke auto save listener
                                 this.editorListeners.autoSaveListener("codemirror");
                                
+                                //invoke insert tab listener
+                                this.editorListeners.insertTabListener((document.querySelector(".cm-content") as HTMLElement), 2);
+
                                //null check
                                if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {
                                 //assign child refs
@@ -417,6 +422,7 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                     }
                                 })
 
+                                //word count listener
                                 wordCountListener("codemirror");
                                 
                                 //kebab dropdown menu listener

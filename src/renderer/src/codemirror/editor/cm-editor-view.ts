@@ -12,7 +12,7 @@ export class CMEditorView {
     public static setContenteditable(enable: boolean): void {
         let contenteditable: void;
 
-        const codeMirrorNode: HTMLElement = document.querySelector('.cm-editor') as HTMLElement;
+        const codeMirrorNode: HTMLElement = document.querySelector('.cm-content') as HTMLElement;
 
         if(enable) {
             contenteditable = codeMirrorNode.setAttribute("contenteditable", "");
@@ -32,10 +32,12 @@ export class CMEditorView {
      */
     public static createEditorView(): EditorView {
         CMEditorView.editorView = new EditorView({
-            state: CMEditorState.editorState,
+            state: CMEditorState.createEditorState(),
             doc: '',
             parent: document.getElementById("editor-container") as HTMLElement
         })
+
+        console.log("cm view");
 
         return CMEditorView.editorView;
     }

@@ -994,47 +994,44 @@ body {
     unicode-bidi: embed;
 }
 
+/*
+* codemirror editor nodes
+*/
 .cm-editor {
     position: fixed;
     width: 100%;
-    height: 100%;
-    font-size: 17px;
+    height: calc(100% - 5px);
+    font-size: 18px;
     font-family: 'Inter-Bold';
     background-color: var(--prosemirror-bg-light); 
     color: var(--prosemirror-color-light);
     /*border: 1px solid black;*/
-    content-visibility: auto;
-    contain-intrinsic-size: auto 800px; 
     padding-bottom: 150px;
-    padding-top: 13px;
+    padding-top: 15px;
     padding-left: 12px;
     padding-right: 12px;
-    top: 40px;
+    top: 50px;
+    overflow-y: scroll;
 }
-
 .cm-editor:focus {
     outline: none;
 }
-
 .ͼ2 .cm-content {
     caret-color: var(--caret-color-light);
 }
-
 .ͼ1.cm-focused {
     outline: none;
 }
-
 .ͼ1.cm-line {
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
 }
-
 .cm-content {
+    position: absolute;
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
     width: calc(100% - 10px);
 }
-
 .ͼ1 .cm-scroller {
     font-family: 'Inter-Regular';
 }

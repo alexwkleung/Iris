@@ -1,6 +1,6 @@
 import { EditorState } from '@codemirror/state'
 import { keymap, rectangularSelection, drawSelection } from '@codemirror/view'
-import { defaultKeymap, history, historyKeymap } from '@codemirror/commands'
+import { defaultKeymap, history, historyKeymap, standardKeymap } from '@codemirror/commands'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { EditorView } from '@codemirror/view'
@@ -31,13 +31,16 @@ export class CMEditorState {
                 drawSelection(),
                 history(),
                 keymap.of([
+                    ...standardKeymap,
                     ...defaultKeymap,
-                    ...historyKeymap
+                    ...historyKeymap,
                 ]),
                 EditorView.lineWrapping
             ]
-        })
-        
+        });
+
+        console.log("cm state");
+
         return CMEditorState.editorState;
     }
 }

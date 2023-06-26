@@ -1,5 +1,7 @@
 import { debounce } from "../utils/debounce"
 import { WordCountContainerNode } from "../misc-ui/word-count"
+import { CMEditorView } from "../codemirror/editor/cm-editor-view"
+import { TextIterator } from "@codemirror/state";
 
 /**
  * Word count listener
@@ -68,28 +70,62 @@ export function wordCountListener(editor: string): number {
         //show word count
         WordCountContainerNode.wordCountContainer.style.display = "";
 
-        //reset value to 0 so re-calculating is accurate (internally and visually)
         WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words";
 
-        //initial check when initially opening a note
-        if(!(cm.textContent as string).trim().split(regexPattern)[0]) {
-            wordCount = 0; //re-initialize 
-            WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words"; 
-        } else {
-            wordCount = (cm.textContent as string).trim().split(regexPattern).filter(str => str !== "").length;
+        //reset word count
+        wordCount = 0;
 
-            //log
-            console.log((cm.textContent as string).trim().split(regexPattern).filter(str => str !== ""));
+        //taken from: https://codemirror.net/examples/panel/
+        const iter = CMEditorView.editorView.state.doc.iter();
+        while(!iter.next().done) {
+            let inWord: boolean = false;
 
-            WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words"; 
+            for(let i = 0; i < iter.value.length; i++) {
+                const word: boolean = /[\w]/.test(iter.value[i]);
+
+                if(word && !inWord) {
+                    wordCount++;
+                }
+
+                inWord = word;
+            }
         }
 
+        //initial word count
+        WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words"; 
+        
         console.log(wordCount);
         
         //listener for during note writing
         cm.addEventListener('keyup', debounce(() => {
-            textArr = (cm.textContent as string).trim().split(regexPattern);
+            
+            console.log(cm.textContent);
+            
+            //reset word count
+            wordCount = 0;
 
+            const iter: TextIterator = CMEditorView.editorView.state.doc.iter();
+            while(!iter.next().done) {
+                let inWord: boolean = false;
+    
+                for(let i = 0; i < iter.value.length; i++) {
+                    const word: boolean = /[\w]/.test(iter.value[i]);
+    
+                    if(word && !inWord) {
+                        wordCount++;
+                    }
+    
+                    inWord = word;
+                }
+            }
+
+            if(!wordCount) {
+                WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words";
+            } else {
+                WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words";
+            }
+
+            /*
             //if there are no words
             if(!textArr[0]) {
                 wordCount = 0; //re-initialize
@@ -102,6 +138,7 @@ export function wordCountListener(editor: string): number {
 
                 WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words";
             }
+            */
 
             console.log(wordCount);
         }, 250)) //250ms default

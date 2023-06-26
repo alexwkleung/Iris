@@ -90,6 +90,8 @@ export class DirectoryTreeKebabDropdownListeners {
 
                 CMEditorView.createEditorView();
 
+                CMEditorView.setContenteditable(false);
+                
                 //check if child file is open 
             }
         })
