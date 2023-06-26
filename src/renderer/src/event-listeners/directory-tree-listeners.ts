@@ -441,6 +441,10 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 CMEditorView.editorView.dispatch({
                                     effects: EditorView.scrollIntoView(0)
                                 })
+
+
+                                //kebab dropdown menu listener
+                                this.editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
                             }
                         }
                     } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {

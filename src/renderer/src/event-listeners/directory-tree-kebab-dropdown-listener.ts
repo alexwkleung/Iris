@@ -21,6 +21,8 @@ const editorModeJSONRef: IEditorModeJSONRef<string> = {
 }
 
 export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
+    private readonly editorKebabDropdownListeners = new EditorKebabDropdownMenuListeners();
+
     public kebabDropdownButtonListener(): void {
         (document.getElementById("file-directory-kebab-dropdown-menu-container") as HTMLElement).addEventListener('click', () => {
             //toggle is-active class
@@ -100,6 +102,9 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                         this.insertTabListener((document.querySelector(".ProseMirror") as HTMLElement), 2);
 
                         wordCountListener("prosemirror");
+
+                        //kebab dropdown menu listener
+                        this.editorKebabDropdownListeners.kebabDropdownMenuListener();
                     })
                 //} else {
                     //return;
@@ -150,6 +155,8 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
 
                     wordCountListener("codemirror");
 
+                    //kebab dropdown menu listener
+                    this.editorKebabDropdownListeners.kebabDropdownMenuListener();
                 //} else {
                     //return;
                 //}
