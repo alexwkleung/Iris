@@ -16,6 +16,10 @@ import { wordCountListener } from "./word-count-listener"
 import { setWindowTitle } from "../window/window-title"
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
+import { CMEditorState } from "../codemirror/editor/cm-editor-state"
+import { cursors } from "../codemirror/extensions/cursors"
+import { Settings } from "../settings/settings"
+
 /**
  * @extends DirectoryTreeUIModals
  * @implements `IDirectoryTreeUIModalListeners`
@@ -364,12 +368,13 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                 //set contenteditable 
                 CMEditorView.setContenteditable(true);
-                
-                //if contenteditable attribute is set to true 
-                //if((document.querySelector('.cm-editor') as HTMLElement).getAttribute('contenteditable') === 'true') {
-                    //show the menubar
-                    //(document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
-                //}
+
+                //cursor theme
+                if(Settings.parseThemeSettings().lightTheme) {
+                    CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+                } else if(Settings.parseThemeSettings().darkTheme) {
+                    CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                }
 
                 (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 

@@ -76,7 +76,7 @@ export function wordCountListener(editor: string): number {
         wordCount = 0;
 
         //taken from: https://codemirror.net/examples/panel/
-        const iter = CMEditorView.editorView.state.doc.iter();
+        const iter: TextIterator = CMEditorView.editorView.state.doc.iter();
         while(!iter.next().done) {
             let inWord: boolean = false;
 
