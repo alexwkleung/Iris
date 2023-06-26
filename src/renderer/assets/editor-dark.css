@@ -61,6 +61,10 @@ body {
     color: var(--prosemirror-color-dark);
 }
 
-.ͼ2 .cm-content {
+.cm-content {
     caret-color: var(--caret-color-dark);
+}
+
+.cm-cursor {
+    color: var(--caret-color-dark);
 }

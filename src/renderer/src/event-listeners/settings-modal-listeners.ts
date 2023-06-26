@@ -1,6 +1,9 @@
 import { SettingsModal } from "../settings/settings-modal"
 import { Settings, EditorThemes } from "../settings/settings"
 import { fsMod } from "../utils/alias"
+import { CMEditorView } from "../codemirror/editor/cm-editor-view"
+import { CMEditorState } from "../codemirror/editor/cm-editor-state"
+import { cursors } from "../codemirror/extensions/cursors"
 
 interface IThemeJSONRef<T extends string> {
     updatedSettings: T;
@@ -73,6 +76,12 @@ export class SettingsModalListeners extends SettingsModal {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
                         }
 
+                        //check mode
+                        if(Settings.parseDotSettings().basicMode) {
+                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+                        } else if(Settings.parseDotSettings().advancedMode) {
+                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+                        }
                     //if selection is dark theme
                     } else if(currentSelection.value === 'editor-dark') {
                         //log
@@ -91,6 +100,13 @@ export class SettingsModalListeners extends SettingsModal {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
                         } else {
                             fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                        }
+
+                        //check mode 
+                        if(Settings.parseDotSettings().basicMode) {
+                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                        } else if(Settings.parseDotSettings().advancedMode) {
+                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
                         }
                     }
                 })

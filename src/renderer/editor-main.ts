@@ -4,6 +4,8 @@ import { WordCountContainerNode } from "./src/misc-ui/word-count"
 import { EditorKebabDropdownMenu } from "./src/misc-ui/editor-kebab-dropdown-menu"
 import { CMEditorView } from "./src/codemirror/editor/cm-editor-view"
 import { Settings } from "./src/settings/settings"
+import { CMEditorState } from "./src/codemirror/editor/cm-editor-state"
+import { cursors } from "./src/codemirror/extensions/cursors"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
@@ -83,6 +85,12 @@ export namespace EditorNs {
             CMEditorView.createEditorView();
 
             CMEditorView.setContenteditable(false);
+
+            if(Settings.parseThemeSettings().lightTheme) {
+                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+            } else if(Settings.parseThemeSettings().darkTheme) {
+                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+            }
         }
 
         //create editor top bar container

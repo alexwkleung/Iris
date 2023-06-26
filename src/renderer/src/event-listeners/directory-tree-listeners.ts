@@ -13,8 +13,10 @@ import { isModeAdvanced, isModeBasic } from "../utils/is"
 import { Node } from "prosemirror-model"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
-import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
+import { CMEditorState } from "../codemirror/editor/cm-editor-state"
+import { Settings } from "../settings/settings"
+import { cursors } from "../codemirror/extensions/cursors"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -427,6 +429,12 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 
                                 //kebab dropdown menu listener
                                 this.editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
+
+                                if(Settings.parseThemeSettings().lightTheme) {
+                                    CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+                                } else if(Settings.parseThemeSettings().darkTheme) {
+                                    CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                                }
                             }
                             }
                         } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {

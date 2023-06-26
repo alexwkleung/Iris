@@ -4,6 +4,8 @@ import { defaultKeymap, history, historyKeymap, standardKeymap } from '@codemirr
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { EditorView } from '@codemirror/view'
+import { Compartment } from '@codemirror/state'
+import { cursors } from '../extensions/cursors'
 
 export class CMEditorState {
     /**
@@ -12,6 +14,8 @@ export class CMEditorState {
      * @static
      */
     public static editorState: EditorState;
+    
+    public static cursorCompartment: Compartment = new Compartment();
 
     /**
      * Create editor state
@@ -21,6 +25,7 @@ export class CMEditorState {
      * @returns EditorState
      */
     public static createEditorState(): EditorState {
+
         CMEditorState.editorState = EditorState.create({
             extensions: [
                 markdown({
@@ -35,9 +40,13 @@ export class CMEditorState {
                     ...defaultKeymap,
                     ...historyKeymap,
                 ]),
-                EditorView.lineWrapping
+                EditorView.lineWrapping,
+                this.cursorCompartment.of(cursors[0])
             ]
         });
+        
+        //dispatch
+        //CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
 
         console.log("cm state");
 
