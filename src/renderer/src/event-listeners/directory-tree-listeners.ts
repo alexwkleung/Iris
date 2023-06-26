@@ -17,6 +17,7 @@ import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { Settings } from "../settings/settings"
 import { cursors } from "../codemirror/extensions/cursors"
+import { EditorView } from "@codemirror/view"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -435,9 +436,14 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 } else if(Settings.parseThemeSettings().darkTheme) {
                                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
                                 }
+
+                                //set scroll position to the beginning of the view 
+                                CMEditorView.editorView.dispatch({
+                                    effects: EditorView.scrollIntoView(0)
+                                })
                             }
-                            }
-                        } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
+                        }
+                    } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }
                     }
