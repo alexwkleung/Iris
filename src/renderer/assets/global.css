@@ -1031,6 +1031,7 @@ body {
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
     width: calc(100% - 10px);
+    text-align: justify;
 }
 .ͼ1 .cm-scroller {
     font-family: 'Inter-Regular';
