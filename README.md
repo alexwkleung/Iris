@@ -10,9 +10,9 @@
 
 <img align="center" src="./screenshots/current-dev-v0.2.0-29.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-30.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-32.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-31.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-33.png"></img>
 
 <p align="center">Current dev screenshots (subject to change; frequently updated)</p>
 

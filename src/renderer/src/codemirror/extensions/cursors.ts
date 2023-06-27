@@ -18,7 +18,7 @@ const defaultCursorDarkTheme = EditorView.theme({
 
 //block cursor
 const blockCursor = EditorView.theme({
-    '.cm-cursor, .cm-dropCursor': { borderLeftColor: dark, borderLeft: "0px solid", borderRight: "0.75em solid", opacity: "0.5" }
+    '.cm-cursor, .cm-dropCursor': { borderLeftColor: dark, borderLeft: "2px solid", borderRight: "0.57em solid", opacity: "0.5" }
 });
 
 //default cursor extension
