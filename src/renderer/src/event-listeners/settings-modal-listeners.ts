@@ -4,14 +4,23 @@ import { fsMod } from "../utils/alias"
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
+import { AdvancedModeSettings } from "../settings/settings"
 
 interface IThemeJSONRef<T extends string> {
+    updatedSettings: T;
+}
+
+interface IAdvancedModeJSONRef<T extends string> {
     updatedSettings: T;
 }
 
 export const themeJSONRef: IThemeJSONRef<string> = {
     //initially parse theme settings so it can be referenced later
     updatedSettings: JSON.stringify(Settings.parseThemeSettings())
+}
+
+export const advancedModeJSONRef: IAdvancedModeJSONRef<string> = {
+    updatedSettings: JSON.stringify(Settings.parseAdvancedModeSettings())
 }
 
 /**
@@ -28,6 +37,176 @@ export class SettingsModalListeners extends SettingsModal {
     }
 
     /**
+     * Theme settings listener
+     * 
+     * @private
+     */
+    private themeSettingsListener(): void {
+        if((document.querySelector('.light-option') as HTMLElement).hasAttribute("selected") && (document.querySelector('.editor-dark-theme') as HTMLElement) !== null) {
+            //remove dark stylesheet node
+            document.querySelectorAll('.editor-dark-theme').forEach((el) => {
+                el.remove();
+            });
+
+            return;
+        } else {
+            (document.getElementById("theme-select") as HTMLElement).addEventListener('change', (e) => {
+                const currentSelection = (e.currentTarget as HTMLSelectElement);
+
+                //if dark theme exists in dom
+                if((document.querySelector('.editor-dark-theme') as HTMLElement) !== null) {
+                    //remove stylesheet node
+                    document.querySelectorAll('.editor-dark-theme').forEach((el) => {
+                        el.remove();
+                    })
+                }
+
+                //if selection is light theme
+                if(currentSelection.value === 'editor-light') {
+                    //log
+                    console.log("selected editor light");
+
+                    //log
+                    console.log(Settings.parseThemeSettings().lightTheme);
+
+                    (document.querySelector('.dark-option') as HTMLElement).removeAttribute("selected");
+
+                    (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
+
+                    themeJSONRef.updatedSettings = '{"lightTheme":true,"darkTheme":false}';
+
+                    if(!Settings.parseThemeSettings().lightTheme) {
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                    } else {
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                    }
+
+                    //check mode
+                    if(Settings.parseDotSettings().basicMode) {
+                        CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+                    } else if(Settings.parseDotSettings().advancedMode) {
+                        CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
+                    }
+
+                    //check block cursor
+                    if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                        AdvancedModeSettings.defaultCursor("light");
+                    } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                        AdvancedModeSettings.defaultCursor("dark");
+                    } else if(
+                        Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
+                        || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                    ) {
+                        AdvancedModeSettings.blockCursor();
+                    }
+                //if selection is dark theme
+                } else if(currentSelection.value === 'editor-dark') {
+                    //log
+                    console.log("selected editor dark");
+
+                    //log
+                    console.log(Settings.parseThemeSettings().darkTheme);
+
+                    (document.querySelector('.light-option') as HTMLElement).removeAttribute("selected");
+
+                    (document.querySelector('.dark-option') as HTMLElement).setAttribute("selected", "");
+
+                    //apply dark theme
+                    EditorThemes.darkTheme();
+
+                    themeJSONRef.updatedSettings = '{"lightTheme":false,"darkTheme":true}';
+
+                    if(!Settings.parseThemeSettings().darkTheme) {
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                    } else {
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                    }
+
+                    //check mode 
+                    if(Settings.parseDotSettings().basicMode) {
+                        CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                    } else if(Settings.parseDotSettings().advancedMode) {
+                        CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                    }
+
+                    //check block cursor
+                    if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                        AdvancedModeSettings.defaultCursor("light");
+                    } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                        AdvancedModeSettings.defaultCursor("dark");
+                    } else if(
+                        Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
+                        || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                    ) {
+                        AdvancedModeSettings.blockCursor();
+                    }
+                }
+            })
+        }
+    }
+
+    /**
+     * Cursor settings listener
+     * 
+     * @private
+     */
+    private cursorSettingsListener(): void {
+        (document.getElementById('advanced-mode-options-select') as HTMLElement).addEventListener('change', (e) => {
+            const currentSelection: HTMLSelectElement = (e.currentTarget as HTMLSelectElement);
+
+            //if current selection is default-cursor and theme is light
+            if(currentSelection.value === 'default-cursor' && Settings.parseThemeSettings().lightTheme) {
+                //log
+                console.log("selected default cursor and theme is light");
+                
+                (document.querySelector('.block-cursor-option') as HTMLElement).removeAttribute("selected");
+                (document.querySelector('.default-cursor-option') as HTMLElement).setAttribute("selected", "");
+
+                //assign updated json to ref
+                advancedModeJSONRef.updatedSettings = '{"defaultCursor":true,"blockCursor":false}';
+
+                //update .iris-advanced-editor-dot-settings.json 
+                fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json", advancedModeJSONRef.updatedSettings);
+
+                //dispatch cursor compartment reconfiguration
+                CMEditorView.editorView.dispatch({
+                    effects: CMEditorState.cursorCompartment.reconfigure(cursors[0])
+                })
+            //if current selection is default-cursor and theme is dark 
+            } else if(currentSelection.value === 'default-cursor' && Settings.parseThemeSettings().darkTheme) {
+                //log
+                console.log("selected default cursor and theme is dark");
+
+                (document.querySelector('.block-cursor-option') as HTMLElement).removeAttribute("selected");
+                (document.querySelector('.default-cursor-option') as HTMLElement).setAttribute("selected", "");
+
+                advancedModeJSONRef.updatedSettings = '{"defaultCursor":true,"blockCursor":false}';
+
+                fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json", advancedModeJSONRef.updatedSettings);
+
+                CMEditorView.editorView.dispatch({
+                    effects: CMEditorState.cursorCompartment.reconfigure(cursors[1])
+                })
+            //if current selection is block-cursor
+            } else if(currentSelection.value === 'block-cursor') {
+                //log
+                console.log("selected block cursor");
+
+                (document.querySelector('.default-cursor-option') as HTMLElement).removeAttribute("selected");
+                (document.querySelector('.block-cursor-option') as HTMLElement).setAttribute("selected", "");
+
+                advancedModeJSONRef.updatedSettings = '{"defaultCursor":false,"blockCursor":true}';
+
+                fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json", advancedModeJSONRef.updatedSettings);
+
+                CMEditorView.editorView.dispatch({
+                    effects: CMEditorState.cursorCompartment.reconfigure(cursors[2])
+                })
+            }
+        })   
+    }
+
+    /**
      * Settings modal listener
      */
     public settingsModalListener(): void {
@@ -40,77 +219,11 @@ export class SettingsModalListeners extends SettingsModal {
             //invoke settings modal exit listener
             this.settingsModalExitListener();
 
-            if((document.querySelector('.light-option') as HTMLElement).hasAttribute("selected") && (document.querySelector('.editor-dark-theme') as HTMLElement) !== null) {
-                //remove dark stylesheet node
-                document.querySelectorAll('.editor-dark-theme').forEach((el) => {
-                    el.remove();
-                });
-
-                return;
-            } else {
-                (document.getElementById("theme-select") as HTMLElement).addEventListener('change', (e) => {
-                    const currentSelection = (e.currentTarget as HTMLSelectElement);
-    
-                    //if dark theme exists in dom
-                    if((document.querySelector('.editor-dark-theme') as HTMLElement) !== null) {
-                        //remove stylesheet node
-                        document.querySelectorAll('.editor-dark-theme').forEach((el) => {
-                            el.remove();
-                        })
-                    }
-
-                    //if selection is light theme
-                    if(currentSelection.value === 'editor-light') {
-                        //log
-                        console.log(Settings.parseThemeSettings().lightTheme);
-
-                        (document.querySelector('.dark-option') as HTMLElement).removeAttribute("selected");
-    
-                        (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
-
-                        themeJSONRef.updatedSettings = '{"lightTheme":true,"darkTheme":false}';
-
-                        if(!Settings.parseThemeSettings().lightTheme) {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
-                        } else {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
-                        }
-
-                        //check mode
-                        if(Settings.parseDotSettings().basicMode) {
-                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-                        } else if(Settings.parseDotSettings().advancedMode) {
-                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-                        }
-                    //if selection is dark theme
-                    } else if(currentSelection.value === 'editor-dark') {
-                        //log
-                        console.log(Settings.parseThemeSettings().darkTheme);
-
-                        (document.querySelector('.light-option') as HTMLElement).removeAttribute("selected");
-    
-                        (document.querySelector('.dark-option') as HTMLElement).setAttribute("selected", "");
-
-                        //apply dark theme
-                        EditorThemes.darkTheme();
-
-                        themeJSONRef.updatedSettings = '{"lightTheme":false,"darkTheme":true}';
-
-                        if(!Settings.parseThemeSettings().darkTheme) {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
-                        } else {
-                            fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
-                        }
-
-                        //check mode 
-                        if(Settings.parseDotSettings().basicMode) {
-                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
-                        } else if(Settings.parseDotSettings().advancedMode) {
-                            CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
-                        }
-                    }
-                })
-            }
+            //theme settings listener
+            this.themeSettingsListener();
+            
+            //cursor settings listener
+            this.cursorSettingsListener();
         })
     }
 }

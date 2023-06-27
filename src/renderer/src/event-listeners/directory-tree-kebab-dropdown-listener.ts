@@ -11,6 +11,7 @@ import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 import { wordCountListener } from "./word-count-listener"
+import { AdvancedModeSettings } from "../settings/settings"
 
 interface IEditorModeJSONRef<T extends string> {
     updatedSettings: T
@@ -153,6 +154,18 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                         CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
                     }
 
+                    //check block cursor
+                    if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                        AdvancedModeSettings.defaultCursor("light");
+                    } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                        AdvancedModeSettings.defaultCursor("dark");
+                    } else if(
+                        Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
+                        || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                    ) {
+                        AdvancedModeSettings.blockCursor();
+                    }
+                    
                     wordCountListener("codemirror");
 
                     //kebab dropdown menu listener

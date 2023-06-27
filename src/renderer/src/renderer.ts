@@ -2,6 +2,7 @@ import { directoryNs } from '../directory-main'
 import { EditorNs } from '../editor-main'
 import { windowNs } from './window/draggable-area'
 import { Settings, EditorThemes } from '../src/settings/settings'
+import { AdvancedModeSettings } from '../src/settings/settings'
 
 export function initRenderer(): void {
     window.addEventListener('DOMContentLoaded', () => {     
@@ -31,7 +32,6 @@ export function initRenderer(): void {
           EditorThemes.darkTheme();
         }
         
-        
         //log
         console.log(Settings.parseDotSettings());
 
@@ -49,6 +49,18 @@ export function initRenderer(): void {
           } 
 
           (document.getElementById('app') as HTMLElement).classList.add('advanced-mode-is-active');
+
+          //check block cursor
+          if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+            AdvancedModeSettings.defaultCursor("light");
+          } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+            AdvancedModeSettings.defaultCursor("dark");
+          } else if(
+            Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
+            || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+          ) {
+            AdvancedModeSettings.blockCursor();
+          }
         }
   });
 }

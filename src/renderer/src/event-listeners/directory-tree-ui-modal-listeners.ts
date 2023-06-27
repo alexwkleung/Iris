@@ -19,6 +19,7 @@ import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 import { Settings } from "../settings/settings"
+import { AdvancedModeSettings } from "../settings/settings"
 
 /**
  * @extends DirectoryTreeUIModals
@@ -374,6 +375,18 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
                 } else if(Settings.parseThemeSettings().darkTheme) {
                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                }
+
+                //check block cursor 
+                if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                    AdvancedModeSettings.defaultCursor("light");
+                } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                    AdvancedModeSettings.defaultCursor("dark");
+                } else if(
+                    Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
+                    || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                ) {
+                    AdvancedModeSettings.blockCursor();
                 }
 
                 (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";

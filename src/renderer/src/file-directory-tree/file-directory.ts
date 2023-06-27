@@ -189,9 +189,19 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
         console.log(nameVec);
         
+        const nameVecMac: string[] = [];
+        for(let i = 0; i < nameVec.length; i++) {
+            console.log(nameVec[i]);
+
+            //filter .DS_Store for mac user
+            if(nameVec[i] !== '.DS_Store') {
+                nameVecMac.push(nameVec[i]);
+            }
+        }
+
         //check platform before returning nameVec
         return window.electron.process.platform === 'darwin' 
-            ? nameVec.slice(1) 
+            ? nameVecMac
             : window.electron.process.platform === 'linux' || window.electron.process.platform === 'win32' 
             ? nameVec 
             : null

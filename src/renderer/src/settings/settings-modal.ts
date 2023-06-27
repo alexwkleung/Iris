@@ -1,6 +1,9 @@
 import { App } from "../../app"
-import { horizontalLineSettings } from "../misc-ui/horizontal-line"
+import { appendHorizontalLineNode } from "../misc-ui/horizontal-line"
 import { Settings } from "./settings"
+import { CMEditorView } from "../codemirror/editor/cm-editor-view"
+import { CMEditorState } from "../codemirror/editor/cm-editor-state"
+import { cursors } from "../codemirror/extensions/cursors"
 
 export class SettingsModal {
     static settingsModalContainerNode: HTMLDivElement;
@@ -39,13 +42,13 @@ export class SettingsModal {
         themeOptionsContainerTitle.appendChild(themeOptionsContainerTitleTextNode);
     
         //horizontal line
-        themeOptionsContainer.appendChild(horizontalLineSettings);
+        appendHorizontalLineNode(themeOptionsContainer);
 
         //theme label
         const themeLabel: HTMLLabelElement = document.createElement('label');
         themeLabel.setAttribute("for", "editor-themes");
         themeLabel.setAttribute("class", "editor-theme-label");
-        themeLabel.textContent = "Editor Theme"
+        themeLabel.textContent = "Editor"
         themeOptionsContainer.appendChild(themeLabel);
 
         //theme select
@@ -58,14 +61,14 @@ export class SettingsModal {
         const themeOptionLight: HTMLOptionElement = document.createElement('option');
         themeOptionLight.setAttribute("value", "editor-light");
         themeOptionLight.setAttribute("class", "light-option");
-        themeOptionLight.textContent = "Light Theme";
+        themeOptionLight.textContent = "Default Light";
         themeSelect.appendChild(themeOptionLight);
 
         //theme option dark
         const themeOptionDark: HTMLOptionElement = document.createElement('option');
         themeOptionDark.setAttribute("value", "editor-dark");
         themeOptionDark.setAttribute("class", "dark-option");
-        themeOptionDark.textContent = "Dark Theme";
+        themeOptionDark.textContent = "Default Dark";
         themeSelect.appendChild(themeOptionDark);
 
         //if light theme is true
@@ -76,6 +79,61 @@ export class SettingsModal {
         } else if(Settings.parseThemeSettings().darkTheme) {
             //set option selection to dark theme
             themeOptionDark.setAttribute("selected", "");
+        }
+    }
+
+    /**
+     * Advanced mode options
+     */
+    public advancedModeOptions(): void {
+        //advanced mode options container
+        const advancedModeOptionsContainer: HTMLDivElement = document.createElement('div');
+        advancedModeOptionsContainer.setAttribute("id", "advanced-mode-options-container");
+        SettingsModal.settingsModalOptionsContainer.appendChild(advancedModeOptionsContainer);
+
+        //advanced mode options container title 
+        const advancedModeOptionsContainerTitle: HTMLDivElement = document.createElement('div');
+        advancedModeOptionsContainerTitle.setAttribute("id", "advanced-mode-options-container-title");  
+        advancedModeOptionsContainer.appendChild(advancedModeOptionsContainerTitle);
+
+        //advanced mode options container title text node
+        const advancedModeOptionsContainerTitleTextNode: Text = document.createTextNode("Advanced Mode");
+        advancedModeOptionsContainerTitle.appendChild(advancedModeOptionsContainerTitleTextNode);
+
+        //horizontal line
+        appendHorizontalLineNode(advancedModeOptionsContainer);
+
+        //advanced mode cursor label
+        const advancedModeCursorLabel: HTMLLabelElement = document.createElement('label');
+        advancedModeCursorLabel.setAttribute("for", "advanced-mode-options");
+        advancedModeCursorLabel.setAttribute("class", "advanced-mode-label");
+        advancedModeCursorLabel.textContent = "Cursor";
+        advancedModeOptionsContainer.appendChild(advancedModeCursorLabel);
+        
+        //advanced mode cursor select
+        const advancedModeCursorSelect: HTMLSelectElement = document.createElement('select');
+        advancedModeCursorSelect.setAttribute("name", "advanced-mode-options");
+        advancedModeCursorSelect.setAttribute("id", "advanced-mode-options-select");
+        advancedModeOptionsContainer.appendChild(advancedModeCursorSelect);
+
+        //advanced mode default cursor option
+        const advancedModeDefaultCursorOption: HTMLOptionElement = document.createElement('option');
+        advancedModeDefaultCursorOption.setAttribute("value", "default-cursor");
+        advancedModeDefaultCursorOption.setAttribute("class", "default-cursor-option");
+        advancedModeDefaultCursorOption.textContent = "Default Cursor";
+        advancedModeCursorSelect.appendChild(advancedModeDefaultCursorOption);
+        
+        //advanced mode block cursor option
+        const advancedModeBlockCursorOption: HTMLOptionElement = document.createElement('option');
+        advancedModeBlockCursorOption.setAttribute("value", "block-cursor");
+        advancedModeBlockCursorOption.setAttribute("class", "block-cursor-option");
+        advancedModeBlockCursorOption.textContent = "Block Cursor";
+        advancedModeCursorSelect.appendChild(advancedModeBlockCursorOption);
+
+        if(Settings.parseAdvancedModeSettings().defaultCursor) {
+            advancedModeDefaultCursorOption.setAttribute("selected", "");
+        } else if(Settings.parseAdvancedModeSettings().blockCursor) {
+            advancedModeBlockCursorOption.setAttribute("selected", "");
         }
     }
 
@@ -103,5 +161,8 @@ export class SettingsModal {
         
         //editor theme options
         this.editorThemeOptions();
+
+        //advanced mode options
+        this.advancedModeOptions();
     }
 }

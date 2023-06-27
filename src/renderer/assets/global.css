@@ -880,7 +880,7 @@ body {
 */
 #theme-options-container {
     /*border: 1px solid white;*/
-    width: 600px;
+    width: 598px;
     height: 150px;
 }
 #theme-options-container-title {
@@ -897,7 +897,7 @@ body {
     font-size: 17px;
 }
 #theme-select {
-    margin-left: 368px;
+    margin-left: 425px;
     font-family: 'Inter-Regular';
     margin-top: 20px;
     background-color: rgb(56, 56, 56);
@@ -906,6 +906,41 @@ body {
     font-size: 17px;
 }
 #theme-select:focus {
+    outline: none;
+}
+
+/*
+* advanced mode options 
+*/
+#advanced-mode-options-container {
+    /*border: 1px solid white;*/
+    width: 598px;
+    height: 150px;
+    margin-top: 20px;
+}
+#advanced-mode-options-container-title {
+    color: #ffffff;
+    font-family: 'Inter-Bold';
+    font-size: 20px;
+    margin-left: 0px;
+    margin-top: 10px;
+}
+.advanced-mode-label {
+    color: white;
+    font-family: 'Inter-Regular';
+    margin-left: 0px;
+    font-size: 17px;
+}
+#advanced-mode-options-select {
+    margin-left: 403px;
+    font-family: 'Inter-Regular';
+    margin-top: 20px;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    border-radius: 5px;
+    font-size: 17px;
+}
+#advanced-mode-options-select:focus {
     outline: none;
 }
 

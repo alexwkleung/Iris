@@ -18,6 +18,7 @@ import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { Settings } from "../settings/settings"
 import { cursors } from "../codemirror/extensions/cursors"
 import { EditorView } from "@codemirror/view"
+import { AdvancedModeSettings } from "../settings/settings"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -431,10 +432,23 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 //kebab dropdown menu listener
                                 this.editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
 
+                                //default cursors
                                 if(Settings.parseThemeSettings().lightTheme) {
                                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
                                 } else if(Settings.parseThemeSettings().darkTheme) {
                                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+                                }
+
+                                //check block cursor
+                                if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                                    AdvancedModeSettings.defaultCursor("light");
+                                } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                                    AdvancedModeSettings.defaultCursor("dark");
+                                } else if(
+                                    Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
+                                    || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                                ) {
+                                    AdvancedModeSettings.blockCursor();
                                 }
 
                                 //set scroll position to the beginning of the view 
