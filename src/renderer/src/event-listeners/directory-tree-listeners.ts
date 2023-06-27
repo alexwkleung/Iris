@@ -429,6 +429,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 //word count listener
                                 wordCountListener("codemirror");
                                 
+                                //apply active state listener 
+                                this.dirTreeStateListeners.activeChildFileStateListener();
+                                
                                 //kebab dropdown menu listener
                                 this.editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
 
