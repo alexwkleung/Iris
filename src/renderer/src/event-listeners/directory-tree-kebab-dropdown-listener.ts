@@ -12,6 +12,7 @@ import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 import { wordCountListener } from "./word-count-listener"
 import { AdvancedModeSettings } from "../settings/settings"
+import { EditorView } from "@codemirror/view"
 
 interface IEditorModeJSONRef<T extends string> {
     updatedSettings: T
@@ -166,6 +167,11 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                         AdvancedModeSettings.blockCursor();
                     }
                     
+                    //set scroll position to the beginning of the view 
+                    CMEditorView.editorView.dispatch({
+                        effects: EditorView.scrollIntoView(0)
+                    })
+
                     wordCountListener("codemirror");
 
                     //kebab dropdown menu listener
