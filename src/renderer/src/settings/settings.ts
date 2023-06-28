@@ -36,7 +36,7 @@ export class Settings {
      * @returns JSON object of Iris settings
      */
     static parseThemeSettings(): IThemeInterface<boolean> {
-        const irisSettings: string = fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json")
+        const irisSettings: string = fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.iris-settings.json")
         const parseIrisSettings: IThemeInterface<boolean> = JSON.parse(irisSettings);
 
         //log

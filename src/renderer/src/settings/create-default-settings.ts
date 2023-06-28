@@ -1,5 +1,5 @@
 import { fsMod } from '../../../preload/mod/fs-mod'
-import irisSettings from './iris-default-settings.json'
+import irisSettings from './.iris-default-settings.json'
 import irisDotSettings from './.iris-default-dot-settings.json'
 import irisAdvancedModeDotSettings from './.iris-default-advanced-editor-dot-settings.json'
 
@@ -7,7 +7,7 @@ import irisAdvancedModeDotSettings from './.iris-default-advanced-editor-dot-set
  * Create default settings
  */
 export function createDefaultSettings(): void {
-    fsMod._createFile(fsMod._baseDir("home") + "/Iris/iris-settings.json", JSON.stringify(irisSettings));
+    fsMod._createFile(fsMod._baseDir("home") + "/Iris/.iris-settings.json", JSON.stringify(irisSettings));
 }
 
 /**

@@ -76,9 +76,9 @@ export class SettingsModalListeners extends SettingsModal {
                     themeJSONRef.updatedSettings = '{"lightTheme":true,"darkTheme":false}';
 
                     if(!Settings.parseThemeSettings().lightTheme) {
-                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-settings.json", themeJSONRef.updatedSettings);
                     } else {
-                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-settings.json", themeJSONRef.updatedSettings);
                     }
 
                     //check mode
@@ -117,9 +117,9 @@ export class SettingsModalListeners extends SettingsModal {
                     themeJSONRef.updatedSettings = '{"lightTheme":false,"darkTheme":true}';
 
                     if(!Settings.parseThemeSettings().darkTheme) {
-                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-settings.json", themeJSONRef.updatedSettings);
                     } else {
-                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/iris-settings.json", themeJSONRef.updatedSettings);
+                        fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-settings.json", themeJSONRef.updatedSettings);
                     }
 
                     //check mode 
