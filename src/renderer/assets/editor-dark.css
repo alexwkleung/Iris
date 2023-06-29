@@ -70,3 +70,9 @@ body {
 .cm-cursor {
     color: var(--caret-color-dark);
 }
+.cm-focused .cm-selectionBackground {
+    background-color: #667fa1 !important;
+}
+.cm-selectionBackground {
+    background-color: #667fa1 !important;
+}

@@ -1071,7 +1071,9 @@ body {
 .ͼ1 .cm-scroller {
     font-family: 'Inter-Regular';
 }
-
 .cm-focused .cm-selectionBackground {
+    background-color: #91a5bd !important;
+}
+.cm-selectionBackground {
     background-color: #91a5bd !important;
 }
