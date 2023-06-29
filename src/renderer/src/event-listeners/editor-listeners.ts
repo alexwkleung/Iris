@@ -47,7 +47,7 @@ export class EditorListeners implements IEditorListeners {
                                 console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
                         }
                     })
-                }, 1100)); //1100ms default
+                }, 1000)); //1000ms default
             } 
         } else if(editor === "codemirror") {
             //when a keyboard press is released
@@ -70,7 +70,7 @@ export class EditorListeners implements IEditorListeners {
                             console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
                         }
                     })
-                }, 1100)); 
+                }, 1000)); 
             } 
         }
     }

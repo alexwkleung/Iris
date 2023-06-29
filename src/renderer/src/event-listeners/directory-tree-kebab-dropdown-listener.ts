@@ -172,6 +172,8 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                         effects: EditorView.scrollIntoView(0)
                     })
 
+                    this.autoSaveListener("codemirror");
+
                     wordCountListener("codemirror");
 
                     //kebab dropdown menu listener
