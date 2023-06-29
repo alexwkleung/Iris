@@ -43,6 +43,8 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
         //hide file directory kebab after click menu container when file directory tree container inner region is clicked
         (document.getElementById("file-directory-tree-container-inner") as HTMLElement).addEventListener('click', () => {
             (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).style.display = "none";
+            
+            (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).classList.remove('is-active');
         })
     }    
 
