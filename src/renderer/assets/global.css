@@ -309,7 +309,7 @@ body {
     height: 400px;
     background-color: #2a2828;
     z-index: 1;
-    /*border: 1px solid grey;*/
+    border: 1px solid rgb(214, 213, 213);
     border-radius: 15px;
 }
 #create-modal-exit {
@@ -598,7 +598,7 @@ body {
     height: 400px;
     background-color: #2a2828;
     z-index: 1;
-    /*border: 1px solid grey;*/
+    border: 1px solid rgb(214, 213, 213);
     border-radius: 15px;
 }
 #kebab-modal-exit-button {
@@ -715,7 +715,7 @@ body {
     height: 450px;
     background-color: #2a2828;
     z-index: 1;
-    /*border: 1px solid grey;*/
+    border: 1px solid rgb(214, 213, 213);
     border-radius: 15px;
 }
 #settings-modal-exit {
