@@ -21,7 +21,8 @@ interface IThemeInterface<T extends boolean> {
  */
 interface IModeInterface<T extends boolean> {
     basicMode: T,
-    advancedMode: T
+    advancedMode: T,
+    readingMode: T
 }
 
 interface IAdvancedModeInterface<T extends boolean> {

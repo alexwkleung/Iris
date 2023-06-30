@@ -61,6 +61,16 @@ export function initRenderer(): void {
           ) {
             AdvancedModeSettings.blockCursor();
           }
+        } else if(Settings.parseDotSettings().readingMode) {
+          if((document.getElementById('app') as HTMLElement).classList.contains('basic-mode-is-active')) {
+            (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');
+          } else if((document.getElementById('app') as HTMLElement).classList.contains('advanced-mode-is-active')) {
+            (document.getElementById('app') as HTMLElement).classList.remove('advanced-mode-is-active');
+          } else {
+            return;
+          }
+
+          (document.getElementById('app') as HTMLElement).classList.add('reading-mode-is-active');
         }
   });
 }

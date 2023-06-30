@@ -5,7 +5,7 @@ import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { DirectoryTreeListeners } from "./directory-tree-listeners"
 import { EditorListeners } from "./editor-listeners"
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
-import { isModeAdvanced, isModeBasic } from "../utils/is"
+import { isModeAdvanced, isModeBasic, isModeReading } from "../utils/is"
 import { fsMod } from "../utils/alias"
 import { PMEditorView } from "../prosemirror/editor/editor-view"
 import { PMEditorState } from "../prosemirror/editor/editor-state"
@@ -432,6 +432,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
                 //to-do: sort files...
+            } else if(isModeReading() && fileName !== " ") {
+                //
             }
         })
     }
@@ -599,10 +601,16 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
             //mode check
             if(isModeBasic()) {
-                //invoke parent root listener 
                 this.directoryTreeListeners.parentRootListener();
     
-                //invoke create file listener
+                this.createFileListener();
+            } else if(isModeAdvanced()) {
+                this.directoryTreeListeners.parentRootListener();
+    
+                this.createFileListener();
+            } else if(isModeReading()) {
+                this.directoryTreeListeners.parentRootListener();
+    
                 this.createFileListener();
             }
         })
@@ -627,6 +635,10 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //mode check
             if(isModeBasic()) {
                 //invoke create folder continue listener
+                this.createFolderContinueListener((document.getElementById('create-folder-input-node') as HTMLElement));
+            } else if(isModeAdvanced()) {
+                this.createFolderContinueListener((document.getElementById('create-folder-input-node') as HTMLElement));
+            } else if(isModeReading()) {
                 this.createFolderContinueListener((document.getElementById('create-folder-input-node') as HTMLElement));
             }
         })

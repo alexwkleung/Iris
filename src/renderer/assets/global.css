@@ -944,6 +944,73 @@ body {
     outline: none;
 }
 
+/*
+* reading mode
+*/
+#reading-mode-container {
+    /*padding-top: 40px;*/
+    padding-left: 15px;
+    font-family: 'Inter-Regular';
+    font-size: 17px;
+    /*border: 1px solid black;*/
+    margin-top: 40px;
+    height: calc(100% - 100px);
+    overflow-y: scroll;
+}
+#reading-mode-content {
+    padding-bottom: 500px;
+}
+#reading-mode-container h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter-Bold';
+    margin-left: 3px;
+}
+#reading-mode-container p {
+    margin-left: 3px;
+    padding-right: 20px;
+    white-space: pre-wrap;
+    text-align: justify;
+}
+#reading-mode-container blockquote  {
+    border-left: 3px solid grey;
+    margin: 1.5em 0px;
+    padding: 0.5em 10px;
+    font-size: 18px;
+}
+#reading-mode-container blockquote:before {
+    color: grey;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+#reading-mode-container blockquote p {
+    display: inline;
+    font-size: 18px;
+    color: rgb(83, 82, 82);
+}
+#reading-mode-container a {
+    color: var(--prosemirror-a-light);
+}
+#reading-mode-container strong {
+    font-family: 'Inter-Bold'
+}
+#reading-mode-container img {
+    max-width: calc(100% - 15px);
+}
+#reading-mode-container hr {
+    border-color: rgb(46, 46, 46);
+    width: calc(100% - 25px);
+    margin-left: -5px;
+}
+#reading-mode-container table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    font-size: 17px;
+    color: black;
+    font-family: 'Inter-Regular', sans-serif;
+    padding: 6px 13px;
+}
+
 /**
 * prosemirror editor nodes 
 */
@@ -1035,13 +1102,12 @@ body {
 .cm-editor {
     position: fixed;
     width: 100%;
-    height: calc(100% - 5px);
+    height: calc(100% + 50px);
     font-size: 17px;
     font-family: 'Inter-Bold';
     background-color: var(--prosemirror-bg-light); 
-    color: var(--prosemirror-color-light);
     /*border: 1px solid black;*/
-    padding-bottom: 150px;
+    padding-bottom: 160px;
     padding-top: 15px;
     padding-left: 12px;
     padding-right: 12px;
@@ -1053,6 +1119,7 @@ body {
 }
 .ͼ2 .cm-content {
     caret-color: var(--caret-color-light);
+    padding-bottom: 500px;
 }
 .ͼ1.cm-focused {
     outline: none;

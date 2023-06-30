@@ -9,7 +9,7 @@ import { EditorListeners } from "./editor-listeners"
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
 import { EditorNs } from "../../editor-main"
 import { wordCountListener } from "./word-count-listener"
-import { isModeAdvanced, isModeBasic } from "../utils/is"
+import { isModeAdvanced, isModeBasic, isModeReading } from "../utils/is"
 import { Node } from "prosemirror-model"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
@@ -19,6 +19,8 @@ import { Settings } from "../settings/settings"
 import { cursors } from "../codemirror/extensions/cursors"
 import { EditorView } from "@codemirror/view"
 import { AdvancedModeSettings } from "../settings/settings"
+import { ReadingMode } from "../mode/reading-mode"
+import { markdownParser } from "../utils/markdown-parser"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -463,18 +465,52 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                     effects: EditorView.scrollIntoView(0)
                                 })
 
-
                                 //kebab dropdown menu listener
                                 this.editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
                             }
+                        //if mode is reading
+                        } else if(isModeReading()) {
+                            if(document.getElementById('reading-mode-container') as HTMLElement !== null) {
+                                (document.getElementById('reading-mode-container') as HTMLElement).remove();
+                            }
+
+                            //create reading mode node 
+                            ReadingMode.readingModeNode();
+
+                            //create fragment from content and append
+                            const content: string = await markdownParser(fsMod.fs._readFileFolder(this.parentNameTagsArr()[j], (childFileName[i].textContent + ".md")))
+                            const rangeContextFragment = new Range().createContextualFragment(content);
+                            (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);
+                            
+                            //assign refs
+                            RefsNs.currentParentChildData.map((props) => {
+                                //null check
+                                if(props !== null) {
+                                    props.childFileName = childFileName[i].textContent as string;
+                                    props.parentFolderName = this.parentNameTagsArr()[j]; 
+                                }
+                            })
                         }
+
+                        //show kebab
+                        (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+
+                        //invoke state listener 
+                        this.dirTreeStateListeners.activeChildFileStateListener();
                     } else if(!this.getParentTags[j].contains(childFileName[i]) && !childFileName[i].classList.contains('is-active-child')) {
                             continue;
                         }
                     }
                     
                     //change document title so it corresponds to the opened file
-                    await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + (childFileName[i].textContent)).catch((e) => { throw console.error(e) });
+                    console.log(this.parentNameTagNodeRef.textContent)
+                    if(this.parentNameTagNodeRef.textContent !== undefined) {
+                        await setWindowTitle("Iris", true, this.parentNameTagRef + " - " + (childFileName[i].textContent)).catch((e) => { throw console.error(e) });
+                    } else {
+                        RefsNs.currentParentChildData.map(async (props) => {
+                            await setWindowTitle("Iris", true, props.parentFolderName + " - " + (childFileName[i].textContent)).catch((e) => { throw console.error(e) });
+                       })
+                    }
 
                     //add directory info to editor top bar
                     this.editorTopBarContainer.directoryInfo();

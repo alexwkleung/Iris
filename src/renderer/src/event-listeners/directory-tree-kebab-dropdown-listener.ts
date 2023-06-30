@@ -13,7 +13,9 @@ import { cursors } from "../codemirror/extensions/cursors"
 import { wordCountListener } from "./word-count-listener"
 import { AdvancedModeSettings } from "../settings/settings"
 import { EditorView } from "@codemirror/view"
-import { isModeBasic, isModeAdvanced } from "../utils/is"
+import { isModeBasic, isModeAdvanced, isModeReading } from "../utils/is"
+import { ReadingMode } from "../mode/reading-mode"
+import { markdownParser } from "../utils/markdown-parser"
 
 interface IEditorModeJSONRef<T extends string> {
     updatedSettings: T
@@ -24,8 +26,18 @@ const editorModeJSONRef: IEditorModeJSONRef<string> = {
 }
 
 export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
+    /**
+     * 
+     * Editor kebab dropdown listeners 
+     * 
+     * @private
+     * @protected
+     */
     private readonly editorKebabDropdownListeners = new EditorKebabDropdownMenuListeners();
 
+    /**
+     * Kebab dropdown button listener
+     */
     public kebabDropdownButtonListener(): void {
         (document.getElementById("file-directory-kebab-dropdown-menu-container") as HTMLElement).addEventListener('click', () => {
             //toggle is-active class
@@ -49,6 +61,9 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
         })
     }    
 
+    /**
+     * Kebab dorpdown select listener
+     */
     public kebabDropdownSelectListener(): void {
         (document.getElementById("editor-mode-select") as HTMLElement).addEventListener('change', (e) => {
             e.stopImmediatePropagation();
@@ -61,6 +76,22 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     //remove it
                     (document.getElementById('app') as HTMLElement).classList.remove('advanced-mode-is-active');    
                 }
+                
+                if(isModeReading()) {
+                    (document.getElementById('app') as HTMLElement).classList.remove('reading-mode-is-active');    
+                }
+
+                if(document.getElementById('reading-mode-container') as HTMLElement !== null) {
+                    (document.getElementById('reading-mode-container') as HTMLElement).remove();
+                }
+
+                if((document.querySelector('.advanced-mode-option') as HTMLElement).hasAttribute('selected')) {
+                    (document.querySelector('.advanced-mode-option') as HTMLElement).removeAttribute('selected');
+                } else if((document.querySelector('.reading-mode-option') as HTMLElement).hasAttribute('selected')) {
+                    (document.querySelector('.reading-mode-option') as HTMLElement).removeAttribute('selected');
+                }
+
+                (document.querySelector('.basic-mode-option') as HTMLElement).setAttribute('selected', "");
 
                 //add basic-mode-is-active class 
                 (document.getElementById('app') as HTMLElement).classList.add('basic-mode-is-active');
@@ -74,10 +105,13 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
 
                 PMEditorView.setContenteditable(true);
 
-                //hide prosemirror menubar
+                //show prosemirror menubar
                 (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
 
-                editorModeJSONRef.updatedSettings = '{"basicMode":true,"advancedMode":false}';
+                //show kebab dropdown 
+                (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+
+                editorModeJSONRef.updatedSettings = '{"basicMode":true,"advancedMode":false,"readingMode":false}';
 
                 fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
 
@@ -118,10 +152,32 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 //log
                 console.log("advanced selected");
 
+                //if basic mode is active
                 if((document.getElementById('app') as HTMLElement).classList.contains('basic-mode-is-active')) {
                     //remove it
                     (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');    
+                } 
+
+                //if reading mode is active
+                if(isModeReading()) {
+                    (document.getElementById('app') as HTMLElement).classList.remove('reading-mode-is-active');    
                 }
+
+                //check if reading mode node is present in dom
+                if(document.getElementById('reading-mode-container') as HTMLElement !== null) {
+                    //remove it
+                    (document.getElementById('reading-mode-container') as HTMLElement).remove();
+                }
+
+                //check attributes and remove them
+                if((document.querySelector('.basic-mode-option') as HTMLElement).hasAttribute('selected')) {
+                    (document.querySelector('.basic-mode-option') as HTMLElement).removeAttribute('selected');
+                } else if((document.querySelector('.reading-mode-option') as HTMLElement).hasAttribute('selected')) {
+                    (document.querySelector('.reading-mode-option') as HTMLElement).removeAttribute('selected');
+                }
+
+                //set correct attribute
+                (document.querySelector('.advanced-mode-option') as HTMLElement).setAttribute('selected', "");
 
                 //add advanced-mode-is-active class
                 (document.getElementById('app') as HTMLElement).classList.add('advanced-mode-is-active');
@@ -130,7 +186,7 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     PMEditorView.editorView.destroy();
                 }
 
-                editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":true}';
+                editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":true,"readingMode":false}';
 
                 fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
 
@@ -187,18 +243,57 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
             } else if(currentSelection.value === 'reading-mode') {
                 //if mode is basic
                 if(isModeBasic()) {
-                    //extract doc state as string
-                    //hide pm editor
-                    //create reading mode 
-                    //append doc string into reading node
+                    (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');
+                    (document.getElementById('app') as HTMLElement).classList.add('reading-mode-is-active');
+
+                    //update settings
+                    editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":false,"readingMode":true}';
+                    fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
+
+                    //destroy corresponding editorview
+                    PMEditorView.editorView.destroy();
                 //if mode is advanced
                 } else if(isModeAdvanced()) {
-                    //
+                    (document.getElementById('app') as HTMLElement).classList.remove('advanced-mode-is-active');
+                    (document.getElementById('app') as HTMLElement).classList.add('reading-mode-is-active');
+
+                    editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":false,"readingMode":true}';
+                    fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
+
+                    CMEditorView.editorView.destroy();
                 }
+
+                if((document.querySelector('.basic-mode-option') as HTMLElement).hasAttribute('selected')) {
+                    (document.querySelector('.basic-mode-option') as HTMLElement).removeAttribute('selected');
+                } else if((document.querySelector('.advanced-mode-option') as HTMLElement).hasAttribute('selected')) {
+                    (document.querySelector('.advanced-mode-option') as HTMLElement).removeAttribute('selected');
+                }
+
+                (document.querySelector('.reading-mode-option') as HTMLElement).setAttribute('selected', "");
+
+                //hide word count
+                (document.getElementById('word-count-container') as HTMLElement).style.display = "none";
+
+                //hide kebab dropdown menu
+                (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
+
+                ReadingMode.readingModeNode();
+
+                RefsNs.currentParentChildData.map(async (props) => {
+                    const content: string = await markdownParser(fsMod.fs._readFileFolder(props.parentFolderName, props.childFileName + ".md"))
+                    const rangeContextFragment = new Range().createContextualFragment(content);
+
+                    (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);
+
+                    //(document.getElementById('reading-mode-content') as HTMLElement).insertAdjacentHTML('afterbegin', content);
+                })
             }
         })
     }
 
+    /**
+     * Directory tree kebab dropdown listeners
+     */
     public directoryTreeKebabDropdownListeners(): void {
         //kebab dropdown button listener
         this.kebabDropdownButtonListener();
