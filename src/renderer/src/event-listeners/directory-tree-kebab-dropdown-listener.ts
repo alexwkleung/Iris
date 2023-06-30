@@ -13,6 +13,7 @@ import { cursors } from "../codemirror/extensions/cursors"
 import { wordCountListener } from "./word-count-listener"
 import { AdvancedModeSettings } from "../settings/settings"
 import { EditorView } from "@codemirror/view"
+import { isModeBasic, isModeAdvanced } from "../utils/is"
 
 interface IEditorModeJSONRef<T extends string> {
     updatedSettings: T
@@ -183,6 +184,17 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 //} else {
                     //return;
                 //}
+            } else if(currentSelection.value === 'reading-mode') {
+                //if mode is basic
+                if(isModeBasic()) {
+                    //extract doc state as string
+                    //hide pm editor
+                    //create reading mode 
+                    //append doc string into reading node
+                //if mode is advanced
+                } else if(isModeAdvanced()) {
+                    //
+                }
             }
         })
     }

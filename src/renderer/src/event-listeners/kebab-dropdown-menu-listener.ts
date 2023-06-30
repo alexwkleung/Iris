@@ -75,6 +75,9 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                         //invoke folder file count
                         this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i], true);
                     }
+
+                    //hide file directory kebab dropdown menu container
+                    (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
                 } else if(isModeAdvanced()) {
                     fsMod.fs._deletePath(
                         fsMod.fs._baseDir("home")
@@ -127,6 +130,8 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
                 //remove top bar directory info node
                 (document.getElementById('top-bar-directory-info') as HTMLElement).remove();
+
+                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
             })
         })
     }

@@ -305,6 +305,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 //invoke insert tab listener
                                 this.editorListeners.insertTabListener((document.querySelector(".ProseMirror") as HTMLElement), 2);
 
+                                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+                                
                                 //null check
                                 if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {
                                     //assign child refs
@@ -384,6 +386,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                
                                 //invoke insert tab listener
                                 this.editorListeners.insertTabListener((document.querySelector(".cm-content") as HTMLElement), 2);
+
+                                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
                                //null check
                                if(this.parentTagNodeRef !== null && this.parentNameTagRef !== null && this.childFileNameRef !== null && this.childFileNodeRef !== null) {

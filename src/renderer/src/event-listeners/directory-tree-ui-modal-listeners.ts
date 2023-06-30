@@ -278,8 +278,10 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 //add directory info to editor top bar
                 this.editorTopBarContainer.directoryInfo();
 
+                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+
                 //to-do: sort files...
-            } else if(isModeAdvanced()) {
+            } else if(isModeAdvanced() && fileName !== " ") {
                 //log
                 console.log((document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent)
                 
@@ -427,6 +429,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 //add directory info to editor top bar
                 this.editorTopBarContainer.directoryInfo();
 
+                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+
                 //to-do: sort files...
             }
         })
@@ -489,7 +493,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                             //invoke folder file count
                             this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
-
                         } else if(!createFileNode[i].classList.contains('show-create-file')) {
                             createFileNode[i].classList.remove('show-create-file');        
                         }

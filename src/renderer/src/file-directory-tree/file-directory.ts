@@ -130,6 +130,13 @@ export class DirectoryTreeUIElements {
         advancedModeOption.textContent = "Advanced";
         (document.getElementById("editor-mode-select") as HTMLElement).appendChild(advancedModeOption);
 
+        //reading mode option
+        const readingModeOption: HTMLOptionElement = document.createElement('option');
+        readingModeOption.setAttribute("value", "reading-mode");
+        readingModeOption.setAttribute("class", "reading-mode-option");
+        readingModeOption.textContent = "Reading";
+        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(readingModeOption);
+
         //if basic mode is true
         if(Settings.parseDotSettings().basicMode) {
             basicModeOption.setAttribute("selected", "");
@@ -159,6 +166,9 @@ export class DirectoryTreeUIElements {
             kebabDropdownMenuShapeContainerNode.appendChild(kebabDropdownMenuShapeNode);    
         }
         
+        //hide kebab dropdown menu container node
+        kebabDropdownMenuContainerNode.style.display = "none";
+
         //kebab after click menu container
         const kebabAfterClickMenuContainer: HTMLDivElement = document.createElement('div');
         kebabAfterClickMenuContainer.setAttribute("id", "file-directory-kebab-after-click-menu-container");
