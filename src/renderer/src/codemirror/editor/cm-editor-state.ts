@@ -6,6 +6,7 @@ import { languages } from '@codemirror/language-data'
 import { EditorView } from '@codemirror/view'
 import { Compartment } from '@codemirror/state'
 import { cursors } from '../extensions/cursors'
+import { closeBrackets } from '@codemirror/autocomplete'
 
 export class CMEditorState {
     /**
@@ -41,6 +42,7 @@ export class CMEditorState {
                     ...historyKeymap,
                     indentWithTab
                 ]),
+                closeBrackets(),
                 EditorView.lineWrapping,
                 this.cursorCompartment.of(cursors[0])
             ]
