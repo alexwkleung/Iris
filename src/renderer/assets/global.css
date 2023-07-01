@@ -956,6 +956,8 @@ body {
     margin-top: 40px;
     height: calc(100% - 100px);
     overflow-y: scroll;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
 }
 #reading-mode-content {
     padding-bottom: 500px;
@@ -1009,6 +1011,12 @@ body {
     color: black;
     font-family: 'Inter-Regular', sans-serif;
     padding: 6px 13px;
+}
+#reading-mode-container code {
+    width: calc(100% - 50px);
+}
+#reading-mode-container mark {
+    font-family: 'Inter-Regular';
 }
 
 /**
@@ -1134,6 +1142,8 @@ body {
     word-wrap: break-word !important;
     width: calc(100% - 10px);
     text-align: justify;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
 }
 .ͼ1 .cm-scroller {
     font-family: 'Inter-Regular';

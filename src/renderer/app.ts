@@ -6,6 +6,8 @@ import './assets/default-fonts/Inter-Bold.ttf'
 import './assets/default-fonts/Inter-Regular.ttf'
 import './assets/default-fonts/Inter-Medium.ttf'
 
+import './assets/katex.min.css'
+
 export class App {
     /**
      * App node

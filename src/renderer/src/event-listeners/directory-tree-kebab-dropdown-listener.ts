@@ -287,8 +287,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     const rangeContextFragment = new Range().createContextualFragment(content);
 
                     (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);
-
-                    //(document.getElementById('reading-mode-content') as HTMLElement).insertAdjacentHTML('afterbegin', content);
                 })
             }
 
@@ -299,7 +297,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
             if((document.querySelector('.highlight-dark-theme') as HTMLElement) !== null) {
                 (document.querySelector('.highlight-dark-theme') as HTMLElement).remove();
             }
-
 
             if(Settings.parseThemeSettings().lightTheme) {
                 const highlightTheme: HTMLLinkElement = document.createElement('link');

@@ -610,7 +610,9 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 this.createFileListener();
             } else if(isModeReading()) {
                 this.directoryTreeListeners.parentRootListener();
-    
+                //invoke again (bug)
+                this.directoryTreeListeners.parentRootListener();
+                
                 this.createFileListener();
             }
         })

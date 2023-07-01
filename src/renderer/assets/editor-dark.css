@@ -21,6 +21,10 @@ body {
     color: var(--top-bar-directory-info-color-dark);
 }
 
+#file-directory-tree-container {
+    color-scheme: dark;
+}
+
 /*
 * word count
 */
@@ -131,5 +135,8 @@ body {
     color: var(--reading-mode-color-dark);
 }
 #reading-mode-container li {
+    color: var(--reading-mode-color-dark);
+}
+#reading-mode-container .katex-html span {
     color: var(--reading-mode-color-dark);
 }
