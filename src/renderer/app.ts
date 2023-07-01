@@ -1,5 +1,6 @@
 import { setWindowTitle } from "./src/window/window-title"
 import prosemirror from '../renderer/assets/prosemirror.css?inline?url'
+import highlightLight from '../renderer/assets/classic-light.min.css?inline?url'
 
 import './assets/default-fonts/Inter-Bold.ttf'
 import './assets/default-fonts/Inter-Regular.ttf'
@@ -72,6 +73,20 @@ export class App {
         pmStylesheet.setAttribute("class", "pm-stylesheet");
         document.body.appendChild(pmStylesheet);
     }
+
+    static highlightLightTheme(): void {
+        if(document.querySelector('.highlight-light-theme') as HTMLElement !== null) {
+            document.querySelectorAll('.highlight-light-theme').forEach((el) => {
+                el.remove();  
+            })
+        }
+        
+        const highlightTheme: HTMLLinkElement = document.createElement('link');
+        highlightTheme.setAttribute("rel", "stylesheet");
+        highlightTheme.setAttribute("href", highlightLight);
+        highlightTheme.setAttribute("class", "highlight-light-theme");
+        document.body.appendChild(highlightTheme);
+    }
 }
 
 function createApp(): void {
@@ -81,6 +96,8 @@ function createApp(): void {
 
         //prosemirror stylesheet
         App.pmStylesheet();
+
+        App.highlightLightTheme();
     });
 }
 createApp();

@@ -5,6 +5,7 @@ import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 import { AdvancedModeSettings } from "../settings/settings"
+import highlightLight from '../../assets/classic-light.min.css?inline?url'
 
 interface IThemeJSONRef<T extends string> {
     updatedSettings: T;
@@ -73,6 +74,26 @@ export class SettingsModalListeners extends SettingsModal {
 
                     (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
 
+                    //check highlight light
+                    if((document.querySelector('.highlight-light-theme') as HTMLElement) !== null) {
+                        document.querySelectorAll('.highlight-light-theme').forEach((el) => {
+                            el.remove();
+                        })
+                    }
+
+                    //check highlight dark
+                    if((document.querySelector('.highlight-dark-theme') as HTMLElement) !== null) {
+                        document.querySelectorAll('.highlight-dark-theme').forEach((el) => {
+                            el.remove();
+                        })
+                    }
+                            
+                    const highlightTheme: HTMLLinkElement = document.createElement('link');
+                    highlightTheme.setAttribute("rel", "stylesheet");
+                    highlightTheme.setAttribute("href", highlightLight);
+                    highlightTheme.setAttribute("class", "highlight-light-theme");
+                    document.body.appendChild(highlightTheme);
+
                     themeJSONRef.updatedSettings = '{"lightTheme":true,"darkTheme":false}';
 
                     if(!Settings.parseThemeSettings().lightTheme) {
@@ -110,6 +131,20 @@ export class SettingsModalListeners extends SettingsModal {
                     (document.querySelector('.light-option') as HTMLElement).removeAttribute("selected");
 
                     (document.querySelector('.dark-option') as HTMLElement).setAttribute("selected", "");
+
+                    //check highlight light
+                    if((document.querySelector('.highlight-light-theme') as HTMLElement) !== null) {
+                        document.querySelectorAll('.highlight-light-theme').forEach((el) => {
+                            el.remove();
+                        })
+                    }
+
+                    //check highlight dark
+                    if((document.querySelector('.highlight-dark-theme') as HTMLElement) !== null) {
+                        document.querySelectorAll('.highlight-dark-theme').forEach((el) => {
+                            el.remove();
+                        })
+                    }
 
                     //apply dark theme
                     EditorThemes.darkTheme();

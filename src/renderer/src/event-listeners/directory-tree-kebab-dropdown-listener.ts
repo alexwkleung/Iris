@@ -17,6 +17,9 @@ import { isModeBasic, isModeAdvanced, isModeReading } from "../utils/is"
 import { ReadingMode } from "../mode/reading-mode"
 import { markdownParser } from "../utils/markdown-parser"
 
+import highlightLight from '../../assets/classic-light.min.css?inline?url'
+import highlightDark from '../../assets/classic-dark.min.css?inline?url'
+
 interface IEditorModeJSONRef<T extends string> {
     updatedSettings: T
 }
@@ -288,6 +291,29 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     //(document.getElementById('reading-mode-content') as HTMLElement).insertAdjacentHTML('afterbegin', content);
                 })
             }
+
+            if((document.querySelector('.highlight-light-theme') as HTMLElement) !== null) {
+                (document.querySelector('.highlight-light-theme') as HTMLElement).remove();
+            }
+
+            if((document.querySelector('.highlight-dark-theme') as HTMLElement) !== null) {
+                (document.querySelector('.highlight-dark-theme') as HTMLElement).remove();
+            }
+
+
+            if(Settings.parseThemeSettings().lightTheme) {
+                const highlightTheme: HTMLLinkElement = document.createElement('link');
+                highlightTheme.setAttribute("rel", "stylesheet");
+                highlightTheme.setAttribute("href", highlightLight);
+                highlightTheme.setAttribute("class", "highlight-light-theme");
+                document.body.appendChild(highlightTheme);
+            } else if(Settings.parseThemeSettings().darkTheme) {
+                const highlightDarkTheme: HTMLLinkElement = document.createElement('link');
+                highlightDarkTheme.setAttribute("rel", "stylesheet");
+                highlightDarkTheme.setAttribute("href", highlightDark);
+                highlightDarkTheme.setAttribute("class", "highlight-dark-theme");
+                document.body.appendChild(highlightDarkTheme);
+            }                            
         })
     }
 

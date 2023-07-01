@@ -26,10 +26,20 @@ export function initRenderer(): void {
             document.querySelectorAll('.editor-dark-theme').forEach((el) => {
               el.remove();
             })
+
+            document.querySelectorAll('.highlight-dark-theme').forEach((el) => {
+              el.remove();
+            })
           }
         //dark theme
         } else if(Settings.parseThemeSettings().darkTheme) {
           EditorThemes.darkTheme();
+        }
+
+        if(Settings.parseThemeSettings().darkTheme) {
+          document.querySelectorAll('.highlight-light-theme').forEach((el) => {
+            el.remove();
+          })
         }
         
         //log
@@ -66,8 +76,6 @@ export function initRenderer(): void {
             (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');
           } else if((document.getElementById('app') as HTMLElement).classList.contains('advanced-mode-is-active')) {
             (document.getElementById('app') as HTMLElement).classList.remove('advanced-mode-is-active');
-          } else {
-            return;
           }
 
           (document.getElementById('app') as HTMLElement).classList.add('reading-mode-is-active');

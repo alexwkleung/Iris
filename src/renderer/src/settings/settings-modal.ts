@@ -1,9 +1,6 @@
 import { App } from "../../app"
 import { appendHorizontalLineNode } from "../misc-ui/horizontal-line"
 import { Settings } from "./settings"
-import { CMEditorView } from "../codemirror/editor/cm-editor-view"
-import { CMEditorState } from "../codemirror/editor/cm-editor-state"
-import { cursors } from "../codemirror/extensions/cursors"
 
 export class SettingsModal {
     static settingsModalContainerNode: HTMLDivElement;

@@ -1089,7 +1089,7 @@ body {
     padding-left: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
-    border-radius: 25px;
+    /*border-radius: 25px;*/
     overflow-x: scroll;
     white-space: pre-wrap;
     display: inline-block; 

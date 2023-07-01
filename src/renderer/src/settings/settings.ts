@@ -3,10 +3,12 @@ import { fsMod } from "../utils/alias"
 //https://vitejs.dev/guide/assets.html#importing-asset-as-url
 //?inline: to prevent auto injection
 //?url: get url of named import
-import editorDark from '../../assets/editor-dark.css?inline?url'
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
+
+import editorDark from '../../assets/editor-dark.css?inline?url'
+import highlightDark from '../../assets/classic-dark.min.css?inline?url'
 
 /**
  * Theme interface 
@@ -88,6 +90,12 @@ export class EditorThemes {
         linkNode.setAttribute("href", editorDark);
         linkNode.setAttribute("class", "editor-dark-theme");
         document.body.appendChild(linkNode);
+
+        const highlightDarkTheme: HTMLLinkElement = document.createElement('link');
+        highlightDarkTheme.setAttribute("rel", "stylesheet");
+        highlightDarkTheme.setAttribute("href", highlightDark);
+        highlightDarkTheme.setAttribute("class", "highlight-dark-theme");
+        document.body.appendChild(highlightDarkTheme);
     }   
 }
 
