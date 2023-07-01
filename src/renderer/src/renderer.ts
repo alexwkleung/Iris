@@ -3,6 +3,7 @@ import { EditorNs } from '../editor-main'
 import { windowNs } from './window/draggable-area'
 import { Settings, EditorThemes } from '../src/settings/settings'
 import { AdvancedModeSettings } from '../src/settings/settings'
+import mermaid from 'mermaid'
 
 export function initRenderer(): void {
     window.addEventListener('DOMContentLoaded', () => {     
@@ -31,6 +32,11 @@ export function initRenderer(): void {
               el.remove();
             })
           }
+
+          //initialize mermaid
+          mermaid.initialize({
+            theme: 'forest'
+          })
         //dark theme
         } else if(Settings.parseThemeSettings().darkTheme) {
           EditorThemes.darkTheme();
@@ -39,6 +45,11 @@ export function initRenderer(): void {
         if(Settings.parseThemeSettings().darkTheme) {
           document.querySelectorAll('.highlight-light-theme').forEach((el) => {
             el.remove();
+          })
+
+          //initialize mermaid
+          mermaid.initialize({
+            theme: 'forest'
           })
         }
         

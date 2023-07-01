@@ -23,7 +23,9 @@ export async function markdownParser(content: string): Promise<string> {
     })
     .use(remarkMath)
     .use(rehypeKatex)
-    .use(rehypeMermaid)
+    .use(rehypeMermaid, {
+        strategy: 'inline-svg'
+    })
     .process(content)
 
     return String(parseContent);
