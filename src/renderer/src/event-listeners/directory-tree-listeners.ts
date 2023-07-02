@@ -478,7 +478,10 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             ReadingMode.readingModeNode();
 
                             //create fragment from content and append
-                            const content: string = await markdownParser(fsMod.fs._readFileFolder(this.parentNameTagsArr()[j], (childFileName[i].textContent + ".md")))
+                            const content: string = await markdownParser(
+                                fsMod.fs._readFileFolder(this.parentNameTagsArr()[j], 
+                                (childFileName[i].textContent + ".md"))
+                            ).catch((e) => { throw console.error(e) })
                             const rangeContextFragment = new Range().createContextualFragment(content);
                             (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);
                             

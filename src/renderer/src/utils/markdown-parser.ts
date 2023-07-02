@@ -27,6 +27,9 @@ export async function markdownParser(content: string): Promise<string> {
         strategy: 'inline-svg'
     })
     .process(content)
+    .catch((e) => { 
+        throw console.error(e) 
+    })
 
     return String(parseContent);
 }

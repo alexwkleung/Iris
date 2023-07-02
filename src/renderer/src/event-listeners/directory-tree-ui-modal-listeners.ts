@@ -20,6 +20,8 @@ import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 import { Settings } from "../settings/settings"
 import { AdvancedModeSettings } from "../settings/settings"
+import { ReadingMode } from "../mode/reading-mode"
+import { markdownParser } from "../utils/markdown-parser"
 
 /**
  * @extends DirectoryTreeUIModals
@@ -132,7 +134,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //log
             console.log(fileName);
         })
-
 
         DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', async () => {
             //mode check
@@ -396,9 +397,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 //invoke auto save listener
                 this.editorListeners.autoSaveListener("codemirror");
 
-                //invoke insert tab listener
-                //this.editorListeners.insertTabListener((document.querySelector('.ProseMirror') as HTMLElement), 2);
-
                 //assign references to corresponding key properties
                 RefsNs.currentParentChildData.map((props) => {
                     //log
@@ -433,7 +431,100 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
                 //to-do: sort files...
             } else if(isModeReading() && fileName !== " ") {
-                //
+                fsMod.fs._createFile(
+                    fsMod.fs._baseDir("home") 
+                    + "/Iris/Notes/" 
+                    + (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent 
+                    +  "/" + fileName,
+                    "# " + fileName.split('.md')[0] + " " + '\n'
+                );
+
+                const createFileModalFolderNameRef: string = (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent as string;
+                const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+
+                createFileNode.forEach((elem) => {
+                    //null check
+                    if(elem !== null) {
+                        elem.classList.remove('is-active-create-new-file-modal');
+                    }
+                });
+
+                //null check
+                if(DirectoryTreeUIModals.createModalContainer !== null) {
+                    DirectoryTreeUIModals.createModalContainer.remove();
+                }
+
+                //if document contains at least one active child
+                if(document.querySelector('.is-active-child')) {
+                    //select all active children and remove them from the dom (active status)
+                    //this removes any existing active children files
+                    document.querySelectorAll('.is-active-child').forEach(
+                        (isActiveChild) => {
+                            if(isActiveChild !== null) {
+                                isActiveChild.classList.remove('is-active-child')
+                            }
+                        }
+                    );
+                }
+
+                const childFile: HTMLDivElement = document.createElement('div');
+                childFile.setAttribute("class", "child-file-name is-active-child");
+
+                const childFileTextNode: Text = document.createTextNode(fileName.split('.md')[0]);
+
+                document.querySelectorAll('.parent-folder-name').forEach((el) => {
+                    //this doesn't cover duplicate folder names, so it might cause bugs
+                    if(el.textContent === createFileModalFolderNameRef) {
+                        childFile.appendChild(childFileTextNode);
+
+                        (el.parentNode as ParentNode).appendChild(childFile);
+                    }
+                })
+
+                //assign references to corresponding key properties
+                RefsNs.currentParentChildData.map((props) => {
+                    //log
+                    console.log(fileName);
+                    //log
+                    console.log(document.querySelector('.child-file-name.is-active-child') as HTMLElement);
+                    
+                    //null check
+                    if(props !== null) {
+                        //child file name
+                        props.childFileName = fileName.split('.md')[0];
+                        props.childFileNode = document.querySelector('.child-file-name.is-active-child') as HTMLElement
+                    }
+                });
+
+                //apply active state listener 
+                this.dirTreeStateListeners.activeChildFileStateListener();
+
+                //change document title so it corresponds to the opened file
+                await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + fileName.split('.md')[0]).catch((e) => { throw console.error(e) });
+ 
+                //add directory info to editor top bar
+                this.editorTopBarContainer.directoryInfo();
+ 
+                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+
+                //remove reading mode container if present in DOM
+                if((document.getElementById('reading-mode-container') as HTMLElement) !== null) {
+                    (document.getElementById('reading-mode-container') as HTMLElement).remove();
+                }
+
+                //create reading mode node
+                ReadingMode.readingModeNode();
+
+                //create fragment and append
+                const content: string = await markdownParser(fsMod.fs._readFileFolder(createFileModalFolderNameRef, fileName)).catch((e) => { throw console.error(e) });
+                const contextFragment = new Range().createContextualFragment(content);
+                (document.getElementById('reading-mode-content') as HTMLElement).appendChild(contextFragment);
+
+                //listeners
+                this.directoryTreeListeners.parentRootListener();
+                this.directoryTreeListeners.childNodeListener();
+
+                //to-do: sort files...
             }
         })
     }
