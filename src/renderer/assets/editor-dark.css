@@ -107,7 +107,7 @@ body {
     color: rgb(83, 82, 82);
 }
 #reading-mode-container a {
-    color: var(--prosemirror-a-light);
+    color: var(--prosemirror-a-dark);
 }
 #reading-mode-container strong {
     font-family: 'Inter-Bold'
