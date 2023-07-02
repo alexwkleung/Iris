@@ -283,10 +283,17 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 ReadingMode.readingModeNode();
 
                 RefsNs.currentParentChildData.map(async (props) => {
+                    //create fragment from content and append fragment
                     const content: string = await markdownParser(fsMod.fs._readFileFolder(props.parentFolderName, props.childFileName + ".md"))
                     const rangeContextFragment = new Range().createContextualFragment(content);
-
                     (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);
+
+                    //link behaviour
+                    document.querySelectorAll('#reading-mode-container a').forEach((el) => {
+                        el.addEventListener('click', (e) => {
+                            e.preventDefault();
+                        })
+                    })
                 })
             }
 
