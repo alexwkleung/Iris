@@ -238,6 +238,8 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
 
                     wordCountListener("codemirror");
 
+                    (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+                    
                     //kebab dropdown menu listener
                     this.editorKebabDropdownListeners.kebabDropdownMenuListener();
                 //} else {
