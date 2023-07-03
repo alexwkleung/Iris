@@ -54,10 +54,12 @@
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron/notarize": "^1.2.3",
+    "@types/dompurify": "^3.0.2",
     "@types/node": "16.18.21",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
     "crelt": "^1.0.6",
+    "dompurify": "^3.0.4",
     "electron": "^25.1.1",
     "electron-builder": "^23.6.0",
     "electron-context-menu": "^3.6.1",

@@ -16,6 +16,7 @@ import { EditorView } from "@codemirror/view"
 import { isModeBasic, isModeAdvanced, isModeReading } from "../utils/is"
 import { ReadingMode } from "../mode/reading-mode"
 import { markdownParser } from "../utils/markdown-parser"
+import DOMPurify from "dompurify"
 
 import highlightLight from '../../assets/classic-light.min.css?inline?url'
 import highlightDark from '../../assets/classic-dark.min.css?inline?url'
@@ -285,9 +286,19 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 ReadingMode.readingModeNode();
 
                 RefsNs.currentParentChildData.map(async (props) => {
-                    //create fragment from content and append fragment
-                    const content: string = await markdownParser(fsMod.fs._readFileFolder(props.parentFolderName, props.childFileName + ".md"))
-                    const rangeContextFragment = new Range().createContextualFragment(content);
+                    const content: string = await markdownParser(
+                        fsMod.fs._readFileFolder(props.parentFolderName, props.childFileName + ".md")
+                    ).catch((e) => {
+                        throw console.error(e)
+                    })
+                    
+                    //santize html string 
+                    const purify = DOMPurify.sanitize(content, {
+                        FORBID_TAGS: ['script']
+                    })
+
+                    //create fragment 
+                    const rangeContextFragment = new Range().createContextualFragment(purify);
                     (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);
 
                     //link behaviour

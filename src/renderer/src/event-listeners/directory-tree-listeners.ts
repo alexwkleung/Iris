@@ -21,6 +21,7 @@ import { EditorView } from "@codemirror/view"
 import { AdvancedModeSettings } from "../settings/settings"
 import { ReadingMode } from "../mode/reading-mode"
 import { markdownParser } from "../utils/markdown-parser"
+import DOMPurify from "dompurify"
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
@@ -482,7 +483,11 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 fsMod.fs._readFileFolder(this.parentNameTagsArr()[j], 
                                 (childFileName[i].textContent + ".md"))
                             ).catch((e) => { throw console.error(e) })
-                            const rangeContextFragment = new Range().createContextualFragment(content);
+
+                            const purify = DOMPurify.sanitize(content, {
+                                FORBID_TAGS: ['script']
+                            })
+                            const rangeContextFragment = new Range().createContextualFragment(purify);
                             (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);
                             
                             //assign refs
