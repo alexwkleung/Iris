@@ -76,8 +76,8 @@ describe('get directory name', () => {
 //get name vector
 describe('get name vector', () => {
     it('should return an array containing all directory names of the path', () => {
-        const dir: string = "/Users/alex/Iris/Basic";
-        const eq: string[] = [".DS_Store", "Test", "Very long long long long integer", "Sample Notes"];
+        const dir: string = "/Users/alex/Iris/Notes";
+        const eq: string[] = [".DS_Store", "Test", "Very long long long long integer", "A Folder", "Sample Notes"];
 
         expect(getNameVec(dir)).toStrictEqual(eq);
     })
@@ -96,7 +96,7 @@ describe('get canonical path', () => {
 
 //is file 
 describe('is file', () => {
-    const pathTruthy: string = "/Iris/Basic/Sample Notes/Sample Note 1.md";
+    const pathTruthy: string = "/Iris/Notes/Sample Notes/Sample Note 1.md";
 
     const pathFalsy: string = "/Foo/Bar.md";
 
@@ -113,7 +113,7 @@ describe('is file', () => {
 
 //is directory
 describe('is directory', () => {
-    const dir: string = "/Iris/Basic/Test";
+    const dir: string = "/Iris/Notes/Test";
 
     //truthy
     it('should return true if the path is a directory', () => {
@@ -128,7 +128,7 @@ describe('is directory', () => {
 
 //is file canonical
 describe('is file canonical', () => {
-    const pathTruthy: string = baseDir("home") + "/Iris/Basic/Very long long long long integer/Some Random Long Note.md";
+    const pathTruthy: string = baseDir("home") + "/Iris/Notes/Very long long long long integer/Some Random Long Note.md";
     
     const pathFalsy: string = "/Foo/bar/baz.md";
 
@@ -143,7 +143,7 @@ describe('is file canonical', () => {
 
 //is directory canonical
 describe('is directory canonical', () => {
-    const pathTruthy: string = baseDir("home") + "/Iris/Basic/Sample Notes";
+    const pathTruthy: string = baseDir("home") + "/Iris/Notes/Sample Notes";
 
     const pathFalsy: string = "/Foo/foo2/bar/bar3/baz/baz4";
 
