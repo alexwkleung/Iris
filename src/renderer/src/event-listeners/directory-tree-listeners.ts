@@ -485,7 +485,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             ).catch((e) => { throw console.error(e) })
 
                             const purify = DOMPurify.sanitize(content, {
-                                FORBID_TAGS: ['script']
+                                FORBID_TAGS: ['script'],
+                                FORBID_ATTR: ['onclick']
                             })
                             const rangeContextFragment = new Range().createContextualFragment(purify);
                             (document.getElementById('reading-mode-content') as HTMLElement).appendChild(rangeContextFragment);

@@ -294,7 +294,8 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     
                     //santize html string 
                     const purify = DOMPurify.sanitize(content, {
-                        FORBID_TAGS: ['script']
+                        FORBID_TAGS: ['script'],
+                        FORBID_ATTR: ['onclick']
                     })
 
                     //create fragment 
