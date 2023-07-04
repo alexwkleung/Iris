@@ -110,6 +110,7 @@ body {
     /*border: 1px solid white;*/
     height: calc(100% - 150px);
     overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 /*
@@ -958,6 +959,7 @@ body {
     overflow-y: scroll;
     content-visibility: auto;
     contain-intrinsic-size: auto 800px;
+    scroll-behavior: smooth;
 }
 #reading-mode-content {
     padding-bottom: 500px;
@@ -1124,6 +1126,7 @@ body {
     padding-right: 12px;
     top: 50px;
     overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 .cm-editor:focus {
     outline: none;

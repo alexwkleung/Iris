@@ -48,6 +48,7 @@
   */
   content-visibility: auto; /* helps with scroll performance and load performance */
   contain-intrinsic-size: auto 800px; /* relates to content-visibility */
+  scroll-behavior: smooth;
 }
 
 .ProseMirror pre {
