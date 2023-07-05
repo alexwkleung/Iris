@@ -4,14 +4,6 @@ import { isFolderNode } from '../utils/is'
 import { Settings } from '../settings/settings'
 
 //eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace DirectoryRefNs {
-    //eslint-disable-next-line prefer-const
-    export let basicRef: string = "";
-
-    //eslint-disable-next-line prefer-const
-    export let advancedRef: string = "";
-}
-
 export class FileDirectoryTreeNode {
     /**
      * File directory tree node 
@@ -189,9 +181,6 @@ export class DirectoryTree extends DirectoryTreeUIElements {
         //get folder names from root
         fsMod.fs._getNameVec(fsMod.fs._baseDir("home") + "/Iris/" + "Notes").map((elem) => nameVec.push(elem));
 
-        //assign basic ref 
-        DirectoryRefNs.basicRef = "Basic";
-
         console.log(nameVec);
         
         const nameVecMac: string[] = [];
@@ -313,17 +302,17 @@ export class DirectoryTree extends DirectoryTreeUIElements {
      * 
      * @returns An array of strings with parent name tag nodes
      */
-        public parentNameTagsArr(): string[] {    
-            const parentNameTagsArr: string[] = [];
+    public parentNameTagsArr(): string[] {    
+        const parentNameTagsArr: string[] = [];
     
-            document.querySelectorAll('.parent-folder-name').forEach(
-                (elem) => {
-                    if(elem !== null) {
-                        parentNameTagsArr.push(elem.textContent as string);
-                    }
+        document.querySelectorAll('.parent-folder-name').forEach(
+            (elem) => {
+                if(elem !== null) {
+                    parentNameTagsArr.push(elem.textContent as string);
                 }
-            );
+            }
+        );
     
-            return parentNameTagsArr;
-        }
+        return parentNameTagsArr;
+    }
 }
