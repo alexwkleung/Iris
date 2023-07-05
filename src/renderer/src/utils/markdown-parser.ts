@@ -7,6 +7,7 @@ import rehypeHighlight from "rehype-highlight"
 import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
 import rehypeMermaid from "rehype-mermaidjs"
+import remarkEmoji from 'remark-emoji'
 
 export async function markdownParser(content: string): Promise<string> {
     const parseContent = await unified()
@@ -19,13 +20,14 @@ export async function markdownParser(content: string): Promise<string> {
         allowDangerousHtml: true
     })
     .use(rehypeHighlight, {
-        plainText: ['mermaid', 'txt', 'text', '', 'katex']
+        plainText: ['mermaid', 'txt', 'text', '', 'katex', 'plain', 'plaintext']
     })
     .use(remarkMath)
     .use(rehypeKatex)
     .use(rehypeMermaid, {
         strategy: 'inline-svg'
     })
+    .use(remarkEmoji)
     .process(content)
     .catch((e) => { 
         throw console.error(e) 
