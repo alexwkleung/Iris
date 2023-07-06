@@ -2,21 +2,21 @@
 
 <p align="center">Iris is a comfortable Markdown note-taking app. Written in TypeScript and Rust.</p>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-34.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-42.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-35.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-43.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-36.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-44.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-37.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-45.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-38.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-46.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-39.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-47.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-40.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-48.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-41.png"></img>
+<img align="center" src="./screenshots/current-dev-v0.2.0-49.png"></img>
 
 <p align="center">Current dev screenshots (subject to change; frequently updated)</p>
 
