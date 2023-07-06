@@ -30,7 +30,7 @@
   position: fixed;
   overflow-y: scroll;
   overflow-x: scroll;
-  width: calc(100% - 318px);
+  width: calc(100% - 310px);
   height: calc(100% - 556px);
   font-size: 17px;
   font-family: 'Inter-Regular';
