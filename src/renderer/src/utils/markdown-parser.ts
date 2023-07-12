@@ -8,6 +8,7 @@ import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
 import rehypeMermaid from "rehype-mermaidjs"
 import remarkEmoji from 'remark-emoji'
+import DOMPurify from "dompurify"
 
 export async function markdownParser(content: string): Promise<string> {
     const parseContent = await unified()
@@ -33,5 +34,11 @@ export async function markdownParser(content: string): Promise<string> {
         throw console.error(e) 
     })
 
-    return String(parseContent);
+    //sanitize html
+    const purify: string = DOMPurify.sanitize(String(parseContent), {
+        FORBID_TAGS: ['script'],
+        FORBID_ATTR: ['onclick']
+    })
+
+    return purify;
 }
