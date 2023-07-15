@@ -1024,6 +1024,24 @@ body {
 #reading-mode-container svg {
     background-color: rgb(155, 154, 154);
 }
+#reading-mode-container h1 mark {
+    font-family: 'Inter-Bold';
+}
+#reading-mode-container h2 mark {
+    font-family: 'Inter-Bold';
+}
+#reading-mode-container h3 mark {
+    font-family: 'Inter-Bold';
+}
+#reading-mode-container h4 mark {
+    font-family: 'Inter-Bold';
+}
+#reading-mode-container h5 mark {
+    font-family: 'Inter-Bold';
+}
+#reading-mode-container h6 mark {
+    font-family: 'Inter-Bold';
+}
 
 /**
 * prosemirror editor nodes 
