@@ -1,7 +1,7 @@
 import { EditorState } from "prosemirror-state"
 import { DOMParser } from "prosemirror-model"
 import { pmSetup } from "./prosemirror-setup"
-import { schema } from "prosemirror-markdown"
+import { schema } from "../markdown/export"
 
 export class PMEditorState {
     /**

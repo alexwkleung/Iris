@@ -1,8 +1,8 @@
 import { IEditorListeners } from "../interfaces/listener-interfaces"
 import { RefsNs } from "./directory-tree-listeners"
 import { fsMod } from "../utils/alias"
-import { defaultMarkdownSerializer } from "prosemirror-markdown"
-import { PMEditorView } from "../prosemirror/editor/editor-view"
+import { defaultMarkdownSerializer } from "../prosemirror/markdown/export"
+import { PMEditorView } from "../prosemirror/editor/pm-editor-view"
 import { debounce } from "../utils/debounce"
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 

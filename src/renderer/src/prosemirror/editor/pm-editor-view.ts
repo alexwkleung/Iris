@@ -1,6 +1,6 @@
 import { EditorView } from "prosemirror-view"
-import { PMEditorState } from "./editor-state"
-import { defaultMarkdownSerializer } from "prosemirror-markdown"
+import { PMEditorState } from "./pm-editor-state"
+import { defaultMarkdownSerializer } from "../markdown/export"
 
 export class PMEditorView {
     /**

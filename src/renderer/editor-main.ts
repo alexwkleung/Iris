@@ -1,5 +1,5 @@
 import { App } from "./app"
-import { PMEditorView } from "./src/prosemirror/editor/editor-view"
+import { PMEditorView } from "./src/prosemirror/editor/pm-editor-view"
 import { WordCountContainerNode } from "./src/misc-ui/word-count"
 import { EditorKebabDropdownMenu } from "./src/misc-ui/editor-kebab-dropdown-menu"
 import { CMEditorView } from "./src/codemirror/editor/cm-editor-view"
