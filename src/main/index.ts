@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, protocol, net } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { dirname } from 'path'
@@ -93,7 +93,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
-    electronApp.setAppUserModelId('com.electron');
+  electronApp.setAppUserModelId('com.electron');
 
   app.on('browser-window-created', (_, window) => {
       optimizer.watchWindowShortcuts(window);
@@ -106,6 +106,11 @@ app.whenReady().then(() => {
         createWindow();
       }
   });
+
+  //custom protocol to handle local file system absolute paths
+  protocol.handle('image', (request): Promise<Response> => {
+    return net.fetch('file://' + request.url.slice('image://'.length)).catch((e) => console.error(e)) as Promise<Response> 
+  })
 });
 
 app.on('window-all-closed', () => {
