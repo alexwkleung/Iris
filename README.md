@@ -38,6 +38,20 @@ If you want to build the app directly from source, follow the instructions in [D
 
 Install [Rust](https://www.rust-lang.org/tools/install)
 
+If you are cross-compiling the native modules for other platforms (i.e., compile to MSVC on macOS), you'll need to install the corresponding target:
+
+```bash
+# check target list
+rustc --print target-list
+
+# install target
+rustup target install <target>
+
+# some targets might require clang or llvm as a dependency 
+# for example, install llvm dependency via brew
+brew install llvm
+```
+
 Clone the repository
 
 ```bash 
@@ -62,8 +76,14 @@ Build native modules
 # change directory to native module
 cd fs-mod
 
-# build native module for your platform
+# execute one of the build commands below:
+
+# build native module for your platform (automatic)
 npm run build
+# build native module for macOS x64
+npm run build-x64
+# build native module for macOS arm64
+npm run build-arm64
 
 # go back to previous directory (assuming Iris root)
 cd -
