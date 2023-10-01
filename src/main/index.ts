@@ -28,7 +28,8 @@ function createWindow(): void {
           titleBarStyle: 'hiddenInset',
           webPreferences: {
           preload: join(_dirname, '../preload/index.js'),
-          sandbox: false
+          sandbox: false,
+          spellcheck: false
         }
     });
     //check if platform is linux
@@ -45,7 +46,8 @@ function createWindow(): void {
         //...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
         preload: join(_dirname, '../preload/index.js'),
-        sandbox: false
+        sandbox: false,
+        spellcheck: false
       }
     });
     //check if platform is windows
@@ -61,7 +63,8 @@ function createWindow(): void {
           titleBarStyle: 'default',
           webPreferences: {
           preload: join(_dirname, '../preload/index.js'),
-          sandbox: false
+          sandbox: false,
+          spellcheck: false
         }
     });
   }

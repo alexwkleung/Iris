@@ -15,7 +15,6 @@ export namespace EditorNs {
         public static createEditorContainer(): void {
             EditorContainerNode.editorContainer = document.createElement('div');
             EditorContainerNode.editorContainer.setAttribute("id", "editor-container");
-            EditorContainerNode.editorContainer.setAttribute("spellcheck", "false");
             EditorContainerNode.editorContainer.setAttribute("aria-hidden", "true");
 
             App.appNode.insertBefore(EditorContainerNode.editorContainer, App.appNode.firstChild);
