@@ -6,6 +6,13 @@ import { fileURLToPath } from 'url'
 import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
 
+//prevent multiple instances of Iris running
+if(!app.requestSingleInstanceLock()) {
+  console.log("Another instance of Iris is running. Exiting.");
+
+  app.quit();
+}
+
 function createWindow(): void {
   //esm version of __dirname 
   const _dirname: string = dirname(fileURLToPath(import.meta.url));
