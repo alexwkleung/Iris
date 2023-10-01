@@ -15,58 +15,31 @@ function createWindow(): void {
 
   let mainWindow: BrowserWindow = {} as BrowserWindow;
 
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 750,
+    show: false,
+    autoHideMenuBar: true,
+    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default', //only check macOS
+    webPreferences: {
+      preload: join(_dirname, '../preload/index.js'),
+      sandbox: false,
+      spellcheck: false
+    }
+  });
+
   //check if platform is darwin
   if(process.platform === 'darwin') {
       //log
       console.log("Platform is darwin (macOS)");
-
-      mainWindow = new BrowserWindow({
-          width: 1200,
-          height: 750,
-          show: false,
-          autoHideMenuBar: true,
-          titleBarStyle: 'hiddenInset',
-          webPreferences: {
-          preload: join(_dirname, '../preload/index.js'),
-          sandbox: false,
-          spellcheck: false
-        }
-    });
     //check if platform is linux
   } else if(process.platform === 'linux') {
       //log
       console.log("Platform is Linux");
-
-      mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 750,
-        show: false,
-        autoHideMenuBar: true,
-        titleBarStyle: 'default',
-        //...(process.platform === 'linux' ? { icon } : {}),
-        webPreferences: {
-        preload: join(_dirname, '../preload/index.js'),
-        sandbox: false,
-        spellcheck: false
-      }
-    });
     //check if platform is windows
   } else if(process.platform === 'win32') {
       //log
       console.log("Platform is Windows");
-
-      mainWindow = new BrowserWindow({
-          width: 1200,
-          height: 750,
-          show: false,
-          autoHideMenuBar: true,
-          titleBarStyle: 'default',
-          webPreferences: {
-          preload: join(_dirname, '../preload/index.js'),
-          sandbox: false,
-          spellcheck: false
-        }
-    });
   }
 
   //set min window size 
