@@ -5,6 +5,7 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
+import { isMacOS, isWindows, isLinux } from './is-main'
 
 //prevent multiple instances of Iris running
 if(!app.requestSingleInstanceLock()) {
@@ -27,7 +28,7 @@ function createWindow(): void {
     height: 750,
     show: false,
     autoHideMenuBar: true,
-    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default', //only check macOS
+    titleBarStyle: isMacOS() ? 'hiddenInset' : 'default', //only check macOS
     webPreferences: {
       preload: join(_dirname, '../preload/index.js'),
       sandbox: false,
@@ -36,15 +37,15 @@ function createWindow(): void {
   });
 
   //check if platform is darwin
-  if(process.platform === 'darwin') {
+  if(isMacOS()) {
       //log
       console.log("Platform is darwin (macOS)");
     //check if platform is linux
-  } else if(process.platform === 'linux') {
+  } else if(isLinux()) {
       //log
       console.log("Platform is Linux");
     //check if platform is windows
-  } else if(process.platform === 'win32') {
+  } else if(isWindows()) {
       //log
       console.log("Platform is Windows");
   }
@@ -76,7 +77,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
-  electronApp.setAppUserModelId('com.electron');
+  electronApp.setAppUserModelId('iris'); //set app user model id for win32
 
   app.on('browser-window-created', (_, window) => {
       optimizer.watchWindowShortcuts(window);
@@ -97,9 +98,9 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
-  if(process.platform === 'linux' || process.platform === 'win32') {
+  if(isLinux() || isWindows()) {
     app.quit();
-  } else if(process.platform === 'darwin') {
+  } else if(isMacOS()) {
     return;
   }
 });
