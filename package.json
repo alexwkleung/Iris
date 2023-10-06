@@ -22,7 +22,8 @@
     "eslint:fix": "eslint . --fix",
     "taze": "npx taze",
     "taze:write": "npx taze -w",
-    "test": "vitest"
+    "test": "vitest",
+    "napi:create": "napi new"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.8.1",

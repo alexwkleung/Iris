@@ -4,6 +4,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/github/downloads/alexwkleung/Iris/total"></img>
+    <img src="https://img.shields.io/github/stars/alexwkleung/Iris"></img>
     <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris"></img>
 </p>
 
