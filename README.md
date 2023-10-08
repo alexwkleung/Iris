@@ -54,9 +54,11 @@ rustc --print target-list
 rustup target install <target>
 
 # some targets might require clang or llvm as a dependency 
-# for example, install llvm dependency via brew
+# for example, install llvm dependency via brew if you don't have it
 brew install llvm
 ```
+
+The recommended build tool for Iris is [GNU Make](https://www.gnu.org/software/make/). All important build steps or commands will be reflected in the `makefile`. At the moment, only a small set of commands have a `npm run` script counterpart.
 
 Clone the repository
 
@@ -119,9 +121,14 @@ npm run build:win
 npm run build:linux
 ```
 
-# v0.1.x
+# Contributing 
 
-If you want to take a look at the v0.1.x prototype source code, you can go to the [v0.1.1 release](https://github.com/alexwkleung/Iris/releases/tag/v0.1.1). 
+Here are a list of ways you can contribute to Iris:
+
+1. [Submit a Pull Request](https://github.com/alexwkleung/Iris/pulls)
+2. [Create or answer issues](https://github.com/alexwkleung/Iris/issues)
+3. [Create or answer discussion posts](https://github.com/alexwkleung/Iris/discussions)
+4. Show your interest by sharing Iris to others :)
 
 # License 
 
