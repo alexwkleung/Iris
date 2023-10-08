@@ -24,8 +24,6 @@
 
 <img align="center" src="./screenshots/current-dev-v0.2.0-49.png"></img>
 
-<p align="center">Current dev screenshots (subject to change; frequently updated)</p>
-
 # Release date 
 
 There is no set release date for v0.2.0 at the moment.  

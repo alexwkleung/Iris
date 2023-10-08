@@ -1,11 +1,10 @@
 import { app, shell, BrowserWindow, protocol, net } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
-import { isMacOS, isWindows, isLinux } from './is-main'
+import { isMacOS, isWindows, isLinux, isDev } from './is-main'
 
 //prevent multiple instances of Iris running
 if(!app.requestSingleInstanceLock()) {
@@ -69,20 +68,20 @@ function createWindow(): void {
       }
   });
 
-  if(is.dev && process.env['ELECTRON_RENDERER_URL']) {
+  if(isDev() && process.env['ELECTRON_RENDERER_URL']) {
       mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
+
+      //open dev tools undocked by default
+      mainWindow.webContents.openDevTools({
+        mode: 'undocked'
+      });
   } else {
       mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
   }
+
 }
 
 app.whenReady().then(() => {
-  electronApp.setAppUserModelId('iris'); //set app user model id for win32
-
-  app.on('browser-window-created', (_, window) => {
-      optimizer.watchWindowShortcuts(window);
-  });
-
   createWindow();
 
   app.on('activate', () => {

@@ -1,3 +1,5 @@
+import { app } from 'electron';
+
 /**
  * Check if platform is macOS 
  *  
@@ -35,4 +37,13 @@ export function isLinux(): boolean {
     process.platform === 'linux' ? bool = true : bool = false;
 
     return bool;
+}
+
+/**
+ * Check if Electron is in dev
+ * 
+ * @returns `true` or `false` if app is packaged
+ */
+export function isDev(): boolean {
+    return !app.isPackaged ? true : false;
 }
