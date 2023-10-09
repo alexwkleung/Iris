@@ -93,8 +93,8 @@ app.whenReady().then(() => {
   });
 
   //custom protocol to handle local file system absolute paths
-  protocol.handle('image', (request): Promise<Response> => {
-    return net.fetch('file://' + request.url.slice('image://'.length)).catch((e) => console.error(e)) as Promise<Response> 
+  protocol.handle('local', (request): Promise<Response> => {
+    return net.fetch('file://' + request.url.slice('local://'.length)).catch((e) => console.error(e)) as Promise<Response> 
   })
 });
 
