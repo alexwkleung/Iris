@@ -47,7 +47,6 @@
     "prosemirror-view": "^1.31.4"
   },
   "devDependencies": {
-    "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron/notarize": "^1.2.3",
     "@napi-rs/cli": "^2.15.2",
     "@types/dompurify": "^3.0.2",
