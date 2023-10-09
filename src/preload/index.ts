@@ -1,5 +1,5 @@
 import { contextBridge } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
+import { electronAPI } from '../preload/electron/electron'
 import { fsMod } from './mod/fs-mod'
 import { createDefaultSettings, createDefaultDotSettings, createDefaultAdvancedModeSettings } from '../renderer/src/settings/create-default-settings'
 
