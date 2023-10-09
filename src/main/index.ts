@@ -68,17 +68,19 @@ function createWindow(): void {
       }
   });
 
-  if(isDev() && process.env['ELECTRON_RENDERER_URL']) {
-      mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
+  if(isDev()) {
+      //load dev server url in main window
+      mainWindow.loadURL('http://localhost:5173/');
 
       //open dev tools undocked by default
       mainWindow.webContents.openDevTools({
         mode: 'undocked'
       });
   } else {
+      //this is supposed to be production build
+      //path might change once electron-vite is removed
       mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
   }
-
 }
 
 app.whenReady().then(() => {
