@@ -24,13 +24,13 @@
 
 <img align="center" src="./screenshots/current-dev-v0.2.0-49.png"></img>
 
-# Release date 
+# Info
 
-There is no set release date for v0.2.0 at the moment.  
+Iris is currently in early development and may not be 100% stable for daily use.
 
-This release will mark the first official build for Iris. There will be a few dev builds that users can install to get a feel of the application before release.
+v0.2.0 will mark the first official build for Iris. There will be a handful of dev builds that users can install to get a feel of the application before release.
 
-You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication.
+You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication. Other mediums will be created in the near future.
 
 # Installation
 
