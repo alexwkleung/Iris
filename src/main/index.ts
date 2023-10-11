@@ -24,7 +24,7 @@ function createWindow(): void {
 
   mainWindow = new BrowserWindow({
     width: 1200,
-    height: 750,
+    height: 900,
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: isMacOS() ? 'hiddenInset' : 'default', //only check macOS
