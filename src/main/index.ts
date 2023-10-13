@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url'
 import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
 import { isMacOS, isWindows, isLinux, isDev } from './is-main'
+import windowStateKeeper from 'electron-window-state'
 
 //prevent multiple instances of Iris running
 if(!app.requestSingleInstanceLock()) {
@@ -20,11 +21,19 @@ function createWindow(): void {
   //isomorphic version of __dirname for both cjs/esm compatibility (https://antfu.me/posts/isomorphic-dirname)
   //const _dirname: string = typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
 
+  //create window state keeper
+  const windowState: windowStateKeeper.State = windowStateKeeper({
+    defaultWidth: 1200,
+    defaultHeight: 900,
+  })
+
   let mainWindow: BrowserWindow = {} as BrowserWindow;
 
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 900,
+    width: windowState.width,
+    height: windowState.height,
+    x: windowState.x,
+    y: windowState.y,
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: isMacOS() ? 'hiddenInset' : 'default', //only check macOS
@@ -34,6 +43,9 @@ function createWindow(): void {
       spellcheck: false
     }
   });
+
+  //register windowState listener
+  windowState.manage(mainWindow);
 
   //check if platform is darwin
   if(isMacOS()) {
