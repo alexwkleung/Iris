@@ -34,7 +34,7 @@ You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discuss
 
 # Installation
 
-You can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
+At the moment, you can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
 
 If you want to build the app directly from source, follow the instructions in [Development](#development).
  
@@ -95,7 +95,7 @@ npm run build-arm64
 cd -
 ```
 
-Run development build
+Run development server. The dev tools is undocked by default.
 
 ```bash
 # via make 
