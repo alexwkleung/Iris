@@ -34,6 +34,8 @@ function createWindow(): void {
     height: windowState.height,
     x: windowState.x,
     y: windowState.y,
+    minWidth: 800,
+    minHeight: 600,
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: isMacOS() ? 'hiddenInset' : 'default', //only check macOS
