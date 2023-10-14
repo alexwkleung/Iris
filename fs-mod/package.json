@@ -9,8 +9,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@napi-rs/cli": "^2.15.2",
-    "ava": "^5.1.1"
+    "@napi-rs/cli": "^2.15.2"
   },
   "ava": {
     "timeout": "3m"
@@ -24,7 +23,6 @@
     "build-arm64": "napi build --platform --release --target 'aarch64-apple-darwin'",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
   }
