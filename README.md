@@ -4,7 +4,6 @@
 
 <p align="center">
     <img src="https://img.shields.io/github/downloads/alexwkleung/Iris/total"></img>
-    <img src="https://img.shields.io/github/stars/alexwkleung/Iris"></img>
     <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris"></img>
 </p>
 
@@ -40,6 +39,8 @@ If you want to build the app directly from source, follow the instructions in [D
  
 # Development 
 
+Install [Node.js](https://nodejs.org/en/download)
+
 Install [Rust](https://www.rust-lang.org/tools/install)
 
 If you are cross-compiling the native modules for other platforms (i.e., compile to MSVC on macOS), you'll need to install the corresponding target:
@@ -51,12 +52,23 @@ rustc --print target-list
 # install target
 rustup target install <target>
 
+# Apple Silicon:
+rustup target install x86_64-apple-darwin
+
+# Intel Architecture:
+rustup target install aarch64-apple-darwin
+
 # some targets might require clang or llvm as a dependency 
 # for example, install llvm dependency via brew if you don't have it
 brew install llvm
 ```
 
-The recommended build tool for Iris is [GNU Make](https://www.gnu.org/software/make/). All important build steps or commands will be reflected in the `makefile`. At the moment, only a small set of commands have a `npm run` script counterpart.
+The recommended build tool for Iris is [GNU Make](https://www.gnu.org/software/make/). All build steps or commands will be reflected in the `makefile`. At the moment, only a small set of commands have a `npm run` script counterpart.
+
+```bash
+# for example: install Xcode Command Line Tools on macOS (includes GNU Make)
+xcode-select --install 
+```
 
 Clone the repository
 
@@ -114,7 +126,7 @@ make build-mac
 # via npm
 npm run build:mac
 
-# windows and linux not tested
+# windows and linux have not been tested yet
 npm run build:win
 npm run build:linux
 ```
