@@ -7,7 +7,6 @@ import { Settings } from "./src/settings/settings"
 import { CMEditorState } from "./src/codemirror/editor/cm-editor-state"
 import { cursors } from "./src/codemirror/extensions/cursors"
 
-//eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
     export class EditorContainerNode {
         public static editorContainer: HTMLDivElement;
