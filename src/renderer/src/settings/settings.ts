@@ -26,8 +26,11 @@ interface ISettingsData<T extends boolean> {
 export class Settings {    
     /**
      * Get local settings
+     * 
+     * @static
+     * @readonly
      */
-    static getSettings: ISettingsData<boolean> = JSON.parse(fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.settings.json"))
+    static readonly getSettings: ISettingsData<boolean> = JSON.parse(fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.settings.json"))
 
     /**
      * Settings data
