@@ -70,7 +70,7 @@ export namespace EditorNs {
         //create editor container
         EditorContainerNode.createEditorContainer();
 
-        if(Settings.parseDotSettings().basicMode) {
+        if(Settings.getSettings.basicMode) {
             //create prosemirror editorview 
             PMEditorView.createEditorView();
     
@@ -79,14 +79,14 @@ export namespace EditorNs {
     
             //hide prosemirror menubar
             (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
-        } else if(Settings.parseDotSettings().advancedMode) {
+        } else if(Settings.getSettings.advancedMode) {
             CMEditorView.createEditorView();
 
             CMEditorView.setContenteditable(false);
 
-            if(Settings.parseThemeSettings().lightTheme) {
+            if(Settings.getSettings.lightTheme) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-            } else if(Settings.parseThemeSettings().darkTheme) {
+            } else if(Settings.getSettings.darkTheme) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
             }
         }

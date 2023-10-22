@@ -22,7 +22,6 @@ import { AdvancedModeSettings } from "../settings/settings"
 import { ReadingMode } from "../mode/reading-mode"
 import { markdownParser } from "../utils/markdown-parser"
 
-//eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RefsNs {
     /**
      * Generic interface for current parent child data
@@ -442,20 +441,20 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 this.editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
 
                                 //default cursors
-                                if(Settings.parseThemeSettings().lightTheme) {
+                                if(Settings.getSettings.lightTheme) {
                                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-                                } else if(Settings.parseThemeSettings().darkTheme) {
+                                } else if(Settings.getSettings.darkTheme) {
                                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
                                 }
 
                                 //check block cursor
-                                if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                                if(Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                                     AdvancedModeSettings.defaultCursor("light");
-                                } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                                } else if(Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                                     AdvancedModeSettings.defaultCursor("dark");
                                 } else if(
-                                    Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
-                                    || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                                    Settings.getSettings.blockCursor && Settings.getSettings.lightTheme 
+                                    || Settings.getSettings.blockCursor && Settings.getSettings.darkTheme
                                 ) {
                                     AdvancedModeSettings.blockCursor();
                                 }

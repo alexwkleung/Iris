@@ -374,20 +374,20 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 CMEditorView.setContenteditable(true);
 
                 //cursor theme
-                if(Settings.parseThemeSettings().lightTheme) {
+                if(/*.parseThemeSettings().lightTheme*/ Settings.getSettings.lightTheme) {
                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-                } else if(Settings.parseThemeSettings().darkTheme) {
+                } else if(/*Settings.parseThemeSettings().darkTheme*/ Settings.getSettings.darkTheme) {
                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
                 }
 
                 //check block cursor 
-                if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                if(/*Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme*/ Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.defaultCursor("light");
-                } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                } else if(/*Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme*/ Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                     AdvancedModeSettings.defaultCursor("dark");
                 } else if(
-                    Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
-                    || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                    /*Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme*/ Settings.getSettings.blockCursor && Settings.getSettings.lightTheme
+                    || /*Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme*/ Settings.getSettings.blockCursor && Settings.getSettings.darkTheme
                 ) {
                     AdvancedModeSettings.blockCursor();
                 }

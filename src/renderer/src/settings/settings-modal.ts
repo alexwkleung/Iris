@@ -69,11 +69,11 @@ export class SettingsModal {
         themeSelect.appendChild(themeOptionDark);
 
         //if light theme is true
-        if(Settings.parseThemeSettings().lightTheme) {
+        if(/*Settings.parseThemeSettings().lightTheme*/ Settings.getSettings.lightTheme) {
             //set option selection to light theme
             themeOptionLight.setAttribute("selected", "");
         //if dark theme is true
-        } else if(Settings.parseThemeSettings().darkTheme) {
+        } else if(/*Settings.parseThemeSettings().darkTheme*/ Settings.getSettings.darkTheme) {
             //set option selection to dark theme
             themeOptionDark.setAttribute("selected", "");
         }
@@ -127,9 +127,9 @@ export class SettingsModal {
         advancedModeBlockCursorOption.textContent = "Block Cursor";
         advancedModeCursorSelect.appendChild(advancedModeBlockCursorOption);
 
-        if(Settings.parseAdvancedModeSettings().defaultCursor) {
+        if(/*Settings.parseAdvancedModeSettings().defaultCursor*/ Settings.getSettings.defaultCursor) {
             advancedModeDefaultCursorOption.setAttribute("selected", "");
-        } else if(Settings.parseAdvancedModeSettings().blockCursor) {
+        } else if(/*Settings.parseAdvancedModeSettings().blockCursor*/ Settings.getSettings.blockCursor) {
             advancedModeBlockCursorOption.setAttribute("selected", "");
         }
     }

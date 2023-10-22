@@ -11,71 +11,30 @@ import editorDark from '../../assets/editor-dark.css?inline?url'
 import highlightDark from '../../assets/classic-dark.min.css?inline?url'
 
 /**
- * Theme interface 
+ * Settings interface
  */
-interface IThemeInterface<T extends boolean> {
-    lightTheme: T,
-    darkTheme: T
-}
-
-/**
- * Mode interface
- */
-interface IModeInterface<T extends boolean> {
-    basicMode: T,
-    advancedMode: T,
-    readingMode: T
-}
-
-interface IAdvancedModeInterface<T extends boolean> {
-    defaultCursor: T,
-    blockCursor: T
+interface ISettingsData<T extends boolean> {
+    "lightTheme": T,
+    "darkTheme": T,
+    "basicMode": T,
+    "advancedMode": T,
+    "readingMode": T,
+    "defaultCursor": T,
+    "blockCursor": T
 }
 
 export class Settings {    
-    /**
-     * Parse theme settings
-     * 
-     * @returns JSON object of Iris settings
-     */
-    static parseThemeSettings(): IThemeInterface<boolean> {
-        const irisSettings: string = fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.iris-settings.json")
-        const parseIrisSettings: IThemeInterface<boolean> = JSON.parse(irisSettings);
+    static getSettings: ISettingsData<boolean> = JSON.parse(fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.settings.json"))
 
-        //log
-        console.log(parseIrisSettings);
-        //log
-        console.log(typeof parseIrisSettings);
-
-        return parseIrisSettings;
-    }
-
-    /**
-     * Parse dot settings 
-     * 
-     * @returns JSON object of Iris dot settings
-     */
-    static parseDotSettings(): IModeInterface<boolean> {
-        const modeSettings: string = fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json");
-        const parseDotSettings: IModeInterface<boolean> = JSON.parse(modeSettings);
-
-        //log
-        console.log(parseDotSettings);
-
-        //log
-        console.log(typeof parseDotSettings);
-
-        return parseDotSettings;
-    }
-
-    static parseAdvancedModeSettings(): IAdvancedModeInterface<boolean> {
-        const advancedModeSettings: string = fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json");
-        const parseAdvancedModeSettings: IAdvancedModeInterface<boolean> = JSON.parse(advancedModeSettings);
-
-        console.log(parseAdvancedModeSettings);
-        
-        return parseAdvancedModeSettings;
-    }
+    static settingsData: ISettingsData<boolean>[] = [{
+        "lightTheme": true,
+        "darkTheme": false,
+        "basicMode": true,
+        "advancedMode": false,
+        "readingMode": false,
+        "defaultCursor": true,
+        "blockCursor": false
+    }]
 }
 
 export class EditorThemes {

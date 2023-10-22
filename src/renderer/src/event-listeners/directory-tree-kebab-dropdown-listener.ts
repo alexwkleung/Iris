@@ -24,10 +24,6 @@ interface IEditorModeJSONRef<T extends string> {
     updatedSettings: T
 }
 
-const editorModeJSONRef: IEditorModeJSONRef<string> = {
-    updatedSettings: JSON.stringify(Settings.parseDotSettings())
-}
-
 export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
     /**
      * 
@@ -114,9 +110,11 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 //show kebab dropdown 
                 (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
 
-                editorModeJSONRef.updatedSettings = '{"basicMode":true,"advancedMode":false,"readingMode":false}';
+                Settings.getSettings.basicMode = true;
+                Settings.getSettings.advancedMode = false;
+                Settings.getSettings.readingMode = false;
 
-                fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
+                fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.settings.json", JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2));
 
                 //log
                 console.log("basic selected");
@@ -189,9 +187,11 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     PMEditorView.editorView.destroy();
                 }
 
-                editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":true,"readingMode":false}';
+                Settings.getSettings.basicMode = false;
+                Settings.getSettings.advancedMode = true;
+                Settings.getSettings.readingMode = false;
 
-                fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
+                fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.settings.json", JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2));
 
                 CMEditorView.createEditorView();
                 CMEditorView.setContenteditable(true);
@@ -211,20 +211,20 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                         });
                     })
                     
-                    if(Settings.parseThemeSettings().lightTheme) {
+                    if(Settings.getSettings.lightTheme) {
                         CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-                    } else if(Settings.parseThemeSettings().darkTheme) {
+                    } else if(Settings.getSettings.darkTheme) {
                         CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
                     }
 
                     //check block cursor
-                    if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                    if(Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                         AdvancedModeSettings.defaultCursor("light");
-                    } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                    } else if(Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                         AdvancedModeSettings.defaultCursor("dark");
                     } else if(
-                        Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
-                        || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                        Settings.getSettings.blockCursor && Settings.getSettings.lightTheme 
+                        || Settings.getSettings.blockCursor && Settings.getSettings.darkTheme
                     ) {
                         AdvancedModeSettings.blockCursor();
                     }
@@ -251,9 +251,11 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');
                     (document.getElementById('app') as HTMLElement).classList.add('reading-mode-is-active');
 
-                    //update settings
-                    editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":false,"readingMode":true}';
-                    fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
+                    Settings.getSettings.basicMode = false;
+                    Settings.getSettings.advancedMode = false;
+                    Settings.getSettings.readingMode = true;
+
+                    fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.settings.json", JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2));
 
                     //destroy corresponding editorview
                     PMEditorView.editorView.destroy();
@@ -262,8 +264,11 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     (document.getElementById('app') as HTMLElement).classList.remove('advanced-mode-is-active');
                     (document.getElementById('app') as HTMLElement).classList.add('reading-mode-is-active');
 
-                    editorModeJSONRef.updatedSettings = '{"basicMode":false,"advancedMode":false,"readingMode":true}';
-                    fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-dot-settings.json", editorModeJSONRef.updatedSettings)
+                    Settings.getSettings.basicMode = false;
+                    Settings.getSettings.advancedMode = false;
+                    Settings.getSettings.readingMode = true;
+
+                    fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.settings.json", JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2));
 
                     CMEditorView.editorView.destroy();
                 }
@@ -312,13 +317,13 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 (document.querySelector('.highlight-dark-theme') as HTMLElement).remove();
             }
 
-            if(Settings.parseThemeSettings().lightTheme) {
+            if(Settings.getSettings.lightTheme) {
                 const highlightTheme: HTMLLinkElement = document.createElement('link');
                 highlightTheme.setAttribute("rel", "stylesheet");
                 highlightTheme.setAttribute("href", highlightLight);
                 highlightTheme.setAttribute("class", "highlight-light-theme");
                 document.body.appendChild(highlightTheme);
-            } else if(Settings.parseThemeSettings().darkTheme) {
+            } else if(Settings.getSettings.darkTheme) {
                 const highlightDarkTheme: HTMLLinkElement = document.createElement('link');
                 highlightDarkTheme.setAttribute("rel", "stylesheet");
                 highlightDarkTheme.setAttribute("href", highlightDark);
