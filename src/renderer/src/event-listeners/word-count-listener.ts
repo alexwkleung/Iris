@@ -2,6 +2,7 @@ import { debounce } from "../utils/debounce"
 import { WordCountContainerNode } from "../misc-ui/word-count"
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { TextIterator } from "@codemirror/state";
+import { GenericEvent } from "./event"
 
 /**
  * Word count listener
@@ -45,8 +46,7 @@ export function wordCountListener(editor: string): number {
 
         console.log(wordCount);
         
-        //listener for during note writing
-        pm.addEventListener('keyup', debounce(() => {
+        const pmDebounceWordCount: () => any = debounce(() => {
             textArr = (pm.textContent as string).trim().split(regexPattern);
 
             //if there are no words
@@ -63,7 +63,9 @@ export function wordCountListener(editor: string): number {
             }
 
             console.log(wordCount);
-        }, 250)) //250ms default
+        }, 250);
+
+        GenericEvent.use.createDisposableEvent(pm, 'keyup', pmDebounceWordCount, undefined, "Created detachable event listener for PM debounce word count");
     } else if(editor === "codemirror") {
         const cm: HTMLElement = document.querySelector('.cm-editor') as HTMLElement;
 
@@ -96,9 +98,7 @@ export function wordCountListener(editor: string): number {
         
         console.log(wordCount);
         
-        //listener for during note writing
-        cm.addEventListener('keyup', debounce(() => {
-            
+        const cmDebounceWordCount: () => any = debounce(() => {
             console.log(cm.textContent);
             
             //reset word count
@@ -125,23 +125,10 @@ export function wordCountListener(editor: string): number {
                 WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words";
             }
 
-            /*
-            //if there are no words
-            if(!textArr[0]) {
-                wordCount = 0; //re-initialize
-                WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words"; 
-            } else {
-                wordCount = textArr.filter(str => str !== "").length;
-
-                //log
-                console.log(textArr.filter(str => str !== ""));
-
-                WordCountContainerNode.wordCountContainer.textContent = wordCount.toString() + " words";
-            }
-            */
-
             console.log(wordCount);
-        }, 250)) //250ms default
+        }, 250) //250ms default
+
+        GenericEvent.use.createDisposableEvent(cm, 'keyup', cmDebounceWordCount, undefined, "Created disposable event for CM debounce");
     }
 
     return wordCount;

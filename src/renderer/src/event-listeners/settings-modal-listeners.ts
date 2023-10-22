@@ -169,7 +169,7 @@ export class SettingsModalListeners extends SettingsModal {
             const currentSelection: HTMLSelectElement = (e.currentTarget as HTMLSelectElement);
 
             //if current selection is default-cursor and theme is light
-            if(currentSelection.value === 'default-cursor' && /*Settings.parseThemeSettings().lightTheme*/ Settings.getSettings.lightTheme) {
+            if(currentSelection.value === 'default-cursor' && Settings.getSettings.lightTheme) {
                 //log
                 console.log("selected default cursor and theme is light");
                 
@@ -186,7 +186,7 @@ export class SettingsModalListeners extends SettingsModal {
                     effects: CMEditorState.cursorCompartment.reconfigure(cursors[0])
                 })
             //if current selection is default-cursor and theme is dark 
-            } else if(currentSelection.value === 'default-cursor' && /*Settings.parseThemeSettings().darkTheme*/ Settings.getSettings.darkTheme) {
+            } else if(currentSelection.value === 'default-cursor' && Settings.getSettings.darkTheme) {
                 //log
                 console.log("selected default cursor and theme is dark");
 
