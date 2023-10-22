@@ -50,9 +50,6 @@ export class SettingsModalListeners extends SettingsModal {
                     //log
                     console.log("selected editor light");
 
-                    //log
-                    //console.log(Settings.parseThemeSettings().lightTheme);
-
                     (document.querySelector('.dark-option') as HTMLElement).removeAttribute("selected");
 
                     (document.querySelector('.light-option') as HTMLElement).setAttribute("selected", "");
@@ -108,9 +105,6 @@ export class SettingsModalListeners extends SettingsModal {
                 } else if(currentSelection.value === 'editor-dark') {
                     //log
                     console.log("selected editor dark");
-
-                    //log
-                    //console.log(Settings.parseThemeSettings().darkTheme);
 
                     (document.querySelector('.light-option') as HTMLElement).removeAttribute("selected");
 
@@ -185,12 +179,6 @@ export class SettingsModalListeners extends SettingsModal {
                 Settings.getSettings.defaultCursor = true;
                 Settings.getSettings.blockCursor = false;
 
-                //assign updated json to ref
-                //advancedModeJSONRef.updatedSettings = '{"defaultCursor":true,"blockCursor":false}';
-
-                //update .iris-advanced-editor-dot-settings.json 
-                //fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json", advancedModeJSONRef.updatedSettings);
-
                 fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.settings.json", JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2));
 
                 //dispatch cursor compartment reconfiguration
@@ -205,12 +193,8 @@ export class SettingsModalListeners extends SettingsModal {
                 (document.querySelector('.block-cursor-option') as HTMLElement).removeAttribute("selected");
                 (document.querySelector('.default-cursor-option') as HTMLElement).setAttribute("selected", "");
 
-                //advancedModeJSONRef.updatedSettings = '{"defaultCursor":true,"blockCursor":false}';
-
                 Settings.getSettings.defaultCursor = true;
                 Settings.getSettings.blockCursor = false;
-
-                //fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json", advancedModeJSONRef.updatedSettings);
 
                 fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.settings.json", JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2));
 
@@ -227,10 +211,6 @@ export class SettingsModalListeners extends SettingsModal {
 
                 Settings.getSettings.defaultCursor = false;
                 Settings.getSettings.blockCursor = true;
-
-                //advancedModeJSONRef.updatedSettings = '{"defaultCursor":false,"blockCursor":true}';
-
-                //fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json", advancedModeJSONRef.updatedSettings);
 
                 fsMod.fs._writeToFileAlt(fsMod.fs._baseDir("home") + "/Iris/.settings.json", JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2));
 
