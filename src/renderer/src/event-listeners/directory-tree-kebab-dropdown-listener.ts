@@ -20,10 +20,6 @@ import { markdownParser } from "../utils/markdown-parser"
 import highlightLight from '../../assets/classic-light.min.css?inline?url'
 import highlightDark from '../../assets/classic-dark.min.css?inline?url'
 
-interface IEditorModeJSONRef<T extends string> {
-    updatedSettings: T
-}
-
 export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
     /**
      * 
