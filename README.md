@@ -7,21 +7,11 @@
     <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris"></img>
 </p>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-42.png"></img>
+<img align="center" src="./screenshots/v0.2.0-dev-4.3-1.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-43.png"></img>
+<img align="center" src="./screenshots/v0.2.0-dev-4.3-2.png"></img>
 
-<img align="center" src="./screenshots/current-dev-v0.2.0-44.png"></img>
-
-<img align="center" src="./screenshots/current-dev-v0.2.0-45.png"></img>
-
-<img align="center" src="./screenshots/current-dev-v0.2.0-46.png"></img>
-
-<img align="center" src="./screenshots/current-dev-v0.2.0-47.png"></img>
-
-<img align="center" src="./screenshots/current-dev-v0.2.0-48.png"></img>
-
-<img align="center" src="./screenshots/current-dev-v0.2.0-49.png"></img>
+<img align="center" src="./screenshots/v0.2.0-dev-4.3-3.png"></img>
 
 # Info
 
