@@ -31,23 +31,6 @@ export class Settings {
      * @readonly
      */
     static readonly getSettings: ISettingsData<boolean> = JSON.parse(fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.settings.json"))
-
-    /**
-     * Settings data
-     * 
-     * Modify settings internally before writing to local
-     * 
-     * @internal
-     */
-    static settingsData: ISettingsData<boolean>[] = [{
-        "lightTheme": true,
-        "darkTheme": false,
-        "basicMode": true,
-        "advancedMode": false,
-        "readingMode": false,
-        "defaultCursor": true,
-        "blockCursor": false
-    }]
 }
 
 export class EditorThemes {
