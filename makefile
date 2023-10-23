@@ -13,3 +13,7 @@ build-mac-x64:
 .PHONY: build-mac-arm64
 build-mac-arm64:
 	npm run build:mac-arm64
+
+.PHONY: build-mac-universal
+build-mac-universal:
+	npm run build:mac-universal

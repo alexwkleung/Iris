@@ -84,6 +84,8 @@ Build native modules
 # change directory to native module
 cd fs-mod
 
+# if you are planning to build a universal binary, you must have the native module for both x64 and arm64
+
 # execute one of the build commands below:
 
 # build native module for your platform (automatic)
@@ -116,8 +118,14 @@ make build-mac-x64
 # via make (arm64)
 make build-mac-arm64
 
+# via make (universal)
+make build-mac-universal
+
 # via npm (x64)
 npm run build:mac-x64
+
+# via npm (universal)
+npm run build:mac-universal
 
 # via npm (arm64)
 npm run build:mac-arm64
