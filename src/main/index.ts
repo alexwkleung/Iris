@@ -6,10 +6,13 @@ import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
 import { isMacOS, isWindows, isLinux, isDev } from './is-main'
 import windowStateKeeper from 'electron-window-state'
+import { dialog } from 'electron'
 
 //prevent multiple instances of Iris running
 if(!app.requestSingleInstanceLock()) {
   console.log("Another instance of Iris is running. Exiting.");
+
+  dialog.showErrorBox("Iris", "Another instance of Iris is running. Closing current instance.");
 
   app.quit();
 }

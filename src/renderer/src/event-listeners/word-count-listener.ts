@@ -65,7 +65,7 @@ export function wordCountListener(editor: string): number {
             console.log(wordCount);
         }, 250);
 
-        GenericEvent.use.createDisposableEvent(pm, 'keyup', pmDebounceWordCount, undefined, "Created detachable event listener for PM debounce word count");
+        GenericEvent.use.createDisposableEvent(pm, 'keyup', pmDebounceWordCount, undefined, "Created disposable event listener for PM debounce word count");
     } else if(editor === "codemirror") {
         const cm: HTMLElement = document.querySelector('.cm-editor') as HTMLElement;
 
