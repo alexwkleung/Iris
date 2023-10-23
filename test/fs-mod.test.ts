@@ -21,11 +21,10 @@ import path from 'path';
 /**
  * NOTE: 
  * 
- * currently, majority of the test data is based on my own hard coded values
+ * Unit tests are outdated. 
  * 
- * others won't be able to run these test cases properly without modifying the values
+ * Don't run this until I update them.
  * 
- * I plan on replacing the hard coded values at a later time
  */
 
 const baseHome: string = "home";
