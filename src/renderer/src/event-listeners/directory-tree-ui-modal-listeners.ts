@@ -125,7 +125,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @param el Element to attach `keyup` event listener to
      */
     public createFileModalContinueListener(el: HTMLElement): void {
-        let fileName: string = "";
+        let fileName: string = "" + ".md";
 
         el.addEventListener('keyup', (e) => {
             //assign current value of input element on keyup + extension
@@ -136,6 +136,10 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         })
 
         DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', async () => {
+            if(fileName === ".md") {
+                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "A note with an empty file name has been created. It is recommended to rename the note.")
+            }
+
             //mode check
             if(isModeBasic() && fileName !== " ") {
                 //log

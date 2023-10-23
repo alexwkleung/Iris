@@ -76,7 +76,7 @@ export class EditorListeners implements IEditorListeners {
                 
                 GenericEvent.use.createDisposableEvent(this.pm, 'keyup', () => {
                     GenericEvent.use.createDisposableEvent(this.pm, 'keyup', this.pmDebounceAutoSave, undefined, "Created disposable event for PM debounce auto save")
-                }, undefined, "Created generic disposable event for PM auto save");
+                }, undefined, "Created generic non-disposable event for PM auto save");
             } 
         } else if(editor === "codemirror") {
             //when a keyboard press is released
@@ -85,7 +85,7 @@ export class EditorListeners implements IEditorListeners {
                 
                 GenericEvent.use.createDisposableEvent(this.cm, 'keyup', () => {
                     GenericEvent.use.createDisposableEvent(this.cm, 'keyup', this.cmDebounceAutoSave, undefined, "Created disposable event for CM debounce auto save")
-                }, undefined, "Created generic disposable event for CM auto save");
+                }, undefined, "Created generic non-disposable event for CM auto save");
             } 
         }
     }

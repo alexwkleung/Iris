@@ -61,8 +61,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
      */
     public kebabDropdownSelectListener(): void {
         (document.getElementById("editor-mode-select") as HTMLElement).addEventListener('change', (e) => {
-            e.stopImmediatePropagation();
-
             const currentSelection = (e.target as HTMLSelectElement);
             
             if(currentSelection.value === 'basic-mode') {

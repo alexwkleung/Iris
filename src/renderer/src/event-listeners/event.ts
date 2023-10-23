@@ -6,7 +6,7 @@ interface IEvent<
     Y extends string | undefined
     > {
     createDisposableEvent(el: T, type: Z, listener: K, useCapture?: X, log?: Y): void;
-    disposeEvent(el: T, type: Z, fn: () => K, capture?: X, log?: Y): void;
+    disposeEvent(el: T, type: Z, fn: (...args: K[]) => K, capture?: X, log?: Y): void;
 }
 
 export namespace GenericEvent {
@@ -25,7 +25,7 @@ export namespace GenericEvent {
          * @param useCapture - Optional - Default value is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
          * @param log - Optional - Print a message to console
          */
-        public createDisposableEvent(el: HTMLElement, type: string, listener: () => any | unknown, useCapture?: boolean | undefined, log?: string | undefined): void {
+        public createDisposableEvent(el: HTMLElement, type: string, listener: (...args: any[]) => any | unknown, useCapture?: boolean | undefined, log?: string | undefined): void {
             if(typeof listener === 'function') {
                 el.addEventListener(type, listener, useCapture);
             }
@@ -46,7 +46,7 @@ export namespace GenericEvent {
          * @param capture Optional - Default value is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
          * @param log Optional - Print a message to console
          */
-        public disposeEvent(el: HTMLElement, type: string, fn: () => any | unknown, capture?: boolean | undefined, log?: string | undefined): void {
+        public disposeEvent(el: HTMLElement, type: string, fn: (...args: any[]) => any | unknown, capture?: boolean | undefined, log?: string | undefined): void {
             if(typeof fn === 'function') {
                 el.removeEventListener(type, fn, capture);
             }

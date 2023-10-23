@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, protocol, net } from 'electron'
+import { app, shell, BrowserWindow, protocol, net, ipcMain } from 'electron'
 import { join } from 'path'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
@@ -16,6 +16,10 @@ if(!app.requestSingleInstanceLock()) {
 
   app.quit();
 }
+
+ipcMain.handle('error-dialog', (event, title, content) => {
+  dialog.showErrorBox(title, content);
+}) 
 
 function createWindow(): void {
   //esm version of __dirname 
