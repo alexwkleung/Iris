@@ -49,9 +49,6 @@ export function initRenderer(): void {
             theme: 'forest'
           })
         }
-        
-        //log
-        //console.log(Settings.parseDotSettings());
 
         //load mode
         if(Settings.getSettings.basicMode) {
