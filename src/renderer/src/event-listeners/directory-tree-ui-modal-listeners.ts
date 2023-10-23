@@ -618,7 +618,11 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //log
             console.log(folderName);
             
-            if(folderName !== " ") {
+            if(folderName === "") {
+                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "Folder name cannot be empty. Enter a valid folder name.");
+                
+                return;
+            } else if(folderName !== " ") {
                 //create directory
                 fsMod.fs._createDir(
                     fsMod.fs._baseDir("home")
