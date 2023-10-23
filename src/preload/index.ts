@@ -7,7 +7,7 @@ function appStartDirectoryCheck(): void {
   if(
     !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris") 
     && !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris/Notes") 
-    && !fsMod._isPathDir(fsMod._baseDir("home") + "/Images")
+    && !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris/Images")
     ) {
       console.log("directories don't exist");
 
@@ -18,7 +18,7 @@ function appStartDirectoryCheck(): void {
       fsMod._createDir(fsMod._baseDir("home") + "/Iris/Notes");
 
       //create images directory
-      fsMod._createDir(fsMod._baseDir("home") + "/Images");
+      fsMod._createDir(fsMod._baseDir("home") + "/Iris/Images");
 
       //create default settings
       settingFiles.createSettingFile('default');
