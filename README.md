@@ -110,11 +110,17 @@ npm run dev
 Build the installer 
 
 ```bash
-# via make
-make build-mac
+# via make (x64)
+make build-mac-x64
 
-# via npm
-npm run build:mac
+# via make (arm64)
+make build-mac-arm64
+
+# via npm (x64)
+npm run build:mac-x64
+
+# via npm (arm64)
+npm run build:mac-arm64
 
 # windows and linux have not been tested yet
 npm run build:win
