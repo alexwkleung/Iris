@@ -1,6 +1,6 @@
 <h1 align="center" style="border-bottom: none">
 <br>
-<a href="https://irisnotes.vercel.app">Iris</em></a>
+<a href="https://irisnotes.vercel.app">Iris</a>
 <br>
 </h1>
 
@@ -79,7 +79,7 @@ Change directory
 cd <...>/Iris
 ```
 
-Install npm dependencies
+Install npm dependencies. Only do this in the *root* of the project. Do not `npm install` inside of the native modules.
 
 ```bash
 npm install 
