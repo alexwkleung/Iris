@@ -1,8 +1,6 @@
-<h1 align="center">
-<br>
+<h1 align="center" style="border-bottom: none">
 <br>
 <a href="https://irisnotes.vercel.app">Iris</em></a>
-<br>
 <br>
 </h1>
 
