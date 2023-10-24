@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, protocol, net, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, protocol, net, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
@@ -6,7 +6,6 @@ import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
 import { isMacOS, isWindows, isLinux, isDev } from './is-main'
 import windowStateKeeper from 'electron-window-state'
-import { dialog } from 'electron'
 
 namespace MainProcess {
   class AppWindow {
