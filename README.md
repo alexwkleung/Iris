@@ -1,5 +1,9 @@
-<h1 align="center" style="padding-top: 20px;padding-bottom:20px">
-<a href="https://irisnotes.vercel.app">Iris <em style="font-size: 15px">(eye-riss)</em></a>
+<h1 align="center">
+<br>
+<br>
+<a href="https://irisnotes.vercel.app">Iris</em></a>
+<br>
+<br>
 </h1>
 
 <p align="center">
