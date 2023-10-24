@@ -1,31 +1,30 @@
 import { fsMod } from '../../../preload/mod/fs-mod'
-import irisSettings from './.iris-default-settings.json'
-import irisDotSettings from './.iris-default-dot-settings.json'
-import irisAdvancedModeDotSettings from './.iris-default-advanced-editor-dot-settings.json'
+import settings from './.settings.json'
 
-/**
- * Create default settings
- */
-export function createDefaultSettings(): void {
-    fsMod._createFile(fsMod._baseDir("home") + "/Iris/.iris-settings.json", JSON.stringify(irisSettings));
+interface ISettingFiles<T, K> {
+    createSettingFile(type: T): K
 }
 
-/**
- * Create dot settings
- */
-export function createDefaultDotSettings(): void {
-    fsMod._createFile(fsMod._baseDir("home") + "/Iris/.iris-dot-settings.json", JSON.stringify(irisDotSettings));
+class SettingFiles implements ISettingFiles<any, void> {
+    /**
+     * Create default settings
+     */
+    private createDefaultSettings(): void {
+        fsMod._createFile(fsMod._baseDir("home") + "/Iris/.settings.json", JSON.stringify(settings, null, 2));
+    }
+
+    /**
+     * Create default setting file 
+     * 
+     * @param type The type of setting file to create (`default`)
+     */
+    public createSettingFile(type: string): void {
+        switch(type) {
+            case 'default':
+                this.createDefaultSettings();
+                break;
+        } 
+    }
 }
 
-/**
- * Create default advanced mode settings
- */
-export function createDefaultAdvancedModeSettings(): void {
-    fsMod._createFile(fsMod._baseDir("home") + "/Iris/.iris-advanced-editor-dot-settings.json", JSON.stringify(irisAdvancedModeDotSettings));
-}
-
-/*
-export function createDefaultStartupDotSettings(): void {
-    fsMod._createFile(fsMod._baseDir("home") + "/Iris/.iris-startup-dot-settings.json", JSON.stringify(irisStartupDotSettings));
-}
-*/
+export const settingFiles = new SettingFiles();

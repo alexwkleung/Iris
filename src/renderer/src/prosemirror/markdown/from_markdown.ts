@@ -117,7 +117,7 @@ function withoutTrailingNewline(str: string) {
 function noOp() {}
 
 //eslint-disable-next-line
-function tokenHandlers(schema: Schema, tokens: {[token: string]: ParseSpec}) {
+function tokenHandlers(schema: Schema | any, tokens: {[token: string]: ParseSpec}) {
   const handlers: {[token: string]: (stat: MarkdownParseState, token: Token, tokens: Token[], i: number) => void} =
     Object.create(null)
   for (const type in tokens) {

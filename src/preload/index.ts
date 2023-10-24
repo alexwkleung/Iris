@@ -1,12 +1,13 @@
 import { contextBridge } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
+import { electronAPI } from '../preload/electron/electron'
 import { fsMod } from './mod/fs-mod'
-import { createDefaultSettings, createDefaultDotSettings, createDefaultAdvancedModeSettings } from '../renderer/src/settings/create-default-settings'
+import { settingFiles } from '../renderer/src/settings/create-default-settings'
 
 function appStartDirectoryCheck(): void {
   if(
     !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris") 
     && !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris/Notes") 
+    && !fsMod._isPathDir(fsMod._baseDir("home") + "/Iris/Images")
     ) {
       console.log("directories don't exist");
 
@@ -16,14 +17,11 @@ function appStartDirectoryCheck(): void {
       //create notes directory
       fsMod._createDir(fsMod._baseDir("home") + "/Iris/Notes");
 
+      //create images directory
+      fsMod._createDir(fsMod._baseDir("home") + "/Iris/Images");
+
       //create default settings
-      createDefaultSettings();
-
-      //create default dot settings 
-      createDefaultDotSettings();
-
-      //create default advanced mode settings
-      createDefaultAdvancedModeSettings();
+      settingFiles.createSettingFile('default');
     }
 }
 appStartDirectoryCheck();

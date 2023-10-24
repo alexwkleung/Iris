@@ -125,7 +125,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @param el Element to attach `keyup` event listener to
      */
     public createFileModalContinueListener(el: HTMLElement): void {
-        let fileName: string = "";
+        let fileName: string = "" + ".md";
 
         el.addEventListener('keyup', (e) => {
             //assign current value of input element on keyup + extension
@@ -136,6 +136,10 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         })
 
         DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', async () => {
+            if(fileName === ".md") {
+                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "A note with an empty file name has been created. It is recommended to rename the note.")
+            }
+
             //mode check
             if(isModeBasic() && fileName !== " ") {
                 //log
@@ -374,20 +378,20 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 CMEditorView.setContenteditable(true);
 
                 //cursor theme
-                if(Settings.parseThemeSettings().lightTheme) {
+                if(Settings.getSettings.lightTheme) {
                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-                } else if(Settings.parseThemeSettings().darkTheme) {
+                } else if(Settings.getSettings.darkTheme) {
                     CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
                 }
 
                 //check block cursor 
-                if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+                if(Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.defaultCursor("light");
-                } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+                } else if(Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                     AdvancedModeSettings.defaultCursor("dark");
                 } else if(
-                    Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
-                    || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+                    Settings.getSettings.blockCursor && Settings.getSettings.lightTheme
+                    || Settings.getSettings.blockCursor && Settings.getSettings.darkTheme
                 ) {
                     AdvancedModeSettings.blockCursor();
                 }
@@ -428,8 +432,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 this.editorTopBarContainer.directoryInfo();
 
                 (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
-
-                //to-do: sort files...
             } else if(isModeReading() && fileName !== " ") {
                 fsMod.fs._createFile(
                     fsMod.fs._baseDir("home") 
@@ -523,8 +525,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 //listeners
                 this.directoryTreeListeners.parentRootListener();
                 this.directoryTreeListeners.childNodeListener();
-
-                //to-do: sort files...
             }
         })
     }
@@ -618,7 +618,11 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //log
             console.log(folderName);
             
-            if(folderName !== " ") {
+            if(folderName === "") {
+                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "Folder name cannot be empty. Enter a valid folder name.");
+                
+                return;
+            } else if(folderName !== " ") {
                 //create directory
                 fsMod.fs._createDir(
                     fsMod.fs._baseDir("home")

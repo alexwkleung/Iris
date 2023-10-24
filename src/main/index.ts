@@ -1,10 +1,25 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, protocol, net, ipcMain } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
+import { isMacOS, isWindows, isLinux, isDev } from './is-main'
+import windowStateKeeper from 'electron-window-state'
+import { dialog } from 'electron'
+
+//prevent multiple instances of Iris running
+if(!app.requestSingleInstanceLock()) {
+  console.log("Another instance of Iris is running. Exiting.");
+
+  dialog.showErrorBox("Iris", "Another instance of Iris is running. Closing current instance.");
+
+  app.quit();
+}
+
+ipcMain.handle('error-dialog', (event, title, content) => {
+  dialog.showErrorBox(title, content);
+}) 
 
 function createWindow(): void {
   //esm version of __dirname 
@@ -13,57 +28,48 @@ function createWindow(): void {
   //isomorphic version of __dirname for both cjs/esm compatibility (https://antfu.me/posts/isomorphic-dirname)
   //const _dirname: string = typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
 
+  //create window state keeper
+  const windowState: windowStateKeeper.State = windowStateKeeper({
+    defaultWidth: 1200,
+    defaultHeight: 900,
+  })
+
   let mainWindow: BrowserWindow = {} as BrowserWindow;
 
+  mainWindow = new BrowserWindow({
+    width: windowState.width,
+    height: windowState.height,
+    x: windowState.x,
+    y: windowState.y,
+    minWidth: 800,
+    minHeight: 600,
+    show: false,
+    autoHideMenuBar: true,
+    titleBarStyle: isMacOS() ? 'hiddenInset' : 'default', //only check macOS
+    webPreferences: {
+      preload: join(_dirname, '../preload/index.js'),
+      sandbox: false,
+      contextIsolation: true,
+      webviewTag: false,
+      spellcheck: false
+    }
+  });
+
+  //register windowState listener
+  windowState.manage(mainWindow);
+
   //check if platform is darwin
-  if(process.platform === 'darwin') {
+  if(isMacOS()) {
       //log
       console.log("Platform is darwin (macOS)");
-
-      mainWindow = new BrowserWindow({
-          width: 1200,
-          height: 750,
-          show: false,
-          autoHideMenuBar: true,
-          titleBarStyle: 'hiddenInset',
-          webPreferences: {
-          preload: join(_dirname, '../preload/index.js'),
-          sandbox: false
-        }
-    });
     //check if platform is linux
-  } else if(process.platform === 'linux') {
+  } else if(isLinux()) {
       //log
       console.log("Platform is Linux");
-
-      mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 750,
-        show: false,
-        autoHideMenuBar: true,
-        titleBarStyle: 'default',
-        //...(process.platform === 'linux' ? { icon } : {}),
-        webPreferences: {
-        preload: join(_dirname, '../preload/index.js'),
-        sandbox: false
-      }
-    });
     //check if platform is windows
-  } else if(process.platform === 'win32') {
+  } else if(isWindows()) {
       //log
       console.log("Platform is Windows");
-
-      mainWindow = new BrowserWindow({
-          width: 1200,
-          height: 750,
-          show: false,
-          autoHideMenuBar: true,
-          titleBarStyle: 'default',
-          webPreferences: {
-          preload: join(_dirname, '../preload/index.js'),
-          sandbox: false
-        }
-    });
   }
 
   //set min window size 
@@ -85,20 +91,22 @@ function createWindow(): void {
       }
   });
 
-  if(is.dev && process.env['ELECTRON_RENDERER_URL']) {
-      mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
+  if(isDev()) {
+      //load dev server url in main window
+      mainWindow.loadURL('http://localhost:5173/');
+
+      //open dev tools undocked by default
+      mainWindow.webContents.openDevTools({
+        mode: 'undocked'
+      });
   } else {
+      //this is supposed to be production build
+      //path might change once electron-vite is removed
       mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
   }
 }
 
 app.whenReady().then(() => {
-    electronApp.setAppUserModelId('com.electron');
-
-  app.on('browser-window-created', (_, window) => {
-      optimizer.watchWindowShortcuts(window);
-  });
-
   createWindow();
 
   app.on('activate', () => {
@@ -106,12 +114,17 @@ app.whenReady().then(() => {
         createWindow();
       }
   });
+
+  //custom protocol to handle local file system absolute paths
+  protocol.handle('local', (request): Promise<Response> => {
+    return net.fetch('file://' + request.url.slice('local://'.length)).catch((e) => console.error(e)) as Promise<Response> 
+  })
 });
 
 app.on('window-all-closed', () => {
-  if(process.platform === 'linux' || process.platform === 'win32') {
+  if(isLinux() || isWindows()) {
     app.quit();
-  } else if(process.platform === 'darwin') {
+  } else if(isMacOS()) {
     return;
   }
 });

@@ -37,7 +37,8 @@ export async function markdownParser(content: string): Promise<string> {
     //sanitize html
     const purify: string = DOMPurify.sanitize(String(parseContent), {
         FORBID_TAGS: ['script'],
-        FORBID_ATTR: ['onclick']
+        FORBID_ATTR: ['onclick'],
+        ALLOW_UNKNOWN_PROTOCOLS: true
     })
 
     return purify;

@@ -123,12 +123,12 @@ export class DirectoryTreeUIElements {
         (document.getElementById("editor-mode-select") as HTMLElement).appendChild(readingModeOption);
 
         //if basic mode is true
-        if(Settings.parseDotSettings().basicMode) {
+        if(/*Settings.parseDotSettings().basicMode*/ Settings.getSettings.basicMode) {
             basicModeOption.setAttribute("selected", "");
         //if advanced mode is true
-        } else if(Settings.parseDotSettings().advancedMode)  {
+        } else if(/*Settings.parseDotSettings().advancedMode*/ Settings.getSettings.advancedMode)  {
             advancedModeOption.setAttribute("selected", "");
-        } else if(Settings.parseDotSettings().readingMode) {
+        } else if(/*Settings.parseDotSettings().readingMode*/ Settings.getSettings.readingMode) {
             readingModeOption.setAttribute("selected", "");
         }
     }

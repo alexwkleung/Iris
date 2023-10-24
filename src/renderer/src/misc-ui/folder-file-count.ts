@@ -26,7 +26,11 @@ export class FolderFileCount {
             parentNameTags.insertBefore(folderFileCountContainer, parentNameTags.firstChild);
     
             //assign length of walked folder (excluding itself) to fileCount
-            fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).slice(1).length;
+            if(window.electron.process.platform === 'darwin') {
+                fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).slice(1).length;
+            } else {
+                fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).length;
+            }
     
             //folder file count text node
             const folderFileCountTextNode: Text = document.createTextNode(fileCount.toString()); 
@@ -40,7 +44,11 @@ export class FolderFileCount {
             parentNameTags.insertBefore(folderFileCountContainer, parentNameTags.firstChild);
     
             //assign length of walked folder (excluding itself) to fileCount
-            fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).slice(1).length;
+            if(window.electron.process.platform === 'darwin') {
+                fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).slice(1).length;
+            } else {
+                fileCount = fsMod.fs._walk(fsMod.fs._baseDir("home") + "/Iris/Notes" + "/" + parentNameTagsArr).length;
+            }
     
             //folder file count text node
             const folderFileCountTextNode: Text = document.createTextNode(fileCount.toString()); 

@@ -8,6 +8,7 @@ import { RefsNs } from "./directory-tree-listeners"
 import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
+import { GenericEvent } from "./event"
 
 /**
  * @extends EditorKebabDropdownModals
@@ -17,13 +18,17 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
     private readonly directoryTree = new DirectoryTree();
 
 
+    public kebabModalContainerCb: () => void  = (): void => {
+        EditorKebabDropdownModals.kebabModalContainerNode.remove();
+
+        GenericEvent.use.disposeEvent(EditorKebabDropdownModals.kebabModalExitButtonNode, 'click', this.kebabModalContainerCb, undefined, "Disposed kebab modal container event")
+    }
+
     /**
      * Kebab exit modal listener
      */
     public kebabExitModalListener(): void {
-        EditorKebabDropdownModals.kebabModalExitButtonNode.addEventListener('click', () => {
-            EditorKebabDropdownModals.kebabModalContainerNode.remove();
-        })
+        GenericEvent.use.createDisposableEvent(EditorKebabDropdownModals.kebabModalExitButtonNode, 'click', this.kebabModalContainerCb, undefined, "Created disposable event for kebab modal container event")
     }
 
     /**

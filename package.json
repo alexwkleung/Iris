@@ -15,14 +15,17 @@
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "postinstall": "electron-builder install-app-deps",
-    "build:mac": "npm run build && electron-builder --mac --config",
+    "build:mac-arm64": "npm run build && electron-builder --mac --arm64 --config",
+    "build:mac-x64": "npm run build && electron-builder --mac --x64 --config",
+    "build:mac-universal": "npm run build && electron-builder --mac --universal --config",
     "build:linux": "npm run build && electron-builder --linux --config",
     "build:win": "npm run build && electron-builder --win --config",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
     "taze": "npx taze",
     "taze:write": "npx taze -w",
-    "test": "vitest"
+    "test": "vitest",
+    "napi:create": "napi new"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.8.1",
@@ -46,9 +49,6 @@
     "prosemirror-view": "^1.31.4"
   },
   "devDependencies": {
-    "@electron-toolkit/preload": "^1.0.3",
-    "@electron-toolkit/tsconfig": "^1.0.1",
-    "@electron-toolkit/utils": "^1.0.2",
     "@electron/notarize": "^1.2.3",
     "@napi-rs/cli": "^2.15.2",
     "@types/dompurify": "^3.0.2",
@@ -63,6 +63,7 @@
     "electron-context-menu": "^3.6.1",
     "electron-updater": "^5.3.0",
     "electron-vite": "^1.0.21",
+    "electron-window-state": "^5.0.3",
     "eslint": "^8.40.0",
     "markdown-it": "^13.0.1",
     "mermaid": "^10.2.4",

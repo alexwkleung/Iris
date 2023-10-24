@@ -3,6 +3,9 @@ edition = "2021"
 name = "fs-mod"
 version = "0.0.0"
 
+[workspace]
+members = ["./"]
+
 [lib]
 crate-type = ["cdylib"]
 

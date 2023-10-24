@@ -16,11 +16,8 @@ export function initRenderer(): void {
         //editor
         EditorNs.editor();
 
-        //log
-        console.log(Settings.parseThemeSettings());
-
         //load themes
-        if(Settings.parseThemeSettings().lightTheme) {
+        if(Settings.getSettings.lightTheme) {
           //if dark theme exists in dom
           if((document.querySelector('.editor-dark-theme') as HTMLElement) !== null) {
             //remove stylesheet node
@@ -38,11 +35,11 @@ export function initRenderer(): void {
             theme: 'forest'
           })
         //dark theme
-        } else if(Settings.parseThemeSettings().darkTheme) {
+        } else if(Settings.getSettings.darkTheme) {
           EditorThemes.darkTheme();
         }
 
-        if(Settings.parseThemeSettings().darkTheme) {
+        if(Settings.getSettings.darkTheme) {
           document.querySelectorAll('.highlight-light-theme').forEach((el) => {
             el.remove();
           })
@@ -52,19 +49,20 @@ export function initRenderer(): void {
             theme: 'forest'
           })
         }
-        
-        //log
-        console.log(Settings.parseDotSettings());
 
         //load mode
-        if(Settings.parseDotSettings().basicMode) {
+        if(Settings.getSettings.basicMode) {
+          console.log("basic mode active");
+
           if((document.getElementById('app') as HTMLElement).classList.contains('advanced-mode-is-active')) {
             (document.getElementById('app') as HTMLElement).classList.remove('advanced-mode-is-active');
           } 
 
           (document.getElementById('app') as HTMLElement).classList.add('basic-mode-is-active');
         //advanced mode
-        } else if(Settings.parseDotSettings().advancedMode) {
+        } else if(Settings.getSettings.advancedMode) {
+          console.log("advanced mode active");
+
           if((document.getElementById('app') as HTMLElement).classList.contains('basic-mode-is-active')) {
             (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');
           } 
@@ -72,17 +70,19 @@ export function initRenderer(): void {
           (document.getElementById('app') as HTMLElement).classList.add('advanced-mode-is-active');
 
           //check block cursor
-          if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().lightTheme) {
+          if(Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
             AdvancedModeSettings.defaultCursor("light");
-          } else if(Settings.parseAdvancedModeSettings().defaultCursor && Settings.parseThemeSettings().darkTheme) {
+          } else if(Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
             AdvancedModeSettings.defaultCursor("dark");
           } else if(
-            Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().lightTheme 
-            || Settings.parseAdvancedModeSettings().blockCursor && Settings.parseThemeSettings().darkTheme
+            Settings.getSettings.blockCursor && Settings.getSettings.lightTheme
+            || Settings.getSettings.blockCursor && Settings.getSettings.darkTheme
           ) {
             AdvancedModeSettings.blockCursor();
           }
-        } else if(Settings.parseDotSettings().readingMode) {
+        } else if(Settings.getSettings.readingMode) {
+          console.log("reading mode active");
+
           if((document.getElementById('app') as HTMLElement).classList.contains('basic-mode-is-active')) {
             (document.getElementById('app') as HTMLElement).classList.remove('basic-mode-is-active');
           } else if((document.getElementById('app') as HTMLElement).classList.contains('advanced-mode-is-active')) {

@@ -7,7 +7,6 @@ import { Settings } from "./src/settings/settings"
 import { CMEditorState } from "./src/codemirror/editor/cm-editor-state"
 import { cursors } from "./src/codemirror/extensions/cursors"
 
-//eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EditorNs {
     export class EditorContainerNode {
         public static editorContainer: HTMLDivElement;
@@ -15,7 +14,6 @@ export namespace EditorNs {
         public static createEditorContainer(): void {
             EditorContainerNode.editorContainer = document.createElement('div');
             EditorContainerNode.editorContainer.setAttribute("id", "editor-container");
-            EditorContainerNode.editorContainer.setAttribute("spellcheck", "false");
             EditorContainerNode.editorContainer.setAttribute("aria-hidden", "true");
 
             App.appNode.insertBefore(EditorContainerNode.editorContainer, App.appNode.firstChild);
@@ -72,7 +70,7 @@ export namespace EditorNs {
         //create editor container
         EditorContainerNode.createEditorContainer();
 
-        if(Settings.parseDotSettings().basicMode) {
+        if(Settings.getSettings.basicMode) {
             //create prosemirror editorview 
             PMEditorView.createEditorView();
     
@@ -81,14 +79,14 @@ export namespace EditorNs {
     
             //hide prosemirror menubar
             (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
-        } else if(Settings.parseDotSettings().advancedMode) {
+        } else if(Settings.getSettings.advancedMode) {
             CMEditorView.createEditorView();
 
             CMEditorView.setContenteditable(false);
 
-            if(Settings.parseThemeSettings().lightTheme) {
+            if(Settings.getSettings.lightTheme) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-            } else if(Settings.parseThemeSettings().darkTheme) {
+            } else if(Settings.getSettings.darkTheme) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
             }
         }
