@@ -7,6 +7,7 @@
 <p align="center">
     <em>ˈaɪərɪs | eye-riss</em>
 <br>
+<br>
     A comfortable note-taking app powered by Markdown that introduces a elegant note-taking experience.
 <br>
     Always local-first, open-source, and free forever.
