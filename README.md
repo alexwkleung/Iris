@@ -1,21 +1,30 @@
-<h1 align="center">✨ Iris</h1>
+<h1 align="center" style="padding-top: 20px;padding-bottom:20px">
+<a href="https://irisnotes.vercel.app">Iris <em style="font-size: 15px">(eye-riss)</em></a>
+</h1>
 
-<p align="center">Iris is a comfortable Markdown note-taking app. Written in TypeScript and Rust.</p>
+<p align="center">
+    A comfortable note-taking app powered by Markdown that introduces a elegant note-taking experience.
+<br>
+    Always local-first, open-source, and free forever.
+</p>
 
 <p align="center">
     <img src="https://img.shields.io/github/downloads/alexwkleung/Iris/total"></img>
     <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris"></img>
+    <img src="https://img.shields.io/github/license/alexwkleung/Iris"></img>
 </p>
 
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-1.png"></img>
-
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-2.png"></img>
-
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-3.png"></img>
 
 # Info
 
-Iris is currently in early development and may not be 100% stable for daily use.
+Iris is written in TypeScript and Rust.
+
+The app currently in early development and may not be 100% stable for daily use.
+
+Only macOS installers are supplied in the early development phase. Other platforms will be supported in the official release.
 
 v0.2.0 will mark the first official build for Iris. There will be a handful of dev builds that users can install to get a feel of the application before release.
 
@@ -47,10 +56,6 @@ rustup target install x86_64-apple-darwin
 
 # Intel Architecture:
 rustup target install aarch64-apple-darwin
-
-# some targets might require clang or llvm as a dependency 
-# for example, install llvm dependency via brew if you don't have it
-brew install llvm
 ```
 
 The recommended build tool for Iris is [GNU Make](https://www.gnu.org/software/make/). All build steps or commands will be reflected in the `makefile`. At the moment, only a small set of commands have a `npm run` script counterpart.
