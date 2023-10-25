@@ -9,13 +9,15 @@ interface IEvent<
     disposeEvent(el: T, type: Z, fn: (...args: K[]) => K, capture?: X, log?: Y): void;
 }
 
+type TEvent = IEvent<HTMLElement | Window & typeof globalThis, string, any | unknown, boolean | undefined, string | undefined>
+
 export namespace GenericEvent {
     /**
      * Don't export 
      * 
      * @internal 
      */
-    class Event implements IEvent<HTMLElement, string, any | unknown, boolean | undefined, string | undefined> {
+    class Event implements TEvent {
         /**
          * Create dispoable event listener
          * 
