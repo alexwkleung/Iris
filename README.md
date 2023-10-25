@@ -27,7 +27,7 @@
 
 Iris is written in TypeScript and Rust.
 
-The app currently in early development and may not be 100% stable for daily use.
+The app is currently in early development and may not be 100% stable for daily use.
 
 Only macOS installers are supplied in the early development phase. Other platforms will be supported in the official release.
 
