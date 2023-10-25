@@ -188,6 +188,8 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                 //log
                 console.log("name is equal or empty");
                 
+                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "Cannot rename note. Name must be different and not empty.")
+
                 return;
             } else {
                 //log
