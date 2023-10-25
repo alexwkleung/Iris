@@ -2,7 +2,7 @@
   "name": "iris",
   "version": "0.2.0-dev-5.0",
   "productName": "Iris",
-  "description": "Iris is a comfortable Markdown note-taking app",
+  "description": "A comfortable note-taking app powered by Markdown",
   "main": "./out/main/index.js",
   "author": "alexwkleung",
   "license": "MIT",
