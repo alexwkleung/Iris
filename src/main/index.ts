@@ -175,7 +175,7 @@ namespace MainProcess {
   }
 
   //AppWindow object
-  export const ElectronWindow = new AppWindow();
+  export const ElectronWindow: AppWindow = new AppWindow();
 }
 
 //build window
