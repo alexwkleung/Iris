@@ -41,6 +41,12 @@ namespace MainProcess {
       ipcMain.handle('error-dialog', (_: Electron.IpcMainInvokeEvent, title: string, content: string) => {
         dialog.showErrorBox(title, content);
       })
+
+      ipcMain.handle('show-message-box', (_: Electron.IpcMainInvokeEvent, message: string) => {
+        dialog.showMessageBox(this.mainWindow, {
+          message: message
+        })
+      })
     }
 
     /**

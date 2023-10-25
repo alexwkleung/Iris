@@ -137,7 +137,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', async () => {
             if(fileName === ".md") {
-                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "Note name cannot be empty. Enter a valid note name.")
+                window.electron.ipcRenderer.invoke('show-message-box', "Note name cannot be empty. Enter a valid note name.");
 
                 return;
             }
@@ -621,7 +621,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             console.log(folderName);
             
             if(folderName === "") {
-                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "Folder name cannot be empty. Enter a valid folder name.");
+                window.electron.ipcRenderer.invoke('show-message-box', "Folder name cannot be empty. Enter a valid folder name.")
                 
                 return;
             } else if(folderName !== " ") {

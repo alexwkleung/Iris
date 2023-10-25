@@ -187,8 +187,8 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
             if(renameFile === " " || renameFile === "" || renameFile === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent || (document.getElementById('rename-file-input-node') as HTMLElement).textContent === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent) {
                 //log
                 console.log("name is equal or empty");
-                
-                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "Cannot rename note. Name must be different and not empty.")
+
+                window.electron.ipcRenderer.invoke('show-message-box', "Cannot rename note. Name must be different and not empty.");
 
                 return;
             } else {
