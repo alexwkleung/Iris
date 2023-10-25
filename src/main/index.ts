@@ -38,7 +38,7 @@ namespace MainProcess {
      * @private
      */
     private ipcMainHandlers(): void {
-      ipcMain.handle('error-dialog', (event: Electron.IpcMainInvokeEvent, title: string, content: string) => {
+      ipcMain.handle('error-dialog', (_: Electron.IpcMainInvokeEvent, title: string, content: string) => {
         dialog.showErrorBox(title, content);
       })
     }
