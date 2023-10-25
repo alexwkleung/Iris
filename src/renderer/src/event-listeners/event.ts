@@ -1,5 +1,5 @@
 interface IEvent<
-    T extends HTMLElement, 
+    T extends HTMLElement | Window & typeof globalThis, 
     Z extends string, 
     K extends any | unknown, 
     X extends boolean | undefined, 
@@ -25,7 +25,7 @@ export namespace GenericEvent {
          * @param useCapture - Optional - Default value is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
          * @param log - Optional - Print a message to console
          */
-        public createDisposableEvent(el: HTMLElement, type: string, listener: (...args: any[]) => any | unknown, useCapture?: boolean | undefined, log?: string | undefined): void {
+        public createDisposableEvent(el: HTMLElement | Window & typeof globalThis, type: string, listener: (...args: any[]) => any | unknown, useCapture?: boolean | undefined, log?: string | undefined): void {
             if(typeof listener === 'function') {
                 el.addEventListener(type, listener, useCapture);
             }
@@ -46,7 +46,7 @@ export namespace GenericEvent {
          * @param capture Optional - Default value is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
          * @param log Optional - Print a message to console
          */
-        public disposeEvent(el: HTMLElement, type: string, fn: (...args: any[]) => any | unknown, capture?: boolean | undefined, log?: string | undefined): void {
+        public disposeEvent(el: HTMLElement | Window & typeof globalThis, type: string, fn: (...args: any[]) => any | unknown, capture?: boolean | undefined, log?: string | undefined): void {
             if(typeof fn === 'function') {
                 el.removeEventListener(type, fn, capture);
             }
