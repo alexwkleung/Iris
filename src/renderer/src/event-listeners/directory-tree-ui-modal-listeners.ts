@@ -137,7 +137,9 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         DirectoryTreeUIModals.createModalContinueButton.addEventListener('click', async () => {
             if(fileName === ".md") {
-                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "A note with an empty file name has been created. It is recommended to rename the note.")
+                window.electron.ipcRenderer.invoke('error-dialog', "Iris", "Note name cannot be empty. Enter a valid note name.")
+
+                return;
             }
 
             //mode check
