@@ -20,7 +20,6 @@ export class DirectoryTreeStateListeners {
                         for(let i = 0; i < childFileName.length; i++) {
                             //check if docTitleFolderName and docTitleFileName match the respective refs
                             if(docTitleFolderName === RefsNs.currentParentChildData[0].parentFolderName && childFileName[i].textContent === RefsNs.currentParentChildData[0].childFileName) {                        
-                                console.log(RefsNs.currentParentChildData[0].childFileNode.textContent);
                                 //compare text content to make sure it's identical
                                 if(childFileName[i].textContent === RefsNs.currentParentChildData[0].childFileName) {
                                     //add is-active-child class to the child file 
