@@ -5,6 +5,9 @@ import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 import { AdvancedModeSettings } from "../settings/settings"
+import { GenericEvent } from "./event"
+import { KeyBinds } from "../../keybinds/keybinds"
+
 import highlightLight from '../../assets/classic-light.min.css?inline?url'
 
 /**
@@ -12,12 +15,25 @@ import highlightLight from '../../assets/classic-light.min.css?inline?url'
  */
 export class SettingsModalListeners extends SettingsModal {
     /**
+     * Settings modal exit callback
+     * 
+     * @public
+     */
+    public settingsModalExitCb: () => void = (): void => {
+        SettingsModal.settingsModalContainerNode.remove();
+
+        GenericEvent.use.disposeEvent(SettingsModal.settingsModalExitButton, 'click', this.settingsModalExitCb, undefined, "Disposed event for settings modal exit (click)");
+
+        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");   
+    }
+
+    /**
      * Settings modal exit listener
      */
     public settingsModalExitListener(): void {
-        SettingsModal.settingsModalExitButton.addEventListener('click', () => {
-            SettingsModal.settingsModalContainerNode.remove();
-        })
+        KeyBinds.map.bind(this.settingsModalExitCb, 'Escape');
+
+        GenericEvent.use.createDisposableEvent(SettingsModal.settingsModalExitButton, 'click', this.settingsModalExitCb, undefined, "Created event for settings modal exit (click)");
     }
 
     /**
