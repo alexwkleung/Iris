@@ -59,6 +59,18 @@ export namespace GenericEvent {
                 return;
             }
         }
+
+
+        /**
+         * Set event callback timeout
+         * 
+         * @param fn Reference callback function to execute after `ms`
+         * @param ms Number to wait until reference function gets executed
+         * @returns Timeout to be executed in event
+         */
+        public setEventCallbackTimeout(fn: () => any | void, ms: number | undefined): NodeJS.Timeout {
+            return setTimeout(fn, ms);
+        }
     }
 
     /**
