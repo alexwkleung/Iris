@@ -137,6 +137,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createModalExitCb, undefined, "Disposed event for create modal exit");
 
         GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for create modal exit (keydown escape)");
+
+        KeyBinds.map.resetMapList();
     }
 
     /**
@@ -147,7 +149,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     public createFileModalExitListener(): void {
         GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createModalExitCb, undefined, "Created disposable event for create modal exit");
 
-        KeyBinds.map.bind(this.createModalExitCb, "Escape");
+        KeyBinds.map.bind(this.createModalExitCb, "Escape", false);
     }
 
     /**
@@ -404,7 +406,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalContinueButton, 'click', this.createFileModalContinueCb, undefined, "Created disposable event for create file modal continue");
 
-        KeyBinds.map.bind(this.createFileModalContinueCb, "Enter");
+        KeyBinds.map.bind(this.createFileModalContinueCb, "Enter", false);
     }
 
     /**
@@ -489,7 +491,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             window.electron.ipcRenderer.invoke('show-message-box', "Folder name cannot be empty. Enter a valid folder name.")
             
             return;
-        } else if(this.folderName !== " ") {
+        } else if(this.folderName !== "") {
             //create directory
             fsMod.fs._createDir(
                 fsMod.fs._baseDir("home")
@@ -559,7 +561,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
         GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalContinueButton, 'click', this.createFolderModalContinueCb, undefined, "Created event for create folder modal continue")
 
-        KeyBinds.map.bind(this.createFolderModalContinueCb, "Enter");
+        KeyBinds.map.bind(this.createFolderModalContinueCb, "Enter", false);
     }
 
     /**
@@ -579,6 +581,8 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createFolderModalExitCb, undefined, "Disposed event for create folder modal exit (click)");
 
         GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");
+
+        KeyBinds.map.resetMapList();
     }
 
     /**
@@ -587,7 +591,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     public createFolderModalExitListener(): void { 
         GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createFolderModalExitCb, undefined, "Created event for create folder modal exit (click)");
 
-        KeyBinds.map.bind(this.createFolderModalExitCb, "Escape");
+        KeyBinds.map.bind(this.createFolderModalExitCb, "Escape", false);
     }
 
     /**

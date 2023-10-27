@@ -1,62 +1,148 @@
 import { EKeyMap } from "./constants"
 import { GenericEvent } from "../src/event-listeners/event"
 
+interface IFn {
+    fn: (...args: any[]) => any,
+    key: string
+}
+
 export namespace KeyBinds {
     class KeyMapper {
-        private fn: Array<() => any> = [];
-        private key: string[] = [];
+        /**
+         * Array of objects to hold key binds and their corresponding functions
+         * 
+         * @private
+         */
+        private map: IFn[] = [
+            {
+                fn: {} as (...args: any[]) => any,
+                key: ""
+            },
+            {
+                fn: {} as (...args: any[]) => any,
+                key: ""
+            }
+        ];
 
+        /**
+         * Reset map list
+         * 
+         * @public
+         */
+        public resetMapList(): void {
+            setTimeout(() => {
+                this.map = [
+                    {
+                        fn: {} as (...args: any[]) => any,
+                        key: ""
+                    },
+                    {
+                        fn: {} as (...args: any[]) => any,
+                        key: ""
+                    }
+                ];
+
+                console.log("Reset map");
+            }, 500);
+        }
+
+        /**
+         * Set bind
+         * 
+         * @param key Type of key to execute corresponding function (`Escape`, `Enter`)
+         * 
+         * @public
+         */
+        public setBind(key: string): void {
+            console.log(this.map.length);
+
+            if(key === 'Escape') {
+                setTimeout(this.map[0].fn, 20);
+            } else if(key === 'Enter') {
+                setTimeout(this.map[1].fn, 20);
+            }
+        }
+
+        /**
+         * Bind callback
+         *  
+         * @param e KeyboardEvent
+         * 
+         * @public
+         */
         public bindCb: (e: KeyboardEvent) => any = (e: KeyboardEvent): any => {
-            console.log(this.key.length);
-            console.log(this.key);
-            console.log(this.fn);
-            console.log(this.fn.length);
+            console.log(this.map);
+            console.log(this.map.length);
 
             switch(e.code) {
                 case EKeyMap.ESCAPE: {
-                    if(this.key[0] === 'Escape') {
+                    if(this.map[0].key === 'Escape') {
                         console.log("Escape bind");
     
-                        setTimeout(this.fn[0], 20);
-                    }
-
-                    if(this.fn.length >= 2 || this.fn[0] !== this.fn[1]) {
-                        this.fn.length = 0;
-                    }
-                
-                    if(this.key.length >= 2) {
-                        this.key.length = 0;
+                        this.setBind("Escape");
                     }
                     break;
                 }
                 case EKeyMap.ENTER: {
-                    if(this.key[1] === 'Enter') {
+                    if(this.map[1].key === 'Enter') {
                         console.log("Enter bind");
     
-                        setTimeout(this.fn[1], 20);
-
-                        if(this.fn.length >= 2 || this.fn[0] !== this.fn[1]) {
-                            this.fn.length = 0;
-                        }
-                    
+                        this.setBind("Enter");
                     }
                     break;
                 }
             }
         }
 
-        public bind(fn: (...args: any[]) => any, key: string): void {
-            this.fn.push(fn);
-            this.key.push(key);
+        /**
+         * Bind a key
+         * 
+         * @param fn Function
+         * @param key Key type (`Escape`, `Enter`)
+         */
+        public bind(fn: (...args: any[]) => any, key: string, singleKey: boolean): void {
+            if(singleKey) {
+                if(key === 'Escape') {
+                    this.map.length = 0;
 
-            console.log(this.key.length);
-            console.log(this.key);
-            console.log(this.fn);
-            console.log(this.fn.length);
-            
-            GenericEvent.use.createDisposableEvent(window, 'keydown', this.bindCb, undefined, "Created disposable event for bind (keydown)");
+                    this.map = [
+                        {
+                            fn: fn,
+                            key: key
+                        }
+                    ]
+                } else if(key === 'Enter') {
+                    this.map.length = 0;
+                    
+                    this.map = [
+                        {
+                            fn: fn,
+                            key: key
+                        }
+                    ]
+                }
+
+                GenericEvent.use.createDisposableEvent(window, 'keydown', this.bindCb, undefined, "Created disposable event for bind (keydown)");
+
+                return;
+            } else if(!singleKey) {
+                if(key === 'Escape') {
+                    this.map[0].fn = fn;
+                    this.map[0].key = key
+                } else if(key === 'Enter') {
+                    this.map[1].fn = fn;
+                    this.map[1].key = key;
+                }
+
+                GenericEvent.use.createDisposableEvent(window, 'keydown', this.bindCb, undefined, "Created disposable event for bind (keydown)");
+
+                return;
+            }
         }
     }
 
+    /**
+     * KeyMapper object
+     */
     export const map: KeyMapper = new KeyMapper();
 }

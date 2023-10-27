@@ -24,14 +24,17 @@ export class SettingsModalListeners extends SettingsModal {
 
         GenericEvent.use.disposeEvent(SettingsModal.settingsModalExitButton, 'click', this.settingsModalExitCb, undefined, "Disposed event for settings modal exit (click)");
 
-        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");   
+        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");
+        
+        //must call this to reset map list once you are done disposing
+        KeyBinds.map.resetMapList();
     }
 
     /**
      * Settings modal exit listener
      */
     public settingsModalExitListener(): void {
-        KeyBinds.map.bind(this.settingsModalExitCb, 'Escape');
+        KeyBinds.map.bind(this.settingsModalExitCb, 'Escape', true);
 
         GenericEvent.use.createDisposableEvent(SettingsModal.settingsModalExitButton, 'click', this.settingsModalExitCb, undefined, "Created event for settings modal exit (click)");
     }

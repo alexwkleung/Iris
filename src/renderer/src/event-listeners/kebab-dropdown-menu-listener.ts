@@ -26,6 +26,8 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
         GenericEvent.use.disposeEvent(EditorKebabDropdownModals.kebabModalExitButtonNode, 'click', this.kebabModalContainerCb, undefined, "Disposed kebab modal container event")
 
         GenericEvent.use.disposeEvent(window, "keydown", this.kebabModalContainerCb, undefined, "Disposed event for kebab modal container (keydown escape)");
+
+        KeyBinds.map.resetMapList();
     }
 
     /**
@@ -34,7 +36,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
     public kebabExitModalListener(): void {
         GenericEvent.use.createDisposableEvent(EditorKebabDropdownModals.kebabModalExitButtonNode, 'click', this.kebabModalContainerCb, undefined, "Created disposable event for kebab modal container event")
 
-        KeyBinds.map.bind(this.kebabModalContainerCb, "Escape");
+        KeyBinds.map.bind(this.kebabModalContainerCb, "Escape", false);
     }
 
     /**
@@ -155,7 +157,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
     public kebabDeleteFileContinueModalListener(): void {
         GenericEvent.use.createDisposableEvent(EditorKebabDropdownModals.kebabModalContinueButtonNode, 'click', this.kebabDeleteFileContinueCb, undefined, "Created event for kebab modal continue button (click)");
 
-        KeyBinds.map.bind(this.kebabDeleteFileContinueCb, "Enter");
+        KeyBinds.map.bind(this.kebabDeleteFileContinueCb, "Enter", false);
     }
 
     public kebabDropdownDeleteFileCb: () => void = (): void => {
@@ -252,7 +254,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
         GenericEvent.use.createDisposableEvent((document.getElementById('kebab-modal-continue-button') as HTMLElement), 'click', this.kebabRenameFileContinueCb, undefined, "Created event for kebab rename file continue (click)");
 
-        KeyBinds.map.bind(this.kebabRenameFileContinueCb, "Enter");
+        KeyBinds.map.bind(this.kebabRenameFileContinueCb, "Enter", false);
     }
 
     /**
