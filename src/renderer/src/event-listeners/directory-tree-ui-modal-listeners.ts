@@ -583,14 +583,17 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             this.createFileListener();
         }
 
-        //dispose create folder modal exit cb
-        GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createFolderModalExitCb, undefined, "Disposed event for create folder modal exit (click)");
+        GenericEvent.use.setEventCallbackTimeout(() => {
+            //dispose create folder modal exit cb
+            GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createFolderModalExitCb, undefined, "Disposed event for create folder modal exit (click)");
+    
+            //dispose bind cb
+            GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");
+    
+            //dispose create folder input cb
+            GenericEvent.use.disposeEvent(document.body, 'keyup', this.createFolderInputCb, undefined, "Disposed event for create folder input");
 
-        //dispose bind cb
-        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");
-
-        //dispose create folder input cb
-        GenericEvent.use.disposeEvent(document.body, 'keyup', this.createFolderInputCb, undefined, "Disposed event for create folder input");
+        }, 150)
 
         KeyBinds.map.resetMapList();
     }
