@@ -23,7 +23,7 @@ import { AdvancedModeSettings } from "../settings/settings"
 import { ReadingMode } from "../mode/reading-mode"
 import { markdownParser } from "../utils/markdown-parser"
 import { GenericEvent } from "./event"
-import { KeyBinds } from "../../keybinds/keybinds"
+import { KeyBinds } from "../keybinds/keybinds"
 
 /**
  * @extends DirectoryTreeUIModals

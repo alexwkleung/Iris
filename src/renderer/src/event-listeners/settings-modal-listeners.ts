@@ -6,7 +6,7 @@ import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 import { AdvancedModeSettings } from "../settings/settings"
 import { GenericEvent } from "./event"
-import { KeyBinds } from "../../keybinds/keybinds"
+import { KeyBinds } from "../keybinds/keybinds"
 
 import highlightLight from '../../assets/classic-light.min.css?inline?url'
 

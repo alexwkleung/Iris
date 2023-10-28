@@ -9,7 +9,7 @@ import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { GenericEvent } from "./event"
-import { KeyBinds } from "../../keybinds/keybinds"
+import { KeyBinds } from "../keybinds/keybinds"
 
 /**
  * @extends EditorKebabDropdownModals

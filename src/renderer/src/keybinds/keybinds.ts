@@ -1,5 +1,5 @@
 import { EKeyMap } from "./constants"
-import { GenericEvent } from "../src/event-listeners/event"
+import { GenericEvent } from "../event-listeners/event"
 
 interface IFn {
     fn: (...args: any[]) => any,
