@@ -99,6 +99,7 @@ export namespace KeyBinds {
          * 
          * @param fn Function
          * @param key Key type (`Escape`, `Enter`)
+         * @param singleKey Option for binding a single key only
          */
         public bind(fn: (...args: any[]) => any, key: string, singleKey: boolean): void {
             if(singleKey) {
