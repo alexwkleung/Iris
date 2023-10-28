@@ -491,7 +491,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             window.electron.ipcRenderer.invoke('show-message-box', "Folder name cannot be empty. Enter a valid folder name.")
             
             return;
-        } else if(this.folderName !== "") {
+        } else if(this.folderName !== "" || this.folderName !== " " as string) {
             //create directory
             fsMod.fs._createDir(
                 fsMod.fs._baseDir("home")
@@ -546,9 +546,14 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         this.directoryTreeListeners.parentRootListener();
         this.directoryTreeListeners.parentRootListener();
 
+        //dispose create file modal continue cb
         GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalContinueButton, 'click', this.createFileModalContinueCb, undefined, "Disposed event for create file modal continue")
 
+        //dispose bind cb
         GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown enter)");
+
+        //dispose create folder input cb
+        GenericEvent.use.disposeEvent(document.body, 'keyup', this.createFolderInputCb, undefined, "Disposed event for create folder input");
     }
 
     /**
@@ -578,9 +583,14 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             this.createFileListener();
         }
 
+        //dispose create folder modal exit cb
         GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createFolderModalExitCb, undefined, "Disposed event for create folder modal exit (click)");
 
+        //dispose bind cb
         GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");
+
+        //dispose create folder input cb
+        GenericEvent.use.disposeEvent(document.body, 'keyup', this.createFolderInputCb, undefined, "Disposed event for create folder input");
 
         KeyBinds.map.resetMapList();
     }
@@ -600,26 +610,34 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @public
      */
     public createFolderCb: () => void = (): void => {
-        //log
-        console.log("clicked create folder");
+        GenericEvent.use.setEventCallbackTimeout(
+            () => {
+                //log
+                console.log("clicked create folder");
 
-        //invoke create folder modal
-        this.createFolderModal();
+                //invoke create folder modal
+                this.createFolderModal();
 
-        //invoke create modal exit listener
-        this.createFolderModalExitListener();
+                //invoke create modal exit listener
+                this.createFolderModalExitListener();
 
-        //mode check
-        if(isModeBasic() || isModeAdvanced() || isModeReading()) {
-            //invoke create folder continue listener
-            this.createFolderContinueListener((document.getElementById('create-folder-input-node') as HTMLElement));
-        }
+                //mode check
+                if(isModeBasic() || isModeAdvanced() || isModeReading()) {
+                    //invoke create folder continue listener
+                    this.createFolderContinueListener((document.getElementById('create-folder-input-node') as HTMLElement));
+                }
+
+                //dispose create folder cb
+                GenericEvent.use.disposeEvent((document.getElementById('create-folder') as HTMLElement), 'click', () => GenericEvent.use.setEventCallbackTimeout(this.createFolderCb, 50), undefined, "Disposed event for create folder (click)");
+            }, 50
+        )
+
     }
 
     /**
      * Create folder listener
      */
     public createFolderListener(): void {
-        GenericEvent.use.createDisposableEvent((document.getElementById('create-folder') as HTMLElement), 'click', this.createFolderCb, undefined, "Created event for create folder (click)");
+        GenericEvent.use.createDisposableEvent((document.getElementById('create-folder') as HTMLElement), 'click', () => GenericEvent.use.setEventCallbackTimeout(this.createFolderCb, 50), undefined, "Created event for create folder (click)");
     }
 }
