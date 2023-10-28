@@ -30,7 +30,7 @@ export namespace KeyBinds {
          * @public
          */
         public resetMapList(): void {
-            setTimeout(() => {
+            GenericEvent.use.setEventCallbackTimeout(() => {
                 this.map = [
                     {
                         fn: {} as (...args: any[]) => any,
@@ -57,9 +57,9 @@ export namespace KeyBinds {
             console.log(this.map.length);
 
             if(key === 'Escape') {
-                setTimeout(this.map[0].fn, 20);
+                GenericEvent.use.setEventCallbackTimeout(this.map[0].fn, 20);
             } else if(key === 'Enter') {
-                setTimeout(this.map[1].fn, 20);
+                GenericEvent.use.setEventCallbackTimeout(this.map[1].fn, 20);
             }
         }
 
