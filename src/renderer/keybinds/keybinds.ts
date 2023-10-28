@@ -76,7 +76,7 @@ export namespace KeyBinds {
 
             switch(e.code) {
                 case EKeyMap.ESCAPE: {
-                    if(this.map[0].key === 'Escape') {
+                    if(this.map[0].key === EKeyMap.ESCAPE) {
                         console.log("Escape bind");
     
                         this.setBind("Escape");
@@ -84,7 +84,7 @@ export namespace KeyBinds {
                     break;
                 }
                 case EKeyMap.ENTER: {
-                    if(this.map[1].key === 'Enter') {
+                    if(this.map[1].key === EKeyMap.ENTER) {
                         console.log("Enter bind");
     
                         this.setBind("Enter");
@@ -102,7 +102,7 @@ export namespace KeyBinds {
          */
         public bind(fn: (...args: any[]) => any, key: string, singleKey: boolean): void {
             if(singleKey) {
-                if(key === 'Escape') {
+                if(key === EKeyMap.ESCAPE) {
                     this.map.length = 0;
 
                     this.map = [
@@ -111,7 +111,7 @@ export namespace KeyBinds {
                             key: key
                         }
                     ]
-                } else if(key === 'Enter') {
+                } else if(key === EKeyMap.ENTER) {
                     this.map.length = 0;
                     
                     this.map = [
