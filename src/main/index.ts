@@ -35,6 +35,7 @@ namespace MainProcess {
         dialog.showErrorBox("Iris", "Another instance of Iris is running. Closing current instance.");
 
         app.quit();
+        process.exit(0);
       }
     }
 
