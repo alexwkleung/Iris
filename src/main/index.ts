@@ -1,6 +1,5 @@
 import { app, shell, BrowserWindow, protocol, net, ipcMain, dialog } from 'electron'
-import { join } from 'path'
-import { dirname } from 'path'
+import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import contextMenu from 'electron-context-menu'
 //import icon from '../../resources/icon.png?asset'
@@ -15,6 +14,13 @@ namespace MainProcess {
      * @protected
      */
     protected mainWindow: BrowserWindow = {} as BrowserWindow;
+
+    /**
+     * Window state
+     * 
+     * @private
+     */
+    private windowState: windowStateKeeper.State = {} as windowStateKeeper.State;
 
     /**
      * App instance 
@@ -50,6 +56,17 @@ namespace MainProcess {
     }
 
     /**
+     * Call this after registering `windowState` listener
+     * 
+     * @internal
+     * @private
+     */
+    private mainProcLogger(): void {
+      console.log("Current window dimensions: " + this.windowState.width + "x" + this.windowState.height);
+      console.log("Current window coordinates: " + "(" + this.windowState.x + ", " + this.windowState.y + ")");
+    }
+
+    /**
      * Initialize main window
      * 
      * @private
@@ -61,17 +78,16 @@ namespace MainProcess {
       //isomorphic version of __dirname for both cjs/esm compatibility (https://antfu.me/posts/isomorphic-dirname)
       //const _dirname: string = typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
     
-      //create window state keeper
-      const windowState: windowStateKeeper.State = windowStateKeeper({
+      this.windowState = windowStateKeeper({
         defaultWidth: 1200,
         defaultHeight: 900,
-      })
-    
+      });
+
       this.mainWindow = new BrowserWindow({
-        width: windowState.width,
-        height: windowState.height,
-        x: windowState.x,
-        y: windowState.y,
+        width: this.windowState.width,
+        height: this.windowState.height,
+        x: this.windowState.x,
+        y: this.windowState.y,
         minWidth: 800,
         minHeight: 600,
         show: false,
@@ -87,8 +103,11 @@ namespace MainProcess {
       });
     
       //register windowState listener
-      windowState.manage(this.mainWindow);
+      this.windowState.manage(this.mainWindow);
     
+      //main process logger
+      this.mainProcLogger();
+
       //check if platform is darwin
       if(isMacOS()) {
           //log
