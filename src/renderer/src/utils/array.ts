@@ -17,7 +17,7 @@ export namespace GenericArray {
             let empty: number | any[] = {} as number | any[];
 
             if(!pop && (arr.length !== 0 && arr.length !== -1 || arr.length !== undefined || arr.length !== null)) {
-                empty = arr.length = 0;
+                empty = (arr.length = 0 as number);
             } else if(pop) {
                 while(arr.length > 0) {
                     empty = arr.pop() as any[];
