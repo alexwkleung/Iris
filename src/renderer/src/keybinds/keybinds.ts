@@ -1,5 +1,6 @@
 import { EKeyMap } from "./constants"
 import { GenericEvent } from "../event-listeners/event"
+import { GenericArray } from "../utils/array"
 
 interface IFn {
     fn: (...args: any[]) => any,
@@ -104,7 +105,7 @@ export namespace KeyBinds {
         public bind(fn: (...args: any[]) => any, key: string, singleKey: boolean): void {
             if(singleKey) {
                 if(key === EKeyMap.ESCAPE) {
-                    this.map.length = 0;
+                    GenericArray.use.empty(this.map, false);
 
                     this.map = [
                         {
@@ -113,7 +114,7 @@ export namespace KeyBinds {
                         }
                     ]
                 } else if(key === EKeyMap.ENTER) {
-                    this.map.length = 0;
+                    GenericArray.use.empty(this.map, false);
                     
                     this.map = [
                         {
