@@ -96,6 +96,27 @@ export namespace KeyBinds {
         }
 
         /**
+         * Remap binding for single key
+         * 
+         * @param fn Function
+         * @param key Key type
+         * @returns Remapped binding for single key
+         * 
+         * @private
+         */
+        private remapSingle(fn: (...args: any[]) => any, key: string): IFn[] {
+            //empty keybind map before reassigning value to this.map
+            GenericArray.use.empty(this.map, false);
+
+            return this.map = [
+                {
+                    fn: fn,
+                    key: key
+                }
+            ]
+        }
+
+        /**
          * Bind a key
          * 
          * @param fn Function
@@ -105,23 +126,9 @@ export namespace KeyBinds {
         public bind(fn: (...args: any[]) => any, key: string, singleKey: boolean): void {
             if(singleKey) {
                 if(key === EKeyMap.ESCAPE) {
-                    GenericArray.use.empty(this.map, false);
-
-                    this.map = [
-                        {
-                            fn: fn,
-                            key: key
-                        }
-                    ]
+                    this.remapSingle(fn, key);
                 } else if(key === EKeyMap.ENTER) {
-                    GenericArray.use.empty(this.map, false);
-                    
-                    this.map = [
-                        {
-                            fn: fn,
-                            key: key
-                        }
-                    ]
+                    this.remapSingle(fn, key)
                 }
 
                 GenericEvent.use.createDisposableEvent(window, 'keydown', this.bindCb, undefined, "Created disposable event for bind (keydown)");
