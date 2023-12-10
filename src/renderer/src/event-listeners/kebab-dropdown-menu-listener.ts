@@ -161,27 +161,27 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
     }
 
     public kebabDropdownDeleteFileCb: () => void = (): void => {
-         //log
-         console.log("clicked kebab delete");
+        //log
+        console.log("clicked kebab delete");
 
-         document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
-             //null check
-             if(el !== null) {
-                 //remove any remaining kebab modal container nodes
-                 el.remove();
-             }
+        document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
+            //null check
+            if(el !== null) {
+                //remove any remaining kebab modal container nodes
+                el.remove();
+            }
 
-             GenericEvent.use.disposeEvent((document.getElementById('kebab-delete-file-button-node') as HTMLElement), 'click', this.kebabDropdownDeleteFileCb, undefined, "Disposed event for kebab dropdown delete file (click)")
-         })
+            GenericEvent.use.disposeEvent((document.getElementById('kebab-delete-file-button-node') as HTMLElement), 'click', this.kebabDropdownDeleteFileCb, undefined, "Disposed event for kebab dropdown delete file (click)")
+        })
 
-         //create kebab modal container
-         this.kebabModalDeleteFileContainer();
+        //create kebab modal container
+        this.kebabModalDeleteFileContainer();
 
-         //invoke kebab delete file exit modal listener
-         this.kebabExitModalListener();
+        //invoke kebab delete file exit modal listener
+        this.kebabExitModalListener();
 
-         //invoke kebab delete file continue modal listener
-         this.kebabDeleteFileContinueModalListener();
+        //invoke kebab delete file continue modal listener
+        this.kebabDeleteFileContinueModalListener();
     }
 
     /**
@@ -257,28 +257,32 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
         KeyBinds.map.bind(this.kebabRenameFileContinueCb, "Enter", false);
     }
 
+    public kebabDropdownRenameFileCb: () => void = (): void => {
+        //log 
+        console.log("clicked kebab rename");
+
+        document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
+            //null check
+            if(el !== null) {
+                //remove any remaining kebab modal container nodes
+                el.remove();
+            }
+        })
+        
+        GenericEvent.use.setEventCallbackTimeout(() => {
+            this.kebabDropdownRenameFileContainer();
+    
+            this.kebabExitModalListener();
+    
+            this.kebabRenameFileContinueModalListener();
+        }, 20);
+    }
+
     /**
      * Kebab dropdown rename file listener
      */
     public kebabDropdownRenameFileListener(): void {
-        (document.getElementById('kebab-rename-file-button') as HTMLElement).addEventListener('click', () => {
-            //log 
-            console.log("clicked kebab rename");
-
-            document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
-                //null check
-                if(el !== null) {
-                    //remove any remaining kebab modal container nodes
-                    el.remove();
-                }
-            })
-            
-            this.kebabDropdownRenameFileContainer();
-
-            this.kebabExitModalListener();
-
-            this.kebabRenameFileContinueModalListener();
-        })
+        GenericEvent.use.createDisposableEvent((document.getElementById('kebab-rename-file-button') as HTMLElement), 'click', () => GenericEvent.use.setEventCallbackTimeout(this.kebabDropdownRenameFileCb, 50), undefined, "Created disposable event for kebab dropdown rename file");
     }
 
     /**
