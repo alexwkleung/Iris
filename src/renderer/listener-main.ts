@@ -3,7 +3,6 @@ import { DirectoryTreeUIModalListeners } from "./src/event-listeners/directory-t
 import { SettingsModalListeners } from "./src/event-listeners/settings-modal-listeners.js"
 import { DirectoryTreeKebabDropdownListeners } from "./src/event-listeners/directory-tree-kebab-dropdown-listener.js"
 
-//eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ListenerNs {
     export function directoryTreeListeners(): void {
         const dirTreeListeners = new DirectoryTreeListeners();

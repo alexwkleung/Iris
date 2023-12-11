@@ -16,7 +16,7 @@ export class SettingsModal {
         SettingsModal.settingsModalExitButton.setAttribute("id", "settings-modal-exit");
         SettingsModal.settingsModalInnerWindow.appendChild(SettingsModal.settingsModalExitButton);
 
-        const settingsModalExitTextNode: Text = document.createTextNode("Exit");
+        const settingsModalExitTextNode: Text = document.createTextNode("x");
         SettingsModal.settingsModalExitButton.appendChild(settingsModalExitTextNode);
     }
 

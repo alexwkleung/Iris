@@ -1,5 +1,5 @@
 interface IEvent<
-    T extends HTMLElement, 
+    T extends HTMLElement | Window & typeof globalThis | Element, 
     Z extends string, 
     K extends any | unknown, 
     X extends boolean | undefined, 
@@ -9,13 +9,15 @@ interface IEvent<
     disposeEvent(el: T, type: Z, fn: (...args: K[]) => K, capture?: X, log?: Y): void;
 }
 
+type TEvent = IEvent<HTMLElement | Window & typeof globalThis | Element, string, any | unknown, boolean | undefined, string | undefined>
+
 export namespace GenericEvent {
     /**
      * Don't export 
      * 
      * @internal 
      */
-    class Event implements IEvent<HTMLElement, string, any | unknown, boolean | undefined, string | undefined> {
+    class Event implements TEvent {
         /**
          * Create dispoable event listener
          * 
@@ -25,7 +27,7 @@ export namespace GenericEvent {
          * @param useCapture - Optional - Default value is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
          * @param log - Optional - Print a message to console
          */
-        public createDisposableEvent(el: HTMLElement, type: string, listener: (...args: any[]) => any | unknown, useCapture?: boolean | undefined, log?: string | undefined): void {
+        public createDisposableEvent(el: HTMLElement | Window & typeof globalThis | Element, type: string, listener: (...args: any[]) => any | unknown, useCapture?: boolean | undefined, log?: string | undefined): void {
             if(typeof listener === 'function') {
                 el.addEventListener(type, listener, useCapture);
             }
@@ -46,7 +48,7 @@ export namespace GenericEvent {
          * @param capture Optional - Default value is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
          * @param log Optional - Print a message to console
          */
-        public disposeEvent(el: HTMLElement, type: string, fn: (...args: any[]) => any | unknown, capture?: boolean | undefined, log?: string | undefined): void {
+        public disposeEvent(el: HTMLElement | Window & typeof globalThis | Element, type: string, fn: (...args: any[]) => any | unknown, capture?: boolean | undefined, log?: string | undefined): void {
             if(typeof fn === 'function') {
                 el.removeEventListener(type, fn, capture);
             }
@@ -56,6 +58,18 @@ export namespace GenericEvent {
             } else {
                 return;
             }
+        }
+
+
+        /**
+         * Set event callback timeout
+         * 
+         * @param fn Reference callback function to execute after `ms`
+         * @param ms Number to wait until reference function gets executed
+         * @returns Timeout to be executed in event
+         */
+        public setEventCallbackTimeout(fn: () => any | void, ms: number | undefined): NodeJS.Timeout {
+            return setTimeout(fn, ms);
         }
     }
 

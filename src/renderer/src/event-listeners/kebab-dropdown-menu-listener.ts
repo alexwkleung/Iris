@@ -9,6 +9,7 @@ import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { FolderFileCount } from "../misc-ui/folder-file-count"
 import { DirectoryTree } from "../file-directory-tree/file-directory"
 import { GenericEvent } from "./event"
+import { KeyBinds } from "../keybinds/keybinds"
 
 /**
  * @extends EditorKebabDropdownModals
@@ -17,11 +18,16 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
     private readonly folderFileCount = new FolderFileCount();
     private readonly directoryTree = new DirectoryTree();
 
+    private renameFile: string = "";
 
     public kebabModalContainerCb: () => void  = (): void => {
         EditorKebabDropdownModals.kebabModalContainerNode.remove();
 
         GenericEvent.use.disposeEvent(EditorKebabDropdownModals.kebabModalExitButtonNode, 'click', this.kebabModalContainerCb, undefined, "Disposed kebab modal container event")
+
+        GenericEvent.use.disposeEvent(window, "keydown", this.kebabModalContainerCb, undefined, "Disposed event for kebab modal container (keydown escape)");
+
+        KeyBinds.map.resetMapList();
     }
 
     /**
@@ -29,218 +35,254 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
      */
     public kebabExitModalListener(): void {
         GenericEvent.use.createDisposableEvent(EditorKebabDropdownModals.kebabModalExitButtonNode, 'click', this.kebabModalContainerCb, undefined, "Created disposable event for kebab modal container event")
+
+        KeyBinds.map.bind(this.kebabModalContainerCb, "Escape", false);
+    }
+
+    /**
+     * Kebab delete file continue callback
+     * 
+     * @public
+     */
+    public kebabDeleteFileContinueCb: () => void = (): void => {
+        document.querySelectorAll('.child-file-name.is-active-child').forEach(async (el) => {
+            //mode check
+            if(isModeBasic()) {
+                //log
+                console.log(
+                    fsMod.fs._baseDir("home")
+                    + "/Iris/Notes/"
+                    + document.title.split('-')[1].trim()
+                    + "/"
+                    + el.textContent + ".md"
+                );
+
+                fsMod.fs._deletePath(
+                    fsMod.fs._baseDir("home")
+                    + "/Iris/Notes/"
+                    + document.title.split('-')[1].trim()
+                    + "/"
+                    + el.textContent + ".md"
+                );
+
+                //destroy editor and respawn 
+                PMEditorView.editorView.destroy();
+                PMEditorView.createEditorView();
+                PMEditorView.setContenteditable(false);
+
+                //hide prosemirror menubar
+                (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
+                
+                const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+                const parentNameTags: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
+                    
+                let count: number = 0;
+                //remove duplicate folder file count nodes
+                while(count <= 2) {
+                    document.querySelectorAll('.folder-file-count-container').forEach((el) => {
+                        el.remove();
+                    });
+                    count++;
+                }
+
+                for(let i = 0; i < parentNameTags.length; i++) {
+                    //invoke folder file count
+                    this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i], true);
+                }
+
+                //hide file directory kebab dropdown menu container
+                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
+            } else if(isModeAdvanced()) {
+                fsMod.fs._deletePath(
+                    fsMod.fs._baseDir("home")
+                    + "/Iris/Notes/"
+                    + document.title.split('-')[1].trim()
+                    + "/"
+                    + el.textContent + ".md"
+                );
+                
+                CMEditorView.editorView.destroy();
+                CMEditorView.createEditorView();
+                CMEditorView.setContenteditable(false);
+
+                const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+                const parentNameTags: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
+                    
+                let count: number = 0;
+                //remove duplicate folder file count nodes
+                while(count <= 2) {
+                    document.querySelectorAll('.folder-file-count-container').forEach((el) => {
+                        el.remove();
+                    });
+                    count++;
+                }
+
+                for(let i = 0; i < parentNameTags.length; i++) {
+                    //invoke folder file count
+                    this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i], true);
+                }
+            }
+            
+            //remove kebab modal container node
+            EditorKebabDropdownModals.kebabModalContainerNode.remove();
+
+            //remove active file from tree
+            el.remove();
+
+            //hide kebab dropdown menu container
+            (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
+
+            //kebab after click menu container
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
+            (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
+
+            //word counter
+            (document.getElementById('word-count-container') as HTMLElement).style.display = "none";
+                
+            //set window title to default
+            await setWindowTitle("Iris", false, null);
+
+            //remove top bar directory info node
+            (document.getElementById('top-bar-directory-info') as HTMLElement).remove();
+
+            (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
+        })
+
+        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for kebab delete file continue (keydown enter)");
     }
 
     /**
      * Kebab delete file continue modal listener
      */
     public kebabDeleteFileContinueModalListener(): void {
-        EditorKebabDropdownModals.kebabModalContinueButtonNode.addEventListener('click', () => {
-            document.querySelectorAll('.child-file-name.is-active-child').forEach(async (el) => {
-                //mode check
-                if(isModeBasic()) {
-                    //log
-                    console.log(
-                        fsMod.fs._baseDir("home")
-                        + "/Iris/Notes/"
-                        + document.title.split('-')[1].trim()
-                        + "/"
-                        + el.textContent + ".md"
-                    );
+        GenericEvent.use.createDisposableEvent(EditorKebabDropdownModals.kebabModalContinueButtonNode, 'click', this.kebabDeleteFileContinueCb, undefined, "Created event for kebab modal continue button (click)");
 
-                    fsMod.fs._deletePath(
-                        fsMod.fs._baseDir("home")
-                        + "/Iris/Notes/"
-                        + document.title.split('-')[1].trim()
-                        + "/"
-                        + el.textContent + ".md"
-                    );
+        KeyBinds.map.bind(this.kebabDeleteFileContinueCb, "Enter", false);
+    }
 
-                    //destroy editor and respawn 
-                    PMEditorView.editorView.destroy();
-                    PMEditorView.createEditorView();
-                    PMEditorView.setContenteditable(false);
+    public kebabDropdownDeleteFileCb: () => void = (): void => {
+        //log
+        console.log("clicked kebab delete");
 
-                    //hide prosemirror menubar
-                    (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
-                    
-                    const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
-                    const parentNameTags: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
-                        
-                    let count: number = 0;
-                    //remove duplicate folder file count nodes
-                    while(count <= 2) {
-                        document.querySelectorAll('.folder-file-count-container').forEach((el) => {
-                            el.remove();
-                        });
-                        count++;
-                    }
-
-                    for(let i = 0; i < parentNameTags.length; i++) {
-                        //invoke folder file count
-                        this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i], true);
-                    }
-
-                    //hide file directory kebab dropdown menu container
-                    (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
-                } else if(isModeAdvanced()) {
-                    fsMod.fs._deletePath(
-                        fsMod.fs._baseDir("home")
-                        + "/Iris/Notes/"
-                        + document.title.split('-')[1].trim()
-                        + "/"
-                        + el.textContent + ".md"
-                    );
-                    
-                    CMEditorView.editorView.destroy();
-                    CMEditorView.createEditorView();
-                    CMEditorView.setContenteditable(false);
-
-                    const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
-                    const parentNameTags: NodeListOf<Element> = document.querySelectorAll('.parent-folder-name');
-                        
-                    let count: number = 0;
-                    //remove duplicate folder file count nodes
-                    while(count <= 2) {
-                        document.querySelectorAll('.folder-file-count-container').forEach((el) => {
-                            el.remove();
-                        });
-                        count++;
-                    }
-
-                    for(let i = 0; i < parentNameTags.length; i++) {
-                        //invoke folder file count
-                        this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i], true);
-                    }
-                }
-                
-                //remove kebab modal container node
-                EditorKebabDropdownModals.kebabModalContainerNode.remove();
-
-                //remove active file from tree
+        document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
+            //null check
+            if(el !== null) {
+                //remove any remaining kebab modal container nodes
                 el.remove();
+            }
 
-                //hide kebab dropdown menu container
-                (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
-
-                //kebab after click menu container
-                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).style.display = "none";
-                (document.getElementById('kebab-after-click-menu-container') as HTMLElement).classList.remove('is-active');
-
-                //word counter
-                (document.getElementById('word-count-container') as HTMLElement).style.display = "none";
-                    
-                //set window title to default
-                await setWindowTitle("Iris", false, null);
-
-                //remove top bar directory info node
-                (document.getElementById('top-bar-directory-info') as HTMLElement).remove();
-
-                (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "none";
-            })
+            GenericEvent.use.disposeEvent((document.getElementById('kebab-delete-file-button-node') as HTMLElement), 'click', this.kebabDropdownDeleteFileCb, undefined, "Disposed event for kebab dropdown delete file (click)")
         })
+
+        //create kebab modal container
+        this.kebabModalDeleteFileContainer();
+
+        //invoke kebab delete file exit modal listener
+        this.kebabExitModalListener();
+
+        //invoke kebab delete file continue modal listener
+        this.kebabDeleteFileContinueModalListener();
     }
 
     /**
      * Kebab dropdown delete file listener
      */
     public kebabDropdownDeleteFileListener(): void {
-        (document.getElementById('kebab-delete-file-button-node') as HTMLElement).addEventListener('click', () => {
+        GenericEvent.use.createDisposableEvent((document.getElementById('kebab-delete-file-button-node') as HTMLElement), 'click', this.kebabDropdownDeleteFileCb, undefined, "Created event for kebab dropdown delete file (click)");
+    }
+
+    /**
+     * Kebab rename file continue callback
+     *  
+     * @public
+     */
+    public kebabRenameFileContinueCb: () => void = (): void => {
+        console.log(((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0]);
+        console.log(fsMod.fs._baseDir("home") + "/Iris/Notes" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent);
+        console.log(fsMod.fs._baseDir("home") + "/Iris/Notes" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + this.renameFile);
+
+        if(this.renameFile === " " || this.renameFile === "" || this.renameFile === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent || (document.getElementById('rename-file-input-node') as HTMLElement).textContent === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent) {
             //log
-            console.log("clicked kebab delete");
+            console.log("name is equal or empty");
 
-            document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
-                //null check
-                if(el !== null) {
-                    //remove any remaining kebab modal container nodes
-                    el.remove();
-                }
-            })
+            window.electron.ipcRenderer.invoke('show-message-box', "Cannot rename note. Name must be different and not empty.");
 
-            //create kebab modal container
-            this.kebabModalDeleteFileContainer();
+            return;
+        } else {
+            //log
+            console.log("name is not equal or empty");
 
-            //invoke kebab delete file exit modal listener
-            this.kebabExitModalListener();
+            //rename file
+            fsMod.fs._renameFile(
+                fsMod.fs._baseDir("home") + "/Iris/Notes/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent + ".md",
+                fsMod.fs._baseDir("home") + "/Iris/Notes/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + this.renameFile + ".md"
+            )
 
-            //invoke kebab delete file continue modal listener
-            this.kebabDeleteFileContinueModalListener();
-        })
+            //remove kebab modal container node
+            EditorKebabDropdownModals.kebabModalContainerNode.remove();
+
+            //create top bar info
+            const topBarInfo: string = ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + " - " + this.renameFile;
+                
+            //update top bar directory info 
+            (document.getElementById('top-bar-directory-info') as HTMLElement).textContent = topBarInfo;
+                
+            //update child file name in directory tree
+            (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent = this.renameFile;
+
+            //update child file name reference
+            RefsNs.currentParentChildData.map((props) => {
+                props.childFileName = this.renameFile
+            });
+
+            GenericEvent.use.disposeEvent((document.getElementById('kebab-modal-continue-button') as HTMLElement), 'click', this.kebabRenameFileContinueCb, undefined, "Disposed event for kebab rename file continue (click)");
+            GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for kebab rename file continue (keydown enter)");
+        }
+    }
+
+    public renameFileCb: (e: KeyboardEvent) => void = (e: KeyboardEvent): void => {
+        this.renameFile = ((e.target as HTMLInputElement).value).trim();
+
+        (document.getElementById('rename-file-input-node') as HTMLElement).textContent = this.renameFile;
+
+        //log
+        console.log(this.renameFile);
     }
 
     public kebabRenameFileContinueModalListener(): void {
-        let renameFile: string = "";
+        GenericEvent.use.createDisposableEvent((document.getElementById('rename-file-input-node') as HTMLElement), 'keyup', this.renameFileCb, undefined, "Created event for rename file (keyup)");
 
-        (document.getElementById('rename-file-input-node') as HTMLElement).addEventListener('keyup', (e) => {
-            renameFile = ((e.target as HTMLInputElement).value).trim();
+        GenericEvent.use.createDisposableEvent((document.getElementById('kebab-modal-continue-button') as HTMLElement), 'click', this.kebabRenameFileContinueCb, undefined, "Created event for kebab rename file continue (click)");
 
-            (document.getElementById('rename-file-input-node') as HTMLElement).textContent = renameFile;
+        KeyBinds.map.bind(this.kebabRenameFileContinueCb, "Enter", false);
+    }
 
-            //log
-            console.log(renameFile);
-        });
+    public kebabDropdownRenameFileCb: () => void = (): void => {
+        //log 
+        console.log("clicked kebab rename");
 
-        (document.getElementById('kebab-modal-continue-button') as HTMLElement).addEventListener('click', () => {
-            console.log(((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0]);
-            console.log(fsMod.fs._baseDir("home") + "/Iris/Notes" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent);
-            console.log(fsMod.fs._baseDir("home") + "/Iris/Notes" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile);
-            if(renameFile === " " || renameFile === "" || renameFile === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent || (document.getElementById('rename-file-input-node') as HTMLElement).textContent === (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent) {
-                //log
-                console.log("name is equal or empty");
-                
-                return;
-            } else {
-                //log
-                console.log("name is not equal or empty");
-
-                //rename file
-                fsMod.fs._renameFile(
-                    fsMod.fs._baseDir("home") + "/Iris/Notes/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent + ".md",
-                    fsMod.fs._baseDir("home") + "/Iris/Notes/" + ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + "/" + renameFile + ".md"
-                )
-    
-                //remove kebab modal container node
-                EditorKebabDropdownModals.kebabModalContainerNode.remove();
-    
-                //create top bar info
-                const topBarInfo: string = ((document.getElementById("top-bar-directory-info") as HTMLElement).textContent as string).split("-")[0].trim() + " - " + renameFile;
-                    
-                //update top bar directory info 
-                (document.getElementById('top-bar-directory-info') as HTMLElement).textContent = topBarInfo;
-                    
-                //update child file name in directory tree
-                (document.querySelector('.child-file-name.is-active-child') as HTMLElement).textContent = renameFile;
-    
-                //update child file name reference
-                RefsNs.currentParentChildData.map((props) => {
-                    props.childFileName = renameFile
-                });
+        document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
+            //null check
+            if(el !== null) {
+                //remove any remaining kebab modal container nodes
+                el.remove();
             }
         })
+        
+        GenericEvent.use.setEventCallbackTimeout(() => {
+            this.kebabDropdownRenameFileContainer();
+    
+            this.kebabExitModalListener();
+    
+            this.kebabRenameFileContinueModalListener();
+        }, 20);
     }
 
     /**
      * Kebab dropdown rename file listener
      */
     public kebabDropdownRenameFileListener(): void {
-        (document.getElementById('kebab-rename-file-button') as HTMLElement).addEventListener('click', () => {
-            //log 
-            console.log("clicked kebab rename");
-
-            document.querySelectorAll('#kebab-modal-container-node').forEach((el) => {
-                //null check
-                if(el !== null) {
-                    //remove any remaining kebab modal container nodes
-                    el.remove();
-                }
-            })
-            
-            this.kebabDropdownRenameFileContainer();
-
-            this.kebabExitModalListener();
-
-            this.kebabRenameFileContinueModalListener();
-        })
+        GenericEvent.use.createDisposableEvent((document.getElementById('kebab-rename-file-button') as HTMLElement), 'click', () => GenericEvent.use.setEventCallbackTimeout(this.kebabDropdownRenameFileCb, 50), undefined, "Created disposable event for kebab dropdown rename file");
     }
 
     /**

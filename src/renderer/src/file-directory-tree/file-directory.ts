@@ -3,7 +3,6 @@ import { fsMod } from '../utils/alias'
 import { isFolderNode } from '../utils/is'
 import { Settings } from '../settings/settings'
 
-//eslint-disable-next-line @typescript-eslint/no-namespace
 export class FileDirectoryTreeNode {
     /**
      * File directory tree node 

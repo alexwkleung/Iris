@@ -23,6 +23,8 @@ interface ISettingsData<T extends boolean> {
     "blockCursor": T
 }
 
+type TSettings = ISettingsData<boolean>;
+
 export class Settings {    
     /**
      * Get local settings
@@ -30,7 +32,7 @@ export class Settings {
      * @static
      * @readonly
      */
-    static readonly getSettings: ISettingsData<boolean> = JSON.parse(fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.settings.json"))
+    static readonly getSettings: TSettings = JSON.parse(fsMod.fs._readFile(fsMod.fs._baseDir("home") + "/Iris/.settings.json"))
 }
 
 export class EditorThemes {

@@ -15,7 +15,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/github/downloads/alexwkleung/Iris/total"></img>
-    <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris"></img>
+    <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris/main"></img>
     <img src="https://img.shields.io/github/license/alexwkleung/Iris"></img>
 </p>
 
@@ -27,7 +27,7 @@
 
 Iris is written in TypeScript and Rust.
 
-The app currently in early development and may not be 100% stable for daily use.
+The app is currently in early development and may not be 100% stable for daily use.
 
 Only macOS installers are supplied in the early development phase. Other platforms will be supported in the official release.
 

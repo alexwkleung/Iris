@@ -722,8 +722,8 @@ body {
 #settings-modal-exit {
     z-index: 1;
     position: fixed;
-    width: 42px;
-    height: 25px;
+    width: 35px;
+    height: 27px;
     color: white;
     border: 1px solid;
     border-color: grey;
