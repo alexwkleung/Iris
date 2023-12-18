@@ -1,11 +1,11 @@
 import { App } from "./app"
-import { PMEditorView } from "./src/prosemirror/editor/pm-editor-view"
-import { WordCountContainerNode } from "./src/misc-ui/word-count"
-import { EditorKebabDropdownMenu } from "./src/misc-ui/editor-kebab-dropdown-menu"
-import { CMEditorView } from "./src/codemirror/editor/cm-editor-view"
-import { Settings } from "./src/settings/settings"
-import { CMEditorState } from "./src/codemirror/editor/cm-editor-state"
-import { cursors } from "./src/codemirror/extensions/cursors"
+import { PMEditorView } from "./prosemirror/editor/pm-editor-view"
+import { WordCountContainerNode } from "./misc-ui/word-count"
+import { EditorKebabDropdownMenu } from "./misc-ui/editor-kebab-dropdown-menu"
+import { CMEditorView } from "./codemirror/editor/cm-editor-view"
+import { Settings } from "./settings/settings"
+import { CMEditorState } from "./codemirror/editor/cm-editor-state"
+import { cursors } from "./codemirror/extensions/cursors"
 
 export namespace EditorNs {
     export class EditorContainerNode {

@@ -1,4 +1,4 @@
-import { setWindowTitle } from "./src/window/window-title"
+import { setWindowTitle } from "./window/window-title"
 import prosemirror from '../renderer/assets/prosemirror.css?inline?url'
 import highlightLight from '../renderer/assets/classic-light.min.css?inline?url'
 
@@ -91,7 +91,7 @@ export class App {
     }
 }
 
-function createApp(): void {
+export function createApp(): void {
     document.addEventListener('DOMContentLoaded', () => {
         //call app
         App.app();
@@ -102,4 +102,3 @@ function createApp(): void {
         App.highlightLightTheme();
     });
 }
-createApp();

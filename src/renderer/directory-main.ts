@@ -1,4 +1,4 @@
-import { DirectoryTree, FileDirectoryTreeNode } from "./src/file-directory-tree/file-directory.js"
+import { DirectoryTree, FileDirectoryTreeNode } from "./file-directory-tree/file-directory.js"
 
 export namespace directoryNs {
     export function directory(): void {

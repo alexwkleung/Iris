@@ -19,6 +19,12 @@ files:
   - '!**/fs-mod/src/*'
   - '!node_modules/*'
   - '!dist/*'
+  - 'out/main.js'
+extraFiles: 
+  - 'out'
+  - 'out/preload/preload.js'
+  - 'out/renderer/renderer.js'
+  - 'out/main.js'
 asarUnpack:
   - resources/**
 afterSign: build/notarize.js
