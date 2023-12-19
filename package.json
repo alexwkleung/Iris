@@ -5,19 +5,6 @@
   "description": "A comfortable note-taking app powered by Markdown",
   "main": "./out/main.js",
   "type": "module",
-  "build": {
-    "files": [
-      "./out/**/*",
-      "./out/index.html",
-      "./out/assets/*",
-      "./out/assets/**/*",
-      "./out/main.js",
-      "./out/renderer/renderer.js",
-      "./out/renderer/**/*.js",
-      "./out/preload/preload.mjs",
-      "./out/preload/**/*.mjs"
-    ]
-  },
   "author": "alexwkleung",
   "license": "MIT",
   "bugs": {

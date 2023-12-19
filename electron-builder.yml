@@ -5,7 +5,6 @@ directories:
 files:
   - '!**/.vscode/*'
   - '!src/*'
-  - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
@@ -19,15 +18,18 @@ files:
   - '!**/fs-mod/src/*'
   - '!node_modules/*'
   - '!dist/*'
-  - 'out/main.js'
-extraFiles: 
-  - 'out'
-  - 'out/preload/preload.js'
+  - './out/**/*'
+  - 'out/**/*'
+  - 'out/index.html'
+  - 'out/assets/*'
+  - 'out/assets/**/*'
+  - './out/main.js'
   - 'out/renderer/renderer.js'
-  - 'out/main.js'
+  - 'out/renderer/**/*.js'
+  - 'out/preload/preload.mjs'
+  - 'out/preload/**/*.mjs'
 asarUnpack:
   - resources/**
-afterSign: build/notarize.js
 win:
   executableName: Iris
 nsis:
