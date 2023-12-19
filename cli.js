@@ -13,8 +13,6 @@ const chokidarPaths = [
     'src/renderer/**/*.mts'
 ];
 
-chokidarPaths = [];
-
 const chokidarDev = () => {
     fs.open('.hmr_pid.txt', 'w', (err, fd) => {
         if(err) {
