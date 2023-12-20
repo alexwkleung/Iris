@@ -24,7 +24,8 @@
     "build:win": "npm run build && electron-builder --win --config",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
-    "napi:create": "napi new"
+    "napi:create": "napi new",
+    "update:deps": "npx taze"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.8.1",

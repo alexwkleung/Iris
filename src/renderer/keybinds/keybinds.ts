@@ -44,7 +44,7 @@ export namespace KeyBinds {
                 ];
 
                 console.log("Reset map");
-            }, 200);
+            }, 122);
         }
 
         /**
