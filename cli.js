@@ -10,25 +10,30 @@ const chokidarPaths = [
     'src/main.ts',
     'src/preload/**/*.mts',
     'src/renderer/**/*.ts',
-    'src/renderer/**/*.mts'
+    'src/renderer/**/*.mts',
+    'src/**/*'
 ];
+
+const chokidarPathsIgnore = [
+    'src/**/*.css'
+]
 
 const chokidarDev = () => {
     fs.open('.hmr_pid.txt', 'w', (err, fd) => {
-        if(err) {
+        if(!err) {
+            fs.close(fd, (err) => {
+                if(err) {
+                    throw console.error(err);
+                }
+            })
+        } else {
             throw console.error(err);
         }
-        
-        fs.close(fd, (err) => {
-            if(err) {
-                throw console.error(err);
-            }
-        })
     })
 
     console.log("HMR is active");
 
-    chokidar.watch(chokidarPaths).on('all', (event, path) => {
+    chokidar.watch(chokidarPaths, { ignored: chokidarPathsIgnore }).on('all', (event, path) => {
         if(event === 'change' && path !== null && path !== undefined) {
             console.log("File changed: " + path);
 
@@ -37,10 +42,10 @@ const chokidarDev = () => {
             try {                  
                 exec('npm run build').on('exit', () => {
                     fs.readFile('.hmr_pid.txt', { encoding: 'utf-8' }, (err, data) => {
-                        if(err) {
-                            throw console.error(err);
-                        } else {
+                        if(!err) {
                             process.kill(data);
+                        } else {
+                            throw console.error(err);
                         }
                     })
 
