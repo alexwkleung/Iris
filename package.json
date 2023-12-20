@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/alexwkleung/Iris#readme",
   "scripts": {
-    "dev": "npm run build && concurrently \"vite serve ./out\" \"electron .\" \"node ./cli.js\"",
+    "dev": "npm run build && concurrently \"vite serve .\" \"electron .\" \"node ./cli.js\"",
     "build": "vite build && tsc",
     "preview": "vite preview",
     "test": "vitest",
