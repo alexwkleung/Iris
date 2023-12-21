@@ -3,6 +3,7 @@
 import chokidar from 'chokidar'
 import { exec } from 'child_process'
 import * as fs from 'fs'
+import process from 'process'
 
 const chokidarPaths = [
     'index.html', 

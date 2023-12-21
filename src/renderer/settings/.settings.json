@@ -5,5 +5,7 @@
     "advancedMode": false,
     "readingMode": false,
     "defaultCursor": true,
-    "blockCursor": false
+    "blockCursor": false,
+    "showBasicInSelection": true,
+    "showAdvancedInSelection": true
 }

@@ -105,6 +105,7 @@ export class DirectoryTreeUIElements {
         basicModeOption.setAttribute("value", "basic-mode");
         basicModeOption.setAttribute("class", "basic-mode-option");
         basicModeOption.textContent = "Basic";
+        basicModeOption.style.display = "";
         (document.getElementById("editor-mode-select") as HTMLElement).appendChild(basicModeOption);
 
         //advanced mode option
@@ -112,6 +113,7 @@ export class DirectoryTreeUIElements {
         advancedModeOption.setAttribute("value", "advanced-mode");
         advancedModeOption.setAttribute("class", "advanced-mode-option");
         advancedModeOption.textContent = "Advanced";
+        advancedModeOption.style.display = "";
         (document.getElementById("editor-mode-select") as HTMLElement).appendChild(advancedModeOption);
 
         //reading mode option
@@ -122,12 +124,12 @@ export class DirectoryTreeUIElements {
         (document.getElementById("editor-mode-select") as HTMLElement).appendChild(readingModeOption);
 
         //if basic mode is true
-        if(/*Settings.parseDotSettings().basicMode*/ Settings.getSettings.basicMode) {
+        if(Settings.getSettings.basicMode) {
             basicModeOption.setAttribute("selected", "");
         //if advanced mode is true
-        } else if(/*Settings.parseDotSettings().advancedMode*/ Settings.getSettings.advancedMode)  {
+        } else if(Settings.getSettings.advancedMode)  {
             advancedModeOption.setAttribute("selected", "");
-        } else if(/*Settings.parseDotSettings().readingMode*/ Settings.getSettings.readingMode) {
+        } else if(Settings.getSettings.readingMode) {
             readingModeOption.setAttribute("selected", "");
         }
     }

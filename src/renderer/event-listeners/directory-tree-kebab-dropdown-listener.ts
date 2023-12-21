@@ -17,8 +17,8 @@ import { isModeBasic, isModeAdvanced, isModeReading } from "../utils/is"
 import { ReadingMode } from "../mode/reading-mode"
 import { markdownParser } from "../utils/markdown-parser"
 
-import highlightLight from '../assets/classic-light.min.css?inline?url'
-import highlightDark from '../assets/classic-dark.min.css?inline?url'
+import highlightLight from '../../assets/classic-light.min.css?inline?url'
+import highlightDark from '../../assets/classic-dark.min.css?inline?url'
 
 export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
     /**

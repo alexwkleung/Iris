@@ -7,6 +7,7 @@ import mermaid from 'mermaid'
 import { GenericEvent } from './event-listeners/event'
 import { createApp } from './app'
 import { invokeListeners } from './listener-main'
+import { fsMod } from './utils/alias'
 
 namespace RendererProcess {
   class Renderer {
@@ -67,6 +68,28 @@ namespace RendererProcess {
     * @private
     */
    private loadMode(): void {
+      //load mode selection
+      if(!Settings.getSettings.showBasicInSelection) {
+        (document.querySelector('.basic-mode-option') as HTMLElement).style.display = "none";
+
+        if(!Settings.getSettings.showAdvancedInSelection) {
+          (document.querySelector('.advanced-mode-option') as HTMLElement).style.display = "none";
+        }
+      } else if(Settings.getSettings.showBasicInSelection && Settings.getSettings.showAdvancedInSelection) {
+        (document.querySelector('.basic-mode-option') as HTMLElement).style.display = "";
+        (document.querySelector('.advanced-mode-option') as HTMLElement).style.display = "";
+      }
+
+      if(Settings.getSettings.showBasicInSelection && !Settings.getSettings.showAdvancedInSelection)  {
+        (document.querySelector('.basic-mode-option') as HTMLElement).style.display = "";
+
+        (document.querySelector('.advanced-mode-option') as HTMLElement).style.display = "none";
+      } else if(Settings.getSettings.showAdvancedInSelection && !Settings.getSettings.showBasicInSelection) {
+        (document.querySelector('.advanced-mode-option') as HTMLElement).style.display = "";
+
+        (document.querySelector('.basic-mode-option') as HTMLElement).style.display = "none";
+      }
+
       //load mode
       if(Settings.getSettings.basicMode) {
         console.log("basic mode active");

@@ -60,11 +60,11 @@ namespace MainProcess {
             dialog.showErrorBox(title, content);
           })
 
-        ipcMain.handle('show-message-box', (_: Electron.IpcMainInvokeEvent, message: string) => {
-            dialog.showMessageBox(this.mainWindow, {
-              message: message
-            })
-        })
+          ipcMain.handle('show-message-box', (_: Electron.IpcMainInvokeEvent, message: string) => {
+              dialog.showMessageBox(this.mainWindow, {
+                message: message
+              })
+          })
       }
 
       /**
@@ -157,14 +157,12 @@ namespace MainProcess {
         
           if(isDev()) {
               //load dev server url in main window
-              //this.mainWindow.loadURL('http://localhost:5173/');
+              this.mainWindow.loadURL('http://localhost:5173/');
 
               //open dev tools undocked by default
               this.mainWindow.webContents.openDevTools({
                 mode: 'undocked'
               });
-
-              this.mainWindow.loadFile(join(_dirname, 'index.html'));
           } else {
               //this is supposed to be production build
               //path might change once electron-vite is removed

@@ -7,8 +7,8 @@ import { CMEditorView } from "../codemirror/editor/cm-editor-view"
 import { CMEditorState } from "../codemirror/editor/cm-editor-state"
 import { cursors } from "../codemirror/extensions/cursors"
 
-import editorDark from '../assets/editor-dark.css?inline?url'
-import highlightDark from '../assets/classic-dark.min.css?inline?url'
+import editorDark from '../../assets/editor-dark.css?inline?url'
+import highlightDark from '../../assets/classic-dark.min.css?inline?url'
 
 /**
  * Settings interface
@@ -20,7 +20,9 @@ interface ISettingsData<T extends boolean> {
     "advancedMode": T,
     "readingMode": T,
     "defaultCursor": T,
-    "blockCursor": T
+    "blockCursor": T,
+    "showBasicInSelection": T,
+    "showAdvancedInSelection": T
 }
 
 type TSettings = ISettingsData<boolean>;

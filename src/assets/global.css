@@ -882,7 +882,7 @@ body {
 #theme-options-container {
     /*border: 1px solid white;*/
     width: 598px;
-    height: 150px;
+    height: 100px;
 }
 #theme-options-container-title {
     color: #ffffff;
@@ -916,7 +916,7 @@ body {
 #advanced-mode-options-container {
     /*border: 1px solid white;*/
     width: 598px;
-    height: 150px;
+    height: 105px;
     margin-top: 20px;
 }
 #advanced-mode-options-container-title {
@@ -942,6 +942,57 @@ body {
     font-size: 17px;
 }
 #advanced-mode-options-select:focus {
+    outline: none;
+}
+
+#mode-dropdown-options-container {
+    width: 598px;
+    height: 100px;
+    margin-top: 0px;
+}
+#mode-dropdown-options-container-title {
+    color: #ffffff;
+    font-family: 'Inter-Bold';
+    font-size: 20px;
+    margin-left: 0px;
+    margin-top: 10px;
+}
+.basic-mode-selection-options-select-label {
+    color: white;
+    font-family: 'Inter-Regular';
+    margin-top: 20px;
+    margin-left: 0px;
+    font-size: 17px;
+}
+#basic-mode-toggle-options-select {
+    margin-left: 320px;
+    font-family: 'Inter-Regular';
+    margin-top: 20px;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    border-radius: 5px;
+    font-size: 17px;
+}
+#basic-mode-toggle-options-select:focus {
+    outline: none;
+}
+.advanced-mode-selection-options-select-label {
+    color: white;
+    font-family: 'Inter-Regular';
+    margin-top: 20px;
+    margin-left: 0px;
+    font-size: 17px;
+}
+#advanced-mode-toggle-options-select {
+    margin-left: 285px;
+    font-family: 'Inter-Regular';
+    margin-top: 20px;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    border-radius: 5px;
+    font-size: 17px;
+}
+#advanced-mode-toggle-options-select:focus {
     outline: none;
 }
 
