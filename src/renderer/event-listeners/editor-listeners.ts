@@ -39,7 +39,7 @@ export class EditorListeners implements IEditorListeners {
                     GenericEvent.use.disposeEvent(this.pm, 'keyup', this.pmDebounceAutoSave, undefined, "Disposed PM debounce auto save event");
             }
         })
-    }, 1000); //1000ms default
+    }, 250); //250ms default
 
     public cmDebounceAutoSave = debounce(() => {
         RefsNs.currentParentChildData.map((props) => {
