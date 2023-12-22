@@ -1,20 +1,18 @@
-import { DirectoryTreeListeners } from "./event-listeners/directory-tree-listeners.js"
-import { DirectoryTreeUIModalListeners } from "./event-listeners/directory-tree-ui-modal-listeners.js"
-import { SettingsModalListeners } from "./event-listeners/settings-modal-listeners.js"
-import { DirectoryTreeKebabDropdownListeners } from "./event-listeners/directory-tree-kebab-dropdown-listener.js"
+import { DirectoryTreeListeners } from "./event-listeners/directory-tree-listeners.js";
+import { DirectoryTreeUIModalListeners } from "./event-listeners/directory-tree-ui-modal-listeners.js";
+import { SettingsModalListeners } from "./event-listeners/settings-modal-listeners.js";
+import { DirectoryTreeKebabDropdownListeners } from "./event-listeners/directory-tree-kebab-dropdown-listener.js";
 
 export namespace ListenerNs {
     export function directoryTreeListeners(): void {
         const dirTreeListeners = new DirectoryTreeListeners();
 
-        //needs to be in sync with mode switch when implemented?
         dirTreeListeners.parentRootListener();
     }
 
     export function directoryTreeUIModalListeners(): void {
         const dirTreeUIModalListeners = new DirectoryTreeUIModalListeners();
 
-        //needs to be in sync with mode switch when implemented?
         dirTreeUIModalListeners.createFileListener();
 
         dirTreeUIModalListeners.createFolderListener();
@@ -34,9 +32,9 @@ export namespace ListenerNs {
 }
 
 export function invokeListeners(): void {
-    window.addEventListener('load', async () => {
+    window.addEventListener("load", async () => {
         ListenerNs.directoryTreeListeners();
-        
+
         ListenerNs.directoryTreeUIModalListeners();
 
         ListenerNs.settingsModalListeners();

@@ -5,7 +5,7 @@ export interface IDirectoryTreeUIModalListeners {
     createFileModalExitListener(): void;
     createFileModalContinueListener(el: HTMLElement): void;
     createFileListener(): void;
-    createFolderContinueListener(el: HTMLElement): void
+    createFolderContinueListener(el: HTMLElement): void;
     createFolderListener(): void;
 }
 

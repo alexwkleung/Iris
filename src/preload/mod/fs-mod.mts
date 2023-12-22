@@ -1,24 +1,24 @@
-import { 
-    baseDir, 
-    getName, 
-    getDirectoryName, 
-    getNameVec, 
-    getCanonicalPath, 
-    isFile, 
-    isDirectory, 
-    isFileCanonical, 
-    isDirectoryCanonical, 
-    readFile, 
-    walk, 
-    walkNoExt, 
+import {
+    baseDir,
+    getName,
+    getDirectoryName,
+    getNameVec,
+    getCanonicalPath,
+    isFile,
+    isDirectory,
+    isFileCanonical,
+    isDirectoryCanonical,
+    readFile,
+    walk,
+    walkNoExt,
     writeToFile,
     createFile,
     createDir,
     isPathDir,
     isPathFile,
     deletePath,
-    renameFile
-} from 'fs-mod'
+    renameFile,
+} from "fs-mod";
 
 //fsMod API
 export const fsMod = {
@@ -30,7 +30,7 @@ export const fsMod = {
     },
     _getDirectoryName(dir: string): string {
         return getDirectoryName(dir);
-    }, 
+    },
     _getNameVec(dir: string): string[] {
         return getNameVec(dir);
     },
@@ -63,7 +63,7 @@ export const fsMod = {
     },
     _readFileFolder(folder: string, file: string): string {
         console.log(baseDir("home") + "/Iris/Notes/" + folder + "/" + file);
-        
+
         return readFile(baseDir("home") + "/Iris/Notes/" + folder + "/" + file);
     },
     _writeToFile(path: string, content: string): void {
@@ -89,5 +89,5 @@ export const fsMod = {
     },
     _renameFile(oldPath: string, newPath: string): void {
         return renameFile(oldPath, newPath);
-    }
-}
+    },
+};

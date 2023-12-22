@@ -41,6 +41,8 @@ If you want to build the app directly from source, follow the instructions in [D
  
 # Development 
 
+The recommended editor for development is [VS Code](https://code.visualstudio.com/)
+
 Install [Node.js](https://nodejs.org/en/download)
 
 Install [Rust](https://www.rust-lang.org/tools/install)
@@ -84,6 +86,16 @@ Install npm dependencies. Only do this in the *root* of the project. Do not `npm
 
 ```bash
 npm install 
+```
+
+It recommended to add these to your VS Code `settings.json`:
+
+```json
+"editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "editor.formatOnSave": "always",
+},
+"prettier.enable": true,
 ```
 
 Build native modules
@@ -147,7 +159,7 @@ npm run build:linux
 
 Here are a list of ways you can contribute to Iris:
 
-1. [Submit a Pull Request](https://github.com/alexwkleung/Iris/pulls)
+1. [Submit a pull request](https://github.com/alexwkleung/Iris/pulls)
 2. [Create or answer issues](https://github.com/alexwkleung/Iris/issues)
 3. [Create or answer discussion posts](https://github.com/alexwkleung/Iris/discussions)
 4. Show your interest by sharing Iris to others :)

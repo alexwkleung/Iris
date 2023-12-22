@@ -3,23 +3,23 @@
 //the code will properly adhere to eslint rules at a later time
 
 import {
-    wrapIn, 
-    setBlockType, 
-    chainCommands, 
-    toggleMark, 
+    wrapIn,
+    setBlockType,
+    chainCommands,
+    toggleMark,
     exitCode,
-    joinUp, 
-    joinDown, 
-    lift, 
-    selectParentNode
-} from "prosemirror-commands"
-import { wrapInList, splitListItem, liftListItem, sinkListItem } from "prosemirror-schema-list"
-import { undo, redo } from "prosemirror-history"
-import { undoInputRule } from "prosemirror-inputrules"
-import { Command } from "prosemirror-state"
-import { Schema } from "prosemirror-model"
+    joinUp,
+    joinDown,
+    lift,
+    selectParentNode,
+} from "prosemirror-commands";
+import { wrapInList, splitListItem, liftListItem, sinkListItem } from "prosemirror-schema-list";
+import { undo, redo } from "prosemirror-history";
+import { undoInputRule } from "prosemirror-inputrules";
+import { Command } from "prosemirror-state";
+import { Schema } from "prosemirror-model";
 
-const mac = typeof navigator != "undefined" ? /Mac|iP(hone|[oa]d)/.test(navigator.platform) : false
+const mac = typeof navigator != "undefined" ? /Mac|iP(hone|[oa]d)/.test(navigator.platform) : false;
 
 /// Inspect the given schema looking for marks and nodes from the
 /// basic schema, and if found, add key bindings related to them.
@@ -50,94 +50,89 @@ const mac = typeof navigator != "undefined" ? /Mac|iP(hone|[oa]d)/.test(navigato
 /// remove the binding, or a new key name string.
 
 //eslint-disable-next-line
-export function buildKeymap(schema: Schema, mapKeys?: {[key: string]: false | string}) {
+export function buildKeymap(schema: Schema, mapKeys?: { [key: string]: false | string }) {
+    //eslint-disable-next-line
+    let keys: { [key: string]: Command } = {},
+        type;
 
-//eslint-disable-next-line    
-let keys: {[key: string]: Command} = {}, type
+    function bind(key: string, cmd: Command): void {
+        if (mapKeys) {
+            const mapped = mapKeys[key];
+            if (mapped === false) return;
+            if (mapped) key = mapped;
+        }
+        keys[key] = cmd;
+    }
 
-function bind(key: string, cmd: Command): void {
-if (mapKeys) {
-  const mapped = mapKeys[key]
-  if (mapped === false) return
-  if (mapped) key = mapped
-}
-keys[key] = cmd
-}
+    bind("Mod-z", undo);
+    bind("Shift-Mod-z", redo);
+    bind("Backspace", undoInputRule);
+    if (!mac) bind("Mod-y", redo);
 
-bind("Mod-z", undo)
-bind("Shift-Mod-z", redo)
-bind("Backspace", undoInputRule)
-if (!mac) bind("Mod-y", redo)
+    bind("Alt-ArrowUp", joinUp);
+    bind("Alt-ArrowDown", joinDown);
+    bind("Mod-BracketLeft", lift);
+    bind("Escape", selectParentNode);
 
-bind("Alt-ArrowUp", joinUp)
-bind("Alt-ArrowDown", joinDown)
-bind("Mod-BracketLeft", lift)
-bind("Escape", selectParentNode)
+    //eslint-disable-next-line
+    if ((type = schema.marks.strong)) {
+        bind("Mod-b", toggleMark(type));
+        bind("Mod-B", toggleMark(type));
+    }
+    //eslint-disable-next-line
+    if ((type = schema.marks.em)) {
+        bind("Mod-i", toggleMark(type));
+        bind("Mod-I", toggleMark(type));
+    }
+    //eslint-disable-next-line
+    if ((type = schema.marks.code)) bind("Mod-`", toggleMark(type));
 
-//eslint-disable-next-line
-if (type = schema.marks.strong) {
-bind("Mod-b", toggleMark(type))
-bind("Mod-B", toggleMark(type))
-}
-//eslint-disable-next-line
-if (type = schema.marks.em) {
-bind("Mod-i", toggleMark(type))
-bind("Mod-I", toggleMark(type))
-}
-//eslint-disable-next-line
-if (type = schema.marks.code)
-bind("Mod-`", toggleMark(type))
+    //eslint-disable-next-line
+    if ((type = schema.nodes.bullet_list)) bind("Shift-Ctrl-8", wrapInList(type));
 
-//eslint-disable-next-line
-if (type = schema.nodes.bullet_list)
-bind("Shift-Ctrl-8", wrapInList(type))
+    //eslint-disable-next-line
+    if ((type = schema.nodes.ordered_list)) bind("Shift-Ctrl-9", wrapInList(type));
 
-//eslint-disable-next-line
-if (type = schema.nodes.ordered_list)
-bind("Shift-Ctrl-9", wrapInList(type))
+    //eslint-disable-next-line
+    if ((type = schema.nodes.blockquote)) bind("Ctrl->", wrapIn(type));
 
-//eslint-disable-next-line
-if (type = schema.nodes.blockquote)
-bind("Ctrl->", wrapIn(type))
+    //eslint-disable-next-line
+    if ((type = schema.nodes.hard_break)) {
+        const br = type,
+            cmd = chainCommands(exitCode, (state, dispatch) => {
+                if (dispatch) dispatch(state.tr.replaceSelectionWith(br.create()).scrollIntoView());
+                return true;
+            });
+        bind("Mod-Enter", cmd);
+        bind("Shift-Enter", cmd);
+        if (mac) bind("Ctrl-Enter", cmd);
+    }
 
-//eslint-disable-next-line
-if (type = schema.nodes.hard_break) {
-const br = type, cmd = chainCommands(exitCode, (state, dispatch) => {
-  if (dispatch) dispatch(state.tr.replaceSelectionWith(br.create()).scrollIntoView())
-  return true
-})
-bind("Mod-Enter", cmd)
-bind("Shift-Enter", cmd)
-if (mac) bind("Ctrl-Enter", cmd)
-}
+    //eslint-disable-next-line
+    if ((type = schema.nodes.list_item)) {
+        bind("Enter", splitListItem(type));
+        bind("Mod-[", liftListItem(type));
+        bind("Mod-]", sinkListItem(type));
+    }
 
-//eslint-disable-next-line
-if (type = schema.nodes.list_item) {
-bind("Enter", splitListItem(type))
-bind("Mod-[", liftListItem(type))
-bind("Mod-]", sinkListItem(type))
-}
+    //eslint-disable-next-line
+    if ((type = schema.nodes.paragraph)) bind("Shift-Ctrl-0", setBlockType(type));
 
-//eslint-disable-next-line
-if (type = schema.nodes.paragraph)
-bind("Shift-Ctrl-0", setBlockType(type))
+    //eslint-disable-next-line
+    if ((type = schema.nodes.code_block)) bind("Shift-Ctrl-\\", setBlockType(type));
 
-//eslint-disable-next-line
-if (type = schema.nodes.code_block)
-bind("Shift-Ctrl-\\", setBlockType(type))
+    //eslint-disable-next-line
+    if ((type = schema.nodes.heading))
+        for (let i = 1; i <= 6; i++) bind("Shift-Ctrl-" + i, setBlockType(type, { level: i }));
 
-//eslint-disable-next-line
-if (type = schema.nodes.heading)
-for (let i = 1; i <= 6; i++) bind("Shift-Ctrl-" + i, setBlockType(type, {level: i}))
+    //eslint-disable-next-line
+    if ((type = schema.nodes.horizontal_rule)) {
+        const hr = type;
+        bind("Mod-_", (state, dispatch) => {
+            if (dispatch) dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView());
+            return true;
+        });
+    }
 
-//eslint-disable-next-line
-if (type = schema.nodes.horizontal_rule) {
-const hr = type
-bind("Mod-_", (state, dispatch) => {
-  if (dispatch) dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView())
-  return true
-})
-}
-
-return keys
+    return keys;
 }

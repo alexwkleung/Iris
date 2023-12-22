@@ -1,29 +1,29 @@
-import { EditorNs } from "../editor-main"
-import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory-tree-modals"
-import { IDirectoryTreeUIModalListeners } from "../interfaces/listener-interfaces"
-import { FolderFileCount } from "../misc-ui/folder-file-count"
-import { DirectoryTreeListeners } from "./directory-tree-listeners"
-import { EditorListeners } from "./editor-listeners"
-import { DirectoryTreeStateListeners } from "./file-directory-state-listener"
-import { isModeAdvanced, isModeBasic, isModeReading } from "../utils/is"
-import { fsMod } from "../utils/alias"
-import { PMEditorView } from "../prosemirror/editor/pm-editor-view"
-import { PMEditorState } from "../prosemirror/editor/pm-editor-state"
-import { Node } from "prosemirror-model"
-import { defaultMarkdownParser } from "../prosemirror/markdown/export"
-import { RefsNs } from "./directory-tree-listeners"
-import { wordCountListener } from "./word-count-listener"
-import { setWindowTitle } from "../window/window-title"
-import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener"
-import { CMEditorView } from "../codemirror/editor/cm-editor-view"
-import { CMEditorState } from "../codemirror/editor/cm-editor-state"
-import { cursors } from "../codemirror/extensions/cursors"
-import { Settings } from "../settings/settings"
-import { AdvancedModeSettings } from "../settings/settings"
-import { ReadingMode } from "../mode/reading-mode"
-import { markdownParser } from "../utils/markdown-parser"
-import { GenericEvent } from "./event"
-import { KeyBinds } from "../keybinds/keybinds"
+import { EditorNs } from "../editor-main";
+import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory-tree-modals";
+import { IDirectoryTreeUIModalListeners } from "../interfaces/listener-interfaces";
+import { FolderFileCount } from "../misc-ui/folder-file-count";
+import { DirectoryTreeListeners } from "./directory-tree-listeners";
+import { EditorListeners } from "./editor-listeners";
+import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
+import { isModeAdvanced, isModeBasic, isModeReading } from "../utils/is";
+import { fsMod } from "../utils/alias";
+import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
+import { PMEditorState } from "../prosemirror/editor/pm-editor-state";
+import { Node } from "prosemirror-model";
+import { defaultMarkdownParser } from "../prosemirror/markdown/export";
+import { RefsNs } from "./directory-tree-listeners";
+import { wordCountListener } from "./word-count-listener";
+import { setWindowTitle } from "../window/window-title";
+import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
+import { CMEditorView } from "../codemirror/editor/cm-editor-view";
+import { CMEditorState } from "../codemirror/editor/cm-editor-state";
+import { cursors } from "../codemirror/extensions/cursors";
+import { Settings } from "../settings/settings";
+import { AdvancedModeSettings } from "../settings/settings";
+import { ReadingMode } from "../mode/reading-mode";
+import { markdownParser } from "../utils/markdown-parser";
+import { GenericEvent } from "./event";
+import { KeyBinds } from "../keybinds/keybinds";
 
 /**
  * @extends DirectoryTreeUIModals
@@ -32,21 +32,21 @@ import { KeyBinds } from "../keybinds/keybinds"
 export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals implements IDirectoryTreeUIModalListeners {
     /**
      * Parent tags
-     * 
+     *
      * @private
      */
     private parentTags: NodeListOf<Element> = {} as NodeListOf<Element>;
 
     /**
      * Parent name tags
-     * 
+     *
      * @private
      */
     private parentNameTags: NodeListOf<Element> = {} as NodeListOf<Element>;
 
     /**
      * Directory tree listeners object
-     *  
+     *
      * @private
      * @readonly
      */
@@ -54,23 +54,23 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
     /**
      * Folder file count object
-     * 
-     * @private 
+     *
+     * @private
      * @readonly
      */
     private readonly folderFileCountObject = new FolderFileCount();
 
     /**
-     * Editor listeners object 
-     * 
-     * @private 
+     * Editor listeners object
+     *
+     * @private
      * @readonly
      */
     private readonly editorListeners = new EditorListeners();
 
     /**
      * Editor top bar container object
-     * 
+     *
      * @private
      * @readonly
      */
@@ -78,7 +78,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
     /**
      * Kebab dropdown menu listeners
-     * 
+     *
      * @private
      * @readonly
      */
@@ -86,7 +86,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
     /**
      * Directory tree state listeners object
-     * 
+     *
      * @private
      * @readonly
      */
@@ -106,24 +106,24 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
     /**
      * Create modal exit callback
-     * 
+     *
      * @public
      */
     public createModalExitCb: () => void = (): void => {
-        const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+        const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll(".create-new-file");
 
         createFileNode.forEach((elem) => {
             //null check
-            if(elem !== null) {
-                elem.classList.remove('is-active-create-new-file-modal');
+            if (elem !== null) {
+                elem.classList.remove("is-active-create-new-file-modal");
             }
         });
 
         //null check
-        if(DirectoryTreeUIModals.createModalContainer !== null) {
+        if (DirectoryTreeUIModals.createModalContainer !== null) {
             DirectoryTreeUIModals.createModalContainer.remove();
         }
-        
+
         //invoke parent root listener
         this.directoryTreeListeners.parentRootListener();
 
@@ -134,140 +134,162 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         this.directoryTreeListeners.parentRootListener();
 
         //dispose
-        GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createModalExitCb, undefined, "Disposed event for create modal exit");
+        GenericEvent.use.disposeEvent(
+            DirectoryTreeUIModals.createModalExitButton,
+            "click",
+            this.createModalExitCb,
+            undefined,
+            "Disposed event for create modal exit"
+        );
 
-        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for create modal exit (keydown escape)");
+        GenericEvent.use.disposeEvent(
+            window,
+            "keydown",
+            KeyBinds.map.bindCb,
+            undefined,
+            "Disposed event for create modal exit (keydown escape)"
+        );
 
         KeyBinds.map.resetMapList();
-    }
+    };
 
     /**
      * Create file modal exit listener
-     * 
+     *
      * @public
      */
     public createFileModalExitListener(): void {
-        GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createModalExitCb, undefined, "Created disposable event for create modal exit");
+        GenericEvent.use.createDisposableEvent(
+            DirectoryTreeUIModals.createModalExitButton,
+            "click",
+            this.createModalExitCb,
+            undefined,
+            "Created disposable event for create modal exit"
+        );
 
         KeyBinds.map.bind(this.createModalExitCb, "Escape", false);
     }
 
     /**
      * Create file modal input callback
-     * 
+     *
      * @param e Event
-     * 
+     *
      * @public
      */
     public createFileModalInputCb: (e: Event) => void = (e: Event): void => {
         //assign current value of input element on keyup + extension
-        this.fileName = ((e.target as HTMLInputElement).value).trim() + ".md";
+        this.fileName = (e.target as HTMLInputElement).value.trim() + ".md";
 
         //log
         console.log(this.fileName);
-    }
+    };
 
     /**
      * Create file modal continue callback
-     * 
+     *
      * @async
      * @public
      */
     public createFileModalContinueCb: () => Promise<void> = async (): Promise<void> => {
-        if(this.fileName === ".md") {
+        if (this.fileName === ".md") {
             //eslint-disable-next-line
             //@ts-ignore
-            window.electron.ipcRenderer.invoke('show-message-box', "Note name cannot be empty. Enter a valid note name.");
+            window.electron.ipcRenderer.invoke(
+                "show-message-box",
+                "Note name cannot be empty. Enter a valid note name."
+            );
 
             return;
         }
 
-        if(this.fileName !== ".md") {
+        if (this.fileName !== ".md") {
             fsMod.fs._createFile(
-                fsMod.fs._baseDir("home") 
-                + "/Iris/Notes/" 
-                + (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent 
-                +  "/" + this.fileName,
-                "# " + this.fileName.split('.md')[0] + " " + '\n'
+                fsMod.fs._baseDir("home") +
+                    "/Iris/Notes/" +
+                    (document.querySelector("#create-file-modal-folder-name-input-node") as HTMLElement).textContent +
+                    "/" +
+                    this.fileName,
+                "# " + this.fileName.split(".md")[0] + " " + "\n"
             );
         }
 
-        const createFileModalFolderNameRef: string = (document.querySelector('#create-file-modal-folder-name-input-node') as HTMLElement).textContent as string;
-        const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll('.create-new-file');
+        const createFileModalFolderNameRef: string = (
+            document.querySelector("#create-file-modal-folder-name-input-node") as HTMLElement
+        ).textContent as string;
+        const createFileNode: NodeListOf<HTMLElement> = document.querySelectorAll(".create-new-file");
 
         createFileNode.forEach((elem) => {
             //null check
-            if(elem !== null) {
-                elem.classList.remove('is-active-create-new-file-modal');
+            if (elem !== null) {
+                elem.classList.remove("is-active-create-new-file-modal");
             }
         });
 
-        if(document.querySelector('.is-active-child')) {
+        if (document.querySelector(".is-active-child")) {
             //select all active children and remove them from the dom (active status)
             //this removes any existing active children files
-            document.querySelectorAll('.is-active-child').forEach(
-                (isActiveChild) => {
-                    if(isActiveChild !== null) {
-                        isActiveChild.classList.remove('is-active-child')
-                    }
+            document.querySelectorAll(".is-active-child").forEach((isActiveChild) => {
+                if (isActiveChild !== null) {
+                    isActiveChild.classList.remove("is-active-child");
                 }
-            );
+            });
         }
 
         //null check
-        if(DirectoryTreeUIModals.createModalContainer !== null) {
+        if (DirectoryTreeUIModals.createModalContainer !== null) {
             DirectoryTreeUIModals.createModalContainer.remove();
         }
 
-        const childFile: HTMLDivElement = document.createElement('div');
+        const childFile: HTMLDivElement = document.createElement("div");
         childFile.setAttribute("class", "child-file-name is-active-child");
 
-        const childFileTextNode: Text = document.createTextNode(this.fileName.split('.md')[0]);
+        const childFileTextNode: Text = document.createTextNode(this.fileName.split(".md")[0]);
 
         //assign references to corresponding key properties
         RefsNs.currentParentChildData.map((props) => {
             //log
             console.log(this.fileName);
             //log
-            console.log(document.querySelector('.child-file-name.is-active-child') as HTMLElement);
-            
+            console.log(document.querySelector(".child-file-name.is-active-child") as HTMLElement);
+
             //null check
-            if(props !== null) {
+            if (props !== null) {
                 //child file name
-                props.childFileName = this.fileName.split('.md')[0];
-                props.childFileNode = document.querySelector('.child-file-name.is-active-child') as HTMLElement
+                props.childFileName = this.fileName.split(".md")[0];
+                props.childFileNode = document.querySelector(".child-file-name.is-active-child") as HTMLElement;
             }
         });
 
-        document.querySelectorAll('.parent-folder-name').forEach((el) => {
+        document.querySelectorAll(".parent-folder-name").forEach((el) => {
             //this doesn't cover duplicate folder names, so it might cause bugs
-            if(el.textContent === createFileModalFolderNameRef) {
+            if (el.textContent === createFileModalFolderNameRef) {
                 childFile.appendChild(childFileTextNode);
 
                 (el.parentNode as ParentNode).appendChild(childFile);
             }
-        })
-                
+        });
+
         //execute parent root listener so it understands the new file
         this.directoryTreeListeners.parentRootListener();
 
         //execute child node listener to allow new file to be clicked
         this.directoryTreeListeners.childNodeListener();
 
-        //execute parent root listener again so everything will be in sync 
+        //execute parent root listener again so everything will be in sync
         this.directoryTreeListeners.parentRootListener();
 
-        //apply active state listener 
+        //apply active state listener
         this.dirTreeStateListeners.activeChildFileStateListener();
 
         //mode check
-        if(isModeBasic()) {
+        if (isModeBasic()) {
             //log
             console.log(this.fileName);
 
             //destroy current editor view
             PMEditorView.editorView.destroy();
-                        
+
             //create new editor view
             PMEditorView.createEditorView();
 
@@ -278,50 +300,50 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             console.log(this.fileName);
 
             //update editor view state
-            PMEditorView.editorView.updateState(             
+            PMEditorView.editorView.updateState(
                 //apply transaction
-                PMEditorView.editorView.state.apply(     
-                    //since editor gets destroyed and re-created, the 
-                    //range is 0 to 0 
+                PMEditorView.editorView.state.apply(
+                    //since editor gets destroyed and re-created, the
+                    //range is 0 to 0
                     PMEditorState.editorState.tr.replaceRangeWith(
-                        0, 
+                        0,
                         0,
                         defaultMarkdownParser.parse(
-                        fsMod.fs._readFileFolder(createFileModalFolderNameRef, 
-                        this.fileName
+                            fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
+                        ) as Node
                     )
-                ) as Node
-            )));
+                )
+            );
 
-            //set contenteditable 
+            //set contenteditable
             PMEditorView.setContenteditable(true);
-            
-            //if contenteditable attribute is set to true 
-            if((document.querySelector('.ProseMirror') as HTMLElement).getAttribute('contenteditable') === 'true') {
+
+            //if contenteditable attribute is set to true
+            if ((document.querySelector(".ProseMirror") as HTMLElement).getAttribute("contenteditable") === "true") {
                 //show the menubar
-                (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "";
+                (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "";
             }
 
-            (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+            (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
 
             //invoke auto save listener
             this.editorListeners.autoSaveListener("prosemirror");
 
             //invoke insert tab listener
-            this.editorListeners.insertTabListener((document.querySelector('.ProseMirror') as HTMLElement), 2);
+            this.editorListeners.insertTabListener(document.querySelector(".ProseMirror") as HTMLElement, 2);
 
             //word count listener
             wordCountListener("prosemirror");
 
             //kebab dropdown menu listener
             this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
-        } else if(isModeAdvanced()) {
+        } else if (isModeAdvanced()) {
             //log
             console.log(this.fileName);
 
             //destroy current editor view
             CMEditorView.editorView.destroy();
-                        
+
             //create new editor view
             CMEditorView.createEditorView();
 
@@ -336,30 +358,33 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                 changes: {
                     from: 0,
                     to: 0,
-                    insert: fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
-                }
-            })
+                    insert: fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName),
+                },
+            });
 
-            //set contenteditable 
+            //set contenteditable
             CMEditorView.setContenteditable(true);
 
             //cursor theme
-            if(Settings.getSettings.lightTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-            } else if(Settings.getSettings.darkTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+            if (Settings.getSettings.lightTheme) {
+                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
+            } else if (Settings.getSettings.darkTheme) {
+                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
             }
 
-            //check block cursor 
-            if(Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
+            //check block cursor
+            if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                 AdvancedModeSettings.defaultCursor("light");
-            } else if(Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
+            } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                 AdvancedModeSettings.defaultCursor("dark");
-            } else if(Settings.getSettings.blockCursor && Settings.getSettings.lightTheme || Settings.getSettings.blockCursor && Settings.getSettings.darkTheme) {
+            } else if (
+                (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
+                (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme)
+            ) {
                 AdvancedModeSettings.blockCursor();
             }
 
-            (document.getElementById('kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+            (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
 
             //invoke auto save listener
             this.editorListeners.autoSaveListener("codemirror");
@@ -369,44 +394,76 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
 
             //kebab dropdown menu listener
             this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
-        } else if(isModeReading()) {
+        } else if (isModeReading()) {
             //remove reading mode container if present in DOM
-            if((document.getElementById('reading-mode-container') as HTMLElement) !== null) {
-                (document.getElementById('reading-mode-container') as HTMLElement).remove();
+            if ((document.getElementById("reading-mode-container") as HTMLElement) !== null) {
+                (document.getElementById("reading-mode-container") as HTMLElement).remove();
             }
 
             //create reading mode node
             ReadingMode.readingModeNode();
 
             //create fragment and append
-            const content: string = await markdownParser(fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)).catch((e) => { throw console.error(e) });
+            const content: string = await markdownParser(
+                fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
+            ).catch((e) => {
+                throw console.error(e);
+            });
             const contextFragment = new Range().createContextualFragment(content);
-            (document.getElementById('reading-mode-content') as HTMLElement).appendChild(contextFragment);
+            (document.getElementById("reading-mode-content") as HTMLElement).appendChild(contextFragment);
         }
 
         //change document title so it corresponds to the opened file
-        await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + this.fileName.split('.md')[0]).catch((e) => { throw console.error(e) });
+        await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + this.fileName.split(".md")[0]).catch(
+            (e) => {
+                throw console.error(e);
+            }
+        );
 
         //add directory info to editor top bar
         this.editorTopBarContainer.directoryInfo();
 
-        (document.getElementById('file-directory-kebab-dropdown-menu-container') as HTMLElement).style.display = "";
+        (document.getElementById("file-directory-kebab-dropdown-menu-container") as HTMLElement).style.display = "";
 
         //dispose
-        GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalContinueButton, 'click', this.createFileModalContinueCb, undefined, "Disposed create file modal continue event");
+        GenericEvent.use.disposeEvent(
+            DirectoryTreeUIModals.createModalContinueButton,
+            "click",
+            this.createFileModalContinueCb,
+            undefined,
+            "Disposed create file modal continue event"
+        );
 
-        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown enter)");
-    }
+        GenericEvent.use.disposeEvent(
+            window,
+            "keydown",
+            KeyBinds.map.bindCb,
+            undefined,
+            "Disposed event for bind (keydown enter)"
+        );
+    };
 
     /**
-     * Create file modal continue listener 
-     * 
+     * Create file modal continue listener
+     *
      * @param el Element to attach `keyup` event listener to
      */
     public createFileModalContinueListener(el: HTMLElement): void {
-        GenericEvent.use.createDisposableEvent(el, 'keyup', this.createFileModalInputCb, undefined, "Created disposable event for create file modal input");
+        GenericEvent.use.createDisposableEvent(
+            el,
+            "keyup",
+            this.createFileModalInputCb,
+            undefined,
+            "Created disposable event for create file modal input"
+        );
 
-        GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalContinueButton, 'click', this.createFileModalContinueCb, undefined, "Created disposable event for create file modal continue");
+        GenericEvent.use.createDisposableEvent(
+            DirectoryTreeUIModals.createModalContinueButton,
+            "click",
+            this.createFileModalContinueCb,
+            undefined,
+            "Created disposable event for create file modal continue"
+        );
 
         KeyBinds.map.bind(this.createFileModalContinueCb, "Enter", false);
     }
@@ -415,21 +472,21 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * Create file listener
      */
     public createFileListener(): void {
-        const createFileNode: NodeListOf<Element> = document.querySelectorAll('.create-new-file');
+        const createFileNode: NodeListOf<Element> = document.querySelectorAll(".create-new-file");
 
-        this.parentTags = document.querySelectorAll('.parent-of-root-folder');
-        this.parentNameTags = document.querySelectorAll('.parent-folder-name');
-        
+        this.parentTags = document.querySelectorAll(".parent-of-root-folder");
+        this.parentNameTags = document.querySelectorAll(".parent-folder-name");
+
         //clean this up
-        for(let i = 0; i < this.parentNameTags.length; i++) {
-            GenericEvent.use.createDisposableEvent(this.parentNameTags[i], 'click', () => {
+        for (let i = 0; i < this.parentNameTags.length; i++) {
+            GenericEvent.use.createDisposableEvent(this.parentNameTags[i], "click", () => {
                 //check if parent tag contains is-active-parent class
-                if(this.parentTags[i].classList.contains('is-active-parent')) {
+                if (this.parentTags[i].classList.contains("is-active-parent")) {
                     //toggle show-create-file class on create-new-file node
-                    createFileNode[i].classList.toggle('show-create-file');
+                    createFileNode[i].classList.toggle("show-create-file");
 
-                    GenericEvent.use.createDisposableEvent(createFileNode[i], 'click', () => {
-                        if(createFileNode[i].classList.contains('show-create-file')) {
+                    GenericEvent.use.createDisposableEvent(createFileNode[i], "click", () => {
+                        if (createFileNode[i].classList.contains("show-create-file")) {
                             //invoke create file modal
                             this.createFileModal();
 
@@ -439,94 +496,103 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             //map over parent child data props
                             RefsNs.currentParentChildData.map((props) => {
                                 //null check
-                                if(props !== null) {
+                                if (props !== null) {
                                     //override current parent folder name ref
                                     props.parentFolderName = this.parentNameTags[i].textContent as string;
-                                    props.parentFolderNode = this.parentTags[i]
-                                    
+                                    props.parentFolderNode = this.parentTags[i];
+
                                     //invoke createFileModalCurrentFolderNode
                                     this.createFileModalCurrentFolderNode(props.parentFolderName);
                                 }
                             });
 
-                            //invoke createFileModalNewFileNameNode 
+                            //invoke createFileModalNewFileNameNode
                             this.createFileModalNewFileNameNode();
 
                             //invoke createFileModalContinueListener
-                            this.createFileModalContinueListener((document.querySelector('#create-file-modal-new-file-name-input-node') as HTMLElement));
+                            this.createFileModalContinueListener(
+                                document.querySelector("#create-file-modal-new-file-name-input-node") as HTMLElement
+                            );
 
-                            const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+                            const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
 
                             //invoke folder file count
-                            this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
-                        } else if(!createFileNode[i].classList.contains('show-create-file')) {
-                            createFileNode[i].classList.remove('show-create-file');        
+                            this.folderFileCountObject.folderFileCount(
+                                parentRoot[i],
+                                this.directoryTreeListeners.parentNameTagsArr()[i],
+                                true
+                            );
+                        } else if (!createFileNode[i].classList.contains("show-create-file")) {
+                            createFileNode[i].classList.remove("show-create-file");
                         }
-                    })
-                } else if(!this.parentTags[i].classList.contains('is-active-parent')) {
-                    createFileNode[i].classList.remove('show-create-file');
+                    });
+                } else if (!this.parentTags[i].classList.contains("is-active-parent")) {
+                    createFileNode[i].classList.remove("show-create-file");
                 }
-            })
+            });
         }
     }
-    
+
     /**
      * Create folder input callback
-     * 
+     *
      * @param e Event
      * @public
      */
     public createFolderInputCb: (e: Event) => void = (e: Event): void => {
-        this.folderName = ((e.target as HTMLInputElement).value).trim();
+        this.folderName = (e.target as HTMLInputElement).value.trim();
         console.log(this.folderName);
-    }
+    };
 
     /**
      * Create folder modal continue callback
-     * 
+     *
      * @public
      */
     public createFolderModalContinueCb: () => void = (): void => {
         let parentFolder: HTMLDivElement = {} as HTMLDivElement;
 
-        if(this.folderName === "" || this.folderName === " ") {
+        if (this.folderName === "" || this.folderName === " ") {
             //eslint-disable-next-line
             //@ts-ignore
-            window.electron.ipcRenderer.invoke('show-message-box', "Folder name cannot be empty. Enter a valid folder name.")
-            
-            return;
-        } else if(this.folderName !== "" || this.folderName !== " " as string) {
-            //create directory
-            fsMod.fs._createDir(
-                fsMod.fs._baseDir("home")
-                + "/Iris/Notes/"
-                + this.folderName
+            window.electron.ipcRenderer.invoke(
+                "show-message-box",
+                "Folder name cannot be empty. Enter a valid folder name."
             );
+
+            return;
+        } else if (this.folderName !== "" || this.folderName !== (" " as string)) {
+            //create directory
+            fsMod.fs._createDir(fsMod.fs._baseDir("home") + "/Iris/Notes/" + this.folderName);
         }
 
-        parentFolder = document.createElement('div');
+        parentFolder = document.createElement("div");
         parentFolder.setAttribute("class", "parent-of-root-folder is-not-active-parent");
-        (document.getElementById('file-directory-tree-container-inner') as HTMLElement).appendChild(parentFolder);
-                
-        const parentFolderName: HTMLDivElement = document.createElement('div');
+        (document.getElementById("file-directory-tree-container-inner") as HTMLElement).appendChild(parentFolder);
+
+        const parentFolderName: HTMLDivElement = document.createElement("div");
         parentFolderName.setAttribute("class", "parent-folder-name");
         parentFolder.appendChild(parentFolderName);
-                
+
         const parentFolderTextNode: Text = document.createTextNode(this.folderName);
         parentFolderName.appendChild(parentFolderTextNode);
-                
-        const parentFolderCaret: HTMLDivElement = document.createElement('div');
+
+        const parentFolderCaret: HTMLDivElement = document.createElement("div");
         parentFolderCaret.setAttribute("class", "parent-folder-caret");
-            
+
         const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
         parentFolderCaret.appendChild(parentFolderCaretTextNode);
         parentFolder.appendChild(parentFolderCaret);
 
-        const parentRoot: NodeListOf<Element> = document.querySelectorAll('.parent-of-root-folder');
+        const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
 
-        for(let i = 0; i < parentRoot.length; i++) {
+        for (let i = 0; i < parentRoot.length; i++) {
             //invoke folder file count
-            this.folderFileCountObject.folderFileCount(parentRoot[i], this.directoryTreeListeners.parentNameTagsArr()[i], true);
+            this.folderFileCountObject.folderFileCount(
+                parentRoot[i],
+                this.directoryTreeListeners.parentNameTagsArr()[i],
+                true
+            );
         }
 
         //invoke parent root listener (created directory only)
@@ -541,34 +607,64 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         this.createFileListener();
 
         //null check
-        if(DirectoryTreeUIModals.createModalContainer !== null) {
+        if (DirectoryTreeUIModals.createModalContainer !== null) {
             DirectoryTreeUIModals.createModalContainer.remove();
         }
-                
-        //invoke parent root listener again so entire directory tree will function normally and be in sync 
+
+        //invoke parent root listener again so entire directory tree will function normally and be in sync
         //bug
         this.directoryTreeListeners.parentRootListener();
         this.directoryTreeListeners.parentRootListener();
 
         //dispose create file modal continue cb
-        GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalContinueButton, 'click', this.createFileModalContinueCb, undefined, "Disposed event for create file modal continue")
+        GenericEvent.use.disposeEvent(
+            DirectoryTreeUIModals.createModalContinueButton,
+            "click",
+            this.createFileModalContinueCb,
+            undefined,
+            "Disposed event for create file modal continue"
+        );
 
         //dispose bind cb
-        GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown enter)");
+        GenericEvent.use.disposeEvent(
+            window,
+            "keydown",
+            KeyBinds.map.bindCb,
+            undefined,
+            "Disposed event for bind (keydown enter)"
+        );
 
         //dispose create folder input cb
-        GenericEvent.use.disposeEvent(document.body, 'keyup', this.createFolderInputCb, undefined, "Disposed event for create folder input");
-    }
+        GenericEvent.use.disposeEvent(
+            document.body,
+            "keyup",
+            this.createFolderInputCb,
+            undefined,
+            "Disposed event for create folder input"
+        );
+    };
 
     /**
      * Create folder continue listener
-     * 
+     *
      * @param el Element to attach the `keyup` event listener to
      */
     public createFolderContinueListener(el: HTMLElement): void {
-        GenericEvent.use.createDisposableEvent(el, 'keyup', this.createFolderInputCb, undefined, "Created disposable event for create folder input")
+        GenericEvent.use.createDisposableEvent(
+            el,
+            "keyup",
+            this.createFolderInputCb,
+            undefined,
+            "Created disposable event for create folder input"
+        );
 
-        GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalContinueButton, 'click', this.createFolderModalContinueCb, undefined, "Created event for create folder modal continue")
+        GenericEvent.use.createDisposableEvent(
+            DirectoryTreeUIModals.createModalContinueButton,
+            "click",
+            this.createFolderModalContinueCb,
+            undefined,
+            "Created event for create folder modal continue"
+        );
 
         KeyBinds.map.bind(this.createFolderModalContinueCb, "Enter", false);
     }
@@ -578,73 +674,105 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @public
      */
     public createFolderModalExitCb: () => void = (): void => {
-        if((document.getElementById('create-modal-container') as HTMLElement) !== null) {
-            (document.getElementById('create-modal-container') as HTMLElement).remove();
+        if ((document.getElementById("create-modal-container") as HTMLElement) !== null) {
+            (document.getElementById("create-modal-container") as HTMLElement).remove();
         }
 
-        if(isModeBasic() || isModeAdvanced() || isModeReading()) {
+        if (isModeBasic() || isModeAdvanced() || isModeReading()) {
             this.directoryTreeListeners.parentRootListener();
             this.createFileListener();
         }
 
         GenericEvent.use.setEventCallbackTimeout(() => {
             //dispose create folder modal exit cb
-            GenericEvent.use.disposeEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createFolderModalExitCb, undefined, "Disposed event for create folder modal exit (click)");
-    
-            //dispose bind cb
-            GenericEvent.use.disposeEvent(window, 'keydown', KeyBinds.map.bindCb, undefined, "Disposed event for bind (keydown escape)");
-    
-            //dispose create folder input cb
-            GenericEvent.use.disposeEvent(document.body, 'keyup', this.createFolderInputCb, undefined, "Disposed event for create folder input");
+            GenericEvent.use.disposeEvent(
+                DirectoryTreeUIModals.createModalExitButton,
+                "click",
+                this.createFolderModalExitCb,
+                undefined,
+                "Disposed event for create folder modal exit (click)"
+            );
 
-        }, 150)
+            //dispose bind cb
+            GenericEvent.use.disposeEvent(
+                window,
+                "keydown",
+                KeyBinds.map.bindCb,
+                undefined,
+                "Disposed event for bind (keydown escape)"
+            );
+
+            //dispose create folder input cb
+            GenericEvent.use.disposeEvent(
+                document.body,
+                "keyup",
+                this.createFolderInputCb,
+                undefined,
+                "Disposed event for create folder input"
+            );
+        }, 150);
 
         KeyBinds.map.resetMapList();
-    }
+    };
 
     /**
      * Create folder modal exit listener
      */
-    public createFolderModalExitListener(): void { 
-        GenericEvent.use.createDisposableEvent(DirectoryTreeUIModals.createModalExitButton, 'click', this.createFolderModalExitCb, undefined, "Created event for create folder modal exit (click)");
+    public createFolderModalExitListener(): void {
+        GenericEvent.use.createDisposableEvent(
+            DirectoryTreeUIModals.createModalExitButton,
+            "click",
+            this.createFolderModalExitCb,
+            undefined,
+            "Created event for create folder modal exit (click)"
+        );
 
         KeyBinds.map.bind(this.createFolderModalExitCb, "Escape", false);
     }
 
     /**
-     * Create folder callback 
-     * 
+     * Create folder callback
+     *
      * @public
      */
     public createFolderCb: () => void = (): void => {
-        GenericEvent.use.setEventCallbackTimeout(
-            () => {
-                //log
-                console.log("clicked create folder");
+        GenericEvent.use.setEventCallbackTimeout(() => {
+            //log
+            console.log("clicked create folder");
 
-                //invoke create folder modal
-                this.createFolderModal();
+            //invoke create folder modal
+            this.createFolderModal();
 
-                //invoke create modal exit listener
-                this.createFolderModalExitListener();
+            //invoke create modal exit listener
+            this.createFolderModalExitListener();
 
-                //mode check
-                if(isModeBasic() || isModeAdvanced() || isModeReading()) {
-                    //invoke create folder continue listener
-                    this.createFolderContinueListener((document.getElementById('create-folder-input-node') as HTMLElement));
-                }
+            //mode check
+            if (isModeBasic() || isModeAdvanced() || isModeReading()) {
+                //invoke create folder continue listener
+                this.createFolderContinueListener(document.getElementById("create-folder-input-node") as HTMLElement);
+            }
 
-                //dispose create folder cb
-                GenericEvent.use.disposeEvent((document.getElementById('create-folder') as HTMLElement), 'click', () => GenericEvent.use.setEventCallbackTimeout(this.createFolderCb, 50), undefined, "Disposed event for create folder (click)");
-            }, 50
-        )
-
-    }
+            //dispose create folder cb
+            GenericEvent.use.disposeEvent(
+                document.getElementById("create-folder") as HTMLElement,
+                "click",
+                () => GenericEvent.use.setEventCallbackTimeout(this.createFolderCb, 50),
+                undefined,
+                "Disposed event for create folder (click)"
+            );
+        }, 50);
+    };
 
     /**
      * Create folder listener
      */
     public createFolderListener(): void {
-        GenericEvent.use.createDisposableEvent((document.getElementById('create-folder') as HTMLElement), 'click', () => GenericEvent.use.setEventCallbackTimeout(this.createFolderCb, 50), undefined, "Created event for create folder (click)");
+        GenericEvent.use.createDisposableEvent(
+            document.getElementById("create-folder") as HTMLElement,
+            "click",
+            () => GenericEvent.use.setEventCallbackTimeout(this.createFolderCb, 50),
+            undefined,
+            "Created event for create folder (click)"
+        );
     }
 }

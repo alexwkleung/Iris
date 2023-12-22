@@ -1,18 +1,18 @@
-import { App } from "./app"
-import { PMEditorView } from "./prosemirror/editor/pm-editor-view"
-import { WordCountContainerNode } from "./misc-ui/word-count"
-import { EditorKebabDropdownMenu } from "./misc-ui/editor-kebab-dropdown-menu"
-import { CMEditorView } from "./codemirror/editor/cm-editor-view"
-import { Settings } from "./settings/settings"
-import { CMEditorState } from "./codemirror/editor/cm-editor-state"
-import { cursors } from "./codemirror/extensions/cursors"
+import { App } from "./app";
+import { PMEditorView } from "./prosemirror/editor/pm-editor-view";
+import { WordCountContainerNode } from "./misc-ui/word-count";
+import { EditorKebabDropdownMenu } from "./misc-ui/editor-kebab-dropdown-menu";
+import { CMEditorView } from "./codemirror/editor/cm-editor-view";
+import { Settings } from "./settings/settings";
+import { CMEditorState } from "./codemirror/editor/cm-editor-state";
+import { cursors } from "./codemirror/extensions/cursors";
 
 export namespace EditorNs {
     export class EditorContainerNode {
         public static editorContainer: HTMLDivElement;
 
         public static createEditorContainer(): void {
-            EditorContainerNode.editorContainer = document.createElement('div');
+            EditorContainerNode.editorContainer = document.createElement("div");
             EditorContainerNode.editorContainer.setAttribute("id", "editor-container");
             EditorContainerNode.editorContainer.setAttribute("aria-hidden", "true");
 
@@ -24,7 +24,7 @@ export namespace EditorNs {
         public static editorTopBarContainer: HTMLDivElement;
 
         public static createEditorTopBarContainer(): void {
-            EditorTopBarContainer.editorTopBarContainer = document.createElement('div');
+            EditorTopBarContainer.editorTopBarContainer = document.createElement("div");
             EditorTopBarContainer.editorTopBarContainer.setAttribute("id", "editor-top-bar-container");
 
             App.appNode.insertBefore(EditorTopBarContainer.editorTopBarContainer, App.appNode.firstChild);
@@ -35,59 +35,68 @@ export namespace EditorNs {
          */
         public directoryInfo(): void {
             //top bar directory info
-            const topBarDirectoryInfo: HTMLDivElement = document.createElement('div');
+            const topBarDirectoryInfo: HTMLDivElement = document.createElement("div");
             topBarDirectoryInfo.setAttribute("id", "top-bar-directory-info");
 
             //doc title folder
-            const docTitleFolder: string = document.title.split('-')[1].trim();
+            const docTitleFolder: string = document.title.split("-")[1].trim();
 
-            document.querySelectorAll('.child-file-name.is-active-child').forEach((el) => {
+            document.querySelectorAll(".child-file-name.is-active-child").forEach((el) => {
                 //null check
-                if(el !== null) {
+                if (el !== null) {
                     //log
                     console.log(el.textContent);
-    
+
                     //top bar directory info text node
-                    const topBarDirectoryInfoTextNode: Text = document.createTextNode(docTitleFolder + " - " + el.textContent);
+                    const topBarDirectoryInfoTextNode: Text = document.createTextNode(
+                        docTitleFolder + " - " + el.textContent
+                    );
                     topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
                 }
             });
 
             //check if top-bar-directory-info node exists in dom
-            if(document.getElementById('top-bar-directory-info') && document.getElementById('top-bar-directory-info') !== null) {
+            if (
+                document.getElementById("top-bar-directory-info") &&
+                document.getElementById("top-bar-directory-info") !== null
+            ) {
                 //remove node from dom
-                (document.getElementById('top-bar-directory-info') as HTMLDivElement).remove();
+                (document.getElementById("top-bar-directory-info") as HTMLDivElement).remove();
 
                 //append top bar directory info node
-                (document.getElementById('editor-top-bar-container') as HTMLDivElement).appendChild(topBarDirectoryInfo);
+                (document.getElementById("editor-top-bar-container") as HTMLDivElement).appendChild(
+                    topBarDirectoryInfo
+                );
             } else {
-                (document.getElementById('editor-top-bar-container') as HTMLDivElement).appendChild(topBarDirectoryInfo);
+                (document.getElementById("editor-top-bar-container") as HTMLDivElement).appendChild(
+                    topBarDirectoryInfo
+                );
             }
         }
     }
-    
+
     export function editor(): void {
         //create editor container
         EditorContainerNode.createEditorContainer();
 
-        if(Settings.getSettings.basicMode) {
-            //create prosemirror editorview 
+        if (Settings.getSettings.basicMode) {
+            //create prosemirror editorview
             PMEditorView.createEditorView();
-    
+
             //set prosemirror contenteditable
             PMEditorView.setContenteditable(false);
-    
+
             //hide prosemirror menubar
-            (document.querySelector('.ProseMirror-menubar') as HTMLElement).style.display = "none";
-        } else if(Settings.getSettings.advancedMode) {
+            (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "none";
+        } else if (Settings.getSettings.advancedMode) {
             CMEditorView.createEditorView();
 
             CMEditorView.setContenteditable(false);
 
-            if(Settings.getSettings.lightTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
-            } else if(Settings.getSettings.darkTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) })
+            if (Settings.getSettings.lightTheme) {
+                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
+            } else if (Settings.getSettings.darkTheme) {
+                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
             }
         }
 

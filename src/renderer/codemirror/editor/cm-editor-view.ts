@@ -1,10 +1,10 @@
-import { EditorView } from "@codemirror/view"
-import { CMEditorState } from "./cm-editor-state"
+import { EditorView } from "@codemirror/view";
+import { CMEditorState } from "./cm-editor-state";
 
 export class CMEditorView {
     /**
      * Editor view reference variable
-     * 
+     *
      * @static
      */
     public static editorView: EditorView;
@@ -12,11 +12,11 @@ export class CMEditorView {
     public static setContenteditable(enable: boolean): void {
         let contenteditable: void;
 
-        const codeMirrorNode: HTMLElement = document.querySelector('.cm-content') as HTMLElement;
+        const codeMirrorNode: HTMLElement = document.querySelector(".cm-content") as HTMLElement;
 
-        if(enable) {
+        if (enable) {
             contenteditable = codeMirrorNode.setAttribute("contenteditable", "");
-        } else if(!enable) {
+        } else if (!enable) {
             contenteditable = codeMirrorNode.setAttribute("contenteditable", "none");
         }
 
@@ -25,17 +25,17 @@ export class CMEditorView {
 
     /**
      * Create editor view
-     * 
-     * @static 
-     * 
+     *
+     * @static
+     *
      * @returns EditorView
      */
     public static createEditorView(): EditorView {
         CMEditorView.editorView = new EditorView({
             state: CMEditorState.createEditorState(),
-            doc: '',
-            parent: document.getElementById("editor-container") as HTMLElement
-        })
+            doc: "",
+            parent: document.getElementById("editor-container") as HTMLElement,
+        });
 
         console.log("cm view");
 

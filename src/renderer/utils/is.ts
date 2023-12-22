@@ -1,19 +1,19 @@
-import { App } from "../app"
-import { fsMod } from "./alias"
+import { App } from "../app";
+import { fsMod } from "./alias";
 
 /**
- * Is mode basic 
- * 
- * Check if the mode is basic 
- * 
+ * Is mode basic
+ *
+ * Check if the mode is basic
+ *
  * @returns `true` or `false`
  */
 export function isModeBasic(): boolean {
     let isActive: boolean = false;
 
-    if(App.appNode.classList.contains('basic-mode-is-active')) {
+    if (App.appNode.classList.contains("basic-mode-is-active")) {
         isActive = true;
-    } else if(!App.appNode.classList.contains('basic-mode-is-active')) {
+    } else if (!App.appNode.classList.contains("basic-mode-is-active")) {
         isActive = false;
     }
 
@@ -21,18 +21,18 @@ export function isModeBasic(): boolean {
 }
 
 /**
- * Is mode advanced 
- * 
- * check if the mode is advanced 
- * 
+ * Is mode advanced
+ *
+ * check if the mode is advanced
+ *
  * @returns `true` or `false`
  */
 export function isModeAdvanced(): boolean {
     let isActive: boolean = false;
 
-    if(App.appNode.classList.contains('advanced-mode-is-active')) {
+    if (App.appNode.classList.contains("advanced-mode-is-active")) {
         isActive = true;
-    } else if(!App.appNode.classList.contains('advanced-mode-is-active')) {
+    } else if (!App.appNode.classList.contains("advanced-mode-is-active")) {
         isActive = false;
     }
 
@@ -41,17 +41,17 @@ export function isModeAdvanced(): boolean {
 
 /**
  * Is mode reading
- * 
+ *
  * Check if the mode is reading
- * 
+ *
  * @returns `true` or `false`
  */
 export function isModeReading(): boolean {
     let isActive: boolean = false;
 
-    if(App.appNode.classList.contains('reading-mode-is-active')) {
+    if (App.appNode.classList.contains("reading-mode-is-active")) {
         isActive = true;
-    } else if(!App.appNode.classList.contains('reading-mode-is-active')) {
+    } else if (!App.appNode.classList.contains("reading-mode-is-active")) {
         isActive = false;
     }
 
