@@ -31,8 +31,6 @@ The app is currently in early development and may not be 100% stable for daily u
 
 Only macOS installers are supplied in the early development phase. Other platforms will be supported in the official release.
 
-v0.2.0 will mark the first official build for Iris. There will be a handful of dev builds that users can install to get a feel of the application before release.
-
 You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication. Other mediums will be created in the near future.
 
 # Installation
