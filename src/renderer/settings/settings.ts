@@ -16,13 +16,10 @@ import highlightDark from "../../assets/classic-dark.min.css?inline?url";
 interface ISettingsData<T extends boolean> {
     lightTheme: T;
     darkTheme: T;
-    basicMode: T;
     advancedMode: T;
     readingMode: T;
     defaultCursor: T;
     blockCursor: T;
-    showBasicInSelection: T;
-    showAdvancedInSelection: T;
 }
 
 type TSettings = ISettingsData<boolean>;

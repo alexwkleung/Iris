@@ -1,5 +1,4 @@
 import { App } from "./app";
-import { PMEditorView } from "./prosemirror/editor/pm-editor-view";
 import { WordCountContainerNode } from "./misc-ui/word-count";
 import { EditorKebabDropdownMenu } from "./misc-ui/editor-kebab-dropdown-menu";
 import { CMEditorView } from "./codemirror/editor/cm-editor-view";
@@ -79,16 +78,7 @@ export namespace EditorNs {
         //create editor container
         EditorContainerNode.createEditorContainer();
 
-        if (Settings.getSettings.basicMode) {
-            //create prosemirror editorview
-            PMEditorView.createEditorView();
-
-            //set prosemirror contenteditable
-            PMEditorView.setContenteditable(false);
-
-            //hide prosemirror menubar
-            (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "none";
-        } else if (Settings.getSettings.advancedMode) {
+        if (Settings.getSettings.advancedMode) {
             CMEditorView.createEditorView();
 
             CMEditorView.setContenteditable(false);

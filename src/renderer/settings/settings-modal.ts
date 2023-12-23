@@ -94,7 +94,7 @@ export class SettingsModal {
         advancedModeOptionsContainer.appendChild(advancedModeOptionsContainerTitle);
 
         //advanced mode options container title text node
-        const advancedModeOptionsContainerTitleTextNode: Text = document.createTextNode("Advanced Mode");
+        const advancedModeOptionsContainerTitleTextNode: Text = document.createTextNode("Markdown Mode");
         advancedModeOptionsContainerTitle.appendChild(advancedModeOptionsContainerTitleTextNode);
 
         //horizontal line
@@ -134,93 +134,6 @@ export class SettingsModal {
         }
     }
 
-    public modeDropdownSelectionOptions(): void {
-        const modeDropdownOptionsContainer: HTMLDivElement = document.createElement("div");
-        modeDropdownOptionsContainer.setAttribute("id", "mode-dropdown-options-container");
-        SettingsModal.settingsModalOptionsContainer.appendChild(modeDropdownOptionsContainer);
-
-        const modeDropdownOptionsContainerTitle: HTMLDivElement = document.createElement("div");
-        modeDropdownOptionsContainerTitle.setAttribute("id", "mode-dropdown-options-container-title");
-        modeDropdownOptionsContainer.appendChild(modeDropdownOptionsContainerTitle);
-
-        const modeDropdownOptionsContainerTitleTextNode: Text = document.createTextNode("Mode Selection");
-        modeDropdownOptionsContainerTitle.appendChild(modeDropdownOptionsContainerTitleTextNode);
-
-        appendHorizontalLineNode(modeDropdownOptionsContainer);
-
-        //basic mode selection label
-        const basicModeSelectLabel: HTMLLabelElement = document.createElement("label");
-        basicModeSelectLabel.setAttribute("for", "basic-mode-selection-options");
-        basicModeSelectLabel.setAttribute("class", "basic-mode-selection-options-select-label");
-        basicModeSelectLabel.textContent = "Show basic in dropdown";
-        modeDropdownOptionsContainer.appendChild(basicModeSelectLabel);
-
-        //basic mode selection toggle select
-        const basicModeToggleSelect: HTMLSelectElement = document.createElement("select");
-        basicModeToggleSelect.setAttribute("name", "basic-mode-selection-options");
-        basicModeToggleSelect.setAttribute("id", "basic-mode-toggle-options-select");
-        modeDropdownOptionsContainer.appendChild(basicModeToggleSelect);
-
-        //basic mode true toggle option
-        const basicModeToggleTrue: HTMLOptionElement = document.createElement("option");
-        basicModeToggleTrue.setAttribute("value", "basic-mode-toggle-true");
-        basicModeToggleTrue.setAttribute("class", "basic-mode-toggle-true-option");
-        basicModeToggleTrue.textContent = "Always";
-        basicModeToggleSelect.appendChild(basicModeToggleTrue);
-
-        //basic mode false toggle option
-        const basicModeToggleFalse: HTMLOptionElement = document.createElement("option");
-        basicModeToggleFalse.setAttribute("value", "basic-mode-toggle-false");
-        basicModeToggleFalse.setAttribute("class", "basic-mode-toggle-false-option");
-        basicModeToggleFalse.textContent = "Never";
-        basicModeToggleSelect.appendChild(basicModeToggleFalse);
-
-        //advanced mode selection label
-        const advancedModeSelectLabel: HTMLLabelElement = document.createElement("label");
-        advancedModeSelectLabel.setAttribute("for", "advanced-mode-selection-options");
-        advancedModeSelectLabel.setAttribute("class", "advanced-mode-selection-options-select-label");
-        advancedModeSelectLabel.textContent = "Show advanced in dropdown";
-        modeDropdownOptionsContainer.appendChild(advancedModeSelectLabel);
-
-        //advanced mode selection toggle select
-        const advancedModeToggleSelect: HTMLSelectElement = document.createElement("select");
-        advancedModeToggleSelect.setAttribute("name", "advanced-mode-selection-options");
-        advancedModeToggleSelect.setAttribute("id", "advanced-mode-toggle-options-select");
-        modeDropdownOptionsContainer.appendChild(advancedModeToggleSelect);
-
-        //advanced mode true toggle option
-        const advancedModeToggleTrue: HTMLOptionElement = document.createElement("option");
-        advancedModeToggleTrue.setAttribute("value", "advanced-mode-toggle-true");
-        advancedModeToggleTrue.setAttribute("class", "advanced-mode-toggle-true-option");
-        advancedModeToggleTrue.textContent = "Always";
-        advancedModeToggleSelect.appendChild(advancedModeToggleTrue);
-
-        //advanced mode false toggle option
-        const advancedModeToggleFalse: HTMLOptionElement = document.createElement("option");
-        advancedModeToggleFalse.setAttribute("value", "advanced-mode-toggle-false");
-        advancedModeToggleFalse.setAttribute("class", "advanced-mode-toggle-false-option");
-        advancedModeToggleFalse.textContent = "Never";
-        advancedModeToggleSelect.appendChild(advancedModeToggleFalse);
-
-        if (Settings.getSettings.showBasicInSelection) {
-            basicModeToggleTrue.setAttribute("selected", "");
-
-            if (Settings.getSettings.showAdvancedInSelection) {
-                advancedModeToggleTrue.setAttribute("selected", "");
-            } else if (!Settings.getSettings.showAdvancedInSelection) {
-                advancedModeToggleFalse.setAttribute("selected", "");
-            }
-        } else if (!Settings.getSettings.showBasicInSelection) {
-            basicModeToggleFalse.setAttribute("selected", "");
-
-            if (Settings.getSettings.showAdvancedInSelection) {
-                advancedModeToggleTrue.setAttribute("selected", "");
-            } else if (!Settings.getSettings.showAdvancedInSelection) {
-                advancedModeToggleFalse.setAttribute("selected", "");
-            }
-        }
-    }
-
     /**
      * Settings modal container
      */
@@ -248,7 +161,5 @@ export class SettingsModal {
 
         //advanced mode options
         this.advancedModeOptions();
-
-        this.modeDropdownSelectionOptions();
     }
 }

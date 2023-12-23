@@ -75,9 +75,7 @@ export class SettingsModalListeners extends SettingsModal {
             }
 
             //check mode
-            if (Settings.getSettings.basicMode) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
-            } else if (Settings.getSettings.advancedMode) {
+            if (Settings.getSettings.advancedMode) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
             }
 
@@ -134,9 +132,7 @@ export class SettingsModalListeners extends SettingsModal {
             }
 
             //check mode
-            if (Settings.getSettings.basicMode) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
-            } else if (Settings.getSettings.advancedMode) {
+            if (Settings.getSettings.advancedMode) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
             }
 
@@ -266,171 +262,6 @@ export class SettingsModalListeners extends SettingsModal {
     }
 
     /**
-     * Basic mode dropdown settings callback
-     *
-     * @param e Event
-     *
-     * @private
-     */
-    private basicModeDropdownSettingsCb: (e: Event) => void = (e: Event): void => {
-        const currentSelection: HTMLSelectElement = e.currentTarget as HTMLSelectElement;
-
-        if (currentSelection.value === "basic-mode-toggle-true") {
-            console.log("basic mode toggle true");
-
-            (document.querySelector(".basic-mode-toggle-false-option") as HTMLElement).removeAttribute("selected");
-            (document.querySelector(".basic-mode-toggle-true-option") as HTMLElement).setAttribute("selected", "");
-
-            (document.querySelector(".basic-mode-option") as HTMLElement).style.display = "";
-
-            Settings.getSettings.showBasicInSelection = true;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-
-            if (!Settings.getSettings.basicMode && Settings.getSettings.showBasicInSelection) {
-                Settings.getSettings.basicMode = true;
-                Settings.getSettings.advancedMode = false;
-
-                fsMod.fs._writeToFileAlt(
-                    fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                    JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-                );
-            }
-        } else if (currentSelection.value === "basic-mode-toggle-false") {
-            console.log("basic mode toggle false");
-
-            (document.querySelector(".basic-mode-toggle-true-option") as HTMLElement).removeAttribute("selected");
-            (document.querySelector(".basic-mode-toggle-false-option") as HTMLElement).setAttribute("selected", "");
-
-            (document.querySelector(".basic-mode-option") as HTMLElement).style.display = "none";
-
-            Settings.getSettings.showBasicInSelection = false;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-
-            if (!Settings.getSettings.advancedMode && Settings.getSettings.showAdvancedInSelection) {
-                Settings.getSettings.basicMode = false;
-                Settings.getSettings.advancedMode = true;
-
-                fsMod.fs._writeToFileAlt(
-                    fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                    JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-                );
-            }
-        }
-
-        if (Settings.getSettings.readingMode) {
-            Settings.getSettings.basicMode = false;
-            Settings.getSettings.advancedMode = false;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-        }
-    };
-
-    /**
-     * Advanced mode dropdown settings callback
-     *
-     * @param e Event
-     *
-     * @private
-     */
-    private advancedModeDropdownSettingsCb: (e: Event) => void = (e: Event): void => {
-        const currentSelection: HTMLSelectElement = e.currentTarget as HTMLSelectElement;
-
-        if (currentSelection.value === "advanced-mode-toggle-true") {
-            console.log("advanced mode toggle true");
-
-            (document.querySelector(".advanced-mode-toggle-false-option") as HTMLElement).removeAttribute("selected");
-            (document.querySelector(".advanced-mode-toggle-true-option") as HTMLElement).setAttribute("selected", "");
-
-            (document.querySelector(".advanced-mode-option") as HTMLElement).style.display = "";
-
-            Settings.getSettings.showAdvancedInSelection = true;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-
-            if (!Settings.getSettings.advancedMode && Settings.getSettings.showAdvancedInSelection) {
-                Settings.getSettings.basicMode = false;
-                Settings.getSettings.advancedMode = true;
-
-                fsMod.fs._writeToFileAlt(
-                    fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                    JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-                );
-            }
-        } else if (currentSelection.value === "advanced-mode-toggle-false") {
-            console.log("advanced mode toggle false");
-
-            (document.querySelector(".advanced-mode-toggle-true-option") as HTMLElement).removeAttribute("selected");
-            (document.querySelector(".advanced-mode-toggle-false-option") as HTMLElement).setAttribute("selected", "");
-
-            (document.querySelector(".advanced-mode-option") as HTMLElement).style.display = "none";
-
-            Settings.getSettings.showAdvancedInSelection = false;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-
-            if (!Settings.getSettings.basicMode && Settings.getSettings.showBasicInSelection) {
-                Settings.getSettings.basicMode = true;
-                Settings.getSettings.advancedMode = false;
-
-                fsMod.fs._writeToFileAlt(
-                    fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                    JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-                );
-            }
-        }
-
-        if (Settings.getSettings.readingMode) {
-            Settings.getSettings.basicMode = false;
-            Settings.getSettings.advancedMode = false;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-        }
-    };
-
-    /**
-     * Mode dropdown settings listener
-     *
-     * @private
-     */
-    private modeDropdownSettingsListener(): void {
-        GenericEvent.use.createDisposableEvent(
-            document.getElementById("basic-mode-toggle-options-select") as HTMLElement,
-            "change",
-            this.basicModeDropdownSettingsCb,
-            undefined,
-            "Create disposable event for basic mode select (change)"
-        );
-
-        GenericEvent.use.createDisposableEvent(
-            document.getElementById("advanced-mode-toggle-options-select") as HTMLElement,
-            "change",
-            this.advancedModeDropdownSettingsCb,
-            undefined,
-            "Create disposable event for advanced mode select (change)"
-        );
-    }
-
-    /**
      * Settings modal exit callback
      *
      * @public
@@ -455,22 +286,6 @@ export class SettingsModalListeners extends SettingsModal {
                 this.cursorSettingsCb,
                 undefined,
                 "Disposed event for cursor settings (change)"
-            );
-
-            GenericEvent.use.disposeEvent(
-                document.body,
-                "change",
-                this.basicModeDropdownSettingsCb,
-                undefined,
-                "Disposed event for basic mode dropdown settings (change)"
-            );
-
-            GenericEvent.use.disposeEvent(
-                document.body,
-                "change",
-                this.advancedModeDropdownSettingsCb,
-                undefined,
-                "Disposed event for advanced mode dropdown settings (change)"
             );
 
             //dispose settings modal exit cb
@@ -528,9 +343,6 @@ export class SettingsModalListeners extends SettingsModal {
 
             //cursor settings listener
             this.cursorSettingsListener();
-
-            //mode dropdown settings listener
-            this.modeDropdownSettingsListener();
 
             //invoke settings modal exit listener
             this.settingsModalExitListener();

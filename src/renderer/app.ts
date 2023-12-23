@@ -1,5 +1,4 @@
 import { setWindowTitle } from "./window/window-title";
-import prosemirror from "../assets/prosemirror.css?inline?url";
 import highlightLight from "../assets/classic-light.min.css?inline?url";
 
 import "../assets/default-fonts/Inter-Bold.ttf";
@@ -46,7 +45,7 @@ export class App {
             App.appNode.setAttribute("id", "app");
 
             //default mode
-            App.appNode.classList.add("basic-mode-is-active");
+            App.appNode.classList.add("advanced-mode-is-active");
 
             //use insertBefore instead of prepend
             document.body.insertBefore(App.appNode, document.body.firstChild);
@@ -61,21 +60,6 @@ export class App {
                 throw console.error("App node is not connected");
             }
         }
-    }
-
-    static pmStylesheet(): void {
-        //remove any duplicate pm stylesheets in dom
-        document.querySelectorAll(".pm-stylesheet").forEach((el) => {
-            if (el !== null) {
-                el.remove();
-            }
-        });
-
-        const pmStylesheet: HTMLLinkElement = document.createElement("link");
-        pmStylesheet.setAttribute("rel", "stylesheet");
-        pmStylesheet.setAttribute("href", prosemirror);
-        pmStylesheet.setAttribute("class", "pm-stylesheet");
-        document.body.appendChild(pmStylesheet);
     }
 
     static highlightLightTheme(): void {
@@ -95,11 +79,7 @@ export class App {
 
 export function createApp(): void {
     document.addEventListener("DOMContentLoaded", () => {
-        //call app
         App.app();
-
-        //prosemirror stylesheet
-        App.pmStylesheet();
 
         App.highlightLightTheme();
     });

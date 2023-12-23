@@ -28,14 +28,9 @@
     --child-file-name: rgb(237, 235, 235);
     --child-file-name-active: orange;
     --create-new-file-bg: #232222;
-    --prosemirror-pre-bg: rgb(181, 181, 181);
-    --prosemirror-code-bg: rgb(181, 181, 181);
-    --prosemirror-pre-color: #2e2a43;
-    --prosemirror-code-color: #2e2a43;
-    --prosemirror-bg-light: #ececec;
+    --bg-light: #ececec;
     --continue-modal: rgb(176, 136, 250);
     --modal-hover-bg: rgb(88, 88, 88);
-    --prosemirror-a-light: rgb(80, 80, 133);
     --top-bar-directory-info-color-light: #000000;
     --word-count-color-light: rgb(99, 99, 99);
     /* 
@@ -51,7 +46,7 @@
 
 /* body */
 body {
-    background-color: var(--prosemirror-bg-light);
+    background-color: var(--bg-light);
 
     /* fix margin */
     margin: 0 auto;
@@ -945,57 +940,6 @@ body {
     outline: none;
 }
 
-#mode-dropdown-options-container {
-    width: 598px;
-    height: 100px;
-    margin-top: 0px;
-}
-#mode-dropdown-options-container-title {
-    color: #ffffff;
-    font-family: 'Inter-Bold';
-    font-size: 20px;
-    margin-left: 0px;
-    margin-top: 10px;
-}
-.basic-mode-selection-options-select-label {
-    color: white;
-    font-family: 'Inter-Regular';
-    margin-top: 20px;
-    margin-left: 0px;
-    font-size: 17px;
-}
-#basic-mode-toggle-options-select {
-    margin-left: 320px;
-    font-family: 'Inter-Regular';
-    margin-top: 20px;
-    background-color: rgb(56, 56, 56);
-    color: white;
-    border-radius: 5px;
-    font-size: 17px;
-}
-#basic-mode-toggle-options-select:focus {
-    outline: none;
-}
-.advanced-mode-selection-options-select-label {
-    color: white;
-    font-family: 'Inter-Regular';
-    margin-top: 20px;
-    margin-left: 0px;
-    font-size: 17px;
-}
-#advanced-mode-toggle-options-select {
-    margin-left: 285px;
-    font-family: 'Inter-Regular';
-    margin-top: 20px;
-    background-color: rgb(56, 56, 56);
-    color: white;
-    border-radius: 5px;
-    font-size: 17px;
-}
-#advanced-mode-toggle-options-select:focus {
-    outline: none;
-}
-
 /*
 * reading mode
 */
@@ -1093,91 +1037,6 @@ body {
 }
 #reading-mode-container h6 mark {
     font-family: 'Inter-Bold';
-}
-
-/**
-* prosemirror editor nodes 
-*/
-.ProseMirror h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter-Bold';
-    margin-left: 3px;
-}
-
-.ProseMirror p {
-    margin-left: 3px;
-    padding-right: 20px;
-    white-space: pre-wrap;
-    text-align: justify;
-}
-
-.ProseMirror pre {
-    white-space: normal;
-}
-
-.ProseMirror blockquote  {
-    border-left: 3px solid grey;
-    margin: 1.5em 0px;
-    padding: 0.5em 10px;
-    font-size: 18px;
-}
-.ProseMirror blockquote:before {
-    color: grey;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-}
-.ProseMirror blockquote p {
-    display: inline;
-    font-size: 18px;
-    color: rgb(83, 82, 82);
-}
-
-.ProseMirror a {
-    color: var(--prosemirror-a-light);
-}
-
-.ProseMirror strong {
-    font-family: 'Inter-Bold'
-}
-
-.ProseMirror img {
-    max-width: calc(100% - 15px);
-}
-
-.ProseMirror hr {
-    border-color: rgb(46, 46, 46);
-    width: calc(100% - 25px);
-    margin-left: -5px;
-}
-
-/*
-.ProseMirror pre {
-    background-color: var(--prosemirror-pre-bg);
-    caret-color: var(--caret-color-light);
-    color: var(--prosemirror-pre-color);
-    width: calc(100% - 40px);
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-radius: 25px;
-    overflow-x: scroll;
-}
-*/
-
-.ProseMirror code {
-    background-color: var(--prosemirror-code-bg);
-    caret-color: var(--caret-color-light);
-    color: var(--prosemirror-code-color);
-    width: calc(100% - 40px);
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    /*border-radius: 25px;*/
-    overflow-x: scroll;
-    white-space: pre-wrap;
-    display: inline-block; 
-    unicode-bidi: embed;
 }
 
 /*

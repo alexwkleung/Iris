@@ -2,25 +2,6 @@ import { App } from "../app";
 import { fsMod } from "./alias";
 
 /**
- * Is mode basic
- *
- * Check if the mode is basic
- *
- * @returns `true` or `false`
- */
-export function isModeBasic(): boolean {
-    let isActive: boolean = false;
-
-    if (App.appNode.classList.contains("basic-mode-is-active")) {
-        isActive = true;
-    } else if (!App.appNode.classList.contains("basic-mode-is-active")) {
-        isActive = false;
-    }
-
-    return isActive;
-}
-
-/**
  * Is mode advanced
  *
  * check if the mode is advanced

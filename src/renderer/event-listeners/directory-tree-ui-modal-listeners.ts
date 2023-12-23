@@ -5,12 +5,8 @@ import { FolderFileCount } from "../misc-ui/folder-file-count";
 import { DirectoryTreeListeners } from "./directory-tree-listeners";
 import { EditorListeners } from "./editor-listeners";
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
-import { isModeAdvanced, isModeBasic, isModeReading } from "../utils/is";
+import { isModeAdvanced, isModeReading } from "../utils/is";
 import { fsMod } from "../utils/alias";
-import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
-import { PMEditorState } from "../prosemirror/editor/pm-editor-state";
-import { Node } from "prosemirror-model";
-import { defaultMarkdownParser } from "../prosemirror/markdown/export";
 import { RefsNs } from "./directory-tree-listeners";
 import { wordCountListener } from "./word-count-listener";
 import { setWindowTitle } from "../window/window-title";
@@ -20,7 +16,7 @@ import { CMEditorState } from "../codemirror/editor/cm-editor-state";
 import { cursors } from "../codemirror/extensions/cursors";
 import { Settings } from "../settings/settings";
 import { AdvancedModeSettings } from "../settings/settings";
-import { ReadingMode } from "../mode/reading-mode";
+import { ReadingMode } from "../misc-ui/reading-mode";
 import { markdownParser } from "../utils/markdown-parser";
 import { GenericEvent } from "./event";
 import { KeyBinds } from "../keybinds/keybinds";
@@ -283,61 +279,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         this.dirTreeStateListeners.activeChildFileStateListener();
 
         //mode check
-        if (isModeBasic()) {
-            //log
-            console.log(this.fileName);
-
-            //destroy current editor view
-            PMEditorView.editorView.destroy();
-
-            //create new editor view
-            PMEditorView.createEditorView();
-
-            //log
-            console.log(createFileModalFolderNameRef);
-
-            //log
-            console.log(this.fileName);
-
-            //update editor view state
-            PMEditorView.editorView.updateState(
-                //apply transaction
-                PMEditorView.editorView.state.apply(
-                    //since editor gets destroyed and re-created, the
-                    //range is 0 to 0
-                    PMEditorState.editorState.tr.replaceRangeWith(
-                        0,
-                        0,
-                        defaultMarkdownParser.parse(
-                            fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
-                        ) as Node
-                    )
-                )
-            );
-
-            //set contenteditable
-            PMEditorView.setContenteditable(true);
-
-            //if contenteditable attribute is set to true
-            if ((document.querySelector(".ProseMirror") as HTMLElement).getAttribute("contenteditable") === "true") {
-                //show the menubar
-                (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "";
-            }
-
-            (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
-
-            //invoke auto save listener
-            this.editorListeners.autoSaveListener("prosemirror");
-
-            //invoke insert tab listener
-            this.editorListeners.insertTabListener(document.querySelector(".ProseMirror") as HTMLElement, 2);
-
-            //word count listener
-            wordCountListener("prosemirror");
-
-            //kebab dropdown menu listener
-            this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
-        } else if (isModeAdvanced()) {
+        if (isModeAdvanced()) {
             //log
             console.log(this.fileName);
 
@@ -678,7 +620,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             (document.getElementById("create-modal-container") as HTMLElement).remove();
         }
 
-        if (isModeBasic() || isModeAdvanced() || isModeReading()) {
+        if (isModeAdvanced() || isModeReading()) {
             this.directoryTreeListeners.parentRootListener();
             this.createFileListener();
         }
@@ -747,7 +689,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             this.createFolderModalExitListener();
 
             //mode check
-            if (isModeBasic() || isModeAdvanced() || isModeReading()) {
+            if (isModeAdvanced() || isModeReading()) {
                 //invoke create folder continue listener
                 this.createFolderContinueListener(document.getElementById("create-folder-input-node") as HTMLElement);
             }

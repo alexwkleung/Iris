@@ -1,11 +1,8 @@
 {
     "lightTheme": true,
     "darkTheme": false,
-    "basicMode": true,
-    "advancedMode": false,
+    "advancedMode": true,
     "readingMode": false,
     "defaultCursor": true,
-    "blockCursor": false,
-    "showBasicInSelection": true,
-    "showAdvancedInSelection": true
+    "blockCursor": false
 }

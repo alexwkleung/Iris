@@ -1,8 +1,6 @@
 import { IEditorListeners } from "../interfaces/listener-interfaces";
 import { RefsNs } from "./directory-tree-listeners";
 import { fsMod } from "../utils/alias";
-import { defaultMarkdownSerializer } from "../prosemirror/markdown/export";
-import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
 import { debounce } from "../utils/debounce";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { GenericEvent } from "./event";
@@ -13,39 +11,6 @@ import { GenericEvent } from "./event";
 export class EditorListeners implements IEditorListeners {
     public pm: HTMLDivElement = {} as HTMLDivElement;
     public cm: HTMLElement = {} as HTMLDivElement;
-
-    public pmDebounceAutoSave = debounce(() => {
-        RefsNs.currentParentChildData.map((props) => {
-            //null check
-            if (props !== null) {
-                //write to file
-                const t0: number = performance.now(); //start perf timer
-
-                //log
-                console.log(props.parentFolderName);
-
-                console.log(props.childFileName);
-
-                fsMod.fs._writeToFile(
-                    props.parentFolderName + "/" + props.childFileName + ".md",
-                    defaultMarkdownSerializer.serialize(PMEditorView.editorView.state.doc).toString()
-                );
-
-                const t1: number = performance.now(); //end perf timer
-
-                //log perf timer
-                console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
-
-                GenericEvent.use.disposeEvent(
-                    this.pm,
-                    "keyup",
-                    this.pmDebounceAutoSave,
-                    undefined,
-                    "Disposed PM debounce auto save event"
-                );
-            }
-        });
-    }, 250); //250ms default
 
     public cmDebounceAutoSave = debounce(() => {
         RefsNs.currentParentChildData.map((props) => {
@@ -81,28 +46,7 @@ export class EditorListeners implements IEditorListeners {
      * @public
      */
     public autoSaveListener(editor: string): void {
-        if (editor === "prosemirror") {
-            //when a keyboard press is released
-            if (this.pm !== null) {
-                this.pm = document.querySelector(".ProseMirror") as HTMLDivElement;
-
-                GenericEvent.use.createDisposableEvent(
-                    this.pm,
-                    "keyup",
-                    () => {
-                        GenericEvent.use.createDisposableEvent(
-                            this.pm,
-                            "keyup",
-                            this.pmDebounceAutoSave,
-                            undefined,
-                            "Created disposable event for PM debounce auto save"
-                        );
-                    },
-                    undefined,
-                    "Created generic non-disposable event for PM auto save"
-                );
-            }
-        } else if (editor === "codemirror") {
+        if (editor === "codemirror") {
             //when a keyboard press is released
             if (this.cm !== null) {
                 this.cm = document.querySelector(".cm-editor") as HTMLElement;

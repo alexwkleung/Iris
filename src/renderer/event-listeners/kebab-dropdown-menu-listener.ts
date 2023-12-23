@@ -1,8 +1,7 @@
 import { EditorKebabDropdownMenu } from "../misc-ui/editor-kebab-dropdown-menu";
 import { EditorKebabDropdownModals } from "../misc-ui/editor-kebab-dropdown-modals";
 import { fsMod } from "../utils/alias";
-import { isModeAdvanced, isModeBasic } from "../utils/is";
-import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
+import { isModeAdvanced } from "../utils/is";
 import { setWindowTitle } from "../window/window-title";
 import { RefsNs } from "./directory-tree-listeners";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
@@ -64,60 +63,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
      */
     public kebabDeleteFileContinueCb: () => void = (): void => {
         document.querySelectorAll(".child-file-name.is-active-child").forEach(async (el) => {
-            //mode check
-            if (isModeBasic()) {
-                //log
-                console.log(
-                    fsMod.fs._baseDir("home") +
-                        "/Iris/Notes/" +
-                        document.title.split("-")[1].trim() +
-                        "/" +
-                        el.textContent +
-                        ".md"
-                );
-
-                fsMod.fs._deletePath(
-                    fsMod.fs._baseDir("home") +
-                        "/Iris/Notes/" +
-                        document.title.split("-")[1].trim() +
-                        "/" +
-                        el.textContent +
-                        ".md"
-                );
-
-                //destroy editor and respawn
-                PMEditorView.editorView.destroy();
-                PMEditorView.createEditorView();
-                PMEditorView.setContenteditable(false);
-
-                //hide prosemirror menubar
-                (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "none";
-
-                const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
-                const parentNameTags: NodeListOf<Element> = document.querySelectorAll(".parent-folder-name");
-
-                let count: number = 0;
-                //remove duplicate folder file count nodes
-                while (count <= 2) {
-                    document.querySelectorAll(".folder-file-count-container").forEach((el) => {
-                        el.remove();
-                    });
-                    count++;
-                }
-
-                for (let i = 0; i < parentNameTags.length; i++) {
-                    //invoke folder file count
-                    this.folderFileCount.folderFileCount(
-                        parentRoot[i],
-                        this.directoryTree.parentNameTagsArr()[i],
-                        true
-                    );
-                }
-
-                //hide file directory kebab dropdown menu container
-                (document.getElementById("file-directory-kebab-dropdown-menu-container") as HTMLElement).style.display =
-                    "none";
-            } else if (isModeAdvanced()) {
+            if (isModeAdvanced()) {
                 fsMod.fs._deletePath(
                     fsMod.fs._baseDir("home") +
                         "/Iris/Notes/" +

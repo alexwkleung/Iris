@@ -2,15 +2,11 @@ import { fsMod } from "../utils/alias";
 import { DirectoryTree } from "../file-directory-tree/file-directory";
 import { setWindowTitle } from "../window/window-title";
 import { IDirectoryTreeListeners } from "../interfaces/listener-interfaces";
-import { defaultMarkdownParser } from "../prosemirror/markdown/export";
-import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
-import { PMEditorState } from "../prosemirror/editor/pm-editor-state";
 import { EditorListeners } from "./editor-listeners";
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
 import { EditorNs } from "../editor-main";
 import { wordCountListener } from "./word-count-listener";
-import { isModeAdvanced, isModeBasic, isModeReading } from "../utils/is";
-import { Node } from "prosemirror-model";
+import { isModeAdvanced, isModeReading } from "../utils/is";
 import { FolderFileCount } from "../misc-ui/folder-file-count";
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
@@ -19,7 +15,7 @@ import { Settings } from "../settings/settings";
 import { cursors } from "../codemirror/extensions/cursors";
 import { EditorView } from "@codemirror/view";
 import { AdvancedModeSettings } from "../settings/settings";
-import { ReadingMode } from "../mode/reading-mode";
+import { ReadingMode } from "../misc-ui/reading-mode";
 import { markdownParser } from "../utils/markdown-parser";
 
 export namespace RefsNs {
@@ -256,132 +252,11 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             //log child file that corresponds to parent folder
                             //console.log(childFileName[i].textContent);
 
-                            //if mode is basic
-                            if (isModeBasic()) {
-                                const t0: number = performance.now(); //start perf timer
-
-                                //destroy current editor view
-                                PMEditorView.editorView.destroy();
-
-                                //create new editor view
-                                PMEditorView.createEditorView();
-
-                                //update editor view state
-                                PMEditorView.editorView.updateState(
-                                    //apply transaction
-                                    PMEditorView.editorView.state.apply(
-                                        //since editor gets destroyed and re-created, the
-                                        //range is 0 to 0
-                                        PMEditorState.editorState.tr.replaceRangeWith(
-                                            0,
-                                            0,
-                                            defaultMarkdownParser.parse(
-                                                fsMod.fs._readFileFolder(
-                                                    this.getParentNameTags[j].textContent as string,
-                                                    (childFileName[i].textContent as string) + ".md"
-                                                )
-                                            ) as Node
-                                        )
-                                    )
-                                );
-
-                                const t1: number = performance.now(); //end perf timer
-
-                                //log perf timer
-                                console.log("Editor destroy, create, and replace in total took " + (t1 - t0) + "ms!");
-
-                                //set contenteditable
-                                PMEditorView.setContenteditable(true);
-
-                                //if contenteditable attribute is set to true
-                                if (
-                                    (document.querySelector(".ProseMirror") as HTMLElement).getAttribute(
-                                        "contenteditable"
-                                    ) === "true"
-                                ) {
-                                    //show the menubar
-                                    (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "";
+                            if (isModeAdvanced()) {
+                                if (document.querySelector(".cm-content") as HTMLElement) {
+                                    //destroy cm editor view
+                                    CMEditorView.editorView.destroy();
                                 }
-
-                                //show kebab dropdown menu
-                                (
-                                    document.getElementById("kebab-dropdown-menu-container") as HTMLElement
-                                ).style.display = "";
-
-                                //invoke auto save listener
-                                this.editorListeners.autoSaveListener("prosemirror");
-
-                                //invoke insert tab listener
-                                this.editorListeners.insertTabListener(
-                                    document.querySelector(".ProseMirror") as HTMLElement,
-                                    2
-                                );
-
-                                (
-                                    document.getElementById(
-                                        "file-directory-kebab-dropdown-menu-container"
-                                    ) as HTMLElement
-                                ).style.display = "";
-
-                                //null check
-                                if (
-                                    this.parentTagNodeRef !== null &&
-                                    this.parentNameTagRef !== null &&
-                                    this.childFileNameRef !== null &&
-                                    this.childFileNodeRef !== null
-                                ) {
-                                    //assign child refs
-                                    this.childFileNameRef = childFileName[i].textContent as string;
-                                    this.childFileNodeRef = childFileName[i];
-
-                                    if (this.getParentTags[j].contains(this.getParentNameTags[j])) {
-                                        //assign parent refs
-                                        this.parentNameTagRef = this.getParentNameTags[j].textContent as string;
-                                        this.parentNameTagNodeRef = this.getParentNameTags[j];
-                                        this.parentTagNodeRef = this.getParentTags[j];
-                                    } else if (!this.getParentTags[j].contains(this.getParentNameTags[j])) {
-                                        continue;
-                                    }
-
-                                    //assign references to corresponding key properties
-                                    RefsNs.currentParentChildData.map((props) => {
-                                        //null check
-                                        if (props !== null) {
-                                            //child file name
-                                            props.childFileName = this.childFileNameRef;
-
-                                            //child file node
-                                            props.childFileNode = this.childFileNodeRef;
-
-                                            //parent folder name
-                                            props.parentFolderName = this.parentNameTagRef;
-
-                                            //parent folder name node
-                                            props.parentFolderNameNode = this.parentNameTagNodeRef;
-
-                                            //parent folder node
-                                            props.parentFolderNode = this.parentTagNodeRef;
-
-                                            //log
-                                            //console.log(props.childFileName);
-                                            //log
-                                            //console.log(props.childFileNode);
-                                        }
-                                    });
-                                }
-
-                                //apply active state listener
-                                this.dirTreeStateListeners.activeChildFileStateListener();
-
-                                //word count listener
-                                wordCountListener("prosemirror");
-
-                                //kebab dropdown menu listener
-                                this.editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
-                                //if mode is advanced
-                            } else if (isModeAdvanced()) {
-                                //destroy cm editor view
-                                CMEditorView.editorView.destroy();
 
                                 //create cm editor view
                                 CMEditorView.createEditorView();

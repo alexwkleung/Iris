@@ -7,7 +7,6 @@ import mermaid from "mermaid";
 import { GenericEvent } from "./event-listeners/event";
 import { createApp } from "./app";
 import { invokeListeners } from "./listener-main";
-import { fsMod } from "./utils/alias";
 
 namespace RendererProcess {
     class Renderer {
@@ -68,43 +67,13 @@ namespace RendererProcess {
          * @private
          */
         private loadMode(): void {
-            //load mode selection
-            if (!Settings.getSettings.showBasicInSelection) {
-                (document.querySelector(".basic-mode-option") as HTMLElement).style.display = "none";
-
-                if (!Settings.getSettings.showAdvancedInSelection) {
-                    (document.querySelector(".advanced-mode-option") as HTMLElement).style.display = "none";
-                }
-            } else if (Settings.getSettings.showBasicInSelection && Settings.getSettings.showAdvancedInSelection) {
-                (document.querySelector(".basic-mode-option") as HTMLElement).style.display = "";
-                (document.querySelector(".advanced-mode-option") as HTMLElement).style.display = "";
-            }
-
-            if (Settings.getSettings.showBasicInSelection && !Settings.getSettings.showAdvancedInSelection) {
-                (document.querySelector(".basic-mode-option") as HTMLElement).style.display = "";
-
-                (document.querySelector(".advanced-mode-option") as HTMLElement).style.display = "none";
-            } else if (Settings.getSettings.showAdvancedInSelection && !Settings.getSettings.showBasicInSelection) {
-                (document.querySelector(".advanced-mode-option") as HTMLElement).style.display = "";
-
-                (document.querySelector(".basic-mode-option") as HTMLElement).style.display = "none";
-            }
-
             //load mode
-            if (Settings.getSettings.basicMode) {
-                console.log("basic mode active");
-
-                if ((document.getElementById("app") as HTMLElement).classList.contains("advanced-mode-is-active")) {
-                    (document.getElementById("app") as HTMLElement).classList.remove("advanced-mode-is-active");
-                }
-
-                (document.getElementById("app") as HTMLElement).classList.add("basic-mode-is-active");
-                //advanced mode
-            } else if (Settings.getSettings.advancedMode) {
+            //advanced mode
+            if (Settings.getSettings.advancedMode) {
                 console.log("advanced mode active");
 
-                if ((document.getElementById("app") as HTMLElement).classList.contains("basic-mode-is-active")) {
-                    (document.getElementById("app") as HTMLElement).classList.remove("basic-mode-is-active");
+                if ((document.getElementById("app") as HTMLElement).classList.contains("reading-mode-is-active")) {
+                    (document.getElementById("app") as HTMLElement).classList.remove("reading-mode-is-active");
                 }
 
                 (document.getElementById("app") as HTMLElement).classList.add("advanced-mode-is-active");
@@ -123,11 +92,7 @@ namespace RendererProcess {
             } else if (Settings.getSettings.readingMode) {
                 console.log("reading mode active");
 
-                if ((document.getElementById("app") as HTMLElement).classList.contains("basic-mode-is-active")) {
-                    (document.getElementById("app") as HTMLElement).classList.remove("basic-mode-is-active");
-                } else if (
-                    (document.getElementById("app") as HTMLElement).classList.contains("advanced-mode-is-active")
-                ) {
+                if ((document.getElementById("app") as HTMLElement).classList.contains("advanced-mode-is-active")) {
                     (document.getElementById("app") as HTMLElement).classList.remove("advanced-mode-is-active");
                 }
 
@@ -154,7 +119,9 @@ namespace RendererProcess {
          * @public
          */
         public initializeRenderer(): void {
+            createApp();
             this.attachWindowEvent();
+            invokeListeners();
         }
     }
 
@@ -164,6 +131,4 @@ namespace RendererProcess {
     export const execute: Renderer = new Renderer();
 }
 
-createApp();
 RendererProcess.execute.initializeRenderer();
-invokeListeners();

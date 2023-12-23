@@ -104,19 +104,11 @@ export class DirectoryTreeUIElements {
             fileDirectoryKebabOptionSelect
         );
 
-        //basic mode option
-        const basicModeOption: HTMLOptionElement = document.createElement("option");
-        basicModeOption.setAttribute("value", "basic-mode");
-        basicModeOption.setAttribute("class", "basic-mode-option");
-        basicModeOption.textContent = "Basic";
-        basicModeOption.style.display = "";
-        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(basicModeOption);
-
         //advanced mode option
         const advancedModeOption: HTMLOptionElement = document.createElement("option");
         advancedModeOption.setAttribute("value", "advanced-mode");
         advancedModeOption.setAttribute("class", "advanced-mode-option");
-        advancedModeOption.textContent = "Advanced";
+        advancedModeOption.textContent = "Markdown";
         advancedModeOption.style.display = "";
         (document.getElementById("editor-mode-select") as HTMLElement).appendChild(advancedModeOption);
 
@@ -127,11 +119,8 @@ export class DirectoryTreeUIElements {
         readingModeOption.textContent = "Reading";
         (document.getElementById("editor-mode-select") as HTMLElement).appendChild(readingModeOption);
 
-        //if basic mode is true
-        if (Settings.getSettings.basicMode) {
-            basicModeOption.setAttribute("selected", "");
-            //if advanced mode is true
-        } else if (Settings.getSettings.advancedMode) {
+        //if advanced mode is true
+        if (Settings.getSettings.advancedMode) {
             advancedModeOption.setAttribute("selected", "");
         } else if (Settings.getSettings.readingMode) {
             readingModeOption.setAttribute("selected", "");
