@@ -1,0 +1,11 @@
+{
+    "lightTheme": true,
+    "darkTheme": false,
+    "basicMode": true,
+    "advancedMode": false,
+    "readingMode": false,
+    "defaultCursor": true,
+    "blockCursor": false,
+    "showBasicInSelection": true,
+    "showAdvancedInSelection": true
+}

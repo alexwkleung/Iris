@@ -31,8 +31,6 @@ The app is currently in early development and may not be 100% stable for daily u
 
 Only macOS installers are supplied in the early development phase. Other platforms will be supported in the official release.
 
-v0.2.0 will mark the first official build for Iris. There will be a handful of dev builds that users can install to get a feel of the application before release.
-
 You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication. Other mediums will be created in the near future.
 
 # Installation
@@ -42,6 +40,8 @@ At the moment, you can install the latest dev builds from [releases](https://git
 If you want to build the app directly from source, follow the instructions in [Development](#development).
  
 # Development 
+
+The recommended editor for development is [VS Code](https://code.visualstudio.com/)
 
 Install [Node.js](https://nodejs.org/en/download)
 
@@ -86,6 +86,16 @@ Install npm dependencies. Only do this in the *root* of the project. Do not `npm
 
 ```bash
 npm install 
+```
+
+It recommended to add these to your VS Code `settings.json`:
+
+```json
+"editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "editor.formatOnSave": "always",
+},
+"prettier.enable": true,
 ```
 
 Build native modules
@@ -149,7 +159,7 @@ npm run build:linux
 
 Here are a list of ways you can contribute to Iris:
 
-1. [Submit a Pull Request](https://github.com/alexwkleung/Iris/pulls)
+1. [Submit a pull request](https://github.com/alexwkleung/Iris/pulls)
 2. [Create or answer issues](https://github.com/alexwkleung/Iris/issues)
 3. [Create or answer discussion posts](https://github.com/alexwkleung/Iris/discussions)
 4. Show your interest by sharing Iris to others :)

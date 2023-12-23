@@ -1,0 +1,17 @@
+**/*.json
+**/*.
+**/*.md
+**/*.js
+**/*.html
+**/*.css
+**/*.yml
+vite.config.ts
+src/vite.d.ts
+out
+dist
+build
+node_modules
+resources
+screenshots
+test
+fs-mod
