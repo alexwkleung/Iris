@@ -1012,6 +1012,7 @@ body {
     content-visibility: auto;
     contain-intrinsic-size: auto 800px;
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 #reading-mode-content {
     padding-bottom: 500px;
