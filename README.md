@@ -25,17 +25,15 @@
 
 # Info
 
-Iris is written in TypeScript and Rust.
-
 The app is currently in early development and may not be 100% stable for daily use.
 
-Only macOS installers are supplied in the early development phase. Other platforms will be supported in the official release.
+Only macOS installers are supplied in the early development phase. Other platforms are planned to be supported in the official release (v1.0.0).
 
 You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication. Other mediums will be created in the near future.
 
 # Installation
 
-At the moment, you can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
+You can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
 
 If you want to build the app directly from source, follow the instructions in [Development](#development).
  
