@@ -1,6 +1,6 @@
 {
   "name": "iris",
-  "version": "0.2.0-dev-6.0",
+  "version": "0.3.0-dev.1",
   "productName": "Iris",
   "description": "A comfortable note-taking app powered by Markdown",
   "main": "./out/main.js",
