@@ -29,6 +29,7 @@
     --child-file-name-active: orange;
     --create-new-file-bg: #232222;
     --bg-light: #ececec;
+    --a-light: rgb(80, 80, 133);
     --continue-modal: rgb(176, 136, 250);
     --modal-hover-bg: rgb(88, 88, 88);
     --top-bar-directory-info-color-light: #000000;
@@ -542,7 +543,7 @@ body {
     border-radius: 15px;
     background-color: #2a2828;
     width: 150px;
-    height: 200px;
+    height: 150px;
     right: 25px;
     top: 85px;
     cursor: default;
@@ -990,7 +991,7 @@ body {
     color: rgb(83, 82, 82);
 }
 #reading-mode-container a {
-    color: var(--prosemirror-a-light);
+    color: var(--a-light);
 }
 #reading-mode-container strong {
     font-family: 'Inter-Bold'
@@ -1048,7 +1049,7 @@ body {
     height: calc(100% + 50px);
     font-size: 17px;
     font-family: 'Inter-Bold';
-    background-color: var(--prosemirror-bg-light); 
+    background-color: var(--bg-light); 
     /*border: 1px solid black;*/
     padding-bottom: 160px;
     padding-top: 15px;

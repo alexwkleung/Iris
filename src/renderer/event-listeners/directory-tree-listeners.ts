@@ -247,11 +247,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             this.getParentTags[j].contains(childFileName[i]) &&
                             childFileName[i].classList.contains("is-active-child")
                         ) {
-                            //log parent folder
-                            //console.log(this.getParentNameTags[j].textContent);
-                            //log child file that corresponds to parent folder
-                            //console.log(childFileName[i].textContent);
-
                             if (isModeAdvanced()) {
                                 if (document.querySelector(".cm-content") as HTMLElement) {
                                     //destroy cm editor view
@@ -356,22 +351,33 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                         CMEditorView.editorView.dispatch({
                                             effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]),
                                         });
+
+                                        AdvancedModeSettings.highlightLight();
                                     } else if (Settings.getSettings.darkTheme) {
                                         CMEditorView.editorView.dispatch({
                                             effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]),
                                         });
+
+                                        AdvancedModeSettings.highlightDark();
                                     }
 
                                     //check block cursor
                                     if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                                         AdvancedModeSettings.defaultCursor("light");
+
+                                        AdvancedModeSettings.highlightLight();
                                     } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                                         AdvancedModeSettings.defaultCursor("dark");
-                                    } else if (
-                                        (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
-                                        (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme)
-                                    ) {
+
+                                        AdvancedModeSettings.highlightDark();
+                                    } else if (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) {
                                         AdvancedModeSettings.blockCursor();
+
+                                        AdvancedModeSettings.highlightLight();
+                                    } else if (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme) {
+                                        AdvancedModeSettings.blockCursor();
+
+                                        AdvancedModeSettings.highlightDark();
                                     }
 
                                     //set scroll position to the beginning of the view

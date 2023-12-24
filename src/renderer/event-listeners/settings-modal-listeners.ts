@@ -90,6 +90,8 @@ export class SettingsModalListeners extends SettingsModal {
             ) {
                 AdvancedModeSettings.blockCursor();
             }
+
+            AdvancedModeSettings.highlightLight();
             //if selection is dark theme
         } else if (currentSelection.value === "editor-dark") {
             //log
@@ -147,6 +149,8 @@ export class SettingsModalListeners extends SettingsModal {
             ) {
                 AdvancedModeSettings.blockCursor();
             }
+
+            AdvancedModeSettings.highlightDark();
         }
     };
 

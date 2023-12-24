@@ -6,6 +6,7 @@ import { fsMod } from "../utils/alias";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { CMEditorState } from "../codemirror/editor/cm-editor-state";
 import { cursors } from "../codemirror/extensions/cursors";
+import { irisEditorStyle } from "../codemirror/extensions/editor-style";
 
 import editorDark from "../../assets/editor-dark.css?inline?url";
 import highlightDark from "../../assets/classic-dark.min.css?inline?url";
@@ -73,6 +74,18 @@ export class AdvancedModeSettings {
     static blockCursor(): void {
         CMEditorView.editorView.dispatch({
             effects: CMEditorState.cursorCompartment.reconfigure(cursors[2]),
+        });
+    }
+
+    static highlightLight(): void {
+        CMEditorView.editorView.dispatch({
+            effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(false)),
+        });
+    }
+
+    static highlightDark(): void {
+        CMEditorView.editorView.dispatch({
+            effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(true)),
         });
     }
 }

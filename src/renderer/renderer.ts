@@ -81,13 +81,26 @@ namespace RendererProcess {
                 //check block cursor
                 if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.defaultCursor("light");
+
+                    AdvancedModeSettings.highlightLight();
                 } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                     AdvancedModeSettings.defaultCursor("dark");
-                } else if (
-                    (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
-                    (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme)
-                ) {
+
+                    AdvancedModeSettings.highlightDark();
+                } else if (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.blockCursor();
+
+                    AdvancedModeSettings.highlightLight();
+                } else if (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme) {
+                    AdvancedModeSettings.blockCursor();
+
+                    AdvancedModeSettings.highlightDark();
+                }
+
+                if (Settings.getSettings.lightTheme) {
+                    AdvancedModeSettings.highlightLight();
+                } else if (Settings.getSettings.darkTheme) {
+                    AdvancedModeSettings.highlightDark();
                 }
             } else if (Settings.getSettings.readingMode) {
                 console.log("reading mode active");

@@ -7,6 +7,7 @@ import { EditorView } from "@codemirror/view";
 import { Compartment } from "@codemirror/state";
 import { cursors } from "../extensions/cursors";
 import { closeBrackets } from "@codemirror/autocomplete";
+import { irisEditorStyle } from "../extensions/editor-style";
 
 export class CMEditorState {
     /**
@@ -17,6 +18,8 @@ export class CMEditorState {
     public static editorState: EditorState;
 
     public static cursorCompartment: Compartment = new Compartment();
+
+    public static editorCompartment: Compartment = new Compartment();
 
     /**
      * Create editor state
@@ -39,11 +42,9 @@ export class CMEditorState {
                 closeBrackets(),
                 EditorView.lineWrapping,
                 this.cursorCompartment.of(cursors[0]),
+                this.editorCompartment.of(irisEditorStyle(false)),
             ],
         });
-
-        //dispatch
-        //CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) })
 
         console.log("cm state");
 

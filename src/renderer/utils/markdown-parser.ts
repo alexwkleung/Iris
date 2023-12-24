@@ -22,6 +22,7 @@ export async function markdownParser(content: string): Promise<string> {
         })
         .use(rehypeHighlight, {
             plainText: ["mermaid", "txt", "text", "", "katex", "plain", "plaintext"],
+            ignoreMissing: true,
         })
         .use(remarkMath)
         .use(rehypeKatex)

@@ -20,7 +20,7 @@ const blockCursor = EditorView.theme({
     ".cm-cursor, .cm-dropCursor": {
         borderLeftColor: dark,
         borderLeft: "2px solid",
-        borderRight: "0.57em solid",
+        borderRight: "0.75em solid",
         opacity: "0.5",
     },
 });

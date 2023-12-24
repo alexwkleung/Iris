@@ -83,12 +83,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 //log
                 console.log("advanced selected");
 
-                //if basic mode is active
-                if ((document.getElementById("app") as HTMLElement).classList.contains("basic-mode-is-active")) {
-                    //remove it
-                    (document.getElementById("app") as HTMLElement).classList.remove("basic-mode-is-active");
-                }
-
                 //if reading mode is active
                 if (isModeReading()) {
                     (document.getElementById("app") as HTMLElement).classList.remove("reading-mode-is-active");
@@ -122,9 +116,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 CMEditorView.createEditorView();
                 CMEditorView.setContenteditable(true);
 
-                //if(document.querySelector('.child-file-name is-active-child') as HTMLElement !== null) {
-                //insert active file content into editor
-
                 RefsNs.currentParentChildData.map((props) => {
                     //dispatch text insertion tr
                     CMEditorView.editorView.dispatch({
@@ -137,25 +128,32 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 });
 
                 if (Settings.getSettings.lightTheme) {
-                    CMEditorView.editorView.dispatch({
-                        effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]),
-                    });
+                    AdvancedModeSettings.defaultCursor("light");
+
+                    AdvancedModeSettings.highlightLight();
                 } else if (Settings.getSettings.darkTheme) {
-                    CMEditorView.editorView.dispatch({
-                        effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]),
-                    });
+                    AdvancedModeSettings.defaultCursor("dark");
+
+                    AdvancedModeSettings.highlightDark();
                 }
 
                 //check block cursor
                 if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.defaultCursor("light");
+
+                    AdvancedModeSettings.highlightLight();
                 } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                     AdvancedModeSettings.defaultCursor("dark");
-                } else if (
-                    (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
-                    (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme)
-                ) {
+
+                    AdvancedModeSettings.highlightDark();
+                } else if (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.blockCursor();
+
+                    AdvancedModeSettings.highlightLight();
+                } else if (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme) {
+                    AdvancedModeSettings.blockCursor();
+
+                    AdvancedModeSettings.highlightDark();
                 }
 
                 //set scroll position to the beginning of the view
@@ -171,9 +169,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
 
                 //kebab dropdown menu listener
                 this.editorKebabDropdownListeners.kebabDropdownMenuListener();
-                //} else {
-                //return;
-                //}
             } else if (currentSelection.value === "reading-mode") {
                 //if mode is advanced
                 if (isModeAdvanced()) {
