@@ -117,6 +117,7 @@ body {
     font-size: 16px;
     margin-left: 25px;
     padding-top: 15px;
+    padding-bottom: 5px;
     font-family: 'Inter-Bold';
     white-space: nowrap; /* don't wrap name and set overflow-x to handle the nowrap */
     overflow-x: scroll;
@@ -137,7 +138,7 @@ body {
 }
 .parent-folder-caret {
     position: absolute;
-    margin-top: -22px;
+    margin-top: -24px;
     margin-right: 100px;
     margin-left: 7px;
     color: var(--parent-folder-caret);
@@ -146,7 +147,7 @@ body {
 }
 .parent-folder-caret.is-active-parent-folder {
     position: absolute;
-    margin-top: -25px;
+    margin-top: -29px;
     margin-right: 100px;
     margin-left: 9px;
     color: var(--parent-folder-caret-active);
@@ -178,7 +179,7 @@ body {
 }
 .child-file-name-container .child-file-name.is-active-child {
     background-color: rgb(87, 87, 87);
-    border: 1px solid #716f6f;
+    /*border: 1px solid #716f6f;*/
 }
 .child-file-name.is-active-child {
     color: var(--child-file-name-active);
@@ -229,7 +230,7 @@ body {
 /* new file */
 .create-new-file {
     position: absolute;
-    margin-top: -22px;
+    margin-top: -26px;
     margin-left: 260px;
     width: 18px;
     height: 20px;
