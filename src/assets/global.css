@@ -40,7 +40,6 @@
     * set alpha value to a float or integer to control opacity
     */
     --create-file-modal-container-bg: rgba(0, 0, 0, 0.5);
-    --folder-file-count-container-color: rgb(99, 99, 99);
     --kebab-dropdown-menu-shape-bg: rgb(163, 162, 162);
     --caret-color-modal: #ffffff;
 }
@@ -459,20 +458,6 @@ body {
     font-size: 14px;
     user-select: none;
     text-align: right;
-    overflow-x: scroll;
-}
-
-/**
-* folder file count container
-*/
-.folder-file-count-container {
-    position: absolute;
-    color: var(--folder-file-count-container-color);
-    margin-left: 205px;
-    margin-top: 16px;
-    width: 42px;
-    text-align: right;
-    /*border: 1px solid white;*/
     overflow-x: scroll;
 }
 

@@ -1,7 +1,6 @@
 import { EditorNs } from "../editor-main";
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory-tree-modals";
 import { IDirectoryTreeUIModalListeners } from "../interfaces/listener-interfaces";
-import { FolderFileCount } from "../misc-ui/folder-file-count";
 import { DirectoryTreeListeners } from "./directory-tree-listeners";
 import { EditorListeners } from "./editor-listeners";
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
@@ -46,14 +45,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @readonly
      */
     private readonly directoryTreeListeners = new DirectoryTreeListeners();
-
-    /**
-     * Folder file count object
-     *
-     * @private
-     * @readonly
-     */
-    private readonly folderFileCountObject = new FolderFileCount();
 
     /**
      * Editor listeners object
@@ -440,14 +431,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             this.createFileModalContinueListener(
                                 document.querySelector("#create-file-modal-new-file-name-input-node") as HTMLElement
                             );
-
-                            const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
-
-                            //invoke folder file count
-                            this.folderFileCountObject.folderFileCount(
-                                parentRoot[i],
-                                this.directoryTreeListeners.parentNameTagsArr()[i]
-                            );
                         } else if (!createFileNode[i].classList.contains("show-create-file")) {
                             createFileNode[i].classList.remove("show-create-file");
                         }
@@ -507,16 +490,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
         parentFolderCaret.appendChild(parentFolderCaretTextNode);
         parentFolder.appendChild(parentFolderCaret);
-
-        const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
-
-        for (let i = 0; i < parentRoot.length; i++) {
-            //invoke folder file count
-            this.folderFileCountObject.folderFileCount(
-                parentRoot[i],
-                this.directoryTreeListeners.parentNameTagsArr()[i]
-            );
-        }
 
         //invoke parent root listener (created directory only)
         this.directoryTreeListeners.parentRootListener();

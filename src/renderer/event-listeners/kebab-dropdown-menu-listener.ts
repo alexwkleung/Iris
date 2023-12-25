@@ -5,7 +5,6 @@ import { isModeAdvanced } from "../utils/is";
 import { setWindowTitle } from "../window/window-title";
 import { RefsNs } from "./directory-tree-listeners";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
-import { FolderFileCount } from "../misc-ui/folder-file-count";
 import { DirectoryTree } from "../file-directory-tree/file-directory";
 import { GenericEvent } from "./event";
 import { KeyBinds } from "../keybinds/keybinds";
@@ -14,7 +13,6 @@ import { KeyBinds } from "../keybinds/keybinds";
  * @extends EditorKebabDropdownModals
  */
 export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals {
-    private readonly folderFileCount = new FolderFileCount();
     private readonly directoryTree = new DirectoryTree();
 
     private renameFile: string = "";
@@ -76,23 +74,6 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
                 CMEditorView.editorView.destroy();
                 CMEditorView.createEditorView();
                 CMEditorView.setContenteditable(false);
-
-                const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
-                const parentNameTags: NodeListOf<Element> = document.querySelectorAll(".parent-folder-name");
-
-                let count: number = 0;
-                //remove duplicate folder file count nodes
-                while (count <= 2) {
-                    document.querySelectorAll(".folder-file-count-container").forEach((el) => {
-                        el.remove();
-                    });
-                    count++;
-                }
-
-                for (let i = 0; i < parentNameTags.length; i++) {
-                    //invoke folder file count
-                    this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i]);
-                }
             }
 
             //remove kebab modal container node

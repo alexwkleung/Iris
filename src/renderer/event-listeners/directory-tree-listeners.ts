@@ -7,7 +7,6 @@ import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
 import { EditorNs } from "../editor-main";
 import { wordCountListener } from "./word-count-listener";
 import { isModeAdvanced, isModeReading } from "../utils/is";
-import { FolderFileCount } from "../misc-ui/folder-file-count";
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { CMEditorState } from "../codemirror/editor/cm-editor-state";
@@ -133,14 +132,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
     private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
 
     /**
-     * Folder file count object
-     *
-     * @private
-     * @readonly
-     */
-    private readonly folderFileCountObject = new FolderFileCount();
-
-    /**
      * Kebab dropdown menu listeners
      *
      * @private
@@ -157,8 +148,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
         if (this.getParentTags !== null && this.getParentNameTags !== null) {
             for (let i = 0; i < this.getParentTags.length; i++) {
-                this.folderFileCountObject.folderFileCount(this.getParentTags[i], this.parentNameTagsArr()[i]);
-
                 this.getParentNameTags[i].addEventListener("click", () => {
                     //toggle is-active-parent class on parent tag
                     this.getParentTags[i].classList.toggle("is-active-parent");
