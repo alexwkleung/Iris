@@ -127,8 +127,9 @@ body {
 }
 .parent-folder-name:hover {
     cursor: pointer;
-    text-decoration: none;
-    text-decoration-color: var(--parent-folder-name-hover);
+    background-color: rgb(87, 87, 87);
+    width: 155px;
+    border-radius: 5px;
 }
 .parent-of-root-folder:hover {
     cursor: pointer;
@@ -170,8 +171,8 @@ body {
 }
 .child-file-name:hover {
     cursor: pointer;
-    text-decoration: none;
-    text-decoration-color: var(--child-file-name-hover);
+    background-color: rgb(87, 87, 87);
+    width: 155px;
     border-radius: 5px;
 }
 .child-file-name-container .child-file-name.is-active-child {
