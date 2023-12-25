@@ -33,12 +33,10 @@ export class App {
 
             const isConnected: boolean = App.appNode.isConnected;
 
-            //check if app node is connected
-            if (isConnected) {
-                //console.log("App node is connected");
-                return;
-            } else if (!isConnected) {
+            if (!isConnected) {
                 throw console.error("App node is not connected");
+            } else {
+                console.log("App node is connected");
             }
         } else {
             App.appNode = document.createElement("div") as HTMLDivElement;
@@ -52,12 +50,10 @@ export class App {
 
             const isConnected: boolean = App.appNode.isConnected;
 
-            //check if app node is connected
-            if (isConnected) {
-                //console.log("App node is connected");
-                return;
-            } else if (!isConnected) {
+            if (!isConnected) {
                 throw console.error("App node is not connected");
+            } else {
+                console.log("App node is connected");
             }
         }
     }

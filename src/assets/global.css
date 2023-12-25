@@ -26,7 +26,7 @@
     --parent-folder-caret: rgb(223, 222, 222);
     --parent-folder-caret-active: rgb(223, 222, 222);
     --child-file-name: rgb(237, 235, 235);
-    --child-file-name-active: orange;
+    --child-file-name-active: #FFFFFF;
     --create-new-file-bg: #232222;
     --bg-light: #ececec;
     --a-light: rgb(80, 80, 133);
@@ -175,11 +175,14 @@ body {
     text-decoration-color: var(--child-file-name-hover);
     border-radius: 5px;
 }
+.child-file-name-container .child-file-name.is-active-child {
+    background-color: rgb(87, 87, 87);
+    border: 1px solid #716f6f;
+}
 .child-file-name.is-active-child {
     color: var(--child-file-name-active);
     width: 155px;
     border-radius: 5px;
-    /*background-color: rgb(67, 65, 65);*/ /* experimental only */
 }
 
 /* 
@@ -1054,7 +1057,7 @@ body {
     padding-bottom: 160px;
     padding-top: 15px;
     padding-left: 12px;
-    padding-right: 12px;
+    padding-right: 25px;
     top: 50px;
     overflow-y: scroll;
     scroll-behavior: smooth;

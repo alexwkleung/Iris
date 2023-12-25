@@ -106,7 +106,7 @@ export namespace KeyBinds {
          */
         private remapSingle(fn: (...args: any[]) => any, key: string): IFn[] {
             //empty keybind map before reassigning value to this.map
-            GenericArray.use.empty(this.map, false);
+            GenericArray.use.empty(this.map, true);
 
             return (this.map = [
                 {

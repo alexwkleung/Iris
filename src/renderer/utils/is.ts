@@ -38,6 +38,13 @@ export function isModeReading(): boolean {
 
     return isActive;
 }
+
+/**
+ *
+ * @param baseDir Base directory
+ * @param dirPropName Directory property name
+ * @returns Boolean
+ */
 export function isFolderNode(baseDir: string, dirPropName: string): boolean {
     return fsMod.fs._isDirectory(baseDir, dirPropName);
 }

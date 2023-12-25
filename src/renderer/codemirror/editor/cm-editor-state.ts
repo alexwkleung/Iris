@@ -5,9 +5,9 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
 import { EditorView } from "@codemirror/view";
 import { Compartment } from "@codemirror/state";
-import { cursors } from "../extensions/cursors";
+import { cursors } from "../extensions/cursor-extension/cursors";
 import { closeBrackets } from "@codemirror/autocomplete";
-import { irisEditorStyle } from "../extensions/editor-style";
+import { irisEditorStyle } from "../extensions/editor-extension/editor-style";
 
 export class CMEditorState {
     /**
@@ -40,7 +40,7 @@ export class CMEditorState {
                 history(),
                 keymap.of([...standardKeymap, ...defaultKeymap, ...historyKeymap, indentWithTab]),
                 closeBrackets(),
-                EditorView.lineWrapping,
+                EditorView.lineWrapping, //in case global fails
                 this.cursorCompartment.of(cursors[0]),
                 this.editorCompartment.of(irisEditorStyle(false)),
             ],

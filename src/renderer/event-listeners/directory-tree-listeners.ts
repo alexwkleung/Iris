@@ -12,11 +12,10 @@ import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { CMEditorState } from "../codemirror/editor/cm-editor-state";
 import { Settings } from "../settings/settings";
-import { cursors } from "../codemirror/extensions/cursors";
+import { cursors } from "../codemirror/extensions/cursor-extension/cursors";
 import { EditorView } from "@codemirror/view";
 import { AdvancedModeSettings } from "../settings/settings";
-import { ReadingMode } from "../misc-ui/reading-mode";
-import { markdownParser } from "../utils/markdown-parser";
+import { reading } from "../misc-ui/reading-mode";
 
 export namespace RefsNs {
     /**
@@ -156,18 +155,9 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
         this.getParentTags = document.querySelectorAll(".parent-of-root-folder");
         this.getParentNameTags = document.querySelectorAll(".parent-folder-name");
 
-        let count: number = 0;
-        //remove duplicate folder file count nodes
-        while (count <= 2) {
-            document.querySelectorAll(".folder-file-count-container").forEach((el) => {
-                el.remove();
-            });
-            count++;
-        }
-
         if (this.getParentTags !== null && this.getParentNameTags !== null) {
             for (let i = 0; i < this.getParentTags.length; i++) {
-                this.folderFileCountObject.folderFileCount(this.getParentTags[i], this.parentNameTagsArr()[i], false);
+                this.folderFileCountObject.folderFileCount(this.getParentTags[i], this.parentNameTagsArr()[i]);
 
                 this.getParentNameTags[i].addEventListener("click", () => {
                     //toggle is-active-parent class on parent tag
@@ -178,7 +168,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                     //check if parent tag contains is-active-parent class
                     if (this.getParentTags[i].classList.contains("is-active-parent")) {
-                        //
                         this.createDirTreeChildNodes(this.getParentTags[i], this.parentNameTagsArr()[i], "home");
 
                         document
@@ -248,25 +237,12 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                             childFileName[i].classList.contains("is-active-child")
                         ) {
                             if (isModeAdvanced()) {
-                                if (document.querySelector(".cm-content") as HTMLElement) {
-                                    //destroy cm editor view
-                                    CMEditorView.editorView.destroy();
-                                }
-
-                                //create cm editor view
-                                CMEditorView.createEditorView();
-
-                                //dispatch text insertion tr
-                                CMEditorView.editorView.dispatch({
-                                    changes: {
-                                        from: 0,
-                                        to: 0,
-                                        insert: fsMod.fs._readFileFolder(
-                                            this.getParentNameTags[j].textContent as string,
-                                            (childFileName[i].textContent as string) + ".md"
-                                        ),
-                                    },
-                                });
+                                CMEditorView.reinitializeEditor(
+                                    fsMod.fs._readFileFolder(
+                                        this.getParentNameTags[j].textContent as string,
+                                        (childFileName[i].textContent as string) + ".md"
+                                    )
+                                );
 
                                 //set contenteditable
                                 CMEditorView.setContenteditable(true);
@@ -390,27 +366,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                 }
                                 //if mode is reading
                             } else if (isModeReading()) {
-                                if ((document.getElementById("reading-mode-container") as HTMLElement) !== null) {
-                                    (document.getElementById("reading-mode-container") as HTMLElement).remove();
-                                }
-
-                                //create reading mode node
-                                ReadingMode.readingModeNode();
-
-                                //create fragment from content and append
-                                const content: string = await markdownParser(
-                                    fsMod.fs._readFileFolder(
-                                        this.parentNameTagsArr()[j],
-                                        childFileName[i].textContent + ".md"
-                                    )
-                                ).catch((e) => {
-                                    throw console.error(e);
-                                });
-
-                                const rangeContextFragment = new Range().createContextualFragment(content);
-                                (document.getElementById("reading-mode-content") as HTMLElement).appendChild(
-                                    rangeContextFragment
-                                );
+                                //create reading mode
+                                reading.createReadingMode(this.parentNameTagsArr()[j], childFileName[i].textContent);
 
                                 //assign refs
                                 RefsNs.currentParentChildData.map((props) => {

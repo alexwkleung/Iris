@@ -13,11 +13,10 @@ import { setWindowTitle } from "../window/window-title";
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { CMEditorState } from "../codemirror/editor/cm-editor-state";
-import { cursors } from "../codemirror/extensions/cursors";
+import { cursors } from "../codemirror/extensions/cursor-extension/cursors";
 import { Settings } from "../settings/settings";
 import { AdvancedModeSettings } from "../settings/settings";
-import { ReadingMode } from "../misc-ui/reading-mode";
-import { markdownParser } from "../utils/markdown-parser";
+import { reading } from "../misc-ui/reading-mode";
 import { GenericEvent } from "./event";
 import { KeyBinds } from "../keybinds/keybinds";
 
@@ -189,8 +188,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      */
     public createFileModalContinueCb: () => Promise<void> = async (): Promise<void> => {
         if (this.fileName === ".md") {
-            //eslint-disable-next-line
-            //@ts-ignore
             window.electron.ipcRenderer.invoke(
                 "show-message-box",
                 "Note name cannot be empty. Enter a valid note name."
@@ -237,10 +234,15 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             DirectoryTreeUIModals.createModalContainer.remove();
         }
 
+        const childFileContainer: HTMLDivElement = document.createElement("div");
+        childFileContainer.setAttribute("class", "child-file-name-container");
+
         const childFile: HTMLDivElement = document.createElement("div");
         childFile.setAttribute("class", "child-file-name is-active-child");
 
         const childFileTextNode: Text = document.createTextNode(this.fileName.split(".md")[0]);
+
+        childFileContainer.appendChild(childFile);
 
         //assign references to corresponding key properties
         RefsNs.currentParentChildData.map((props) => {
@@ -262,7 +264,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             if (el.textContent === createFileModalFolderNameRef) {
                 childFile.appendChild(childFileTextNode);
 
-                (el.parentNode as ParentNode).appendChild(childFile);
+                (el.parentNode as ParentNode).appendChild(childFileContainer);
             }
         });
 
@@ -283,26 +285,13 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //log
             console.log(this.fileName);
 
-            //destroy current editor view
-            CMEditorView.editorView.destroy();
-
-            //create new editor view
-            CMEditorView.createEditorView();
-
             //log
             console.log(createFileModalFolderNameRef);
 
             //log
             console.log(this.fileName);
 
-            //dispatch text insertion tr
-            CMEditorView.editorView.dispatch({
-                changes: {
-                    from: 0,
-                    to: 0,
-                    insert: fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName),
-                },
-            });
+            CMEditorView.reinitializeEditor(fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName));
 
             //set contenteditable
             CMEditorView.setContenteditable(true);
@@ -310,20 +299,31 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //cursor theme
             if (Settings.getSettings.lightTheme) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
+
+                AdvancedModeSettings.highlightLight();
             } else if (Settings.getSettings.darkTheme) {
                 CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
+
+                AdvancedModeSettings.highlightDark();
             }
 
             //check block cursor
             if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                 AdvancedModeSettings.defaultCursor("light");
+
+                AdvancedModeSettings.highlightLight();
             } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
                 AdvancedModeSettings.defaultCursor("dark");
-            } else if (
-                (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
-                (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme)
-            ) {
+
+                AdvancedModeSettings.highlightDark();
+            } else if (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) {
                 AdvancedModeSettings.blockCursor();
+
+                AdvancedModeSettings.highlightLight();
+            } else if (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme) {
+                AdvancedModeSettings.blockCursor();
+
+                AdvancedModeSettings.highlightDark();
             }
 
             (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
@@ -337,22 +337,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //kebab dropdown menu listener
             this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
         } else if (isModeReading()) {
-            //remove reading mode container if present in DOM
-            if ((document.getElementById("reading-mode-container") as HTMLElement) !== null) {
-                (document.getElementById("reading-mode-container") as HTMLElement).remove();
-            }
-
-            //create reading mode node
-            ReadingMode.readingModeNode();
-
-            //create fragment and append
-            const content: string = await markdownParser(
-                fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
-            ).catch((e) => {
-                throw console.error(e);
-            });
-            const contextFragment = new Range().createContextualFragment(content);
-            (document.getElementById("reading-mode-content") as HTMLElement).appendChild(contextFragment);
+            reading.createReadingMode(createFileModalFolderNameRef, this.fileName);
         }
 
         //change document title so it corresponds to the opened file
@@ -461,8 +446,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             //invoke folder file count
                             this.folderFileCountObject.folderFileCount(
                                 parentRoot[i],
-                                this.directoryTreeListeners.parentNameTagsArr()[i],
-                                true
+                                this.directoryTreeListeners.parentNameTagsArr()[i]
                             );
                         } else if (!createFileNode[i].classList.contains("show-create-file")) {
                             createFileNode[i].classList.remove("show-create-file");
@@ -495,8 +479,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         let parentFolder: HTMLDivElement = {} as HTMLDivElement;
 
         if (this.folderName === "" || this.folderName === " ") {
-            //eslint-disable-next-line
-            //@ts-ignore
             window.electron.ipcRenderer.invoke(
                 "show-message-box",
                 "Folder name cannot be empty. Enter a valid folder name."
@@ -532,8 +514,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             //invoke folder file count
             this.folderFileCountObject.folderFileCount(
                 parentRoot[i],
-                this.directoryTreeListeners.parentNameTagsArr()[i],
-                true
+                this.directoryTreeListeners.parentNameTagsArr()[i]
             );
         }
 

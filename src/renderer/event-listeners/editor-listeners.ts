@@ -18,24 +18,26 @@ export class EditorListeners implements IEditorListeners {
             if (props !== null) {
                 const t0: number = performance.now(); //start perf timer
 
-                //write to file
-                fsMod.fs._writeToFile(
-                    props.parentFolderName + "/" + props.childFileName + ".md",
-                    CMEditorView.editorView.state.doc.toString()
-                );
+                setTimeout(() => {
+                    //write to file
+                    fsMod.fs._writeToFile(
+                        props.parentFolderName + "/" + props.childFileName + ".md",
+                        CMEditorView.editorView.state.doc.toString()
+                    );
+
+                    //log perf timer
+                    console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
+
+                    GenericEvent.use.disposeEvent(
+                        this.cm,
+                        "keyup",
+                        this.cmDebounceAutoSave,
+                        undefined,
+                        "Disposed CM debounce auto save event"
+                    );
+                }, 750);
 
                 const t1: number = performance.now(); //end perf timer
-
-                //log perf timer
-                console.log("window.fsMod._writeToFile took " + (t1 - t0) + "ms!");
-
-                GenericEvent.use.disposeEvent(
-                    this.cm,
-                    "keyup",
-                    this.cmDebounceAutoSave,
-                    undefined,
-                    "Disposed CM debounce auto save event"
-                );
             }
         });
     }, 1000);

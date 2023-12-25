@@ -4,7 +4,5 @@ export namespace fsMod {
      *
      * Exposes `fsMod.fs` as `window.fsMod`
      */
-    //eslint-disable-next-line
-    //@ts-ignore
     export const fs = window.fsMod;
 }

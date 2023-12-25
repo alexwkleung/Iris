@@ -11,10 +11,10 @@ export class EditorKebabDropdownModals {
      *
      * @protected
      */
-    protected kebabModalContinueButton(cl: string): void {
+    protected kebabModalContinueButton(className: string): void {
         EditorKebabDropdownModals.kebabModalContinueButtonNode = document.createElement("div");
         EditorKebabDropdownModals.kebabModalContinueButtonNode.setAttribute("id", "kebab-modal-continue-button");
-        EditorKebabDropdownModals.kebabModalContinueButtonNode.setAttribute("class", cl);
+        EditorKebabDropdownModals.kebabModalContinueButtonNode.setAttribute("class", className);
         EditorKebabDropdownModals.kebabModalInnerWindow.appendChild(
             EditorKebabDropdownModals.kebabModalContinueButtonNode
         );

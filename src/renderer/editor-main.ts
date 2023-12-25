@@ -4,7 +4,7 @@ import { EditorKebabDropdownMenu } from "./misc-ui/editor-kebab-dropdown-menu";
 import { CMEditorView } from "./codemirror/editor/cm-editor-view";
 import { Settings } from "./settings/settings";
 import { CMEditorState } from "./codemirror/editor/cm-editor-state";
-import { cursors } from "./codemirror/extensions/cursors";
+import { cursors } from "./codemirror/extensions/cursor-extension/cursors";
 
 export namespace EditorNs {
     export class EditorContainerNode {

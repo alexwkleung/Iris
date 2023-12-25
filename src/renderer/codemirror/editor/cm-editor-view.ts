@@ -14,10 +14,10 @@ export class CMEditorView {
 
         const codeMirrorNode: HTMLElement = document.querySelector(".cm-content") as HTMLElement;
 
-        if (enable) {
-            contenteditable = codeMirrorNode.setAttribute("contenteditable", "");
-        } else if (!enable) {
+        if (!enable) {
             contenteditable = codeMirrorNode.setAttribute("contenteditable", "none");
+        } else {
+            contenteditable = codeMirrorNode.setAttribute("contenteditable", "");
         }
 
         return contenteditable;
@@ -40,5 +40,27 @@ export class CMEditorView {
         console.log("cm view");
 
         return CMEditorView.editorView;
+    }
+
+    /**
+     *
+     * @param insertStr The string to insert into editor
+     */
+    public static reinitializeEditor(insertStr: string): void {
+        if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
+            CMEditorView.editorView.destroy();
+        } else {
+            CMEditorView.editorView.destroy();
+        }
+
+        CMEditorView.createEditorView();
+
+        CMEditorView.editorView.dispatch({
+            changes: {
+                from: 0,
+                to: 0,
+                insert: insertStr,
+            },
+        });
     }
 }

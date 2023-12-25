@@ -4,8 +4,6 @@ import { Settings } from "../settings/settings";
 import { RefsNs } from "./directory-tree-listeners";
 import { EditorListeners } from "./editor-listeners";
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
-import { CMEditorState } from "../codemirror/editor/cm-editor-state";
-import { cursors } from "../codemirror/extensions/cursors";
 import { wordCountListener } from "./word-count-listener";
 import { AdvancedModeSettings } from "../settings/settings";
 import { EditorView } from "@codemirror/view";
@@ -73,7 +71,7 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
     }
 
     /**
-     * Kebab dorpdown select listener
+     * Kebab dropdown select listener
      */
     public kebabDropdownSelectListener(): void {
         (document.getElementById("editor-mode-select") as HTMLElement).addEventListener("change", (e) => {
@@ -113,19 +111,13 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
                 );
 
-                CMEditorView.createEditorView();
-                CMEditorView.setContenteditable(true);
-
                 RefsNs.currentParentChildData.map((props) => {
-                    //dispatch text insertion tr
-                    CMEditorView.editorView.dispatch({
-                        changes: {
-                            from: 0,
-                            to: 0,
-                            insert: fsMod.fs._readFileFolder(props.parentFolderName, props.childFileName + ".md"),
-                        },
-                    });
+                    CMEditorView.reinitializeEditor(
+                        fsMod.fs._readFileFolder(props.parentFolderName, props.childFileName + ".md")
+                    );
                 });
+
+                CMEditorView.setContenteditable(true);
 
                 if (Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.defaultCursor("light");

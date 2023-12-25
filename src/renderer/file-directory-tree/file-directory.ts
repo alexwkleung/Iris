@@ -195,13 +195,9 @@ export class DirectoryTree extends DirectoryTreeUIElements {
         }
 
         //check platform before returning nameVec
-        //eslint-disable-next-line
-        //@ts-ignore
         return window.electron.process.platform === "darwin"
             ? nameVecMac
-            : //eslint-disable-next-line
-              //@ts-ignore
-              window.electron.process.platform === "linux" || window.electron.process.platform === "win32"
+            : window.electron.process.platform === "linux" || window.electron.process.platform === "win32"
               ? nameVec
               : null;
     }
@@ -261,13 +257,9 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
         //mode check
         //platform check
-        //eslint-disable-next-line
-        //@ts-ignore
         if (window.electron.process.platform === "darwin") {
             //walk directory recursively
             walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes" + "/" + parentNameTags);
-            //eslint-disable-next-line
-            //@ts-ignore
         } else if (window.electron.process.platform === "linux" || window.electron.process.platform === "win32") {
             walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes" + "/" + parentNameTags);
         } else {
@@ -289,6 +281,10 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
         for (let i = 0; i < namesArr.length; i++) {
             if (namesArr[i] !== parentNameTags) {
+                const childFileContainer: HTMLDivElement = document.createElement("div");
+                childFileContainer.setAttribute("class", "child-file-name-container");
+                parentTags.appendChild(childFileContainer);
+
                 const childFile: HTMLDivElement = document.createElement("div");
                 childFile.setAttribute("class", "child-file-name");
 
@@ -297,7 +293,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
                 childFile.appendChild(childFileTextNode);
 
                 //append to passed parent node
-                parentTags.appendChild(childFile);
+                childFileContainer.appendChild(childFile);
             }
         }
     }

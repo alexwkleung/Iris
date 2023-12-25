@@ -91,11 +91,7 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
 
                 for (let i = 0; i < parentNameTags.length; i++) {
                     //invoke folder file count
-                    this.folderFileCount.folderFileCount(
-                        parentRoot[i],
-                        this.directoryTree.parentNameTagsArr()[i],
-                        true
-                    );
+                    this.folderFileCount.folderFileCount(parentRoot[i], this.directoryTree.parentNameTagsArr()[i]);
                 }
             }
 
@@ -231,8 +227,6 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
             //log
             console.log("name is equal or empty");
 
-            //eslint-disable-next-line
-            //@ts-ignore
             window.electron.ipcRenderer.invoke(
                 "show-message-box",
                 "Cannot rename note. Name must be different and not empty."

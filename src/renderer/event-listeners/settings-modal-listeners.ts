@@ -3,7 +3,7 @@ import { Settings, EditorThemes } from "../settings/settings";
 import { fsMod } from "../utils/alias";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { CMEditorState } from "../codemirror/editor/cm-editor-state";
-import { cursors } from "../codemirror/extensions/cursors";
+import { cursors } from "../codemirror/extensions/cursor-extension/cursors";
 import { AdvancedModeSettings } from "../settings/settings";
 import { GenericEvent } from "./event";
 import { KeyBinds } from "../keybinds/keybinds";
