@@ -5,6 +5,7 @@ import { CMEditorView } from "./codemirror/editor/cm-editor-view";
 import { Settings } from "./settings/settings";
 import { CMEditorState } from "./codemirror/editor/cm-editor-state";
 import { cursors } from "./codemirror/extensions/cursor-extension/cursors";
+import { ModeSelectionUI } from "./misc-ui/mode-selection";
 
 export namespace EditorNs {
     export class EditorContainerNode {
@@ -98,5 +99,8 @@ export namespace EditorNs {
 
         //create editor kebab dropdown menu container
         EditorKebabDropdownMenu.createEditorKebabDropdownMenuContainer();
+
+        //mode selection
+        ModeSelectionUI.modeSelection.createModeSelection();
     }
 }

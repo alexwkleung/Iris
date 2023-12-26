@@ -3,7 +3,6 @@ import { fsMod } from "../utils/alias";
 import { Settings } from "../settings/settings";
 import { RefsNs } from "./directory-tree-listeners";
 import { EditorListeners } from "./editor-listeners";
-import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
 import { wordCountListener } from "./word-count-listener";
 import { AdvancedModeSettings } from "../settings/settings";
 import { EditorView } from "@codemirror/view";
@@ -14,93 +13,28 @@ import { markdownParser } from "../utils/markdown-parser";
 import highlightLight from "../../assets/classic-light.min.css?inline?url";
 import highlightDark from "../../assets/classic-dark.min.css?inline?url";
 
-export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
-    /**
-     *
-     * Editor kebab dropdown listeners
-     *
-     * @private
-     * @protected
-     */
-    private readonly editorKebabDropdownListeners = new EditorKebabDropdownMenuListeners();
-
-    /**
-     * Kebab dropdown button listener
-     */
-    public kebabDropdownButtonListener(): void {
-        (document.getElementById("file-directory-kebab-dropdown-menu-container") as HTMLElement).addEventListener(
-            "click",
-            () => {
-                //toggle is-active class
-                (
-                    document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement
-                ).classList.toggle("is-active");
-
-                //check if file-directory-kebab-after-click-menu-container contains is-active class
-                if (
-                    (
-                        document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement
-                    ).classList.contains("is-active")
-                ) {
-                    //show menu container
-                    (
-                        document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement
-                    ).style.display = "";
-                } else {
-                    //hide menu container
-                    (
-                        document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement
-                    ).style.display = "none";
-                }
-            }
-        );
-
-        //hide file directory kebab after click menu container when file directory tree container inner region is clicked
-        (document.getElementById("file-directory-tree-container-inner") as HTMLElement).addEventListener(
-            "click",
-            () => {
-                (
-                    document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement
-                ).style.display = "none";
-
-                (
-                    document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement
-                ).classList.remove("is-active");
-            }
-        );
-    }
-
-    /**
-     * Kebab dropdown select listener
-     */
-    public kebabDropdownSelectListener(): void {
+export class ModeSelectionListeners extends EditorListeners {
+    public modeSelectListener(): void {
         (document.getElementById("editor-mode-select") as HTMLElement).addEventListener("change", (e) => {
             const currentSelection = e.target as HTMLSelectElement;
 
             if (currentSelection.value === "advanced-mode") {
-                //log
                 console.log("advanced selected");
 
-                //if reading mode is active
                 if (isModeReading()) {
                     (document.getElementById("app") as HTMLElement).classList.remove("reading-mode-is-active");
                 }
 
-                //check if reading mode node is present in dom
                 if ((document.getElementById("reading-mode-container") as HTMLElement) !== null) {
-                    //remove it
                     (document.getElementById("reading-mode-container") as HTMLElement).remove();
                 }
 
-                //check attributes and remove them
                 if ((document.querySelector(".reading-mode-option") as HTMLElement).hasAttribute("selected")) {
                     (document.querySelector(".reading-mode-option") as HTMLElement).removeAttribute("selected");
                 }
 
-                //set correct attribute
                 (document.querySelector(".advanced-mode-option") as HTMLElement).setAttribute("selected", "");
 
-                //add advanced-mode-is-active class
                 (document.getElementById("app") as HTMLElement).classList.add("advanced-mode-is-active");
 
                 Settings.getSettings.advancedMode = true;
@@ -129,7 +63,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                     AdvancedModeSettings.highlightDark();
                 }
 
-                //check block cursor
                 if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
                     AdvancedModeSettings.defaultCursor("light");
 
@@ -158,11 +91,7 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                 wordCountListener("codemirror");
 
                 (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
-
-                //kebab dropdown menu listener
-                this.editorKebabDropdownListeners.kebabDropdownMenuListener();
             } else if (currentSelection.value === "reading-mode") {
-                //if mode is advanced
                 if (isModeAdvanced()) {
                     (document.getElementById("app") as HTMLElement).classList.remove("advanced-mode-is-active");
                     (document.getElementById("app") as HTMLElement).classList.add("reading-mode-is-active");
@@ -175,7 +104,9 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                         JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
                     );
 
-                    CMEditorView.editorView.destroy();
+                    if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
+                        CMEditorView.editorView.destroy();
+                    }
                 }
 
                 if ((document.querySelector(".advanced-mode-option") as HTMLElement).hasAttribute("selected")) {
@@ -184,10 +115,7 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
 
                 (document.querySelector(".reading-mode-option") as HTMLElement).setAttribute("selected", "");
 
-                //hide word count
                 (document.getElementById("word-count-container") as HTMLElement).style.display = "none";
-
-                //hide kebab dropdown menu
                 (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "none";
 
                 ReadingMode.readingModeNode();
@@ -199,7 +127,6 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
                         throw console.error(e);
                     });
 
-                    //create fragment
                     const rangeContextFragment = new Range().createContextualFragment(content);
                     (document.getElementById("reading-mode-content") as HTMLElement).appendChild(rangeContextFragment);
 
@@ -236,14 +163,9 @@ export class DirectoryTreeKebabDropdownListeners extends EditorListeners {
         });
     }
 
-    /**
-     * Directory tree kebab dropdown listeners
-     */
-    public directoryTreeKebabDropdownListeners(): void {
-        //kebab dropdown button listener
-        this.kebabDropdownButtonListener();
-
-        //kebab dropdown select listener
-        this.kebabDropdownSelectListener();
+    public invokeModeSelectListeners(): void {
+        this.modeSelectListener();
     }
+
+    public static modeSelectListeners: ModeSelectionListeners = new ModeSelectionListeners();
 }

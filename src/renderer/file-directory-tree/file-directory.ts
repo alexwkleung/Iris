@@ -1,7 +1,6 @@
 import { App } from "../app";
 import { fsMod } from "../utils/alias";
 import { isFolderNode } from "../utils/is";
-import { Settings } from "../settings/settings";
 
 export class FileDirectoryTreeNode {
     /**
@@ -83,90 +82,6 @@ export class DirectoryTreeUIElements {
 
         const settingsTextNode: Text = document.createTextNode("Settings");
         settingsNode.appendChild(settingsTextNode);
-    }
-
-    /**
-     * File directory kebab options
-     */
-    public fileDirectoryKebabOptionsNode(): void {
-        const fileDirectoryKebabOptionLabel: HTMLLabelElement = document.createElement("label");
-        fileDirectoryKebabOptionLabel.setAttribute("for", "editor-mode-select");
-        fileDirectoryKebabOptionLabel.setAttribute("class", "editor-mode-label");
-        fileDirectoryKebabOptionLabel.textContent = "Mode";
-        (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).appendChild(
-            fileDirectoryKebabOptionLabel
-        );
-
-        const fileDirectoryKebabOptionSelect: HTMLSelectElement = document.createElement("select");
-        fileDirectoryKebabOptionSelect.setAttribute("name", "editor-mode");
-        fileDirectoryKebabOptionSelect.setAttribute("id", "editor-mode-select");
-        (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).appendChild(
-            fileDirectoryKebabOptionSelect
-        );
-
-        //advanced mode option
-        const advancedModeOption: HTMLOptionElement = document.createElement("option");
-        advancedModeOption.setAttribute("value", "advanced-mode");
-        advancedModeOption.setAttribute("class", "advanced-mode-option");
-        advancedModeOption.textContent = "Markdown";
-        advancedModeOption.style.display = "";
-        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(advancedModeOption);
-
-        //reading mode option
-        const readingModeOption: HTMLOptionElement = document.createElement("option");
-        readingModeOption.setAttribute("value", "reading-mode");
-        readingModeOption.setAttribute("class", "reading-mode-option");
-        readingModeOption.textContent = "Reading";
-        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(readingModeOption);
-
-        //if advanced mode is true
-        if (Settings.getSettings.advancedMode) {
-            advancedModeOption.setAttribute("selected", "");
-        } else if (Settings.getSettings.readingMode) {
-            readingModeOption.setAttribute("selected", "");
-        }
-    }
-
-    /**
-     * File directory kebab
-     */
-    public fileDirectoryKebabNode(): void {
-        //kebab dropdown menu container node
-        const kebabDropdownMenuContainerNode: HTMLDivElement = document.createElement("div");
-        kebabDropdownMenuContainerNode.setAttribute("id", "file-directory-kebab-dropdown-menu-container");
-        (document.getElementById("file-directory-tree-container") as HTMLElement).appendChild(
-            kebabDropdownMenuContainerNode
-        );
-
-        for (let i = 0; i < 3; i++) {
-            const kebabDropdownMenuShapeContainerNode: HTMLDivElement = document.createElement("div");
-            kebabDropdownMenuShapeContainerNode.setAttribute("id", "file-directory-kebab-dropdown-shape-container");
-            kebabDropdownMenuContainerNode.appendChild(kebabDropdownMenuShapeContainerNode);
-
-            //kebab dropdown menu shape node
-            const kebabDropdownMenuShapeNode: HTMLDivElement = document.createElement("div");
-            kebabDropdownMenuShapeNode.setAttribute(
-                "class",
-                "file-directory-kebab-dropdown-shape-node num-" + i.toString()
-            );
-            kebabDropdownMenuShapeContainerNode.appendChild(kebabDropdownMenuShapeNode);
-        }
-
-        //hide kebab dropdown menu container node
-        kebabDropdownMenuContainerNode.style.display = "none";
-
-        //kebab after click menu container
-        const kebabAfterClickMenuContainer: HTMLDivElement = document.createElement("div");
-        kebabAfterClickMenuContainer.setAttribute("id", "file-directory-kebab-after-click-menu-container");
-        (document.getElementById("file-directory-tree-container") as HTMLElement).appendChild(
-            kebabAfterClickMenuContainer
-        );
-
-        //hide kebab after click menu container
-        kebabAfterClickMenuContainer.style.display = "none";
-
-        //create file directory kebab options node
-        this.fileDirectoryKebabOptionsNode();
     }
 }
 

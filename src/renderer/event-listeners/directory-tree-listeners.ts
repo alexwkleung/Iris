@@ -15,6 +15,7 @@ import { cursors } from "../codemirror/extensions/cursor-extension/cursors";
 import { EditorView } from "@codemirror/view";
 import { AdvancedModeSettings } from "../settings/settings";
 import { reading } from "../misc-ui/reading-mode";
+import { ModeSelectionUI } from "../misc-ui/mode-selection";
 
 export namespace RefsNs {
     /**
@@ -217,6 +218,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                         });
                     }
 
+                    ModeSelectionUI.modeSelection.showModeSelectionUI();
+
                     //for all clicked children files, add 'is-active-child' class
                     childFileName[i].classList.add("is-active-child");
 
@@ -249,12 +252,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                     document.querySelector(".cm-content") as HTMLElement,
                                     2
                                 );
-
-                                (
-                                    document.getElementById(
-                                        "file-directory-kebab-dropdown-menu-container"
-                                    ) as HTMLElement
-                                ).style.display = "";
 
                                 //null check
                                 if (
@@ -375,11 +372,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                     });
                                 });
                             }
-
-                            //show kebab
-                            (
-                                document.getElementById("file-directory-kebab-dropdown-menu-container") as HTMLElement
-                            ).style.display = "";
 
                             //invoke state listener
                             this.dirTreeStateListeners.activeChildFileStateListener();

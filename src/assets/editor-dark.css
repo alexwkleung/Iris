@@ -1,5 +1,6 @@
 :root {
     --default-bg: #151515;
+    --default-color: #ffffff;
     --bg-dark: #151515;
     --color-dark: #eaeaea;
     --caret-color-dark: #ffffff;
@@ -16,12 +17,30 @@ body {
     background-color: var(--default-bg);
     caret-color: var(--caret-color-dark);
 }
+
 #top-bar-directory-info {
     color: var(--top-bar-directory-info-color-dark);
 }
 
 #file-directory-tree-container {
     color-scheme: dark;
+}
+
+.editor-mode-label {
+    font-family: 'Inter-Regular';
+    position: fixed;
+    color: var(--default-color);
+    margin-left: 310px;
+    margin-top: 18px;
+}
+#editor-mode-select {
+    font-family: 'Inter-Regular';
+    background-color: var(--default-bg);
+    color: var(--default-color);
+    border-radius: 5px;
+    font-size: 17px;
+    margin-top: 16px;
+    margin-left: 360px;
 }
 
 /*
