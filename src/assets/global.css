@@ -89,10 +89,8 @@ body {
     -webkit-user-select: none;
     user-select: none;
     font-family: 'Inter-Regular';
-    /*border-radius: 25px;*/
     margin-top: 0px;
     top: 0px;
-    /*margin: 0;*/
     left: -2px;
     content-visibility: auto; /* helps with scroll performance and load performance */
     contain-intrinsic-size: auto 300px; /* relates to content-visibility */
@@ -194,10 +192,6 @@ body {
 #editor-container {
     margin-left: 298px;
     position: fixed;
-    /*
-    overflow-y: scroll;
-    overflow-x: scroll;
-    */
     width: calc(100% - 318px);
     height: calc(100% - 8px);
 }
@@ -877,7 +871,6 @@ body {
 * reading mode
 */
 #reading-mode-container {
-    /*padding-top: 40px;*/
     padding-left: 15px;
     font-family: 'Inter-Regular';
     font-size: 17px;
@@ -983,11 +976,9 @@ body {
     width: calc(100% + 33px);
     height: calc(100% + 70px);
     font-size: 17px;
-    font-family: 'Inter-Bold';
     background-color: var(--bg-light); 
     /*border: 1px solid black;*/
     padding-bottom: 160px;
-    /*padding-top: 15px;*/
     padding-left: 5px;
     padding-right: 11px;
     top: 50px;
