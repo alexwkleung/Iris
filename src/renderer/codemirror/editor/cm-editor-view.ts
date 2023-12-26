@@ -49,8 +49,6 @@ export class CMEditorView {
     public static reinitializeEditor(insertStr: string): void {
         if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
             CMEditorView.editorView.destroy();
-        } else {
-            CMEditorView.editorView.destroy();
         }
 
         CMEditorView.createEditorView();
