@@ -9,7 +9,10 @@ export class ReadingMode {
 
         const readingModeContent: HTMLDivElement = document.createElement("div");
         readingModeContent.setAttribute("id", "reading-mode-content");
+        readingModeContent.setAttribute("tabindex", "1");
         readingModeContainerNode.appendChild(readingModeContent);
+
+        readingModeContent.focus();
     }
 
     public async createReadingMode(parent: string, child: string | null): Promise<void> {

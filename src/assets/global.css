@@ -953,6 +953,9 @@ body {
 #reading-mode-content {
     padding-bottom: 500px;
 }
+#reading-mode-content:focus {
+    outline: none;
+}
 #reading-mode-container h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter-Bold';
     margin-left: 3px;

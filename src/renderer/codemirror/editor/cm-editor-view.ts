@@ -60,5 +60,7 @@ export class CMEditorView {
                 insert: insertStr,
             },
         });
+
+        CMEditorView.editorView.focus();
     }
 }
