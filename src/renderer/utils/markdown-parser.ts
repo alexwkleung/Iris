@@ -10,6 +10,23 @@ import rehypeMermaid from "rehype-mermaidjs";
 import remarkEmoji from "remark-emoji";
 import DOMPurify from "dompurify";
 
+/**
+ * @param content HTML string to sanitize
+ * @returns Sanitized HTML string
+ */
+function sanitizeHtml(content: string): string {
+    return DOMPurify.sanitize(String(content), {
+        FORBID_TAGS: ["script", "button", "iframe", "style"],
+        FORBID_ATTR: ["onclick"],
+        //https://github.com/cure53/DOMPurify#control-permitted-attribute-values
+        ALLOWED_URI_REGEXP: new RegExp(/^(?:(?:(?:f|ht)tps?|local|):|[^a-z]|[a-z+./-]+(?:[^a-z+.\-:]|$))/i),
+    });
+}
+
+/**
+ * @param content Markdown string to parse into HTML
+ * @returns Sanitized HTML string of parsed Markdown
+ */
 export async function markdownParser(content: string): Promise<string> {
     const parseContent = await unified()
         .use(remarkParse)
@@ -35,12 +52,5 @@ export async function markdownParser(content: string): Promise<string> {
             throw console.error(e);
         });
 
-    //sanitize html
-    const purify: string = DOMPurify.sanitize(String(parseContent), {
-        FORBID_TAGS: ["script"],
-        FORBID_ATTR: ["onclick"],
-        ALLOW_UNKNOWN_PROTOCOLS: true,
-    });
-
-    return purify;
+    return sanitizeHtml(String(parseContent));
 }
