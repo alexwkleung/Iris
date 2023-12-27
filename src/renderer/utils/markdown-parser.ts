@@ -16,7 +16,7 @@ import DOMPurify from "dompurify";
  */
 function sanitizeHtml(content: string): string {
     return DOMPurify.sanitize(String(content), {
-        FORBID_TAGS: ["script", "button", "iframe", "style"],
+        FORBID_TAGS: ["script", "button", "iframe"],
         FORBID_ATTR: ["onclick"],
         //https://github.com/cure53/DOMPurify#control-permitted-attribute-values
         ALLOWED_URI_REGEXP: new RegExp(/^(?:(?:(?:f|ht)tps?|local|):|[^a-z]|[a-z+./-]+(?:[^a-z+.\-:]|$))/i),
