@@ -784,6 +784,7 @@ body {
     color: rgb(0, 0, 0);
     margin-left: 310px;
     margin-top: 18px;
+    user-select: none;
 }
 #editor-mode-select {
     font-family: 'Inter-Regular';
@@ -793,6 +794,7 @@ body {
     font-size: 17px;
     margin-top: 16px;
     margin-left: 360px;
+    user-select: none;
 }
 #editor-mode-select:focus {
     outline: none;
