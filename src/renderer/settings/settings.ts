@@ -60,11 +60,11 @@ export class EditorThemes {
 
 export class AdvancedModeSettings {
     static defaultCursor(theme: string): void {
-        if (theme === "light") {
+        if (theme === "light" && (document.querySelector(".cm-content") as HTMLElement) !== null) {
             CMEditorView.editorView.dispatch({
                 effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]),
             });
-        } else if (theme === "dark") {
+        } else if (theme === "dark" && (document.querySelector(".cm-content") as HTMLElement) !== null) {
             CMEditorView.editorView.dispatch({
                 effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]),
             });
@@ -72,20 +72,26 @@ export class AdvancedModeSettings {
     }
 
     static blockCursor(): void {
-        CMEditorView.editorView.dispatch({
-            effects: CMEditorState.cursorCompartment.reconfigure(cursors[2]),
-        });
+        if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
+            CMEditorView.editorView.dispatch({
+                effects: CMEditorState.cursorCompartment.reconfigure(cursors[2]),
+            });
+        }
     }
 
     static highlightLight(): void {
-        CMEditorView.editorView.dispatch({
-            effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(false)),
-        });
+        if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
+            CMEditorView.editorView.dispatch({
+                effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(false)),
+            });
+        }
     }
 
     static highlightDark(): void {
-        CMEditorView.editorView.dispatch({
-            effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(true)),
-        });
+        if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
+            CMEditorView.editorView.dispatch({
+                effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(true)),
+            });
+        }
     }
 }
