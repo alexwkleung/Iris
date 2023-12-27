@@ -10,8 +10,8 @@ import { isModeAdvanced, isModeReading } from "../utils/is";
 import { ReadingMode } from "../misc-ui/reading-mode";
 import { markdownParser } from "../utils/markdown-parser";
 
-import highlightLight from "../../assets/classic-light.min.css?inline?url";
-import highlightDark from "../../assets/classic-dark.min.css?inline?url";
+import highlightLight from "../../assets/github-light.css?inline?url";
+import highlightDark from "../../assets/github-dark.css?inline?url";
 
 export class ModeSelectionListeners extends EditorListeners {
     public modeSelectListener(): void {

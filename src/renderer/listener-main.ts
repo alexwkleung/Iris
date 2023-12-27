@@ -1,7 +1,7 @@
 import { DirectoryTreeListeners } from "./event-listeners/directory-tree-listeners.js";
 import { DirectoryTreeUIModalListeners } from "./event-listeners/directory-tree-ui-modal-listeners.js";
 import { SettingsModalListeners } from "./event-listeners/settings-modal-listeners.js";
-import { ModeSelectionListeners } from "./event-listeners/directory-tree-kebab-dropdown-listener.js";
+import { ModeSelectionListeners } from "./event-listeners/mode-select-listener.js";
 
 export namespace ListenerNs {
     export function directoryTreeListeners(): void {

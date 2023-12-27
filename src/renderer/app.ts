@@ -1,5 +1,5 @@
 import { setWindowTitle } from "./window/window-title";
-import highlightLight from "../assets/classic-light.min.css?inline?url";
+import highlightLight from "../assets/github-light.css?inline?url";
 
 import "../assets/default-fonts/Inter-Bold.ttf";
 import "../assets/default-fonts/Inter-Regular.ttf";

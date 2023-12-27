@@ -9,7 +9,7 @@ import { cursors } from "../codemirror/extensions/cursor-extension/cursors";
 import { irisEditorStyle } from "../codemirror/extensions/editor-extension/editor-style";
 
 import editorDark from "../../assets/editor-dark.css?inline?url";
-import highlightDark from "../../assets/classic-dark.min.css?inline?url";
+import highlightDark from "../../assets/github-dark.css?inline?url";
 
 /**
  * Settings interface
