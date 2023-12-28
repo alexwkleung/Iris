@@ -6,6 +6,8 @@ import contextMenu from "electron-context-menu";
 import { isMacOS, isWindows, isLinux, isDev } from "./is-main.mjs";
 import windowStateKeeper from "electron-window-state";
 import * as fs from "fs";
+import { homedir } from "os";
+import * as path from "path";
 
 //DON'T REMOVE IF YOU WANT HMR IN DEV
 function hmr(): void {
@@ -181,11 +183,13 @@ namespace MainProcess {
                     }
                 });
 
-                //custom protocol to handle local file system absolute paths
+                //local protocol
                 protocol.handle("local", (request): Promise<Response> => {
-                    return net
-                        .fetch("file://" + request.url.slice("local://".length))
-                        .catch((e) => console.error(e)) as Promise<Response>;
+                    const defaultPath = path.join(homedir(), "/Iris/Images") + request.url.slice("local://".length);
+
+                    console.log("file://" + defaultPath);
+
+                    return net.fetch("file://" + defaultPath).catch((e) => console.error(e)) as Promise<Response>;
                 });
             });
 
