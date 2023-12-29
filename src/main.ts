@@ -146,6 +146,12 @@ namespace MainProcess {
                 this.mainWindow.show();
             });
 
+            //@ts-expect-error type error
+            this.mainWindow.webContents.on("will-navigate", (e: Event, url: string) => {
+                e.preventDefault();
+                shell.openExternal(url);
+            });
+
             this.mainWindow.webContents.setWindowOpenHandler((details) => {
                 shell.openExternal(details.url);
                 return {

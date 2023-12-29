@@ -129,13 +129,6 @@ export class ModeSelectionListeners extends EditorListeners {
 
                     const rangeContextFragment = new Range().createContextualFragment(content);
                     (document.getElementById("reading-mode-content") as HTMLElement).appendChild(rangeContextFragment);
-
-                    //link behaviour
-                    document.querySelectorAll("#reading-mode-container a").forEach((el) => {
-                        el.addEventListener("click", (e) => {
-                            e.preventDefault();
-                        });
-                    });
                 });
             }
 
