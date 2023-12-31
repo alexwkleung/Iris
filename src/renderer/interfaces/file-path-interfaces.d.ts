@@ -4,6 +4,7 @@ export interface IFileData {
         childFilePaths: string[];
         parentFolderName: string;
         childFileNames: string[];
+        childFileNamesWithExt: string[];
     };
 }
 

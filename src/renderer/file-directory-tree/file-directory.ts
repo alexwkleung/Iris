@@ -5,7 +5,11 @@ import { FilePath } from "../utils/file-path";
 
 //testing purposes, remove later
 console.log(FilePath.use.baseNotes);
-FilePath.use.populateFileData();
+
+function populateFileData(): void {
+    FilePath.use.populateFileData();
+}
+populateFileData();
 
 export class FileDirectoryTreeNode {
     /**

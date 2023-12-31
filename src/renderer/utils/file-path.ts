@@ -1,5 +1,6 @@
 import { IFileData, ICurrentNoteData } from "../interfaces/file-path-interfaces";
 import { fsMod } from "./alias";
+import { GenericArray } from "./array";
 
 /**
  * note 1:
@@ -49,7 +50,7 @@ export namespace FilePath {
         /**
          * Array to hold child file names
          */
-        private childFiles: string[][] = [];
+        private childFiles: string[] = [];
 
         /**
          * Array containing object of file data
@@ -64,7 +65,10 @@ export namespace FilePath {
             },
         };
 
-        private populateParentFolder(): void {
+        /**
+         * @private
+         */
+        private populateParentFolderPaths(): void {
             try {
                 fsMod.fs._getNameVec(this.baseNotes).map((folders) => {
                     if (folders !== ".DS_Store") {
@@ -81,7 +85,10 @@ export namespace FilePath {
             }
         }
 
-        private populateChildFiles(): void {
+        /**
+         * @private
+         */
+        private populateChildFilePaths(): void {
             for (let i = 0; i < this.parentFolders.length; i++) {
                 try {
                     const parentContentTemp: string[] = Array.from(
@@ -97,29 +104,60 @@ export namespace FilePath {
                     throw console.error(e);
                 }
             }
-            console.log(this.childFilePaths);
 
-            //append child file names to this.childFiles
+            //https://stackoverflow.com/questions/43674164/delete-first-element-from-each-array-in-javascript
+            //remove directory name from first index of each array in matrix
+            this.childFilePaths.forEach((childPaths) => {
+                childPaths.splice(0, 1);
+            });
+
+            console.log(this.childFilePaths);
         }
 
+        /**
+         * @public
+         */
         public populateFileData(): void {
-            this.populateParentFolder();
-            this.populateChildFiles();
+            this.populateParentFolderPaths();
+            this.populateChildFilePaths();
 
             //populate file data with initial objects + parent folder properties
-            for (let i = 0; i < this.parentFolderPaths.length && this.parentFolders.length; i++) {
-                if (this.parentFolderPaths.length === this.parentFolders.length) {
+            for (
+                let i = 0;
+                i < this.parentFolderPaths.length && this.parentFolders.length && this.childFilePaths.length;
+                i++
+            ) {
+                if (
+                    this.parentFolderPaths.length === this.parentFolders.length &&
+                    this.childFilePaths.length === this.parentFolderPaths.length &&
+                    this.childFilePaths.length === this.parentFolders.length
+                ) {
+                    this.childFiles = GenericArray.use.deepCopy(this.childFilePaths[i]);
+
+                    //push file data object, exclude value of childFileNames and childFileNamesWithExt
                     this.fileData.push({
                         noteDirectory: {
                             parentFolderPath: this.parentFolderPaths[i],
-                            childFilePaths: [], //get from this.childFilePaths
+                            childFilePaths: this.childFilePaths[i],
                             parentFolderName: this.parentFolders[i],
-                            childFileNames: [], //get from this.childFiles -> fsMod.fs_.getName(...)
+                            childFileNames: [],
+                            childFileNamesWithExt: [],
                         },
                     });
                 } else {
                     throw console.error("Length of parent paths and names do not match.");
                 }
+
+                //populate child file names
+                this.childFiles.forEach((filePaths) => {
+                    //child file names (no extension)
+                    this.fileData[i].noteDirectory.childFileNames.push(
+                        (filePaths.split("/").pop() as string).split(".md")[0]
+                    );
+
+                    //child file names (with extension)
+                    this.fileData[i].noteDirectory.childFileNamesWithExt.push(filePaths.split("/").pop() as string);
+                });
             }
             console.log(this.fileData);
         }
