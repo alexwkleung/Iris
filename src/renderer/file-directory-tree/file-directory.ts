@@ -1,6 +1,11 @@
 import { App } from "../app";
 import { fsMod } from "../utils/alias";
 import { isFolderNode } from "../utils/is";
+import { FilePath } from "../utils/file-path";
+
+//testing purposes, remove later
+console.log(FilePath.use.baseNotes);
+FilePath.use.populateFileData();
 
 export class FileDirectoryTreeNode {
     /**
