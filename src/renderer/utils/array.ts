@@ -1,19 +1,21 @@
-interface IArray<T, K, V> {
-    empty(arr: T, pop: K): V;
+interface IArray<T, K, V, M> {
+    empty(arr: T[], pop: K): V[];
+    deepCopy(arr: T[]): M[];
+    shallowCopy(arr: T[]): T[];
 }
 
 export namespace GenericArray {
     /**
      * @internal
      */
-    class ArrayUtil implements IArray<any, boolean, number | any[]> {
+    class ArrayUtil implements IArray<any[], boolean, number | any[], any[]> {
         /**
          *
          * @param arr Array to empty
          * @param pop Option to empty array by popping the stack instead of setting length
          * @returns Emptied array
          */
-        public empty<T, K, V>(arr: T[], pop: K): V {
+        public empty<T, K, V>(arr: T[], pop: K): V[] {
             let empty: number | V[] = {} as number | V[];
 
             if (!pop && ((arr.length !== 0 && arr.length !== -1) || arr.length !== undefined || arr.length !== null)) {
@@ -24,7 +26,7 @@ export namespace GenericArray {
                 }
             }
 
-            return empty as V;
+            return empty as V[];
         }
 
         /**
@@ -34,8 +36,8 @@ export namespace GenericArray {
          * @returns New deep copied array
          * @throws Exception if array cannot be deep copied
          */
-        public deepCopy<T, K>(arr: T[]): K {
-            let deep: K[] = [];
+        public deepCopy<T, M>(arr: T[]): M[] {
+            let deep: M[] = [];
 
             try {
                 deep = JSON.parse(JSON.stringify(arr));
@@ -43,7 +45,7 @@ export namespace GenericArray {
                 throw console.error(e);
             }
 
-            return deep as K;
+            return deep as M[];
         }
 
         /**
@@ -52,10 +54,10 @@ export namespace GenericArray {
          * @param arr Array to shallow copy
          * @returns New shallow copied array
          */
-        public shallowCopy<T, K>(arr: T[]): K {
-            const shallow = Array.from(arr);
+        public shallowCopy<T>(arr: T[]): T[] {
+            const shallow: T[] = Array.from(arr);
 
-            return shallow as K;
+            return shallow as T[];
         }
     }
 
