@@ -1,14 +1,14 @@
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
-import { fsMod } from "../utils/alias";
+import { fsMod } from "../../utils/alias";
 import { Settings } from "../settings/settings";
 import { RefsNs } from "./directory-tree-listeners";
 import { EditorListeners } from "./editor-listeners";
 import { wordCountListener } from "./word-count-listener";
 import { AdvancedModeSettings } from "../settings/settings";
 import { EditorView } from "@codemirror/view";
-import { isModeAdvanced, isModeReading } from "../utils/is";
+import { isModeAdvanced, isModeReading } from "../../utils/is";
 import { ReadingMode } from "../misc-ui/reading-mode";
-import { markdownParser } from "../utils/markdown-parser";
+import { markdownParser } from "../../utils/markdown-parser";
 
 import highlightLight from "../../assets/github-light.css?inline?url";
 import highlightDark from "../../assets/github-dark.css?inline?url";

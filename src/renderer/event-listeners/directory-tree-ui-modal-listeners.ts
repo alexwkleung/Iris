@@ -4,8 +4,8 @@ import { IDirectoryTreeUIModalListeners } from "../interfaces/listener-interface
 import { DirectoryTreeListeners } from "./directory-tree-listeners";
 import { EditorListeners } from "./editor-listeners";
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
-import { isModeAdvanced, isModeReading } from "../utils/is";
-import { fsMod } from "../utils/alias";
+import { isModeAdvanced, isModeReading } from "../../utils/is";
+import { fsMod } from "../../utils/alias";
 import { RefsNs } from "./directory-tree-listeners";
 import { wordCountListener } from "./word-count-listener";
 import { setWindowTitle } from "../window/window-title";

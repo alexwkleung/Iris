@@ -1,4 +1,4 @@
-import { debounce } from "../utils/debounce";
+import { debounce } from "../../utils/debounce";
 import { WordCountContainerNode } from "../misc-ui/word-count";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { TextIterator } from "@codemirror/state";

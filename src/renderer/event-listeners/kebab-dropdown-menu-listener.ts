@@ -1,7 +1,7 @@
 import { EditorKebabDropdownMenu } from "../misc-ui/editor-kebab-dropdown-menu";
 import { EditorKebabDropdownModals } from "../misc-ui/editor-kebab-dropdown-modals";
-import { fsMod } from "../utils/alias";
-import { isModeAdvanced } from "../utils/is";
+import { fsMod } from "../../utils/alias";
+import { isModeAdvanced } from "../../utils/is";
 import { setWindowTitle } from "../window/window-title";
 import { RefsNs } from "./directory-tree-listeners";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";

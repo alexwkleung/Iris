@@ -1,4 +1,4 @@
-import { App } from "../app";
+import { App } from "../renderer/app";
 import { fsMod } from "./alias";
 
 /**

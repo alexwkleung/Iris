@@ -1,4 +1,4 @@
-import { fsMod } from "../utils/alias";
+import { fsMod } from "../../utils/alias";
 import { DirectoryTree } from "../file-directory-tree/file-directory";
 import { setWindowTitle } from "../window/window-title";
 import { IDirectoryTreeListeners } from "../interfaces/listener-interfaces";
@@ -6,7 +6,7 @@ import { EditorListeners } from "./editor-listeners";
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
 import { EditorNs } from "../editor-main";
 import { wordCountListener } from "./word-count-listener";
-import { isModeAdvanced, isModeReading } from "../utils/is";
+import { isModeAdvanced, isModeReading } from "../../utils/is";
 import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { CMEditorState } from "../codemirror/editor/cm-editor-state";

@@ -1,4 +1,4 @@
-import { fsMod } from "../utils/alias";
+import { fsMod } from "../../utils/alias";
 //https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
 //https://vitejs.dev/guide/assets.html#importing-asset-as-url
 //?inline: to prevent auto injection

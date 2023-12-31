@@ -1,6 +1,6 @@
 import { EKeyMap } from "./constants";
 import { GenericEvent } from "../event-listeners/event";
-import { GenericArray } from "../utils/array";
+import { GenericArray } from "../../utils/array";
 
 interface IFn {
     fn: (...args: any[]) => any;

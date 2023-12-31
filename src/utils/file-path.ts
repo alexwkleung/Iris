@@ -1,4 +1,4 @@
-import { IFileData, ICurrentNoteData } from "../interfaces/file-path-interfaces";
+import { IFileData, ICurrentNoteData } from "../renderer/interfaces/file-path-interfaces";
 import { fsMod } from "./alias";
 import { GenericArray } from "./array";
 

@@ -1,5 +1,5 @@
-import { markdownParser } from "../utils/markdown-parser";
-import { fsMod } from "../utils/alias";
+import { markdownParser } from "../../utils/markdown-parser";
+import { fsMod } from "../../utils/alias";
 
 export class ReadingMode {
     static readingModeNode(): void {

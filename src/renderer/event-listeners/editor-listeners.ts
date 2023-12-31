@@ -1,7 +1,7 @@
 import { IEditorListeners } from "../interfaces/listener-interfaces";
 import { RefsNs } from "./directory-tree-listeners";
-import { fsMod } from "../utils/alias";
-import { debounce } from "../utils/debounce";
+import { fsMod } from "../../utils/alias";
+import { debounce } from "../../utils/debounce";
 import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { GenericEvent } from "./event";
 
