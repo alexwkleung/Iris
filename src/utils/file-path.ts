@@ -2,29 +2,6 @@ import { IFileData, ICurrentNoteData } from "../renderer/interfaces/file-path-in
 import { fsMod } from "./alias";
 import { GenericArray } from "./array";
 
-/**
- * note 1:
- *
- * add watcher for paths
- *
- */
-
-/**
- * note 2:
- *
- * last opened note should be persisted using json
- *
- */
-
-/**
- * note 3:
- *
- * sort parent and child paths
- *
- * handle deletion and insertion of paths (goes hand-in-hand with path watcher)
- *
- */
-
 export namespace FilePath {
     class PathUtil {
         /**
