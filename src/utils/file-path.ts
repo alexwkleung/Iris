@@ -122,7 +122,7 @@ export namespace FilePath {
                         },
                     });
                 } else {
-                    throw console.error("Length of parent paths and names do not match.");
+                    throw console.error("Length of paths and names do not match.");
                 }
 
                 //populate child file names
