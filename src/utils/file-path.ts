@@ -58,7 +58,9 @@ export namespace FilePath {
 
                 console.log(this.parentFolderPaths);
             } catch (e) {
-                throw console.error(e);
+                console.error(e);
+
+                throw new Error("Unable to populate parent folder paths");
             }
         }
 
@@ -78,7 +80,9 @@ export namespace FilePath {
                     //first index of each array in matrix contains the parent folder path
                     this.childFilePaths.push(parentContentTemp);
                 } catch (e) {
-                    throw console.error(e);
+                    console.error(e);
+
+                    throw new Error("Unable to populate child file paths.");
                 }
             }
 
@@ -122,7 +126,7 @@ export namespace FilePath {
                         },
                     });
                 } else {
-                    throw console.error("Length of paths and names do not match.");
+                    throw new Error("Cannot populate file data. Length of paths and names do not match.");
                 }
 
                 //populate child file names
