@@ -35,7 +35,7 @@ export class EditorListeners implements IEditorListeners {
                         undefined,
                         "Disposed CM debounce auto save event"
                     );
-                }, 750);
+                }, 1100);
 
                 const t1: number = performance.now(); //end perf timer
             }
