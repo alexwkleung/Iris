@@ -137,9 +137,7 @@ namespace MainProcess {
             //set min window size
             this.mainWindow.setMinimumSize(800, 600);
 
-            //for now, use electron-context-menu and extend it if necessary.
-            //later on, I will implement my own custom context menu so it can be
-            //fine-tuned based on the needs of Iris
+            //temporary, remove later
             contextMenu();
 
             this.mainWindow.on("ready-to-show", () => {
