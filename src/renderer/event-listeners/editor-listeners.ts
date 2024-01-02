@@ -9,7 +9,6 @@ import { GenericEvent } from "./event";
  * @implements `IEditorListeners`
  */
 export class EditorListeners implements IEditorListeners {
-    public pm: HTMLDivElement = {} as HTMLDivElement;
     public cm: HTMLElement = {} as HTMLDivElement;
 
     public cmDebounceAutoSave = debounce(() => {
