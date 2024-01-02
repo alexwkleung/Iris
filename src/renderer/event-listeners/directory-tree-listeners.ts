@@ -363,14 +363,6 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
                                         props.parentFolderName = this.parentNameTagsArr()[j];
                                     }
                                 });
-
-                                //prevent default behaviour of clicked anchor tags opening inside electron window
-                                //only allow selection and context menu
-                                document.querySelectorAll("#reading-mode-container a").forEach((el) => {
-                                    el.addEventListener("click", (e) => {
-                                        e.preventDefault();
-                                    });
-                                });
                             }
 
                             //invoke state listener
