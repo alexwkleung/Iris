@@ -27,7 +27,7 @@
 
 The app is currently in early development and may not be 100% stable for daily use.
 
-Only macOS installers are supplied in the early development phase. Other platforms are planned to be supported in the official release (v1.0.0).
+Only macOS installers will be supplied in the early development phase and official release (v1.0.0). Other platforms are not supported but the decision may change after the official release.
 
 You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication. Other mediums will be created in the near future.
 
@@ -147,10 +147,6 @@ npm run build:mac-universal
 
 # via npm (arm64)
 npm run build:mac-arm64
-
-# windows and linux have not been tested yet
-npm run build:win
-npm run build:linux
 ```
 
 # Contributing 
