@@ -42,8 +42,17 @@ export function isLinux(): boolean {
 /**
  * Check if Electron is in dev
  *
- * @returns `true` or `false` if app is packaged
+ * @returns `true` or `false` if app is not packaged
  */
 export function isDev(): boolean {
     return !app.isPackaged ? true : false;
+}
+
+/**
+ * Check if Electron is production build
+ *
+ * @returns `true` or `false` if app is packaged
+ */
+export function isProd(): boolean {
+    return app.isPackaged ? true : false;
 }

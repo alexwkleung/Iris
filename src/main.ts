@@ -3,7 +3,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import contextMenu from "electron-context-menu";
 //import icon from '../../resources/icon.png?asset'
-import { isMacOS, isWindows, isLinux, isDev } from "./is-main.mjs";
+import { isMacOS, isWindows, isLinux, isDev, isProd } from "./is-main.mjs";
 import windowStateKeeper from "electron-window-state";
 import * as fs from "fs";
 import { homedir } from "os";
@@ -14,7 +14,9 @@ function hmr(): void {
     //write Electron PID to .hmr_pid.txt
     fs.writeFile(".hmr_pid.txt", String(process.pid), (err) => {
         if (err) {
-            throw console.error(err);
+            console.error(err);
+
+            throw new Error("Unable to write current Electron PID to .hmr_pid.txt");
         }
     });
 }
@@ -24,9 +26,9 @@ namespace MainProcess {
         /**
          * Browser window
          *
-         * @protected
+         * @private
          */
-        protected mainWindow: BrowserWindow = {} as BrowserWindow;
+        private mainWindow: BrowserWindow = {} as BrowserWindow;
 
         /**
          * Window state
@@ -70,12 +72,34 @@ namespace MainProcess {
         }
 
         /**
+         * Electron protocol handlers
+         *
+         * Call after app is ready
+         *
+         * @private
+         */
+        private handleProtocols(): void {
+            //local protocol
+            protocol.handle("local", (request): Promise<Response> => {
+                const defaultPath = path.join(homedir(), "/Iris/Images") + request.url.slice("local://".length);
+
+                console.log("file://" + defaultPath);
+
+                return net.fetch("file://" + defaultPath).catch((e) => {
+                    console.error(e);
+
+                    throw new Error("Unable to register protocol handler (local://)");
+                }) as Promise<Response>;
+            });
+        }
+
+        /**
          * Call this after registering `windowState` listener
          *
          * @internal
          * @private
          */
-        private mainProcLogger(): void {
+        private browserWindowDetails(): void {
             console.log("Current window dimensions: " + this.windowState.width + "x" + this.windowState.height);
             console.log("Current window coordinates: " + "(" + this.windowState.x + ", " + this.windowState.y + ")");
         }
@@ -94,55 +118,35 @@ namespace MainProcess {
                 defaultHeight: 900,
             });
 
-            console.log(join(_dirname, "preload", "preload.mjs")),
-                (this.mainWindow = new BrowserWindow({
-                    width: this.windowState.width,
-                    height: this.windowState.height,
-                    x: this.windowState.x,
-                    y: this.windowState.y,
-                    minWidth: 800,
-                    minHeight: 600,
-                    show: false,
-                    autoHideMenuBar: true,
-                    titleBarStyle: isMacOS() ? "hiddenInset" : "default", //only check macOS
-                    webPreferences: {
-                        preload: join(_dirname, "preload", "preload.mjs"),
-                        contextIsolation: true,
-                        sandbox: false,
-                        webviewTag: false,
-                        spellcheck: false,
-                    },
-                }));
+            console.log(join(_dirname, "preload", "preload.mjs"));
+
+            this.mainWindow = new BrowserWindow({
+                width: this.windowState.width,
+                height: this.windowState.height,
+                x: this.windowState.x,
+                y: this.windowState.y,
+                minWidth: 800,
+                minHeight: 600,
+                show: false,
+                autoHideMenuBar: true,
+                titleBarStyle: isMacOS() ? "hiddenInset" : "default", //only check macOS
+                webPreferences: {
+                    preload: join(_dirname, "preload", "preload.mjs"),
+                    contextIsolation: true,
+                    sandbox: false,
+                    webviewTag: false,
+                    spellcheck: false,
+                },
+            });
 
             //register windowState listener
             this.windowState.manage(this.mainWindow);
-
-            //main process logger
-            this.mainProcLogger();
-
-            //check if platform is darwin
-            if (isMacOS()) {
-                //log
-                console.log("Platform is darwin (macOS)");
-                //check if platform is linux
-            } else if (isLinux()) {
-                //log
-                console.log("Platform is Linux");
-                //check if platform is windows
-            } else if (isWindows()) {
-                //log
-                console.log("Platform is Windows");
-            }
 
             //set min window size
             this.mainWindow.setMinimumSize(800, 600);
 
             //temporary, remove later
             contextMenu();
-
-            this.mainWindow.on("ready-to-show", () => {
-                this.mainWindow.show();
-            });
 
             //@ts-expect-error type error
             this.mainWindow.webContents.on("will-navigate", (e: Event, url: string) => {
@@ -157,7 +161,11 @@ namespace MainProcess {
                 };
             });
 
+            //check dev
             if (isDev()) {
+                //log browser window details
+                this.browserWindowDetails();
+
                 //load dev server url in main window
                 this.mainWindow.loadURL("http://localhost:5173/");
 
@@ -165,10 +173,23 @@ namespace MainProcess {
                 this.mainWindow.webContents.openDevTools({
                     mode: "undocked",
                 });
-            } else {
-                //production build
+
+                //platform check
+                if (isMacOS()) {
+                    console.log("Platform is darwin (macOS)");
+                } else if (isLinux()) {
+                    console.log("Platform is Linux");
+                } else if (isWindows()) {
+                    console.log("Platform is Windows");
+                }
+                //check prod
+            } else if (isProd()) {
                 this.mainWindow.loadFile(join(_dirname, "index.html"));
             }
+
+            this.mainWindow.on("ready-to-show", () => {
+                this.mainWindow.show();
+            });
         }
 
         /**
@@ -187,21 +208,13 @@ namespace MainProcess {
                     }
                 });
 
-                //local protocol
-                protocol.handle("local", (request): Promise<Response> => {
-                    const defaultPath = path.join(homedir(), "/Iris/Images") + request.url.slice("local://".length);
-
-                    console.log("file://" + defaultPath);
-
-                    return net.fetch("file://" + defaultPath).catch((e) => console.error(e)) as Promise<Response>;
-                });
+                //handle protocols
+                this.handleProtocols();
             });
 
             app.on("window-all-closed", () => {
-                if (isLinux() || isWindows()) {
+                if ((isLinux() || isWindows()) && !isMacOS()) {
                     app.quit();
-                } else if (isMacOS()) {
-                    return;
                 }
             });
         }
@@ -212,7 +225,11 @@ namespace MainProcess {
          * @public
          */
         public buildMainWindow(): void {
-            hmr();
+            //invoke hmr in dev
+            if (isDev()) {
+                hmr();
+            }
+
             this.appInstance();
             this.ipcMainHandlers();
             this.initializeElectronApp();
