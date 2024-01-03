@@ -45,7 +45,7 @@ Install [Node.js](https://nodejs.org/en/download)
 
 Install [Rust](https://www.rust-lang.org/tools/install)
 
-If you are cross-compiling the native modules for other platforms (i.e., compile to MSVC on macOS), you'll need to install the corresponding target:
+If you are cross-compiling the native modules for other platforms, you'll need to install the corresponding target if it isn't already installed:
 
 ```bash
 # check target list
