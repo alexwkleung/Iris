@@ -9,12 +9,12 @@ export namespace FilePath {
          *
          * @readonly
          */
-        public baseNotesDir: Readonly<string> = fsMod.fs._baseDir("home") + "/Iris/Notes";
+        public readonly baseNotesDir: string = fsMod.fs._baseDir("home") + "/Iris/Notes";
 
         /**
          * Base directory for assets
          */
-        public baseAssetsDir: Readonly<string> = fsMod.fs._baseDir("home") + "/Iris/Images";
+        public readonly baseAssetsDir: string = fsMod.fs._baseDir("home") + "/Iris/Images";
 
         /**
          * Array to hold parent folder paths
