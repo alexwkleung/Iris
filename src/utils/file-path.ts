@@ -5,9 +5,11 @@ import { GenericArray } from "./array";
 export namespace FilePath {
     class PathUtil {
         /**
-         * Base directory to look in for notes
+         * Base directory for notes
+         *
+         * @readonly
          */
-        public baseNotes: string = fsMod.fs._baseDir("home") + "/Iris/Notes";
+        public baseNotesDir: Readonly<string> = fsMod.fs._baseDir("home") + "/Iris/Notes";
 
         /**
          * Array to hold parent folder paths
@@ -31,10 +33,17 @@ export namespace FilePath {
 
         /**
          * Array containing object of file data
+         *
+         * @readonly
          */
-        public fileData: IFileData[] = [];
+        public readonly fileData: IFileData[] = [];
 
-        public currentNoteData: ICurrentNoteData = {
+        /**
+         * Object containing current note data
+         *
+         * @readonly
+         */
+        public readonly currentNoteData: ICurrentNoteData = {
             currentNote: {
                 parentFolder: "",
                 childFile: "",
@@ -47,9 +56,9 @@ export namespace FilePath {
          */
         private populateParentFolderPaths(): void {
             try {
-                fsMod.fs._getNameVec(this.baseNotes).map((folders) => {
+                fsMod.fs._getNameVec(this.baseNotesDir).map((folders) => {
                     if (folders !== ".DS_Store") {
-                        this.parentFolderPaths.push(this.baseNotes + "/" + folders);
+                        this.parentFolderPaths.push(this.baseNotesDir + "/" + folders);
 
                         this.parentFolders.push(folders);
                         console.log(folders);
@@ -71,7 +80,7 @@ export namespace FilePath {
             for (let i = 0; i < this.parentFolders.length; i++) {
                 try {
                     const parentContentTemp: string[] = Array.from(
-                        fsMod.fs._walk(this.baseNotes + "/" + this.parentFolders[i])
+                        fsMod.fs._walk(this.baseNotesDir + "/" + this.parentFolders[i])
                     );
 
                     console.log(parentContentTemp);

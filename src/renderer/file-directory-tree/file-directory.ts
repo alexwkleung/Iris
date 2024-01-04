@@ -4,7 +4,7 @@ import { isFolderNode } from "../../utils/is";
 import { FilePath } from "../../utils/file-path";
 
 //testing purposes, remove later
-console.log(FilePath.use.baseNotes);
+console.log(FilePath.use.baseNotesDir);
 
 function populateFileData(): void {
     FilePath.use.populateFileData();
