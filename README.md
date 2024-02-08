@@ -16,6 +16,7 @@
 <p align="center">
     <img src="https://img.shields.io/github/downloads/alexwkleung/Iris/total"></img>
     <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris/main"></img>
+    <img src="https://img.shields.io/discord/1205241215612747876?label=Discord&link=https%3A%2F%2Fdiscord.gg%2Fz9QmRgJsmc"></img>
     <img src="https://img.shields.io/github/license/alexwkleung/Iris"></img>
 </p>
 
@@ -25,17 +26,15 @@
 
 # Info
 
-Iris is written in TypeScript and Rust.
+The app is currently in early development and may not be 100% stable for daily use. The source code could go through a handful of iterations and subsequent releases may not be backward compatible.
 
-The app is currently in early development and may not be 100% stable for daily use.
+Only macOS installers will be supplied in the early development phase and official release (v1.0.0). Other platforms are not supported but is considered in the future roadmap.
 
-Only macOS installers are supplied in the early development phase. Other platforms will be supported in the official release.
-
-You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication. Other mediums will be created in the near future.
+Join the [Discord](https://discord.gg/z9QmRgJsmc) to chat with others in the community.
 
 # Installation
 
-At the moment, you can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
+You can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
 
 If you want to build the app directly from source, follow the instructions in [Development](#development).
  
@@ -47,7 +46,7 @@ Install [Node.js](https://nodejs.org/en/download)
 
 Install [Rust](https://www.rust-lang.org/tools/install)
 
-If you are cross-compiling the native modules for other platforms (i.e., compile to MSVC on macOS), you'll need to install the corresponding target:
+If you are cross-compiling the native modules for other platforms, you'll need to install the corresponding target if it isn't already installed:
 
 ```bash
 # check target list
@@ -149,13 +148,9 @@ npm run build:mac-universal
 
 # via npm (arm64)
 npm run build:mac-arm64
-
-# windows and linux have not been tested yet
-npm run build:win
-npm run build:linux
 ```
 
-# Contributing 
+# Contributing
 
 Here are a list of ways you can contribute to Iris:
 
