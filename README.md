@@ -20,8 +20,8 @@
     <img src="https://img.shields.io/github/license/alexwkleung/Iris"></img>
 </p>
 
-<p align="center" style="border-bottom: none">
-    <a href="https://discord.gg/z9QmRgJsmc">Discord</a>
+<p align="center">
+    <a href="https://discord.gg/z9QmRgJsmc" style="border-bottom: none">Discord</a>
 </p>
 
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-1.png"></img>
