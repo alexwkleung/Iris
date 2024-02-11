@@ -20,6 +20,10 @@
     <img src="https://img.shields.io/github/license/alexwkleung/Iris"></img>
 </p>
 
+<p align="center">
+    <a align="center" src="https://discord.gg/z9QmRgJsmc">Discord</a>
+</p>
+
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-1.png"></img>
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-2.png"></img>
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-3.png"></img>
@@ -30,7 +34,13 @@ The app is currently in early development and may not be 100% stable for daily u
 
 Only macOS installers will be supplied in the early development phase and official release (v1.0.0). Other platforms are not supported but is considered in the future roadmap.
 
+# Contact 
+
 Join the [Discord](https://discord.gg/z9QmRgJsmc) to chat with others in the community.
+
+For professional mediums, you can contact via email (expect 24-48 hour reply time): irisnotesapp@gmail.com 
+
+[GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) is also an alternative to the above contact methods.
 
 # Installation
 
