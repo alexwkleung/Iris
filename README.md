@@ -16,7 +16,6 @@
 <p align="center">
     <img src="https://img.shields.io/github/downloads/alexwkleung/Iris/total"></img>
     <img src="https://img.shields.io/github/package-json/v/alexwkleung/Iris/main"></img>
-    <img src="https://img.shields.io/discord/1205241215612747876?label=Discord&link=https%3A%2F%2Fdiscord.gg%2Fz9QmRgJsmc"></img>
     <img src="https://img.shields.io/github/license/alexwkleung/Iris"></img>
 </p>
 
