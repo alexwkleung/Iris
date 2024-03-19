@@ -390,3 +390,6 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
         );
     }
 }
+
+export const editorKebabDropdownMenuListeners: EditorKebabDropdownMenuListeners =
+    new EditorKebabDropdownMenuListeners();

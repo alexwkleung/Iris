@@ -6,7 +6,7 @@ import { EditorListeners } from "./editor-listeners";
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
 import { EditorNs } from "../editor-main";
 import { wordCountListener } from "./word-count-listener";
-import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
+import { editorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
 import { defaultMarkdownParser } from "../prosemirror/markdown/export";
 import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
 import { PMEditorState } from "../prosemirror/editor/pm-editor-state";
@@ -222,6 +222,8 @@ export class DirectoryTreeListeners extends DirectoryTree implements IDirectoryT
 
                             (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display =
                                 "";
+
+                            editorKebabDropdownMenuListeners.kebabDropdownMenuListener();
 
                             //invoke insert tab listener
                             this.editorListeners.insertTabListener(
