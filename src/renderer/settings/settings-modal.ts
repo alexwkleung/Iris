@@ -80,61 +80,6 @@ export class SettingsModal {
     }
 
     /**
-     * Advanced mode options
-     */
-    public advancedModeOptions(): void {
-        //advanced mode options container
-        const advancedModeOptionsContainer: HTMLDivElement = document.createElement("div");
-        advancedModeOptionsContainer.setAttribute("id", "advanced-mode-options-container");
-        SettingsModal.settingsModalOptionsContainer.appendChild(advancedModeOptionsContainer);
-
-        //advanced mode options container title
-        const advancedModeOptionsContainerTitle: HTMLDivElement = document.createElement("div");
-        advancedModeOptionsContainerTitle.setAttribute("id", "advanced-mode-options-container-title");
-        advancedModeOptionsContainer.appendChild(advancedModeOptionsContainerTitle);
-
-        //advanced mode options container title text node
-        const advancedModeOptionsContainerTitleTextNode: Text = document.createTextNode("Markdown Mode");
-        advancedModeOptionsContainerTitle.appendChild(advancedModeOptionsContainerTitleTextNode);
-
-        //horizontal line
-        appendHorizontalLineNode(advancedModeOptionsContainer);
-
-        //advanced mode cursor label
-        const advancedModeCursorLabel: HTMLLabelElement = document.createElement("label");
-        advancedModeCursorLabel.setAttribute("for", "advanced-mode-options");
-        advancedModeCursorLabel.setAttribute("class", "advanced-mode-label");
-        advancedModeCursorLabel.textContent = "Cursor";
-        advancedModeOptionsContainer.appendChild(advancedModeCursorLabel);
-
-        //advanced mode cursor select
-        const advancedModeCursorSelect: HTMLSelectElement = document.createElement("select");
-        advancedModeCursorSelect.setAttribute("name", "advanced-mode-options");
-        advancedModeCursorSelect.setAttribute("id", "advanced-mode-options-select");
-        advancedModeOptionsContainer.appendChild(advancedModeCursorSelect);
-
-        //advanced mode default cursor option
-        const advancedModeDefaultCursorOption: HTMLOptionElement = document.createElement("option");
-        advancedModeDefaultCursorOption.setAttribute("value", "default-cursor");
-        advancedModeDefaultCursorOption.setAttribute("class", "default-cursor-option");
-        advancedModeDefaultCursorOption.textContent = "Default Cursor";
-        advancedModeCursorSelect.appendChild(advancedModeDefaultCursorOption);
-
-        //advanced mode block cursor option
-        const advancedModeBlockCursorOption: HTMLOptionElement = document.createElement("option");
-        advancedModeBlockCursorOption.setAttribute("value", "block-cursor");
-        advancedModeBlockCursorOption.setAttribute("class", "block-cursor-option");
-        advancedModeBlockCursorOption.textContent = "Block Cursor";
-        advancedModeCursorSelect.appendChild(advancedModeBlockCursorOption);
-
-        if (Settings.getSettings.defaultCursor) {
-            advancedModeDefaultCursorOption.setAttribute("selected", "");
-        } else if (Settings.getSettings.blockCursor) {
-            advancedModeBlockCursorOption.setAttribute("selected", "");
-        }
-    }
-
-    /**
      * Settings modal container
      */
     public settingsModalContainer(): void {
@@ -158,8 +103,5 @@ export class SettingsModal {
 
         //editor theme options
         this.editorThemeOptions();
-
-        //advanced mode options
-        this.advancedModeOptions();
     }
 }

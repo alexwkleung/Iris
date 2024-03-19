@@ -1,11 +1,9 @@
 import { setWindowTitle } from "./window/window-title";
-import highlightLight from "../assets/github-light.css?inline?url";
+import prosemirror from "../assets/prosemirror.css?inline?url";
 
 import "../assets/default-fonts/Inter-Bold.ttf";
 import "../assets/default-fonts/Inter-Regular.ttf";
 import "../assets/default-fonts/Inter-Medium.ttf";
-
-import "../assets/katex.min.css";
 
 export class App {
     /**
@@ -14,6 +12,21 @@ export class App {
      * Reference variable for app node
      */
     public static appNode: HTMLDivElement;
+
+    public static pmStylesheet(): void {
+        //remove any duplicate pm stylesheets in dom
+        document.querySelectorAll(".pm-stylesheet").forEach((el) => {
+            if (el !== null) {
+                el.remove();
+            }
+        });
+
+        const pmStylesheet: HTMLLinkElement = document.createElement("link");
+        pmStylesheet.setAttribute("rel", "stylesheet");
+        pmStylesheet.setAttribute("href", prosemirror);
+        pmStylesheet.setAttribute("class", "pm-stylesheet");
+        document.body.appendChild(pmStylesheet);
+    }
 
     public static async app(): Promise<void> {
         //set window title
@@ -42,10 +55,8 @@ export class App {
             App.appNode = document.createElement("div") as HTMLDivElement;
             App.appNode.setAttribute("id", "app");
 
-            //default mode
-            App.appNode.classList.add("advanced-mode-is-active");
+            App.appNode.classList.add("default-mode-is-active");
 
-            //use insertBefore instead of prepend
             document.body.insertBefore(App.appNode, document.body.firstChild);
 
             const isConnected: boolean = App.appNode.isConnected;
@@ -57,26 +68,12 @@ export class App {
             }
         }
     }
-
-    static highlightLightTheme(): void {
-        if ((document.querySelector(".highlight-light-theme") as HTMLElement) !== null) {
-            document.querySelectorAll(".highlight-light-theme").forEach((el) => {
-                el.remove();
-            });
-        }
-
-        const highlightTheme: HTMLLinkElement = document.createElement("link");
-        highlightTheme.setAttribute("rel", "stylesheet");
-        highlightTheme.setAttribute("href", highlightLight);
-        highlightTheme.setAttribute("class", "highlight-light-theme");
-        document.body.appendChild(highlightTheme);
-    }
 }
 
 export function createApp(): void {
     document.addEventListener("DOMContentLoaded", () => {
         App.app();
 
-        App.highlightLightTheme();
+        App.pmStylesheet();
     });
 }

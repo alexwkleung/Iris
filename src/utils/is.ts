@@ -1,38 +1,12 @@
 import { App } from "../renderer/app";
 import { fsMod } from "./alias";
 
-/**
- * Is mode advanced
- *
- * check if the mode is advanced
- *
- * @returns `true` or `false`
- */
-export function isModeAdvanced(): boolean {
+export function isDefaultMode(): boolean {
     let isActive: boolean = false;
 
-    if (App.appNode.classList.contains("advanced-mode-is-active")) {
+    if (App.appNode.classList.contains("default-mode-is-active")) {
         isActive = true;
-    } else if (!App.appNode.classList.contains("advanced-mode-is-active")) {
-        isActive = false;
-    }
-
-    return isActive;
-}
-
-/**
- * Is mode reading
- *
- * Check if the mode is reading
- *
- * @returns `true` or `false`
- */
-export function isModeReading(): boolean {
-    let isActive: boolean = false;
-
-    if (App.appNode.classList.contains("reading-mode-is-active")) {
-        isActive = true;
-    } else if (!App.appNode.classList.contains("reading-mode-is-active")) {
+    } else if (!App.appNode.classList.contains("default-mode-is-active")) {
         isActive = false;
     }
 

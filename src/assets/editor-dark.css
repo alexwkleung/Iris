@@ -1,13 +1,45 @@
 :root {
     --default-bg: #151515;
+    --prosemirror-bg-dark: #151515;
+    --prosemirror-color-dark: #eaeaea;
     --default-color: #ffffff;
     --bg-dark: #151515;
     --color-dark: #eaeaea;
     --caret-color-dark: #ffffff;
+    --prosemirror-a-dark: rgb(136, 136, 220);
+    --prosemirror-menu-bar-dropdown-item-bg-dark: black; 
     --top-bar-directory-info-color-dark: #ffffff;
     --word-count-color-dark: rgb(109, 109, 109);
     --reading-mode-color-dark: #eaeaea;
     --a-dark: rgb(136, 136, 220);
+}
+
+
+/*
+* prosemirror 
+*/
+.ProseMirror {
+    background-color: var(--prosemirror-bg-dark);
+    color: var(--prosemirror-color-dark);
+    caret-color: var(--caret-color-dark);
+    color-scheme: dark;
+}
+.ProseMirror-menubar {
+    background-color: var(--prosemirror-bg-dark);
+}
+.ProseMirror-menu-dropdown-item {
+    background: var(--prosemirror-menu-bar-dropdown-item-bg-dark);
+}
+.ProseMirror-menu-dropdown-item:hover {
+    background: rgb(48, 48, 48);
+    border-radius: 10px;
+}
+.ProseMirror-menu-dropdown-menu, .ProseMirror-menu-submenu {
+    background: var(--prosemirror-menu-bar-dropdown-item-bg-dark);
+    border-color: black;
+}
+.ProseMirror a {
+    color: var(--prosemirror-a-dark);
 }
 
 /*
@@ -48,6 +80,91 @@ body {
 */
 #word-count-container {
     color: var(--word-count-color-dark);
+}
+
+/**
+* prosemirror editor nodes 
+*/
+.ProseMirror h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter-Bold';
+    margin-left: 3px;
+}
+
+.ProseMirror p {
+    margin-left: 3px;
+    padding-right: 20px;
+    white-space: pre-wrap;
+    text-align: justify;
+}
+
+.ProseMirror pre {
+    white-space: normal;
+}
+
+.ProseMirror blockquote  {
+    border-left: 3px solid grey;
+    margin: 1.5em 0px;
+    padding: 0.5em 10px;
+    font-size: 18px;
+}
+.ProseMirror blockquote:before {
+    color: grey;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+.ProseMirror blockquote p {
+    display: inline;
+    font-size: 18px;
+    color: rgb(83, 82, 82);
+}
+
+.ProseMirror a {
+    color: var(--prosemirror-a-light);
+}
+
+.ProseMirror strong {
+    font-family: 'Inter-Bold'
+}
+
+.ProseMirror img {
+    max-width: calc(100% - 15px);
+}
+
+.ProseMirror hr {
+    border-color: rgb(46, 46, 46);
+    width: calc(100% - 25px);
+    margin-left: -5px;
+}
+
+/*
+.ProseMirror pre {
+    background-color: var(--prosemirror-pre-bg);
+    caret-color: var(--caret-color-light);
+    color: var(--prosemirror-pre-color);
+    width: calc(100% - 40px);
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 25px;
+    overflow-x: scroll;
+}
+*/
+
+.ProseMirror code {
+    background-color: var(--prosemirror-code-bg);
+    caret-color: var(--caret-color-light);
+    color: var(--prosemirror-code-color);
+    width: calc(100% - 40px);
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /*border-radius: 25px;*/
+    overflow-x: scroll;
+    white-space: pre-wrap;
+    display: inline-block; 
+    unicode-bidi: embed;
 }
 
 /*

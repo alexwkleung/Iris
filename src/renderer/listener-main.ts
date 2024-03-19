@@ -1,7 +1,6 @@
 import { DirectoryTreeListeners } from "./event-listeners/directory-tree-listeners.js";
 import { DirectoryTreeUIModalListeners } from "./event-listeners/directory-tree-ui-modal-listeners.js";
 import { SettingsModalListeners } from "./event-listeners/settings-modal-listeners.js";
-import { ModeSelectionListeners } from "./event-listeners/mode-select-listener.js";
 
 export namespace ListenerNs {
     export function directoryTreeListeners(): void {
@@ -23,10 +22,6 @@ export namespace ListenerNs {
 
         settingsModalListenersObj.settingsModalListener();
     }
-
-    export function modeSelectListeners(): void {
-        ModeSelectionListeners.modeSelectListeners.invokeModeSelectListeners();
-    }
 }
 
 export function invokeListeners(): void {
@@ -36,7 +31,5 @@ export function invokeListeners(): void {
         ListenerNs.directoryTreeUIModalListeners();
 
         ListenerNs.settingsModalListeners();
-
-        ListenerNs.modeSelectListeners();
     });
 }

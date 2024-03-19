@@ -1,15 +1,5 @@
 import { fsMod } from "../../utils/alias";
-//https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
-//https://vitejs.dev/guide/assets.html#importing-asset-as-url
-//?inline: to prevent auto injection
-//?url: get url of named import
-import { CMEditorView } from "../codemirror/editor/cm-editor-view";
-import { CMEditorState } from "../codemirror/editor/cm-editor-state";
-import { cursors } from "../codemirror/extensions/cursor-extension/cursors";
-import { irisEditorStyle } from "../codemirror/extensions/editor-extension/editor-style";
-
 import editorDark from "../../assets/editor-dark.css?inline?url";
-import highlightDark from "../../assets/github-dark.css?inline?url";
 
 /**
  * Settings interface
@@ -17,10 +7,6 @@ import highlightDark from "../../assets/github-dark.css?inline?url";
 interface ISettingsData<T extends boolean> {
     lightTheme: T;
     darkTheme: T;
-    advancedMode: T;
-    readingMode: T;
-    defaultCursor: T;
-    blockCursor: T;
 }
 
 type TSettings = ISettingsData<boolean>;
@@ -49,49 +35,5 @@ export class EditorThemes {
         linkNode.setAttribute("href", editorDark);
         linkNode.setAttribute("class", "editor-dark-theme");
         document.body.appendChild(linkNode);
-
-        const highlightDarkTheme: HTMLLinkElement = document.createElement("link");
-        highlightDarkTheme.setAttribute("rel", "stylesheet");
-        highlightDarkTheme.setAttribute("href", highlightDark);
-        highlightDarkTheme.setAttribute("class", "highlight-dark-theme");
-        document.body.appendChild(highlightDarkTheme);
-    }
-}
-
-export class AdvancedModeSettings {
-    static defaultCursor(theme: string): void {
-        if (theme === "light" && (document.querySelector(".cm-content") as HTMLElement) !== null) {
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]),
-            });
-        } else if (theme === "dark" && (document.querySelector(".cm-content") as HTMLElement) !== null) {
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]),
-            });
-        }
-    }
-
-    static blockCursor(): void {
-        if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[2]),
-            });
-        }
-    }
-
-    static highlightLight(): void {
-        if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(false)),
-            });
-        }
-    }
-
-    static highlightDark(): void {
-        if ((document.querySelector(".cm-content") as HTMLElement) !== null) {
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.editorCompartment.reconfigure(irisEditorStyle(true)),
-            });
-        }
     }
 }

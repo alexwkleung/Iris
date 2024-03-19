@@ -30,6 +30,12 @@
     --child-file-name-active: #FFFFFF;
     --child-file-name-hover: rgb(87, 87, 87);
     --create-new-file-bg: #232222;
+    --prosemirror-pre-bg: rgb(181, 181, 181);
+    --prosemirror-code-bg: rgb(181, 181, 181);
+    --prosemirror-pre-color: #2e2a43;
+    --prosemirror-code-color: #2e2a43;
+    --prosemirror-bg-light: #ececec;
+    --prosemirror-a-light: rgb(80, 80, 133);
     --bg-light: #ececec;
     --a-light: #5e5ed2;
     --continue-modal: rgb(176, 136, 250);
@@ -968,6 +974,91 @@ body {
 }
 #reading-mode-container h6 mark {
     font-family: 'Inter-Bold';
+}
+
+/**
+* prosemirror editor nodes 
+*/
+.ProseMirror h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter-Bold';
+    margin-left: 3px;
+}
+
+.ProseMirror p {
+    margin-left: 3px;
+    padding-right: 20px;
+    white-space: pre-wrap;
+    text-align: justify;
+}
+
+.ProseMirror pre {
+    white-space: normal;
+}
+
+.ProseMirror blockquote  {
+    border-left: 3px solid grey;
+    margin: 1.5em 0px;
+    padding: 0.5em 10px;
+    font-size: 18px;
+}
+.ProseMirror blockquote:before {
+    color: grey;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+.ProseMirror blockquote p {
+    display: inline;
+    font-size: 18px;
+    color: rgb(83, 82, 82);
+}
+
+.ProseMirror a {
+    color: var(--prosemirror-a-light);
+}
+
+.ProseMirror strong {
+    font-family: 'Inter-Bold'
+}
+
+.ProseMirror img {
+    max-width: calc(100% - 15px);
+}
+
+.ProseMirror hr {
+    border-color: rgb(46, 46, 46);
+    width: calc(100% - 25px);
+    margin-left: -5px;
+}
+
+/*
+.ProseMirror pre {
+    background-color: var(--prosemirror-pre-bg);
+    caret-color: var(--caret-color-light);
+    color: var(--prosemirror-pre-color);
+    width: calc(100% - 40px);
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 25px;
+    overflow-x: scroll;
+}
+*/
+
+.ProseMirror code {
+    background-color: var(--prosemirror-code-bg);
+    caret-color: var(--caret-color-light);
+    color: var(--prosemirror-code-color);
+    width: calc(100% - 40px);
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /*border-radius: 25px;*/
+    overflow-x: scroll;
+    white-space: pre-wrap;
+    display: inline-block; 
+    unicode-bidi: embed;
 }
 
 /*

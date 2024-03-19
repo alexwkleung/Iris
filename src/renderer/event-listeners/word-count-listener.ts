@@ -1,36 +1,9 @@
 import { debounce } from "../../utils/debounce";
 import { WordCountContainerNode } from "../misc-ui/word-count";
-import { CMEditorView } from "../codemirror/editor/cm-editor-view";
-import { TextIterator } from "@codemirror/state";
 import { GenericEvent } from "./event";
 
 class WordCount {
     public static count: number = 0;
-
-    public static createWordCount(): void {
-        //taken from: https://codemirror.net/examples/panel/
-        const iter: TextIterator = CMEditorView.editorView.state.doc.iter();
-        while (!iter.next().done) {
-            let inWord: boolean = false;
-
-            for (let i = 0; i < iter.value.length; i++) {
-                //https://stackoverflow.com/questions/4593565/regular-expression-for-accurate-word-count-using-javascript
-                const word: boolean = /[/\b\S+\b/g]/.test(iter.value[i]);
-
-                if (word && !inWord) {
-                    WordCount.count++;
-                }
-
-                inWord = word;
-            }
-        }
-
-        if (!WordCount.count) {
-            WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
-        } else {
-            WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
-        }
-    }
 }
 /**
  * Word count listener
@@ -39,36 +12,54 @@ class WordCount {
  * @returns Word count
  */
 export function wordCountListener(editor: string): number {
-    if (editor === "codemirror") {
-        const cm: HTMLElement = document.querySelector(".cm-editor") as HTMLElement;
+    let textArr: string[] = [];
 
-        //show word count
+    const regexPattern: RegExp = new RegExp(/[\s+\n+\r+]/g);
+
+    if (editor === "prosemirror") {
+        const pm: HTMLElement = document.querySelector(".ProseMirror") as HTMLElement;
+
         WordCountContainerNode.wordCountContainer.style.display = "";
-        WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
 
-        //reset word count
         WordCount.count = 0;
 
-        WordCount.createWordCount();
-
-        //initial word count
         WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
 
-        const cmDebounceWordCount: () => any = debounce(() => {
-            console.log(cm.textContent);
-
-            //reset word count
+        if (!(pm.textContent as string).trim().split(regexPattern)[0]) {
             WordCount.count = 0;
+            WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
+        } else {
+            WordCount.count = (pm.textContent as string)
+                .trim()
+                .split(regexPattern)
+                .filter((str) => str !== "").length;
 
-            WordCount.createWordCount();
-        }, 250); //250ms default
+            WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
+        }
+
+        const pmDebounceWordCount: () => any = debounce(() => {
+            textArr = (pm.textContent as string).trim().split(regexPattern);
+
+            //if there are no words
+            if (!textArr[0]) {
+                WordCount.count = 0; //re-initialize
+                WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
+            } else {
+                WordCount.count = textArr.filter((str) => str !== "").length;
+
+                //log
+                console.log(textArr.filter((str) => str !== ""));
+
+                WordCountContainerNode.wordCountContainer.textContent = WordCount.count.toString() + " words";
+            }
+        }, 250);
 
         GenericEvent.use.createDisposableEvent(
-            cm,
+            pm,
             "keyup",
-            cmDebounceWordCount,
+            pmDebounceWordCount,
             undefined,
-            "Created disposable event for CM debounce"
+            "Created disposable event listener for PM debounce word count"
         );
     }
 

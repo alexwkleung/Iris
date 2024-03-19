@@ -1,8 +1,4 @@
 {
     "lightTheme": true,
-    "darkTheme": false,
-    "advancedMode": true,
-    "readingMode": false,
-    "defaultCursor": true,
-    "blockCursor": false
+    "darkTheme": false
 }

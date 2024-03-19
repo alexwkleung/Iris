@@ -155,16 +155,6 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
                 //temp
                 this.createFileNode(parentFolder);
-            } else if (!isFolderNode("home", "/Iris/Notes" + "/" + elem)) {
-                //create parent folder node
-                const childFileRoot: HTMLDivElement = document.createElement("div");
-
-                childFileRoot.setAttribute("class", "child-file-name");
-                FileDirectoryTreeNode.fileDirectoryNode.appendChild(childFileRoot);
-
-                //create text node based on directory name
-                const parentFolderTextNode: Text = document.createTextNode(elem);
-                childFileRoot.appendChild(parentFolderTextNode);
             }
         });
     }

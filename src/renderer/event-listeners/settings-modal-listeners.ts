@@ -1,14 +1,8 @@
 import { SettingsModal } from "../settings/settings-modal";
 import { Settings, EditorThemes } from "../settings/settings";
 import { fsMod } from "../../utils/alias";
-import { CMEditorView } from "../codemirror/editor/cm-editor-view";
-import { CMEditorState } from "../codemirror/editor/cm-editor-state";
-import { cursors } from "../codemirror/extensions/cursor-extension/cursors";
-import { AdvancedModeSettings } from "../settings/settings";
 import { GenericEvent } from "./event";
 import { KeyBinds } from "../keybinds/keybinds";
-
-import highlightLight from "../../assets/github-light.css?inline?url";
 
 /**
  * @extends SettingsModal
@@ -22,9 +16,7 @@ export class SettingsModalListeners extends SettingsModal {
     public themeSelectCb: (e: Event) => void = (e: Event): void => {
         const currentSelection = e.currentTarget as HTMLSelectElement;
 
-        //if dark theme exists in dom
         if ((document.querySelector(".editor-dark-theme") as HTMLElement) !== null) {
-            //remove stylesheet node
             document.querySelectorAll(".editor-dark-theme").forEach((el) => {
                 el.remove();
             });
@@ -38,26 +30,6 @@ export class SettingsModalListeners extends SettingsModal {
             (document.querySelector(".dark-option") as HTMLElement).removeAttribute("selected");
 
             (document.querySelector(".light-option") as HTMLElement).setAttribute("selected", "");
-
-            //check highlight light
-            if ((document.querySelector(".highlight-light-theme") as HTMLElement) !== null) {
-                document.querySelectorAll(".highlight-light-theme").forEach((el) => {
-                    el.remove();
-                });
-            }
-
-            //check highlight dark
-            if ((document.querySelector(".highlight-dark-theme") as HTMLElement) !== null) {
-                document.querySelectorAll(".highlight-dark-theme").forEach((el) => {
-                    el.remove();
-                });
-            }
-
-            const highlightTheme: HTMLLinkElement = document.createElement("link");
-            highlightTheme.setAttribute("rel", "stylesheet");
-            highlightTheme.setAttribute("href", highlightLight);
-            highlightTheme.setAttribute("class", "highlight-light-theme");
-            document.body.appendChild(highlightTheme);
 
             Settings.getSettings.lightTheme = true;
             Settings.getSettings.darkTheme = false;
@@ -73,49 +45,10 @@ export class SettingsModalListeners extends SettingsModal {
                     JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
                 );
             }
-
-            //check mode
-            if (Settings.getSettings.advancedMode) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
-            }
-
-            //check block cursor
-            if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
-                AdvancedModeSettings.defaultCursor("light");
-            } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
-                AdvancedModeSettings.defaultCursor("dark");
-            } else if (
-                (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
-                (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme)
-            ) {
-                AdvancedModeSettings.blockCursor();
-            }
-
-            AdvancedModeSettings.highlightLight();
-            //if selection is dark theme
         } else if (currentSelection.value === "editor-dark") {
-            //log
-            console.log("selected editor dark");
-
             (document.querySelector(".light-option") as HTMLElement).removeAttribute("selected");
-
             (document.querySelector(".dark-option") as HTMLElement).setAttribute("selected", "");
 
-            //check highlight light
-            if ((document.querySelector(".highlight-light-theme") as HTMLElement) !== null) {
-                document.querySelectorAll(".highlight-light-theme").forEach((el) => {
-                    el.remove();
-                });
-            }
-
-            //check highlight dark
-            if ((document.querySelector(".highlight-dark-theme") as HTMLElement) !== null) {
-                document.querySelectorAll(".highlight-dark-theme").forEach((el) => {
-                    el.remove();
-                });
-            }
-
-            //apply dark theme
             EditorThemes.darkTheme();
 
             Settings.getSettings.lightTheme = false;
@@ -132,94 +65,6 @@ export class SettingsModalListeners extends SettingsModal {
                     JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
                 );
             }
-
-            //check mode
-            if (Settings.getSettings.advancedMode) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
-            }
-
-            //check block cursor
-            if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
-                AdvancedModeSettings.defaultCursor("light");
-            } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
-                AdvancedModeSettings.defaultCursor("dark");
-            } else if (
-                (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
-                (Settings.getSettings.darkTheme && Settings.getSettings.darkTheme)
-            ) {
-                AdvancedModeSettings.blockCursor();
-            }
-
-            AdvancedModeSettings.highlightDark();
-        }
-    };
-
-    /**
-     * Cursor settings callback
-     *
-     * @public
-     */
-    public cursorSettingsCb: (e: Event) => void = (e: Event): void => {
-        const currentSelection: HTMLSelectElement = e.currentTarget as HTMLSelectElement;
-
-        //if current selection is default-cursor and theme is light
-        if (currentSelection.value === "default-cursor" && Settings.getSettings.lightTheme) {
-            //log
-            console.log("selected default cursor and theme is light");
-
-            (document.querySelector(".block-cursor-option") as HTMLElement).removeAttribute("selected");
-            (document.querySelector(".default-cursor-option") as HTMLElement).setAttribute("selected", "");
-
-            Settings.getSettings.defaultCursor = true;
-            Settings.getSettings.blockCursor = false;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-
-            //dispatch cursor compartment reconfiguration
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]),
-            });
-            //if current selection is default-cursor and theme is dark
-        } else if (currentSelection.value === "default-cursor" && Settings.getSettings.darkTheme) {
-            //log
-            console.log("selected default cursor and theme is dark");
-
-            (document.querySelector(".block-cursor-option") as HTMLElement).removeAttribute("selected");
-            (document.querySelector(".default-cursor-option") as HTMLElement).setAttribute("selected", "");
-
-            Settings.getSettings.defaultCursor = true;
-            Settings.getSettings.blockCursor = false;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]),
-            });
-            //if current selection is block-cursor
-        } else if (currentSelection.value === "block-cursor") {
-            //log
-            console.log("selected block cursor");
-
-            (document.querySelector(".default-cursor-option") as HTMLElement).removeAttribute("selected");
-            (document.querySelector(".block-cursor-option") as HTMLElement).setAttribute("selected", "");
-
-            Settings.getSettings.defaultCursor = false;
-            Settings.getSettings.blockCursor = true;
-
-            fsMod.fs._writeToFileAlt(
-                fsMod.fs._baseDir("home") + "/Iris/.settings.json",
-                JSON.stringify(JSON.parse(JSON.stringify(Settings.getSettings, null, 2)), null, 2)
-            );
-
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[2]),
-            });
         }
     };
 
@@ -251,21 +96,6 @@ export class SettingsModalListeners extends SettingsModal {
     }
 
     /**
-     * Cursor settings listener
-     *
-     * @private
-     */
-    private cursorSettingsListener(): void {
-        GenericEvent.use.createDisposableEvent(
-            document.getElementById("advanced-mode-options-select") as HTMLElement,
-            "change",
-            this.cursorSettingsCb,
-            undefined,
-            "Created disposable event for cursor settings (change)"
-        );
-    }
-
-    /**
      * Settings modal exit callback
      *
      * @public
@@ -281,15 +111,6 @@ export class SettingsModalListeners extends SettingsModal {
                 this.themeSelectCb,
                 undefined,
                 "Disposed event for theme select (change)"
-            );
-
-            //dispose cursor settings cb
-            GenericEvent.use.disposeEvent(
-                document.body,
-                "change",
-                this.cursorSettingsCb,
-                undefined,
-                "Disposed event for cursor settings (change)"
             );
 
             //dispose settings modal exit cb
@@ -344,9 +165,6 @@ export class SettingsModalListeners extends SettingsModal {
 
             //theme settings listener
             this.themeSettingsListener();
-
-            //cursor settings listener
-            this.cursorSettingsListener();
 
             //invoke settings modal exit listener
             this.settingsModalExitListener();

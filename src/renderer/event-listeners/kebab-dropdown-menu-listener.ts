@@ -1,10 +1,9 @@
 import { EditorKebabDropdownMenu } from "../misc-ui/editor-kebab-dropdown-menu";
 import { EditorKebabDropdownModals } from "../misc-ui/editor-kebab-dropdown-modals";
 import { fsMod } from "../../utils/alias";
-import { isModeAdvanced } from "../../utils/is";
+import { isDefaultMode } from "../../utils/is";
 import { setWindowTitle } from "../window/window-title";
 import { RefsNs } from "./directory-tree-listeners";
-import { CMEditorView } from "../codemirror/editor/cm-editor-view";
 import { DirectoryTree } from "../file-directory-tree/file-directory";
 import { GenericEvent } from "./event";
 import { KeyBinds } from "../keybinds/keybinds";
@@ -61,20 +60,14 @@ export class EditorKebabDropdownMenuListeners extends EditorKebabDropdownModals 
      */
     public kebabDeleteFileContinueCb: () => void = (): void => {
         document.querySelectorAll(".child-file-name.is-active-child").forEach(async (el) => {
-            if (isModeAdvanced()) {
-                fsMod.fs._deletePath(
-                    fsMod.fs._baseDir("home") +
-                        "/Iris/Notes/" +
-                        document.title.split("-")[1].trim() +
-                        "/" +
-                        el.textContent +
-                        ".md"
-                );
-
-                CMEditorView.editorView.destroy();
-                CMEditorView.createEditorView();
-                CMEditorView.setContenteditable(false);
-            }
+            fsMod.fs._deletePath(
+                fsMod.fs._baseDir("home") +
+                    "/Iris/Notes/" +
+                    document.title.split("-")[1].trim() +
+                    "/" +
+                    el.textContent +
+                    ".md"
+            );
 
             //remove kebab modal container node
             EditorKebabDropdownModals.kebabModalContainerNode.remove();

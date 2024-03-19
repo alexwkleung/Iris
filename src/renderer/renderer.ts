@@ -2,8 +2,6 @@ import { directoryNs } from "./directory-main";
 import { EditorNs } from "./editor-main";
 import { windowNs } from "./window/draggable-area";
 import { Settings, EditorThemes } from "./settings/settings";
-import { AdvancedModeSettings } from "./settings/settings";
-import mermaid from "mermaid";
 import { GenericEvent } from "./event-listeners/event";
 import { createApp } from "./app";
 import { invokeListeners } from "./listener-main";
@@ -48,68 +46,6 @@ namespace RendererProcess {
                 //dark theme
             } else if (Settings.getSettings.darkTheme) {
                 EditorThemes.darkTheme();
-
-                document.querySelectorAll(".highlight-light-theme").forEach((el) => {
-                    el.remove();
-                });
-            }
-
-            //initialize mermaid
-            mermaid.initialize({
-                theme: "forest",
-                startOnLoad: true,
-            });
-        }
-
-        /**
-         * Load mode
-         *
-         * @private
-         */
-        private loadMode(): void {
-            //load mode
-            //advanced mode
-            if (Settings.getSettings.advancedMode) {
-                console.log("advanced mode active");
-
-                if ((document.getElementById("app") as HTMLElement).classList.contains("reading-mode-is-active")) {
-                    (document.getElementById("app") as HTMLElement).classList.remove("reading-mode-is-active");
-                }
-
-                (document.getElementById("app") as HTMLElement).classList.add("advanced-mode-is-active");
-
-                //check block cursor
-                if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
-                    AdvancedModeSettings.defaultCursor("light");
-
-                    AdvancedModeSettings.highlightLight();
-                } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
-                    AdvancedModeSettings.defaultCursor("dark");
-
-                    AdvancedModeSettings.highlightDark();
-                } else if (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) {
-                    AdvancedModeSettings.blockCursor();
-
-                    AdvancedModeSettings.highlightLight();
-                } else if (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme) {
-                    AdvancedModeSettings.blockCursor();
-
-                    AdvancedModeSettings.highlightDark();
-                }
-
-                if (Settings.getSettings.lightTheme) {
-                    AdvancedModeSettings.highlightLight();
-                } else if (Settings.getSettings.darkTheme) {
-                    AdvancedModeSettings.highlightDark();
-                }
-            } else if (Settings.getSettings.readingMode) {
-                console.log("reading mode active");
-
-                if ((document.getElementById("app") as HTMLElement).classList.contains("advanced-mode-is-active")) {
-                    (document.getElementById("app") as HTMLElement).classList.remove("advanced-mode-is-active");
-                }
-
-                (document.getElementById("app") as HTMLElement).classList.add("reading-mode-is-active");
             }
         }
 
@@ -122,7 +58,6 @@ namespace RendererProcess {
             GenericEvent.use.createDisposableEvent(window, "DOMContentLoaded", () => {
                 this.coupleNs();
                 this.loadTheme();
-                this.loadMode();
             });
         }
 
