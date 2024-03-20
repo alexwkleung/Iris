@@ -1,6 +1,5 @@
 import { App } from "./app";
 import { WordCountContainerNode } from "./misc-ui/word-count";
-import { EditorKebabDropdownMenu } from "./misc-ui/editor-kebab-dropdown-menu";
 import { PMEditorView } from "./prosemirror/editor/pm-editor-view";
 
 export namespace EditorNs {
@@ -71,7 +70,5 @@ export namespace EditorNs {
         EditorTopBarContainer.createEditorTopBarContainer();
 
         WordCountContainerNode.createWordCountContainer();
-
-        EditorKebabDropdownMenu.createEditorKebabDropdownMenuContainer();
     }
 }

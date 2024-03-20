@@ -9,7 +9,6 @@ import { fsMod } from "../../utils/alias";
 import { RefsNs } from "./directory-tree-listeners";
 import { wordCountListener } from "./word-count-listener";
 import { setWindowTitle } from "../window/window-title";
-import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
 import { GenericEvent } from "./event";
 import { KeyBinds } from "../keybinds/keybinds";
 import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
@@ -59,14 +58,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @readonly
      */
     private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
-
-    /**
-     * Kebab dropdown menu listeners
-     *
-     * @private
-     * @readonly
-     */
-    private readonly editorkebabDropdownMenuListeners = new EditorKebabDropdownMenuListeners();
 
     /**
      * Directory tree state listeners object
