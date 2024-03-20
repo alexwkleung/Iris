@@ -19,17 +19,27 @@
     <img src="https://img.shields.io/github/license/alexwkleung/Iris"></img>
 </p>
 
+<h4 align="center">
+    <a href="https://discord.gg/z9QmRgJsmc" style="border-bottom: none">Discord</a>
+</h4>
+
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-1.png"></img>
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-2.png"></img>
 <img align="center" src="./screenshots/v0.2.0-dev-4.3-3.png"></img>
 
 # Info
 
-The app is currently in early development and may not be 100% stable for daily use.
+The app is currently in early development and may not be 100% stable for daily use. The source code could go through a handful of iterations and subsequent releases may not be backward compatible.
 
-Only macOS installers will be supplied in the early development phase and official release (v1.0.0). Other platforms are not supported but the decision may change after the official release.
+Only macOS installers will be supplied in the early development phase and official release (v1.0.0). Other platforms are not supported but is considered in the future roadmap.
 
-You can use the [GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) for communication. Other mediums will be created in the near future.
+# Contact 
+
+Join the [Discord](https://discord.gg/z9QmRgJsmc) to chat with others in the community.
+
+For professional mediums, you can contact via email (expect 24-48 hour reply time): irisnotesapp@gmail.com 
+
+[GitHub Discussions](https://github.com/alexwkleung/Iris/discussions) is also an alternative to the above contact methods.
 
 # Installation
 
@@ -149,7 +159,7 @@ npm run build:mac-universal
 npm run build:mac-arm64
 ```
 
-# Contributing 
+# Contributing
 
 Here are a list of ways you can contribute to Iris:
 
