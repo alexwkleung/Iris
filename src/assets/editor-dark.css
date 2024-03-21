@@ -10,7 +10,6 @@
     --prosemirror-menu-bar-dropdown-item-bg-dark: black; 
     --top-bar-directory-info-color-dark: #ffffff;
     --word-count-color-dark: rgb(109, 109, 109);
-    --reading-mode-color-dark: #eaeaea;
     --a-dark: rgb(136, 136, 220);
 }
 
@@ -138,20 +137,6 @@ body {
     margin-left: -5px;
 }
 
-/*
-.ProseMirror pre {
-    background-color: var(--prosemirror-pre-bg);
-    caret-color: var(--caret-color-light);
-    color: var(--prosemirror-pre-color);
-    width: calc(100% - 40px);
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-radius: 25px;
-    overflow-x: scroll;
-}
-*/
-
 .ProseMirror code {
     caret-color: var(--caret-color-dark);
     width: calc(100% - 50px);
@@ -163,86 +148,4 @@ body {
     white-space: pre-wrap;
     display: inline-block; 
     unicode-bidi: embed;
-}
-
-/*
-* codemirror
-*/ 
-.cm-editor {
-    background-color: var(--bg-dark); 
-    color: var(--color-dark);
-    color-scheme: dark;
-}
-
-.cm-content {
-    caret-color: var(--caret-color-dark);
-}
-
-.cm-cursor {
-    color: var(--caret-color-dark);
-}
-.cm-focused .cm-selectionBackground {
-    background-color: #667fa1 !important;
-}
-.cm-selectionBackground {
-    background-color: #667fa1 !important;
-}
-
-/*
-* reading mode 
-*/
-#reading-mode-container {
-    color-scheme: dark;
-}
-#reading-mode-container blockquote  {
-    border-left: 3px solid grey;
-    margin: 1.5em 0px;
-    padding: 0.5em 10px;
-    font-size: 18px;
-}
-#reading-mode-container blockquote:before {
-    color: grey;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-}
-#reading-mode-container blockquote p {
-    display: inline;
-    font-size: 18px;
-    color: rgb(83, 82, 82);
-}
-#reading-mode-container a {
-    color: var(--a-dark);
-}
-#reading-mode-container strong {
-    font-family: 'Inter-Bold'
-}
-#reading-mode-container img {
-    max-width: calc(100% - 15px);
-}
-#reading-mode-container hr {
-    border-color: rgb(46, 46, 46);
-    width: calc(100% - 25px);
-    margin-left: -5px;
-}
-#reading-mode-container table, th, td {
-    border: 1px solid;
-    border-collapse: collapse;
-    font-size: 17px;
-    color: var(--reading-mode-color-dark);
-    font-family: 'Inter-Regular', sans-serif;
-    padding: 6px 13px;
-}
-#reading-mode-container h1, h2, h3, h4, h5, h6 {
-    color: var(--reading-mode-color-dark);
-}
-#reading-mode-container p {
-    color: var(--reading-mode-color-dark);
-}
-#reading-mode-container li {
-    color: var(--reading-mode-color-dark);
-}
-#reading-mode-container .katex-html span {
-    color: var(--reading-mode-color-dark);
 }
