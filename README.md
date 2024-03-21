@@ -23,15 +23,14 @@
     <a href="https://discord.gg/z9QmRgJsmc" style="border-bottom: none">Discord</a>
 </h4>
 
-<img align="center" src="./screenshots/v0.2.0-dev-4.3-1.png"></img>
-<img align="center" src="./screenshots/v0.2.0-dev-4.3-2.png"></img>
-<img align="center" src="./screenshots/v0.2.0-dev-4.3-3.png"></img>
+<img align="center" src="./screenshots/2024-03-20.png"></img>
+<p><i>Screenshot as of 2024-03-20</i></p>
 
 # Info
 
-The app is currently in early development and may not be 100% stable for daily use. The source code could go through a handful of iterations and subsequent releases may not be backward compatible.
+The app is currently in early development and may not be 100% stable for daily use.
 
-Only macOS installers will be supplied in the early development phase and official release (v1.0.0). Other platforms are not supported but is considered in the future roadmap.
+Only macOS installers will be supplied in the early development phase and official release (v1.0.0). Other platforms are not supported but may be considered in the future.
 
 # Contact 
 
@@ -45,9 +44,30 @@ For professional mediums, you can contact via email (expect 24-48 hour reply tim
 
 You can install the latest dev builds from [releases](https://github.com/alexwkleung/Iris/releases).
 
-If you want to build the app directly from source, follow the instructions in [Development](#development).
+To build the app directly from source, follow the instructions in [Development](#development).
  
-# Development 
+# Development (Tech Stack, Libraries, Tools)
+
+**Tech Stack:**
+
+1. TypeScript (Front-end)
+2. Rust (Back-End)
+
+**Libraries:**
+
+1. Electron (Desktop framework)
+2. napi-rs (Native Node modules using Rust)
+3. ProseMirror (Note-taking editor)  
+4. markdown-it (CommonMark flavoured Markdown)
+
+**Tools:**
+
+1. ESLint + Prettier (Code linter + code formatter)
+2. Vite (Development server)
+3. Vitest (Unit testing)
+4. Make (Build tool)
+
+# Development (Setup)
 
 The recommended editor for development is [VS Code](https://code.visualstudio.com/)
 
@@ -55,7 +75,7 @@ Install [Node.js](https://nodejs.org/en/download)
 
 Install [Rust](https://www.rust-lang.org/tools/install)
 
-If you are cross-compiling the native modules for other platforms, you'll need to install the corresponding target if it isn't already installed:
+For cross-compiling the native modules, you'll need to install the corresponding target. This is necessary for universal builds (i.e., need to install x86_64 target on aarch64 machines).
 
 ```bash
 # check target list
@@ -64,17 +84,17 @@ rustc --print target-list
 # install target
 rustup target install <target>
 
-# Apple Silicon:
+# For Apple Silicon:
 rustup target install x86_64-apple-darwin
 
-# Intel Architecture:
+# For Intel:
 rustup target install aarch64-apple-darwin
 ```
 
-The recommended build tool for Iris is [GNU Make](https://www.gnu.org/software/make/). All build steps or commands will be reflected in the `makefile`. At the moment, only a small set of commands have a `npm run` script counterpart.
+The recommended build tool for Iris is [GNU Make](https://www.gnu.org/software/make/). All build steps or commands will be reflected in the `makefile`.
 
 ```bash
-# for example: install Xcode Command Line Tools on macOS (includes GNU Make)
+# install Xcode Command Line Tools on macOS (includes GNU Make)
 xcode-select --install 
 ```
 
@@ -84,7 +104,7 @@ Clone the repository
 git clone <SSH/HTTPS URL>
 ```
 
-Change directory 
+Change directory to project
 
 ```bash
 cd <...>/Iris
@@ -108,18 +128,18 @@ It recommended to add these to your VS Code `settings.json`:
 
 Build native modules
 
+You must have the native module for both x64 and arm64 in order to build the universal binary
+
 ```bash
 # change directory to native module
 cd fs-mod
 
-# if you are planning to build a universal binary, you must have the native module for both x64 and arm64
-
-# execute one of the build commands below:
-
 # build native module for your platform (automatic)
 npm run build
+
 # build native module for macOS x64
 npm run build-x64
+
 # build native module for macOS arm64
 npm run build-arm64
 
@@ -132,31 +152,21 @@ Run development server. The dev tools is undocked by default.
 ```bash
 # via make 
 make dev
-
-# via npm
-npm run dev
 ```
 
 Build the installer 
 
+Universal is the recommended installer to build.
+
 ```bash
+# via make (universal)
+make build-mac-universal
+
 # via make (x64)
 make build-mac-x64
 
 # via make (arm64)
 make build-mac-arm64
-
-# via make (universal)
-make build-mac-universal
-
-# via npm (x64)
-npm run build:mac-x64
-
-# via npm (universal)
-npm run build:mac-universal
-
-# via npm (arm64)
-npm run build:mac-arm64
 ```
 
 # Contributing
