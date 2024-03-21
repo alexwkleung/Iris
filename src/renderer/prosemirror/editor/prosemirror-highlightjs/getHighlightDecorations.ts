@@ -111,7 +111,7 @@ export function getHighlightDecorations(
             // if the returned decorations are non-null, use them instead of rendering our own
             if (prerenderedDecorations) {
                 decorations = [...decorations, ...prerenderedDecorations];
-                return;
+                return decorations;
             }
         }
 
@@ -148,15 +148,13 @@ export function getHighlightDecorations(
 
         const localDecorations: Decoration[] = [];
         value.forEach((v) => {
-            if (!v.scope) {
-                return;
+            if (v.scope) {
+                const decoration = Decoration.inline(v.from, v.to, {
+                    class: v.classes,
+                });
+
+                localDecorations.push(decoration);
             }
-
-            const decoration = Decoration.inline(v.from, v.to, {
-                class: v.classes,
-            });
-
-            localDecorations.push(decoration);
         });
 
         if (options?.postRenderer) {
@@ -190,11 +188,9 @@ class ProseMirrorRenderer implements Renderer {
     addText(text: string) {
         const node = this.currentNode;
 
-        if (!node) {
-            return;
+        if (node) {
+            this.currentPosition += text.length;
         }
-
-        this.currentPosition += text.length;
     }
 
     openNode(node: DataNode) {

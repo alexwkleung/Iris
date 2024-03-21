@@ -51,11 +51,9 @@ export class DecorationCache {
      * @param decorations The decorations to place in cache
      */
     set(pos: number, node: ProseMirrorNode, decorations: Decoration[]): void {
-        if (pos < 0) {
-            return;
+        if (!(pos < 0)) {
+            this.cache[pos] = { node, decorations };
         }
-
-        this.cache[pos] = { node, decorations };
     }
 
     /**
@@ -88,22 +86,21 @@ export class DecorationCache {
         const returnCache = new DecorationCache(this.cache);
         const mapping = tr.mapping;
         Object.keys(this.cache).forEach((k) => {
-            const pos = +k;
+            const pos = Number(k);
 
-            if (pos < 0) {
-                return;
-            }
+            if (!(pos < 0)) {
+                const result = mapping.mapResult(pos);
+                const mappedNode = tr.doc.nodeAt(result.pos);
+                const { node, decorations } = this.get(pos);
 
-            const result = mapping.mapResult(pos);
-            const mappedNode = tr.doc.nodeAt(result.pos);
-            const { node, decorations } = this.get(pos);
-
-            if (result.deleted || !mappedNode?.eq(node)) {
-                returnCache.remove(pos);
-            } else if (pos !== result.pos) {
-                // update the decorations' from/to values to match the new node position
-                const updatedDecorations = decorations.map((d) => d.map(mapping, 0, 0)).filter((d) => d !== null);
-                returnCache.replace(pos, result.pos, mappedNode, updatedDecorations);
+                if (result.deleted || !mappedNode?.eq(node)) {
+                    returnCache.remove(pos);
+                }
+                if (pos !== result.pos && mappedNode != null) {
+                    // update the decorations' from/to values to match the new node position
+                    const updatedDecorations = decorations.map((d) => d.map(mapping, 0, 0)).filter((d) => d !== null);
+                    returnCache.replace(pos, result.pos, mappedNode, updatedDecorations);
+                }
             }
         });
 
@@ -191,6 +188,7 @@ export function highlightPlugin(
             },
             apply(tr, data) {
                 const updatedCache = data.cache.invalidate(tr);
+                /*
                 if (!tr.docChanged) {
                     return {
                         cache: updatedCache,
@@ -198,6 +196,7 @@ export function highlightPlugin(
                         autodetectedLanguages: [],
                     };
                 }
+                */
 
                 const result = getDecos(tr.doc, updatedCache);
 
@@ -219,15 +218,15 @@ export function highlightPlugin(
             // for consumers using this plugin server-side with no view
 
             // dispatches a transaction to update a node's language if needed
-            const updateNodeLanguages = (view: EditorView) => {
-                const pluginState = key.getState(view.state);
+            const updateNodeLanguages = (): undefined => {
+                const pluginState = key.getState(initialView.state);
 
                 // if there's no pluginState found or if no block was autodetected, no need to do anything
                 if (!pluginState || !pluginState.autodetectedLanguages.length) {
                     return;
                 }
 
-                let tr = view.state.tr;
+                let tr = initialView.state.tr;
 
                 // for each autodetected language, place it
                 pluginState.autodetectedLanguages.forEach((l) => {
@@ -240,15 +239,15 @@ export function highlightPlugin(
                 // ensure that our behind-the-scenes update doesn't get added to the editor history
                 tr = tr.setMeta("addToHistory", false);
 
-                view.dispatch(tr);
+                initialView.dispatch(tr);
             };
 
             // go ahead and update the nodes immediately
-            updateNodeLanguages(initialView);
+            // updateNodeLanguages(initialView);
 
             // update all the nodes whenever the document updates
             return {
-                update: updateNodeLanguages,
+                update: updateNodeLanguages(),
             };
         },
     });

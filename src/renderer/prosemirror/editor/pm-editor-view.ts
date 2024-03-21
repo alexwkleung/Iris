@@ -46,6 +46,9 @@ export class PMEditorView {
             clipboardTextSerializer: (slice): any => {
                 return defaultMarkdownSerializer.serialize(slice.content as any);
             },
+            attributes: {
+                spellcheck: "false",
+            },
         });
 
         return PMEditorView.editorView;
