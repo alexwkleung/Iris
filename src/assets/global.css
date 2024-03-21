@@ -1047,18 +1047,47 @@ body {
 */
 
 .ProseMirror code {
-    background-color: var(--prosemirror-code-bg);
     caret-color: var(--caret-color-light);
-    color: var(--prosemirror-code-color);
-    width: calc(100% - 40px);
+    width: calc(100% - 50px);
     padding-left: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
-    /*border-radius: 25px;*/
+    border-radius: 25px;
     overflow-x: scroll;
     white-space: pre-wrap;
     display: inline-block; 
     unicode-bidi: embed;
+}
+
+.ProseMirror h1::before {
+    content: "# ";
+    color: grey;
+    opacity: 0.97;
+}
+.ProseMirror h2::before {
+    content: "## ";
+    color: grey;
+    opacity: 0.97;
+}
+.ProseMirror h3::before {
+    content: "### ";
+    color: grey;
+    opacity: 0.97;
+}
+.ProseMirror h4::before {
+    content: "#### ";
+    color: grey;
+    opacity: 0.97;
+}
+.ProseMirror h5::before {
+    content: "#####  ";
+    color: grey;
+    opacity: 0.97;
+}
+.ProseMirror h6::before {
+    content: "####### ";
+    color: grey;
+    opacity: 0.97;
 }
 
 /*

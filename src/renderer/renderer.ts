@@ -43,8 +43,14 @@ namespace RendererProcess {
                         el.remove();
                     });
                 }
+                EditorThemes.lightTheme();
                 //dark theme
             } else if (Settings.getSettings.darkTheme) {
+                if ((document.querySelector(".highlight-light-theme") as HTMLElement) !== null) {
+                    document.querySelectorAll(".highlight-light-theme").forEach((el) => {
+                        el.remove();
+                    });
+                }
                 EditorThemes.darkTheme();
             }
         }

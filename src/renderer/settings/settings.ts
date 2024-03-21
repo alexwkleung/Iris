@@ -1,5 +1,7 @@
 import { fsMod } from "../../utils/alias";
 import editorDark from "../../assets/editor-dark.css?inline?url";
+import githubLight from "../../assets/github-light-highlight.css?inline?url";
+import githubDark from "../../assets/github-dark-highlight.css?inline?url";
 
 /**
  * Settings interface
@@ -24,6 +26,14 @@ export class Settings {
 }
 
 export class EditorThemes {
+    static lightTheme(): void {
+        const highlightLight: HTMLLinkElement = document.createElement("link");
+        highlightLight.setAttribute("rel", "stylesheet");
+        highlightLight.setAttribute("href", githubLight);
+        highlightLight.setAttribute("class", "highlight-light-theme");
+        document.body.appendChild(highlightLight);
+    }
+
     /**
      * Dark theme
      *
@@ -35,5 +45,11 @@ export class EditorThemes {
         linkNode.setAttribute("href", editorDark);
         linkNode.setAttribute("class", "editor-dark-theme");
         document.body.appendChild(linkNode);
+
+        const highlightDark: HTMLLinkElement = document.createElement("link");
+        highlightDark.setAttribute("rel", "stylesheet");
+        highlightDark.setAttribute("href", githubDark);
+        highlightDark.setAttribute("class", "highlight-dark-theme");
+        document.body.appendChild(highlightDark);
     }
 }

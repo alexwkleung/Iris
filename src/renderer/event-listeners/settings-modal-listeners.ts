@@ -31,6 +31,8 @@ export class SettingsModalListeners extends SettingsModal {
 
             (document.querySelector(".light-option") as HTMLElement).setAttribute("selected", "");
 
+            EditorThemes.lightTheme();
+
             Settings.getSettings.lightTheme = true;
             Settings.getSettings.darkTheme = false;
 
@@ -83,7 +85,9 @@ export class SettingsModalListeners extends SettingsModal {
                 el.remove();
             });
 
-            return;
+            document.querySelectorAll(".highlight-dark-theme").forEach((el) => {
+                el.remove();
+            });
         } else {
             GenericEvent.use.createDisposableEvent(
                 document.getElementById("theme-select") as HTMLElement,

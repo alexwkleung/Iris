@@ -15,6 +15,8 @@ import pasteLinkPlugin from "prosemirror-paste-link";
 import { MenuItem } from "../menu/menu";
 import { menuBar } from "../menu/menubar";
 import { buildMenuItems } from "../menu/build-menu";
+import hljs from "highlight.js";
+import { highlightPlugin } from "./prosemirror-highlightjs/plugin";
 
 //eslint-disable-next-line
 export function pmSetup(options: {
@@ -32,6 +34,7 @@ export function pmSetup(options: {
         dropCursor(),
         gapCursor(),
         pasteLinkPlugin,
+        highlightPlugin(hljs),
     ];
 
     if (options.menuBar !== false) {

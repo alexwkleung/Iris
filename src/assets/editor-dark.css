@@ -153,14 +153,12 @@ body {
 */
 
 .ProseMirror code {
-    background-color: var(--prosemirror-code-bg);
-    caret-color: var(--caret-color-light);
-    color: var(--prosemirror-code-color);
-    width: calc(100% - 40px);
+    caret-color: var(--caret-color-dark);
+    width: calc(100% - 50px);
     padding-left: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
-    /*border-radius: 25px;*/
+    border-radius: 25px;
     overflow-x: scroll;
     white-space: pre-wrap;
     display: inline-block; 
