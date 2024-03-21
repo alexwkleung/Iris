@@ -1,11 +1,6 @@
 import { App } from "./app";
-import { PMEditorView } from "./prosemirror/editor/pm-editor-view";
 import { WordCountContainerNode } from "./misc-ui/word-count";
-import { EditorKebabDropdownMenu } from "./misc-ui/editor-kebab-dropdown-menu";
-import { CMEditorView } from "./codemirror/editor/cm-editor-view";
-import { Settings } from "./settings/settings";
-import { CMEditorState } from "./codemirror/editor/cm-editor-state";
-import { cursors } from "./codemirror/extensions/cursors";
+import { PMEditorView } from "./prosemirror/editor/pm-editor-view";
 
 export namespace EditorNs {
     export class EditorContainerNode {
@@ -34,36 +29,24 @@ export namespace EditorNs {
          * Directory info
          */
         public directoryInfo(): void {
-            //top bar directory info
             const topBarDirectoryInfo: HTMLDivElement = document.createElement("div");
             topBarDirectoryInfo.setAttribute("id", "top-bar-directory-info");
 
-            //doc title folder
-            const docTitleFolder: string = document.title.split("-")[1].trim();
+            const docTitleName: string = document.title.split("-")[2].trim();
 
             document.querySelectorAll(".child-file-name.is-active-child").forEach((el) => {
-                //null check
                 if (el !== null) {
-                    //log
-                    console.log(el.textContent);
-
-                    //top bar directory info text node
-                    const topBarDirectoryInfoTextNode: Text = document.createTextNode(
-                        docTitleFolder + " - " + el.textContent
-                    );
+                    const topBarDirectoryInfoTextNode: Text = document.createTextNode(docTitleName);
                     topBarDirectoryInfo.appendChild(topBarDirectoryInfoTextNode);
                 }
             });
 
-            //check if top-bar-directory-info node exists in dom
             if (
                 document.getElementById("top-bar-directory-info") &&
                 document.getElementById("top-bar-directory-info") !== null
             ) {
-                //remove node from dom
                 (document.getElementById("top-bar-directory-info") as HTMLDivElement).remove();
 
-                //append top bar directory info node
                 (document.getElementById("editor-top-bar-container") as HTMLDivElement).appendChild(
                     topBarDirectoryInfo
                 );
@@ -76,37 +59,16 @@ export namespace EditorNs {
     }
 
     export function editor(): void {
-        //create editor container
         EditorContainerNode.createEditorContainer();
 
-        if (Settings.getSettings.basicMode) {
-            //create prosemirror editorview
-            PMEditorView.createEditorView();
+        PMEditorView.createEditorView();
 
-            //set prosemirror contenteditable
-            PMEditorView.setContenteditable(false);
+        PMEditorView.setContenteditable(false);
 
-            //hide prosemirror menubar
-            (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "none";
-        } else if (Settings.getSettings.advancedMode) {
-            CMEditorView.createEditorView();
+        (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "none";
 
-            CMEditorView.setContenteditable(false);
-
-            if (Settings.getSettings.lightTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
-            } else if (Settings.getSettings.darkTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
-            }
-        }
-
-        //create editor top bar container
         EditorTopBarContainer.createEditorTopBarContainer();
 
-        //create word count container
         WordCountContainerNode.createWordCountContainer();
-
-        //create editor kebab dropdown menu container
-        EditorKebabDropdownMenu.createEditorKebabDropdownMenuContainer();
     }
 }

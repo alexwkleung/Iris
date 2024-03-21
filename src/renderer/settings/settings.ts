@@ -1,14 +1,7 @@
-import { fsMod } from "../utils/alias";
-//https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
-//https://vitejs.dev/guide/assets.html#importing-asset-as-url
-//?inline: to prevent auto injection
-//?url: get url of named import
-import { CMEditorView } from "../codemirror/editor/cm-editor-view";
-import { CMEditorState } from "../codemirror/editor/cm-editor-state";
-import { cursors } from "../codemirror/extensions/cursors";
-
+import { fsMod } from "../../utils/alias";
 import editorDark from "../../assets/editor-dark.css?inline?url";
-import highlightDark from "../../assets/classic-dark.min.css?inline?url";
+import githubLight from "../../assets/github-light-highlight.css?inline?url";
+import githubDark from "../../assets/github-dark-highlight.css?inline?url";
 
 /**
  * Settings interface
@@ -16,13 +9,6 @@ import highlightDark from "../../assets/classic-dark.min.css?inline?url";
 interface ISettingsData<T extends boolean> {
     lightTheme: T;
     darkTheme: T;
-    basicMode: T;
-    advancedMode: T;
-    readingMode: T;
-    defaultCursor: T;
-    blockCursor: T;
-    showBasicInSelection: T;
-    showAdvancedInSelection: T;
 }
 
 type TSettings = ISettingsData<boolean>;
@@ -40,6 +26,14 @@ export class Settings {
 }
 
 export class EditorThemes {
+    static lightTheme(): void {
+        const highlightLight: HTMLLinkElement = document.createElement("link");
+        highlightLight.setAttribute("rel", "stylesheet");
+        highlightLight.setAttribute("href", githubLight);
+        highlightLight.setAttribute("class", "highlight-light-theme");
+        document.body.appendChild(highlightLight);
+    }
+
     /**
      * Dark theme
      *
@@ -52,30 +46,10 @@ export class EditorThemes {
         linkNode.setAttribute("class", "editor-dark-theme");
         document.body.appendChild(linkNode);
 
-        const highlightDarkTheme: HTMLLinkElement = document.createElement("link");
-        highlightDarkTheme.setAttribute("rel", "stylesheet");
-        highlightDarkTheme.setAttribute("href", highlightDark);
-        highlightDarkTheme.setAttribute("class", "highlight-dark-theme");
-        document.body.appendChild(highlightDarkTheme);
-    }
-}
-
-export class AdvancedModeSettings {
-    static defaultCursor(theme: string): void {
-        if (theme === "light") {
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]),
-            });
-        } else if (theme === "dark") {
-            CMEditorView.editorView.dispatch({
-                effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]),
-            });
-        }
-    }
-
-    static blockCursor(): void {
-        CMEditorView.editorView.dispatch({
-            effects: CMEditorState.cursorCompartment.reconfigure(cursors[2]),
-        });
+        const highlightDark: HTMLLinkElement = document.createElement("link");
+        highlightDark.setAttribute("rel", "stylesheet");
+        highlightDark.setAttribute("href", githubDark);
+        highlightDark.setAttribute("class", "highlight-dark-theme");
+        document.body.appendChild(highlightDark);
     }
 }

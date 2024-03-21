@@ -1,7 +1,6 @@
 import { DirectoryTreeListeners } from "./event-listeners/directory-tree-listeners.js";
 import { DirectoryTreeUIModalListeners } from "./event-listeners/directory-tree-ui-modal-listeners.js";
 import { SettingsModalListeners } from "./event-listeners/settings-modal-listeners.js";
-import { DirectoryTreeKebabDropdownListeners } from "./event-listeners/directory-tree-kebab-dropdown-listener.js";
 
 export namespace ListenerNs {
     export function directoryTreeListeners(): void {
@@ -23,12 +22,6 @@ export namespace ListenerNs {
 
         settingsModalListenersObj.settingsModalListener();
     }
-
-    export function kebabListeners(): void {
-        const directoryTreeKebabDropdownListener = new DirectoryTreeKebabDropdownListeners();
-
-        directoryTreeKebabDropdownListener.directoryTreeKebabDropdownListeners();
-    }
 }
 
 export function invokeListeners(): void {
@@ -38,7 +31,5 @@ export function invokeListeners(): void {
         ListenerNs.directoryTreeUIModalListeners();
 
         ListenerNs.settingsModalListeners();
-
-        ListenerNs.kebabListeners();
     });
 }

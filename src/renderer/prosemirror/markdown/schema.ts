@@ -73,7 +73,11 @@ export const schema = new Schema({
             ],
             //eslint-disable-next-line
             toDOM(node) {
-                return ["pre", node.attrs.params ? { "data-params": node.attrs.params } : {}, ["code", 0]];
+                return [
+                    "pre",
+                    node.attrs.params ? { "data-params": node.attrs.params } : {},
+                    ["code", { class: "hljs" }, 0],
+                ];
             },
         },
         ordered_list: {

@@ -2,35 +2,17 @@
     --default-bg: #151515;
     --prosemirror-bg-dark: #151515;
     --prosemirror-color-dark: #eaeaea;
+    --default-color: #ffffff;
+    --bg-dark: #151515;
+    --color-dark: #eaeaea;
     --caret-color-dark: #ffffff;
     --prosemirror-a-dark: rgb(136, 136, 220);
     --prosemirror-menu-bar-dropdown-item-bg-dark: black; 
     --top-bar-directory-info-color-dark: #ffffff;
     --word-count-color-dark: rgb(109, 109, 109);
-    --reading-mode-color-dark: #eaeaea;
+    --a-dark: rgb(136, 136, 220);
 }
 
-/*
-* global
-*/
-body { 
-    background-color: var(--default-bg);
-    caret-color: var(--caret-color-dark);
-}
-#top-bar-directory-info {
-    color: var(--top-bar-directory-info-color-dark);
-}
-
-#file-directory-tree-container {
-    color-scheme: dark;
-}
-
-/*
-* word count
-*/
-#word-count-container {
-    color: var(--word-count-color-dark);
-}
 
 /*
 * prosemirror 
@@ -60,83 +42,110 @@ body {
 }
 
 /*
-* codemirror
-*/ 
-.cm-editor {
-    background-color: var(--prosemirror-bg-dark); 
-    color: var(--prosemirror-color-dark);
-    color-scheme: dark;
-}
-
-.cm-content {
+* global
+*/
+body { 
+    background-color: var(--default-bg);
     caret-color: var(--caret-color-dark);
 }
 
-.cm-cursor {
-    color: var(--caret-color-dark);
+#top-bar-directory-info {
+    color: var(--top-bar-directory-info-color-dark);
 }
-.cm-focused .cm-selectionBackground {
-    background-color: #667fa1 !important;
+
+#file-directory-tree-container {
+    color-scheme: dark;
 }
-.cm-selectionBackground {
-    background-color: #667fa1 !important;
+
+.editor-mode-label {
+    font-family: 'Inter-Regular';
+    position: fixed;
+    color: var(--default-color);
+    margin-left: 310px;
+    margin-top: 18px;
+}
+#editor-mode-select {
+    font-family: 'Inter-Regular';
+    background-color: var(--default-bg);
+    color: var(--default-color);
+    border-radius: 5px;
+    font-size: 17px;
+    margin-top: 16px;
+    margin-left: 360px;
 }
 
 /*
-* reading mode 
+* word count
 */
-#reading-mode-container {
-    color-scheme: dark;
+#word-count-container {
+    color: var(--word-count-color-dark);
 }
-#reading-mode-container blockquote  {
+
+/**
+* prosemirror editor nodes 
+*/
+.ProseMirror h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter-Bold';
+    margin-left: 3px;
+}
+
+.ProseMirror p {
+    margin-left: 3px;
+    padding-right: 20px;
+    white-space: pre-wrap;
+    text-align: justify;
+}
+
+.ProseMirror pre {
+    white-space: normal;
+}
+
+.ProseMirror blockquote  {
     border-left: 3px solid grey;
     margin: 1.5em 0px;
     padding: 0.5em 10px;
     font-size: 18px;
 }
-#reading-mode-container blockquote:before {
+.ProseMirror blockquote:before {
     color: grey;
     font-size: 4em;
     line-height: 0.1em;
     margin-right: 0.25em;
     vertical-align: -0.4em;
 }
-#reading-mode-container blockquote p {
+.ProseMirror blockquote p {
     display: inline;
     font-size: 18px;
     color: rgb(83, 82, 82);
 }
-#reading-mode-container a {
-    color: var(--prosemirror-a-dark);
+
+.ProseMirror a {
+    color: var(--prosemirror-a-light);
 }
-#reading-mode-container strong {
+
+.ProseMirror strong {
     font-family: 'Inter-Bold'
 }
-#reading-mode-container img {
+
+.ProseMirror img {
     max-width: calc(100% - 15px);
 }
-#reading-mode-container hr {
+
+.ProseMirror hr {
     border-color: rgb(46, 46, 46);
     width: calc(100% - 25px);
     margin-left: -5px;
 }
-#reading-mode-container table, th, td {
-    border: 1px solid;
-    border-collapse: collapse;
-    font-size: 17px;
-    color: var(--reading-mode-color-dark);
-    font-family: 'Inter-Regular', sans-serif;
-    padding: 6px 13px;
-}
-#reading-mode-container h1, h2, h3, h4, h5, h6 {
-    color: var(--reading-mode-color-dark);
-}
-#reading-mode-container p {
-    color: var(--reading-mode-color-dark);
-}
-#reading-mode-container li {
-    color: var(--reading-mode-color-dark);
-}
-#reading-mode-container .katex-html span {
-    color: var(--reading-mode-color-dark);
+
+.ProseMirror code {
+    caret-color: var(--caret-color-dark);
+    width: calc(100% - 50px);
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 25px;
+    overflow-x: scroll;
+    white-space: pre-wrap;
+    display: inline-block; 
+    unicode-bidi: embed;
 }

@@ -11,7 +11,5 @@ export namespace directoryNs {
         dirTree.createFolderNode();
 
         dirTree.settingsNode();
-
-        dirTree.fileDirectoryKebabNode();
     }
 }

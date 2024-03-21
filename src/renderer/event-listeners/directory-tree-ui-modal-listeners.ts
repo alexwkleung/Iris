@@ -1,29 +1,20 @@
 import { EditorNs } from "../editor-main";
 import { DirectoryTreeUIModals } from "../file-directory-tree/file-directory-tree-modals";
 import { IDirectoryTreeUIModalListeners } from "../interfaces/listener-interfaces";
-import { FolderFileCount } from "../misc-ui/folder-file-count";
 import { DirectoryTreeListeners } from "./directory-tree-listeners";
 import { EditorListeners } from "./editor-listeners";
 import { DirectoryTreeStateListeners } from "./file-directory-state-listener";
-import { isModeAdvanced, isModeBasic, isModeReading } from "../utils/is";
-import { fsMod } from "../utils/alias";
+import { isDefaultMode } from "../../utils/is";
+import { fsMod } from "../../utils/alias";
+import { RefsNs } from "./directory-tree-listeners";
+import { wordCountListener } from "./word-count-listener";
+import { setWindowTitle } from "../window/window-title";
+import { GenericEvent } from "./event";
+import { KeyBinds } from "../keybinds/keybinds";
 import { PMEditorView } from "../prosemirror/editor/pm-editor-view";
 import { PMEditorState } from "../prosemirror/editor/pm-editor-state";
 import { Node } from "prosemirror-model";
 import { defaultMarkdownParser } from "../prosemirror/markdown/export";
-import { RefsNs } from "./directory-tree-listeners";
-import { wordCountListener } from "./word-count-listener";
-import { setWindowTitle } from "../window/window-title";
-import { EditorKebabDropdownMenuListeners } from "./kebab-dropdown-menu-listener";
-import { CMEditorView } from "../codemirror/editor/cm-editor-view";
-import { CMEditorState } from "../codemirror/editor/cm-editor-state";
-import { cursors } from "../codemirror/extensions/cursors";
-import { Settings } from "../settings/settings";
-import { AdvancedModeSettings } from "../settings/settings";
-import { ReadingMode } from "../mode/reading-mode";
-import { markdownParser } from "../utils/markdown-parser";
-import { GenericEvent } from "./event";
-import { KeyBinds } from "../keybinds/keybinds";
 
 /**
  * @extends DirectoryTreeUIModals
@@ -53,14 +44,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
     private readonly directoryTreeListeners = new DirectoryTreeListeners();
 
     /**
-     * Folder file count object
-     *
-     * @private
-     * @readonly
-     */
-    private readonly folderFileCountObject = new FolderFileCount();
-
-    /**
      * Editor listeners object
      *
      * @private
@@ -75,14 +58,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      * @readonly
      */
     private readonly editorTopBarContainer = new EditorNs.EditorTopBarContainer();
-
-    /**
-     * Kebab dropdown menu listeners
-     *
-     * @private
-     * @readonly
-     */
-    private readonly editorkebabDropdownMenuListeners = new EditorKebabDropdownMenuListeners();
 
     /**
      * Directory tree state listeners object
@@ -193,8 +168,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
      */
     public createFileModalContinueCb: () => Promise<void> = async (): Promise<void> => {
         if (this.fileName === ".md") {
-            //eslint-disable-next-line
-            //@ts-ignore
             window.electron.ipcRenderer.invoke(
                 "show-message-box",
                 "Note name cannot be empty. Enter a valid note name."
@@ -241,10 +214,15 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             DirectoryTreeUIModals.createModalContainer.remove();
         }
 
+        const childFileContainer: HTMLDivElement = document.createElement("div");
+        childFileContainer.setAttribute("class", "child-file-name-container");
+
         const childFile: HTMLDivElement = document.createElement("div");
         childFile.setAttribute("class", "child-file-name is-active-child");
 
         const childFileTextNode: Text = document.createTextNode(this.fileName.split(".md")[0]);
+
+        childFileContainer.appendChild(childFile);
 
         //assign references to corresponding key properties
         RefsNs.currentParentChildData.map((props) => {
@@ -266,7 +244,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             if (el.textContent === createFileModalFolderNameRef) {
                 childFile.appendChild(childFileTextNode);
 
-                (el.parentNode as ParentNode).appendChild(childFile);
+                (el.parentNode as ParentNode).appendChild(childFileContainer);
             }
         });
 
@@ -282,136 +260,56 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         //apply active state listener
         this.dirTreeStateListeners.activeChildFileStateListener();
 
-        //mode check
-        if (isModeBasic()) {
-            //log
-            console.log(this.fileName);
+        //log
+        console.log(this.fileName);
 
-            //destroy current editor view
-            PMEditorView.editorView.destroy();
+        //destroy current editor view
+        PMEditorView.editorView.destroy();
 
-            //create new editor view
-            PMEditorView.createEditorView();
+        //create new editor view
+        PMEditorView.createEditorView();
 
-            //log
-            console.log(createFileModalFolderNameRef);
+        //log
+        console.log(createFileModalFolderNameRef);
 
-            //log
-            console.log(this.fileName);
+        //log
+        console.log(this.fileName);
 
-            //update editor view state
-            PMEditorView.editorView.updateState(
-                //apply transaction
-                PMEditorView.editorView.state.apply(
-                    //since editor gets destroyed and re-created, the
-                    //range is 0 to 0
-                    PMEditorState.editorState.tr.replaceRangeWith(
-                        0,
-                        0,
-                        defaultMarkdownParser.parse(
-                            fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
-                        ) as Node
-                    )
+        //update editor view state
+        PMEditorView.editorView.updateState(
+            //apply transaction
+            PMEditorView.editorView.state.apply(
+                //since editor gets destroyed and re-created, the
+                //range is 0 to 0
+                PMEditorState.editorState.tr.replaceRangeWith(
+                    0,
+                    0,
+                    defaultMarkdownParser.parse(
+                        fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
+                    ) as Node
                 )
-            );
+            )
+        );
 
-            //set contenteditable
-            PMEditorView.setContenteditable(true);
+        //set contenteditable
+        PMEditorView.setContenteditable(true);
 
-            //if contenteditable attribute is set to true
-            if ((document.querySelector(".ProseMirror") as HTMLElement).getAttribute("contenteditable") === "true") {
-                //show the menubar
-                (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "";
-            }
-
-            (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
-
-            //invoke auto save listener
-            this.editorListeners.autoSaveListener("prosemirror");
-
-            //invoke insert tab listener
-            this.editorListeners.insertTabListener(document.querySelector(".ProseMirror") as HTMLElement, 2);
-
-            //word count listener
-            wordCountListener("prosemirror");
-
-            //kebab dropdown menu listener
-            this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
-        } else if (isModeAdvanced()) {
-            //log
-            console.log(this.fileName);
-
-            //destroy current editor view
-            CMEditorView.editorView.destroy();
-
-            //create new editor view
-            CMEditorView.createEditorView();
-
-            //log
-            console.log(createFileModalFolderNameRef);
-
-            //log
-            console.log(this.fileName);
-
-            //dispatch text insertion tr
-            CMEditorView.editorView.dispatch({
-                changes: {
-                    from: 0,
-                    to: 0,
-                    insert: fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName),
-                },
-            });
-
-            //set contenteditable
-            CMEditorView.setContenteditable(true);
-
-            //cursor theme
-            if (Settings.getSettings.lightTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[0]) });
-            } else if (Settings.getSettings.darkTheme) {
-                CMEditorView.editorView.dispatch({ effects: CMEditorState.cursorCompartment.reconfigure(cursors[1]) });
-            }
-
-            //check block cursor
-            if (Settings.getSettings.defaultCursor && Settings.getSettings.lightTheme) {
-                AdvancedModeSettings.defaultCursor("light");
-            } else if (Settings.getSettings.defaultCursor && Settings.getSettings.darkTheme) {
-                AdvancedModeSettings.defaultCursor("dark");
-            } else if (
-                (Settings.getSettings.blockCursor && Settings.getSettings.lightTheme) ||
-                (Settings.getSettings.blockCursor && Settings.getSettings.darkTheme)
-            ) {
-                AdvancedModeSettings.blockCursor();
-            }
-
-            (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
-
-            //invoke auto save listener
-            this.editorListeners.autoSaveListener("codemirror");
-
-            //word count listener
-            wordCountListener("codemirror");
-
-            //kebab dropdown menu listener
-            this.editorkebabDropdownMenuListeners.kebabDropdownMenuListener();
-        } else if (isModeReading()) {
-            //remove reading mode container if present in DOM
-            if ((document.getElementById("reading-mode-container") as HTMLElement) !== null) {
-                (document.getElementById("reading-mode-container") as HTMLElement).remove();
-            }
-
-            //create reading mode node
-            ReadingMode.readingModeNode();
-
-            //create fragment and append
-            const content: string = await markdownParser(
-                fsMod.fs._readFileFolder(createFileModalFolderNameRef, this.fileName)
-            ).catch((e) => {
-                throw console.error(e);
-            });
-            const contextFragment = new Range().createContextualFragment(content);
-            (document.getElementById("reading-mode-content") as HTMLElement).appendChild(contextFragment);
+        //if contenteditable attribute is set to true
+        if ((document.querySelector(".ProseMirror") as HTMLElement).getAttribute("contenteditable") === "true") {
+            //show the menubar
+            (document.querySelector(".ProseMirror-menubar") as HTMLElement).style.display = "";
         }
+
+        (document.getElementById("kebab-dropdown-menu-container") as HTMLElement).style.display = "";
+
+        //invoke auto save listener
+        this.editorListeners.autoSaveListener("prosemirror");
+
+        //invoke insert tab listener
+        this.editorListeners.insertTabListener(document.querySelector(".ProseMirror") as HTMLElement, 2);
+
+        //word count listener
+        wordCountListener("prosemirror");
 
         //change document title so it corresponds to the opened file
         await setWindowTitle("Iris", true, createFileModalFolderNameRef + " - " + this.fileName.split(".md")[0]).catch(
@@ -513,15 +411,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
                             this.createFileModalContinueListener(
                                 document.querySelector("#create-file-modal-new-file-name-input-node") as HTMLElement
                             );
-
-                            const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
-
-                            //invoke folder file count
-                            this.folderFileCountObject.folderFileCount(
-                                parentRoot[i],
-                                this.directoryTreeListeners.parentNameTagsArr()[i],
-                                true
-                            );
                         } else if (!createFileNode[i].classList.contains("show-create-file")) {
                             createFileNode[i].classList.remove("show-create-file");
                         }
@@ -553,8 +442,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         let parentFolder: HTMLDivElement = {} as HTMLDivElement;
 
         if (this.folderName === "" || this.folderName === " ") {
-            //eslint-disable-next-line
-            //@ts-ignore
             window.electron.ipcRenderer.invoke(
                 "show-message-box",
                 "Folder name cannot be empty. Enter a valid folder name."
@@ -583,17 +470,6 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
         const parentFolderCaretTextNode: Text = document.createTextNode(String.fromCharCode(94));
         parentFolderCaret.appendChild(parentFolderCaretTextNode);
         parentFolder.appendChild(parentFolderCaret);
-
-        const parentRoot: NodeListOf<Element> = document.querySelectorAll(".parent-of-root-folder");
-
-        for (let i = 0; i < parentRoot.length; i++) {
-            //invoke folder file count
-            this.folderFileCountObject.folderFileCount(
-                parentRoot[i],
-                this.directoryTreeListeners.parentNameTagsArr()[i],
-                true
-            );
-        }
 
         //invoke parent root listener (created directory only)
         this.directoryTreeListeners.parentRootListener();
@@ -678,7 +554,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             (document.getElementById("create-modal-container") as HTMLElement).remove();
         }
 
-        if (isModeBasic() || isModeAdvanced() || isModeReading()) {
+        if (isDefaultMode()) {
             this.directoryTreeListeners.parentRootListener();
             this.createFileListener();
         }
@@ -747,7 +623,7 @@ export class DirectoryTreeUIModalListeners extends DirectoryTreeUIModals impleme
             this.createFolderModalExitListener();
 
             //mode check
-            if (isModeBasic() || isModeAdvanced() || isModeReading()) {
+            if (isDefaultMode()) {
                 //invoke create folder continue listener
                 this.createFolderContinueListener(document.getElementById("create-folder-input-node") as HTMLElement);
             }

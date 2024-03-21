@@ -1,7 +1,15 @@
 import { App } from "../app";
-import { fsMod } from "../utils/alias";
-import { isFolderNode } from "../utils/is";
-import { Settings } from "../settings/settings";
+import { fsMod } from "../../utils/alias";
+import { isFolderNode } from "../../utils/is";
+import { FilePath } from "../../utils/file-path";
+
+//testing purposes, remove later
+console.log(FilePath.use.baseNotesDir);
+
+function populateFileData(): void {
+    FilePath.use.populateFileData();
+}
+populateFileData();
 
 export class FileDirectoryTreeNode {
     /**
@@ -84,101 +92,6 @@ export class DirectoryTreeUIElements {
         const settingsTextNode: Text = document.createTextNode("Settings");
         settingsNode.appendChild(settingsTextNode);
     }
-
-    /**
-     * File directory kebab options
-     */
-    public fileDirectoryKebabOptionsNode(): void {
-        const fileDirectoryKebabOptionLabel: HTMLLabelElement = document.createElement("label");
-        fileDirectoryKebabOptionLabel.setAttribute("for", "editor-mode-select");
-        fileDirectoryKebabOptionLabel.setAttribute("class", "editor-mode-label");
-        fileDirectoryKebabOptionLabel.textContent = "Mode";
-        (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).appendChild(
-            fileDirectoryKebabOptionLabel
-        );
-
-        const fileDirectoryKebabOptionSelect: HTMLSelectElement = document.createElement("select");
-        fileDirectoryKebabOptionSelect.setAttribute("name", "editor-mode");
-        fileDirectoryKebabOptionSelect.setAttribute("id", "editor-mode-select");
-        (document.getElementById("file-directory-kebab-after-click-menu-container") as HTMLElement).appendChild(
-            fileDirectoryKebabOptionSelect
-        );
-
-        //basic mode option
-        const basicModeOption: HTMLOptionElement = document.createElement("option");
-        basicModeOption.setAttribute("value", "basic-mode");
-        basicModeOption.setAttribute("class", "basic-mode-option");
-        basicModeOption.textContent = "Basic";
-        basicModeOption.style.display = "";
-        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(basicModeOption);
-
-        //advanced mode option
-        const advancedModeOption: HTMLOptionElement = document.createElement("option");
-        advancedModeOption.setAttribute("value", "advanced-mode");
-        advancedModeOption.setAttribute("class", "advanced-mode-option");
-        advancedModeOption.textContent = "Advanced";
-        advancedModeOption.style.display = "";
-        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(advancedModeOption);
-
-        //reading mode option
-        const readingModeOption: HTMLOptionElement = document.createElement("option");
-        readingModeOption.setAttribute("value", "reading-mode");
-        readingModeOption.setAttribute("class", "reading-mode-option");
-        readingModeOption.textContent = "Reading";
-        (document.getElementById("editor-mode-select") as HTMLElement).appendChild(readingModeOption);
-
-        //if basic mode is true
-        if (Settings.getSettings.basicMode) {
-            basicModeOption.setAttribute("selected", "");
-            //if advanced mode is true
-        } else if (Settings.getSettings.advancedMode) {
-            advancedModeOption.setAttribute("selected", "");
-        } else if (Settings.getSettings.readingMode) {
-            readingModeOption.setAttribute("selected", "");
-        }
-    }
-
-    /**
-     * File directory kebab
-     */
-    public fileDirectoryKebabNode(): void {
-        //kebab dropdown menu container node
-        const kebabDropdownMenuContainerNode: HTMLDivElement = document.createElement("div");
-        kebabDropdownMenuContainerNode.setAttribute("id", "file-directory-kebab-dropdown-menu-container");
-        (document.getElementById("file-directory-tree-container") as HTMLElement).appendChild(
-            kebabDropdownMenuContainerNode
-        );
-
-        for (let i = 0; i < 3; i++) {
-            const kebabDropdownMenuShapeContainerNode: HTMLDivElement = document.createElement("div");
-            kebabDropdownMenuShapeContainerNode.setAttribute("id", "file-directory-kebab-dropdown-shape-container");
-            kebabDropdownMenuContainerNode.appendChild(kebabDropdownMenuShapeContainerNode);
-
-            //kebab dropdown menu shape node
-            const kebabDropdownMenuShapeNode: HTMLDivElement = document.createElement("div");
-            kebabDropdownMenuShapeNode.setAttribute(
-                "class",
-                "file-directory-kebab-dropdown-shape-node num-" + i.toString()
-            );
-            kebabDropdownMenuShapeContainerNode.appendChild(kebabDropdownMenuShapeNode);
-        }
-
-        //hide kebab dropdown menu container node
-        kebabDropdownMenuContainerNode.style.display = "none";
-
-        //kebab after click menu container
-        const kebabAfterClickMenuContainer: HTMLDivElement = document.createElement("div");
-        kebabAfterClickMenuContainer.setAttribute("id", "file-directory-kebab-after-click-menu-container");
-        (document.getElementById("file-directory-tree-container") as HTMLElement).appendChild(
-            kebabAfterClickMenuContainer
-        );
-
-        //hide kebab after click menu container
-        kebabAfterClickMenuContainer.style.display = "none";
-
-        //create file directory kebab options node
-        this.fileDirectoryKebabOptionsNode();
-    }
 }
 
 export class DirectoryTree extends DirectoryTreeUIElements {
@@ -206,13 +119,9 @@ export class DirectoryTree extends DirectoryTreeUIElements {
         }
 
         //check platform before returning nameVec
-        //eslint-disable-next-line
-        //@ts-ignore
         return window.electron.process.platform === "darwin"
             ? nameVecMac
-            : //eslint-disable-next-line
-              //@ts-ignore
-              window.electron.process.platform === "linux" || window.electron.process.platform === "win32"
+            : window.electron.process.platform === "linux" || window.electron.process.platform === "win32"
               ? nameVec
               : null;
     }
@@ -246,16 +155,6 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
                 //temp
                 this.createFileNode(parentFolder);
-            } else if (!isFolderNode("home", "/Iris/Notes" + "/" + elem)) {
-                //create parent folder node
-                const childFileRoot: HTMLDivElement = document.createElement("div");
-
-                childFileRoot.setAttribute("class", "child-file-name");
-                FileDirectoryTreeNode.fileDirectoryNode.appendChild(childFileRoot);
-
-                //create text node based on directory name
-                const parentFolderTextNode: Text = document.createTextNode(elem);
-                childFileRoot.appendChild(parentFolderTextNode);
             }
         });
     }
@@ -272,13 +171,9 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
         //mode check
         //platform check
-        //eslint-disable-next-line
-        //@ts-ignore
         if (window.electron.process.platform === "darwin") {
             //walk directory recursively
             walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes" + "/" + parentNameTags);
-            //eslint-disable-next-line
-            //@ts-ignore
         } else if (window.electron.process.platform === "linux" || window.electron.process.platform === "win32") {
             walkRef = fsMod.fs._walk(fsMod.fs._baseDir(base) + "/Iris/Notes" + "/" + parentNameTags);
         } else {
@@ -300,6 +195,10 @@ export class DirectoryTree extends DirectoryTreeUIElements {
 
         for (let i = 0; i < namesArr.length; i++) {
             if (namesArr[i] !== parentNameTags) {
+                const childFileContainer: HTMLDivElement = document.createElement("div");
+                childFileContainer.setAttribute("class", "child-file-name-container");
+                parentTags.appendChild(childFileContainer);
+
                 const childFile: HTMLDivElement = document.createElement("div");
                 childFile.setAttribute("class", "child-file-name");
 
@@ -308,7 +207,7 @@ export class DirectoryTree extends DirectoryTreeUIElements {
                 childFile.appendChild(childFileTextNode);
 
                 //append to passed parent node
-                parentTags.appendChild(childFile);
+                childFileContainer.appendChild(childFile);
             }
         }
     }
